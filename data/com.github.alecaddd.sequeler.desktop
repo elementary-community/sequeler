@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Sequeler
+GenericName=Sequeler App
+Comment=SQL Client for Local and Remote Databases
+Categories=Utility;Development;
+Exec=com.github.alecaddd.sequeler
+Icon=application-default-icon
+Terminal=false
+Type=Application
+X-GNOME-Gettext-Domain=sequeler
+Keywords=SQL;MySql;Database;MariaDB;S3;
