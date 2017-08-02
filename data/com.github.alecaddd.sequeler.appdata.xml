@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com> -->
 <component type="desktop">
-<id>com.github.alecaddd.sequeler.desktop</id>
-<metadata_license>CC0</metadata_license>
-<name>Sequeler</name>
-<summary>SQL Client for Local and Remote Databases</summary>
-<description>
-<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
-</description>
+	<id>com.github.alecaddd.sequeler.desktop</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0+</project_license>
+	<name>Sequeler</name>
+	<summary>SQL Client for Local and Remote Databases</summary>
+	<description>
+	<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
+	</description>
+	<provides>
+		<binary>sequeler</binary>
+	</provides>
+	<releases>
+	</releases>
+	<screenshots>
+		<screenshot type="default">
+			<image></image>
+		</screenshot>
+	</screenshots>
+	<developer_name>Alessandro "Alecaddd" Castellani</developer_name>
+	<url type="homepage">https://github.com/Alecaddd/sequeler</url>
+	<url type="bugtracker">https://github.com/Alecaddd/sequeler/issues</url>
+	<url type="help">https://github.com/Alecaddd/sequeler/wiki</url>
+	<update_contact>castellani.ale@gmail.com</update_contact>
+	<custom>
+		<value key="x-appcenter-color-primary">#C2D5FF</value>
+		<value key="x-appcenter-color-primary-text">#223b69</value>
+		<value key="x-appcenter-suggested-price">5</value>
+	</custom>
 </component>
