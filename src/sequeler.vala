@@ -36,6 +36,23 @@ int main (string[] args) {
 	window.set_default_size(800, 600);
 	window.destroy.connect(Gtk.main_quit);
 
+	var grid = new Gtk.Grid();
+	grid.orientation = Gtk.Orientation.VERTICAL;
+	grid.row_spacing = 6;
+
+	var button = new Gtk.Button.with_label("Click Me!");
+	var label = new Gtk.Label(null);
+
+	grid.add(button);
+	grid.add(label);
+
+	window.add(grid);
+
+	button.clicked.connect(() => {
+		label.label = _("Hello Alex!");
+		button.sensitive = false;
+	});
+
 	window.show_all();
 
 	Gtk.main();
