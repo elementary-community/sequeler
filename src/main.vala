@@ -19,42 +19,15 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-using Gtk;
+public const string APP_NAME = "Sequeler";
+public const string TERMINAL_NAME = "sequeler";
 
-int main (string[] args) {
-	Gtk.init (ref args);
+public static int main (string[] args) {
 
-	var header = new Gtk.HeaderBar();
-	header.title = "Sequeler";
-	header.set_subtitle("Freindly SQL Client");
-	header.set_show_close_button(true);
+    Environment.set_application_name (APP_NAME);
+    Environment.set_prgname (APP_NAME);
 
-	var window = new Gtk.Window();
-	window.set_titlebar(header);
-	window.set_border_width(10);
-	window.set_position(Gtk.WindowPosition.CENTER);
-	window.set_default_size(800, 600);
-	window.destroy.connect(Gtk.main_quit);
+    var application = new Sequeler.Application ();
 
-	var grid = new Gtk.Grid();
-	grid.orientation = Gtk.Orientation.VERTICAL;
-	grid.row_spacing = 6;
-
-	var button = new Gtk.Button.with_label("Click Me!");
-	var label = new Gtk.Label(null);
-
-	grid.add(button);
-	grid.add(label);
-
-	window.add(grid);
-
-	button.clicked.connect(() => {
-		label.label = _("Hello Alex!");
-		button.sensitive = false;
-	});
-
-	window.show_all();
-
-	Gtk.main();
-	return 0;
+    return application.run (args);
 }
