@@ -39,8 +39,9 @@ ensure_vala_version("0.16" MINIMUM)
 # files we want to compile
 include(ValaPrecompile)
 vala_precompile(VALA_C ${EXEC_NAME}
-src/main.vala
-src/application.vala
+    src/Main.vala
+    src/Application.vala
+    src/Partials/HeaderBar.vala
 
 # tell what libraries to use when compiling
 PACKAGES
