@@ -22,19 +22,33 @@
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
     public Window (Gtk.Application app) {
+        // Store the main app to be used
         Object (application: app);
 
+        // Build the UI
+        build_ui ();
+        build_headerbar ();
+        build_test();
+
+        show_app ();
+    }
+
+    private void build_ui () {
         set_border_width(10);
         set_position(Gtk.WindowPosition.CENTER);
         set_default_size (900, 600);
         set_size_request (750, 500);
         destroy.connect (Gtk.main_quit);
+    }
 
+    private void build_headerbar () {
         var headerbar = Sequeler.HeaderBar.get_instance ();
-
+        
         set_titlebar (headerbar);
         add (headerbar);
+    }
 
+    public void build_test () {
         // create stack
         Gtk.Stack stack = new Gtk.Stack();
         stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
@@ -59,12 +73,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         vbox.pack_start(stack, false, false, 10);
 
         add(vbox);
-
-        show_app ();
     }
 
     public void show_app () {
         show_all ();
         show ();
+        present ();
     }
 }
