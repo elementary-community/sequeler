@@ -24,7 +24,7 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     private static HeaderBar? instance = null;
 
     private HeaderBar () {
-        this.set_title ("Test");
+        this.set_title (APP_NAME);
         this.set_show_close_button (true);
 
         build_ui ();

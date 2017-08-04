@@ -41,6 +41,7 @@ include(ValaPrecompile)
 vala_precompile(VALA_C ${EXEC_NAME}
     src/Main.vala
     src/Application.vala
+    src/Window.vala
     src/Partials/HeaderBar.vala
 
 # tell what libraries to use when compiling
