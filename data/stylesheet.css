@@ -1,0 +1,5 @@
+GtkButton.btn-headerbar {
+    border: 1px solid transparent;
+    background: none;
+    box-shadow: none;
+}

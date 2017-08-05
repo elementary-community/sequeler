@@ -23,9 +23,14 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
     private static HeaderBar? instance = null;
 
+    private HeaderBarButton new_connection;
+    private HeaderBarButton search;
+    private HeaderBarButton terminal;
+    private HeaderBarButton open_menu;
+
     private HeaderBar () {
-        this.set_title (APP_NAME);
-        this.set_show_close_button (true);
+        set_title (APP_NAME);
+        set_show_close_button (true);
 
         build_ui ();
     }
@@ -40,8 +45,38 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
     private void build_ui () {
         // Add some widgets here
-        Gtk.Button button = new Gtk.Button.with_label ("About");
+        new_connection = new HeaderBarButton ("star-new-symbolic", _("New Connection"));
+        search = new HeaderBarButton ("system-search-symbolic", _("Search Connection"));
+        terminal = new HeaderBarButton ("utilities-terminal-symbolic", _("Connection in Terminal"));
+        open_menu = new HeaderBarButton ("open-menu-symbolic", _("Settings"));
+
+        terminal.sensitive = false;
+
         // add button to headerbar
-        this.pack_end(button);
+        pack_start(new_connection);
+        pack_end(open_menu);
+        pack_end(search);
+        pack_end(terminal);
+    }
+
+    protected class HeaderBarButton : Gtk.Button {
+
+        public HeaderBarButton (string icon_name, string tooltip) {
+            can_focus = false;
+
+            Gtk.Image image;
+
+            if (icon_name.contains ("/")) {
+                image = new Gtk.Image.from_resource (icon_name);
+            } else {
+                image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
+            }
+
+            image.margin = 3;
+
+            get_style_context ().add_class ("btn-headerbar");
+            set_tooltip_text (tooltip);
+            this.add (image);
+        }
     }
 }

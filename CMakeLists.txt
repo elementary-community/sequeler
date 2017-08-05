@@ -62,7 +62,12 @@ install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.alecaddd.sequeler.des
 # install our .appdata.xml file so AppCenter will see it
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.alecaddd.sequeler.appdata.xml DESTINATION ${DATADIR}/metainfo/)
 
+# install the mimefile
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.alecaddd.sequeler.mime.xml
+DESTINATION ${DATADIR}/mime/packages/)
+
 # Translation files
 set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}")
 add_definitions (-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\")
+
 add_subdirectory (po)

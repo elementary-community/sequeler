@@ -21,6 +21,8 @@
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
+    private string css_file = "../data/stylesheet.css";
+
     public Window (Gtk.Application app) {
         // Store the main app to be used
         Object (application: app);
@@ -34,6 +36,20 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     private void build_ui () {
+        // User can decide theme color
+        // Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
+
+        var css_provider = new Gtk.CssProvider ();
+        try {
+            css_provider.load_from_path (css_file);
+        } catch (GLib.Error e) {
+            warning ("Error loading css styles from %s: %s", css_file, e.message);
+        }
+        
+        Gtk.StyleContext.add_provider_for_screen (
+            Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        );
+
         set_border_width(10);
         set_position(Gtk.WindowPosition.CENTER);
         set_default_size (900, 600);
@@ -45,7 +61,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var headerbar = Sequeler.HeaderBar.get_instance ();
         
         set_titlebar (headerbar);
-        add (headerbar);
     }
 
     public void build_test () {
