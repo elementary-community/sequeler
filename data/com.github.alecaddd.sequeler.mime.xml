@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-    <mime-type type="application/x-spiceup">
+    <mime-type type="application/x-sequeler">
         <comment>Sequeler</comment>
         <icon name="application-x-sequeler"/>
         <glob-deleteall/>

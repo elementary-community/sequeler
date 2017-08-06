@@ -4,6 +4,9 @@ project (com.github.alecaddd.sequeler)
 # the oldest stable cmake version we support
 cmake_minimum_required (VERSION 2.6)
 
+# enable testing
+enable_testing (true)
+
 # tell cmake where its modules can be found in our project directory
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/src)
@@ -18,6 +21,9 @@ set (EXEC_NAME "com.github.alecaddd.sequeler")
 set (RELEASE_NAME "Sequeler")
 set (VERSION "0.1")
 set (VERSION_INFO "Freindly SQL Client")
+
+# disable C compiler warnings
+add_definitions(-w)
 
 # we're about to use pkgconfig to make sure dependencies are installed so let's find pkgconfig first
 find_package(PkgConfig)
@@ -56,18 +62,9 @@ add_executable(${EXEC_NAME} ${VALA_C})
 # install the binaries we just made
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
 
-# install our .desktop file so the Applications menu will see it
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.alecaddd.sequeler.desktop DESTINATION ${DATADIR}/applications/)
-
-# install our .appdata.xml file so AppCenter will see it
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.alecaddd.sequeler.appdata.xml DESTINATION ${DATADIR}/metainfo/)
-
-# install the mimefile
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.alecaddd.sequeler.mime.xml
-DESTINATION ${DATADIR}/mime/packages/)
-
 # Translation files
 set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}")
 add_definitions (-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\")
 
 add_subdirectory (po)
+add_subdirectory (data)
