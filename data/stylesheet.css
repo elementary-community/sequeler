@@ -3,3 +3,8 @@ GtkButton.btn-headerbar {
     background: none;
     box-shadow: none;
 }
+
+GtkButton.btn-headerbar:active {
+    border-color: #888;
+    background-color: #aaa;
+}

@@ -28,11 +28,20 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         Object (application: app);
 
         // Build the UI
+        set_appicon ();
         build_ui ();
         build_headerbar ();
         build_test();
 
         show_app ();
+    }
+
+    private void set_appicon () {
+        try {
+            icon = new Gdk.Pixbuf.from_file ("../data/assets/icons/64x64.svg");
+        } catch (Error e) {
+            stderr.printf ("Could not load application icon: %s\n", e.message);
+        }
     }
 
     private void build_ui () {
