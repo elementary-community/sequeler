@@ -1,0 +1,15 @@
+Source: sequeler
+Section: x11
+Priority: extra
+Maintainer: Alessandro Castellani <castellani.ale@gmail.com>
+Build-Depends: cmake (>= 2.8),
+               cmake-elementary,
+               debhelper (>= 8.0.0),
+               valac-0.26 | valac (>= 0.26)
+Standards-Version: 3.9.3
+
+Package: sequeler
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Hey young world
+ Freindly SQL Client
