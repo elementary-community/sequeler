@@ -28,7 +28,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         Object (application: app);
 
         // Build the UI
-        set_appicon ();
+        //  set_appicon ();
         build_ui ();
         build_headerbar ();
         build_test();
@@ -36,13 +36,13 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         show_app ();
     }
 
-    private void set_appicon () {
-        try {
-            icon = new Gdk.Pixbuf.from_file ("../data/assets/icons/128x128/com.github.alecaddd.sequeler.svg");
-        } catch (Error e) {
-            stderr.printf ("Could not load application icon: %s\n", e.message);
-        }
-    }
+    //  private void set_appicon () {
+    //      try {
+    //          icon = new Gdk.Pixbuf.from_file ("../data/assets/icons/128x128/com.github.alecaddd.sequeler.svg");
+    //      } catch (Error e) {
+    //          stderr.printf ("Could not load application icon: %s\n", e.message);
+    //      }
+    //  }
 
     private void build_ui () {
         // User can decide theme color

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com> -->
-<component type="desktop">
+<component type="desktop-application">
 	<id>com.github.alecaddd.sequeler.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0+</project_license>
 	<name>Sequeler</name>
-	<summary>Freindly SQL Client</summary>
+	<summary>Friendly SQL Client</summary>
 	<description>
 	<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
 	</description>
