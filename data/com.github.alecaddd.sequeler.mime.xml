@@ -2,7 +2,7 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
     <mime-type type="application/x-sequeler">
         <comment>Sequeler</comment>
-        <icon name="application-x-sequeler"/>
+        <icon name="com.github.alecaddd.sequeler"/>
         <glob-deleteall/>
         <glob pattern="*.sequeler"/>
     </mime-type>

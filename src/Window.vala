@@ -38,7 +38,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     private void set_appicon () {
         try {
-            icon = new Gdk.Pixbuf.from_file ("../data/assets/icons/64x64.svg");
+            icon = new Gdk.Pixbuf.from_file ("../data/assets/icons/128x128/com.github.alecaddd.sequeler.svg");
         } catch (Error e) {
             stderr.printf ("Could not load application icon: %s\n", e.message);
         }
