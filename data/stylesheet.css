@@ -5,6 +5,6 @@ GtkButton.btn-headerbar {
 }
 
 GtkButton.btn-headerbar:active {
-    border-color: #888;
-    background-color: #aaa;
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
 }

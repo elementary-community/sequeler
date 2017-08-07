@@ -1,0 +1,47 @@
+<schemalist>
+    <schema id="com.github.alecaddd.sequeler" path="/com/github/alecaddd/sequeler/" gettext-domain="sequeler">
+        <key name="pos-x" type="i">
+            <default>360</default>
+            <summary>The saved horizontal position of the window.</summary>
+            <description>The saved horizontal position of the window.</description>
+        </key>
+
+        <key name="pos-y" type="i">
+            <default>360</default>
+            <summary>The vertical position width of the window.</summary>
+            <description>The saved vertical position of the window.</description>
+        </key>
+
+        <key name="window-width" type="i">
+            <default>900</default>
+            <summary>The saved width of the window.</summary>
+            <description>The saved width of the window. Must be greater than 750, or it will not take effect.</description>
+        </key>
+
+        <key name="window-height" type="i">
+            <default>600</default>
+            <summary>The saved height of the window.</summary>
+            <description>The saved height of the window. Must be greater than 500, or it will not take effect.</description>
+        </key>
+
+        <key name="last-connections" type="as">
+            <default>[]</default>
+            <summary>The last configured conenctions</summary>
+            <description>The last 10 connections you openeded are here</description>
+        </key>
+
+        <key name="saved-connections" type="as">
+            <default>[]</default>
+            <summary>The saved configured conenctions</summary>
+            <description>All the configured connections you saved are here</description>
+        </key>
+
+         <key name="dark-theme" type="b">
+            <default>false</default>
+            <summary>Use dark theme</summary>
+            <description>
+                Switch between Light and Dark theme.
+            </description>
+        </key>
+    </schema>
+</schemalist>

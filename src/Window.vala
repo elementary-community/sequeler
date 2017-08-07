@@ -21,48 +21,34 @@
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
-    private string css_file = "../data/stylesheet.css";
-
     public Window (Gtk.Application app) {
         // Store the main app to be used
         Object (application: app);
 
         // Build the UI
-        //  set_appicon ();
         build_ui ();
         build_headerbar ();
-        build_test();
 
+        // Update UI based on user settings
+        move (settings.pos_x, settings.pos_y);
+        resize (settings.window_width, settings.window_height);
+
+        // Show the app
         show_app ();
     }
 
-    //  private void set_appicon () {
-    //      try {
-    //          icon = new Gdk.Pixbuf.from_file ("../data/assets/icons/128x128/com.github.alecaddd.sequeler.svg");
-    //      } catch (Error e) {
-    //          stderr.printf ("Could not load application icon: %s\n", e.message);
-    //      }
-    //  }
-
     private void build_ui () {
         // User can decide theme color
-        // Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
+        Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
 
         var css_provider = new Gtk.CssProvider ();
-        try {
-            css_provider.load_from_path (css_file);
-        } catch (GLib.Error e) {
-            warning ("Error loading css styles from %s: %s", css_file, e.message);
-        }
+        css_provider.load_from_resource ("/com/github/alecaddd/sequeler/stylesheet.css");
         
         Gtk.StyleContext.add_provider_for_screen (
             Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         );
 
         set_border_width(10);
-        set_position(Gtk.WindowPosition.CENTER);
-        set_default_size (900, 600);
-        set_size_request (750, 500);
         destroy.connect (Gtk.main_quit);
     }
 
@@ -72,31 +58,19 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         set_titlebar (headerbar);
     }
 
-    public void build_test () {
-        // create stack
-        Gtk.Stack stack = new Gtk.Stack();
-        stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
+    protected override bool delete_event (Gdk.EventAny event) {
 
-        // giving widgets to stack
-        Gtk.Label label = new Gtk.Label("");
-        label.set_markup("<big>A label</big>");
-        stack.add_titled(label, "label", "A label");
+        int width, height, x, y;
 
-        Gtk.Label label2 = new Gtk.Label("");
-        label2.set_markup("<big>Another label</big>");
-        stack.add_titled(label2, "label2", "Another label");
+        get_size (out width, out height);
+        get_position (out x, out y);
 
-        // add stack(contains widgets) to stackswitcher widget
-        Gtk.StackSwitcher stack_switcher = new Gtk.StackSwitcher();
-        stack_switcher.halign = Gtk.Align.CENTER;
-        stack_switcher.set_stack(stack);
+        settings.pos_x = x;
+        settings.pos_y = y;
+        settings.window_width = width;
+        settings.window_height = height;
 
-        // add stackswitcher to vertical box
-        Gtk.Box vbox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
-        vbox.pack_start(stack_switcher, false, false, 0);
-        vbox.pack_start(stack, false, false, 10);
-
-        add(vbox);
+        return false;
     }
 
     public void show_app () {

@@ -18,8 +18,10 @@
 *
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
+
 namespace Sequeler { 
     public Sequeler.Window window;
+    public Sequeler.Services.Settings settings;
 }
 
 public class Sequeler.Application : Granite.Application {
@@ -42,6 +44,7 @@ public class Sequeler.Application : Granite.Application {
     protected override void activate () {
 
         if (!running) {
+            settings = Sequeler.Services.Settings.get_instance ();
             window = new Sequeler.Window (this);
             this.add_window (window);
 

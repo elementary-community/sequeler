@@ -23,13 +23,13 @@ set (VERSION "0.1")
 set (VERSION_INFO "Freindly SQL Client")
 
 # disable C compiler warnings
-add_definitions(-w)
+# add_definitions(-w)
 
 # we're about to use pkgconfig to make sure dependencies are installed so let's find pkgconfig first
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -48,16 +48,24 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Main.vala
     src/Application.vala
     src/Window.vala
+
     src/Partials/HeaderBar.vala
+
+    src/Services/Settings.vala
 
 # tell what libraries to use when compiling
 PACKAGES
     gtk+-3.0
     granite
+    glib-2.0
+    gee-0.8
 )
 
+include (GResource)
+glib_compile_resources(GLIB_RESOURCES_ICONS SOURCE /data/assets.gresource.xml)
+
 # tell cmake what to call the executable we just made
-add_executable(${EXEC_NAME} ${VALA_C})
+add_executable(${EXEC_NAME} ${VALA_C} ${GLIB_RESOURCES_ICONS})
 
 # install the binaries we just made
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
@@ -68,3 +76,4 @@ add_definitions (-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\")
 
 add_subdirectory (po)
 add_subdirectory (data)
+add_subdirectory (schemas)
