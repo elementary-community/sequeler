@@ -59,7 +59,9 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
         var about_item = new Gtk.MenuItem.with_label (_("About"));
         about_item.activate.connect (() => {
-            about_selected ();
+            try {
+                Gtk.show_uri (null, "https://github.com/alecaddd/sequeler", 0);
+            } catch (Error error) {}
         });
         menu.add (about_item);
 

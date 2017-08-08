@@ -21,6 +21,10 @@
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
+    private Gtk.Stack panels;
+    private Granite.Widgets.Welcome welcome;
+    private Gtk.Widget current_widget;
+
     public Window (Gtk.Application app) {
         // Store the main app to be used
         Object (application: app);
@@ -28,6 +32,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         // Build the UI
         build_ui ();
         build_headerbar ();
+        build_panels ();
 
         // Update UI based on user settings
         move (settings.pos_x, settings.pos_y);
@@ -56,6 +61,26 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var headerbar = Sequeler.HeaderBar.get_instance ();
         
         set_titlebar (headerbar);
+    }
+
+    private void build_panels () {
+        welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
+        welcome.append ("bookmark-new", _("Quick Connect"), _("Quickly connect to a database you don't need to save in your Library."));
+        welcome.append ("document-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
+        welcome.append ( "preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
+        //  welcome.activated.connect(on_welcome);
+
+        panels = new Gtk.Stack();
+        panels.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
+        panels.transition_duration = 300;
+
+        panels.add_titled(welcome, "welcome", _("Welcome"));
+
+        // add stackswitcher to vertical box
+        Gtk.Box vbox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+        vbox.pack_start(panels, true, true, 0);
+
+        add(vbox);
     }
 
     protected override bool delete_event (Gdk.EventAny event) {
