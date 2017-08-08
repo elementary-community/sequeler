@@ -23,10 +23,14 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
     private static HeaderBar? instance = null;
 
+    private Gtk.Menu menu;
     private HeaderBarButton new_connection;
     private HeaderBarButton search;
     private HeaderBarButton terminal;
-    private HeaderBarButton open_menu;
+    private Gtk.MenuButton open_menu;
+
+    public signal void preferences_selected();
+    public signal void about_selected();
 
     private HeaderBar () {
         set_title (APP_NAME);
@@ -44,11 +48,47 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     }
 
     private void build_ui () {
-        // Add some widgets here
+
+        // Add some buttons in the HeaderBar
         new_connection = new HeaderBarButton ("star-new-symbolic", _("New Connection"));
         search = new HeaderBarButton ("system-search-symbolic", _("Search Connection"));
         terminal = new HeaderBarButton ("utilities-terminal-symbolic", _("Connection in Terminal"));
-        open_menu = new HeaderBarButton ("open-menu-symbolic", _("Settings"));
+
+        // Create the Menu
+        menu = new Gtk.Menu ();
+
+        var about_item = new Gtk.MenuItem.with_label (_("About"));
+        about_item.activate.connect (() => {
+            about_selected ();
+        });
+        menu.add (about_item);
+
+        var report_problem_item = new Gtk.MenuItem.with_label (_("Report a Problem…"));
+        report_problem_item.activate.connect (() => {
+            try {
+                Gtk.show_uri (null, "https://github.com/alecaddd/sequeler/issues", 0);
+            } catch (Error error) {}
+        });
+        menu.add(report_problem_item);
+
+        menu.add(new Gtk.SeparatorMenuItem());
+
+        var preferences_item = new Gtk.MenuItem.with_label(_("Preferences"));
+        preferences_item.activate.connect(() => {
+            preferences_selected();
+        });
+        menu.add(preferences_item);
+
+        menu.show_all();
+        
+        // Create the AppMenu
+        open_menu = new Gtk.MenuButton();
+        open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
+        open_menu.set_tooltip_text ("Settings");
+
+        open_menu.popup = menu;
+        open_menu.relief = Gtk.ReliefStyle.NONE;
+        open_menu.valign = Gtk.Align.CENTER;
 
         terminal.sensitive = false;
 
