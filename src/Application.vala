@@ -22,6 +22,7 @@
 namespace Sequeler { 
     public Sequeler.Window window;
     public Sequeler.Services.Settings settings;
+    //  public Sequeler.Widgets.SettingsDialog settings_dialog;
 }
 
 public class Sequeler.Application : Granite.Application {
@@ -49,6 +50,8 @@ public class Sequeler.Application : Granite.Application {
             this.add_window (window);
 
             running = true;
+
+            return;
         }
 
         window.show_app ();

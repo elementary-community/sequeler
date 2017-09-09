@@ -21,6 +21,7 @@
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
+    /* Core Componenets */
     private Gtk.Stack panels;
     private Granite.Widgets.Welcome welcome;
     private Gtk.Widget current_widget;
@@ -59,6 +60,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     private void build_headerbar () {
         var headerbar = Sequeler.HeaderBar.get_instance ();
+
+        headerbar.preferences_selected.connect(() => {
+            var settings_dialog = Sequeler.Widgets.SettingsDialog.get_instance ();
+            settings_dialog.show_all();
+        });
         
         set_titlebar (headerbar);
     }
@@ -67,7 +73,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
         welcome.append ("bookmark-new", _("Quick Connect"), _("Quickly connect to a database you don't need to save in your Library."));
         welcome.append ("document-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
-        welcome.append ( "preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
+        welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
         //  welcome.activated.connect(on_welcome);
 
         panels = new Gtk.Stack();

@@ -30,7 +30,6 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     private Gtk.MenuButton open_menu;
 
     public signal void preferences_selected();
-    public signal void about_selected();
 
     private HeaderBar () {
         set_title (APP_NAME);

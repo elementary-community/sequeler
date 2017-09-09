@@ -53,6 +53,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Services/Settings.vala
 
+    src/Widgets/SettingsDialog.vala
+
 # tell what libraries to use when compiling
 PACKAGES
     gtk+-3.0
