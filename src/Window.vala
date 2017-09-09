@@ -24,7 +24,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     /* Core Componenets */
     private Gtk.Stack panels;
     private Granite.Widgets.Welcome welcome;
-    private Gtk.Widget current_widget;
 
     public Window (Gtk.Application app) {
         // Store the main app to be used
@@ -54,7 +53,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         );
 
-        set_border_width(10);
+        set_border_width (10);
         destroy.connect (Gtk.main_quit);
     }
 
@@ -62,7 +61,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var headerbar = Sequeler.HeaderBar.get_instance ();
 
         headerbar.preferences_selected.connect(() => {
-            var settings_dialog = Sequeler.Widgets.SettingsDialog.get_instance ();
+            var settings_dialog = new Sequeler.Widgets.SettingsDialog ();
             settings_dialog.show_all();
         });
         
