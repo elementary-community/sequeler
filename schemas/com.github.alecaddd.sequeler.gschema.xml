@@ -27,7 +27,7 @@
         <key name="last-connections" type="as">
             <default>[]</default>
             <summary>The last configured conenctions</summary>
-            <description>The last 10 connections you openeded are here</description>
+            <description>The last 5 connections you openeded are here</description>
         </key>
 
         <key name="saved-connections" type="as">
@@ -36,12 +36,34 @@
             <description>All the configured connections you saved are here</description>
         </key>
 
-         <key name="dark-theme" type="b">
+        <key name="save-quick" type="b">
+            <default>true</default>
+            <summary>Save Quick Connections</summary>
+            <description>Automatically Save a Quick Connections into the Database Library.</description>
+        </key>
+
+        <key name="show-recent" type="b">
+            <default>false</default>
+            <summary>Show Recent Connections</summary>
+            <description>Show a list of recent connections in the Welcome Screen.</description>
+        </key>
+
+        <key name="show-library" type="b">
+            <default>false</default>
+            <summary>Show Library</summary>
+            <description>Show the connections library in the Welcome Screen.</description>
+        </key>
+
+        <key name="reconnect" type="b">
+            <default>false</default>
+            <summary>Automatically Reconnect</summary>
+            <description>Automatically Reconnect to the Latest Database.</description>
+        </key>
+
+        <key name="dark-theme" type="b">
             <default>false</default>
             <summary>Use dark theme</summary>
-            <description>
-                Switch between Light and Dark theme.
-            </description>
+            <description>Switch between Light and Dark theme.</description>
         </key>
     </schema>
 </schemalist>

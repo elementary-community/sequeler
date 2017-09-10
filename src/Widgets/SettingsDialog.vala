@@ -42,8 +42,8 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
 
         main_stack = new Gtk.Stack ();
         main_stack.margin = 6;
-        main_stack.margin_bottom = 18;
-        main_stack.margin_top = 24;
+        main_stack.margin_bottom = 15;
+        main_stack.margin_top = 15;
         main_stack.add_titled (get_general_box (), "general", _("General"));
         main_stack.add_titled (get_interface_box (), "interface", _("Interface"));
 
@@ -72,12 +72,19 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
 
         general_grid.attach (new SettingsHeader (_("General")), 0, 0, 2, 1);
 
-        general_grid.attach (new SettingsLabel (_("Automatic indentation:")), 0, 3, 1, 1);
-        //  general_grid.attach (new SettingsSwitch ("auto-indent"), 1, 3, 1, 1);
-        general_grid.attach (new SettingsLabel (_("Insert spaces instead of tabs:")), 0, 4, 1, 1);
-        //  general_grid.attach (new SettingsSwitch ("spaces-instead-of-tabs"), 1, 4, 1, 1);
-        general_grid.attach (new SettingsLabel (_("Tab width:")), 0, 5, 1, 1);
-        //  general_grid.attach (indent_width, 1, 5, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Automatically Save Quick Connections:")), 0, 1, 1, 1);
+        general_grid.attach (new SettingsSwitch ("save-quick"), 1, 1, 1, 1);
+
+        general_grid.attach (new SettingsHeader (_("Welcome Screen")), 0, 2, 2, 1);
+
+        general_grid.attach (new SettingsLabel (_("Show Recent Connections:")), 0, 3, 1, 1);
+        general_grid.attach (new SettingsSwitch ("show-recent"), 1, 3, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Show Library:")), 0, 4, 1, 1);
+        general_grid.attach (new SettingsSwitch ("show-library"), 1, 4, 1, 1);
+
+        general_grid.attach (new SettingsHeader (_("Startup Behaviour")), 0, 5, 2, 1);
+        general_grid.attach (new SettingsLabel (_("Reconnect to the Latest Database:")), 0, 6, 1, 1);
+        general_grid.attach (new SettingsSwitch ("reconnect"), 1, 6, 1, 1);
 
         return general_grid;
     }
@@ -87,12 +94,11 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
         content.row_spacing = 6;
         content.column_spacing = 12;
 
-        content.attach (new SettingsHeader (_("Theme")), 0, 0, 3, 1);
+        content.attach (new SettingsHeader (_("Theme")), 0, 0, 2, 1);
 
-        content.attach (new SettingsLabel (_("Use Dark Theme:")), 0, 1, 2, 1);
-
+        content.attach (new SettingsLabel (_("Use Dark Theme:")), 0, 1, 1, 1);
         dark_theme_switch = new SettingsSwitch (_("dark-theme"));
-        content.attach (dark_theme_switch, 2, 1, 2, 1);
+        content.attach (dark_theme_switch, 1, 1, 1, 1);
 
         dark_theme_switch.notify.connect (() => {
             Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
@@ -112,14 +118,14 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
     private class SettingsLabel : Gtk.Label {
         public SettingsLabel (string text) {
             label = text;
-            halign = Gtk.Align.END;
-            margin_start = 12;
+            halign = Gtk.Align.START;
+            margin_end = 10;
         }
     }
 
     private class SettingsSwitch : Gtk.Switch {
         public SettingsSwitch (string setting) {
-            halign = Gtk.Align.START;
+            halign = Gtk.Align.END;
             Sequeler.settings.schema.bind (setting, this, "active", SettingsBindFlags.DEFAULT);
         }
     }
