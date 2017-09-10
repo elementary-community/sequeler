@@ -57,7 +57,8 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
 
         get_content_area ().add (main_grid);
 
-        var close_button = new Gtk.Button.with_label (_("Close"));
+        var close_button = new SettingsButton (_("Close"));
+        
         close_button.clicked.connect (() => {
             destroy ();
         });
@@ -127,6 +128,15 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
         public SettingsSwitch (string setting) {
             halign = Gtk.Align.END;
             Sequeler.settings.schema.bind (setting, this, "active", SettingsBindFlags.DEFAULT);
+        }
+    }
+
+    private class SettingsButton : Gtk.Button {
+        public SettingsButton (string text) {
+            label = text;
+            valign = Gtk.Align.END;
+            var style_context = this.get_style_context ();
+            style_context.add_class ("suggested-action");
         }
     }
 

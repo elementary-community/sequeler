@@ -75,6 +75,18 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
         //  welcome.activated.connect(on_welcome);
 
+        welcome.activated.connect ((index) => {
+            switch (index) {
+                case 0:
+                    quick_connect ();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+             }
+        });
+
         panels = new Gtk.Stack();
         panels.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
         panels.transition_duration = 300;
@@ -86,6 +98,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         vbox.pack_start(panels, true, true, 0);
 
         add(vbox);
+    }
+
+    public void quick_connect () {
+        var quick_connect_dialog = new Sequeler.Widgets.QuickConnectionDialog (this, settings);
+        quick_connect_dialog.show_all();
     }
 
     protected override bool delete_event (Gdk.EventAny event) {
