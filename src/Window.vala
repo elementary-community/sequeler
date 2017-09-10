@@ -61,7 +61,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var headerbar = Sequeler.HeaderBar.get_instance ();
 
         headerbar.preferences_selected.connect(() => {
-            var settings_dialog = new Sequeler.Widgets.SettingsDialog ();
+            var settings_dialog = new Sequeler.Widgets.SettingsDialog (this, settings);
             settings_dialog.show_all();
         });
         

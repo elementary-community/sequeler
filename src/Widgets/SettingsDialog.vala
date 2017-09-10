@@ -21,50 +21,107 @@
 
 public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
 
-    private Gtk.Label dark_theme_label;
-    private Gtk.Switch dark_theme;
-
+    private Gtk.Stack main_stack;
+    private Gtk.Switch dark_theme_switch;
     public Gtk.Box content_box;
-    private Sequeler.Services.Settings settings;
 
-    public SettingsDialog () {
+    public SettingsDialog (Gtk.ApplicationWindow parent, Sequeler.Services.Settings settings) {
 
-        Object (use_header_bar: 1);
+        Object (
+            use_header_bar: 0,
+            border_width: 20,
+            deletable: false,
+            resizable: false,
+            title: _("Preferences"),
+            transient_for: parent
+        );
 
-        set_title (_("Preferences"));
-        set_border_width (5);
-        set_default_size (500, 300);
-        
-        build_ui ();
     }
 
-    private void build_ui () {
-        this.modal = true;
-        this.settings = Sequeler.Services.Settings.get_instance ();
+    construct {
 
-        content_box = get_content_area () as Gtk.Box;
-        content_box.homogeneous = false;
-        content_box.margin = 10;
-        
-        // dark_theme option
-        dark_theme_label = new Gtk.Label (_("Use Dark Theme:"));
-        dark_theme_label.justify = Gtk.Justification.LEFT;
-        dark_theme_label.set_property ("xalign", 0);
-        dark_theme_label.margin_end = 10;
-        
-        dark_theme = new Gtk.Switch();
-        
-        dark_theme.set_active(settings.dark_theme);
-        dark_theme.notify["active"].connect (() => {
-            settings.dark_theme = dark_theme.active;
+        main_stack = new Gtk.Stack ();
+        main_stack.margin = 6;
+        main_stack.margin_bottom = 18;
+        main_stack.margin_top = 24;
+        main_stack.add_titled (get_general_box (), "general", _("General"));
+        main_stack.add_titled (get_interface_box (), "interface", _("Interface"));
+
+        var main_stackswitcher = new Gtk.StackSwitcher ();
+        main_stackswitcher.set_stack (main_stack);
+        main_stackswitcher.halign = Gtk.Align.CENTER;
+
+        var main_grid = new Gtk.Grid ();
+        main_grid.attach (main_stackswitcher, 0, 0, 1, 1);
+        main_grid.attach (main_stack, 0, 1, 1, 1);
+
+        get_content_area ().add (main_grid);
+
+        var close_button = new Gtk.Button.with_label (_("Close"));
+        close_button.clicked.connect (() => {
+            destroy ();
+        });
+
+        add_action_widget (close_button, 0);
+    }
+
+    private Gtk.Widget get_general_box () {
+        var general_grid = new Gtk.Grid ();
+        general_grid.column_spacing = 12;
+        general_grid.row_spacing = 6;
+
+        general_grid.attach (new SettingsHeader (_("General")), 0, 0, 2, 1);
+
+        general_grid.attach (new SettingsLabel (_("Automatic indentation:")), 0, 3, 1, 1);
+        //  general_grid.attach (new SettingsSwitch ("auto-indent"), 1, 3, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Insert spaces instead of tabs:")), 0, 4, 1, 1);
+        //  general_grid.attach (new SettingsSwitch ("spaces-instead-of-tabs"), 1, 4, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Tab width:")), 0, 5, 1, 1);
+        //  general_grid.attach (indent_width, 1, 5, 1, 1);
+
+        return general_grid;
+    }
+
+    private Gtk.Widget get_interface_box () {
+        var content = new Gtk.Grid ();
+        content.row_spacing = 6;
+        content.column_spacing = 12;
+
+        content.attach (new SettingsHeader (_("Theme")), 0, 0, 3, 1);
+
+        content.attach (new SettingsLabel (_("Use Dark Theme:")), 0, 1, 2, 1);
+
+        dark_theme_switch = new SettingsSwitch (_("dark-theme"));
+        content.attach (dark_theme_switch, 2, 1, 2, 1);
+
+        dark_theme_switch.notify.connect (() => {
             Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
         });
-        
-        var dark_theme_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-        dark_theme_box.margin_bottom = 10;
-        dark_theme_box.pack_start(dark_theme_label, true, true, 0);
-        dark_theme_box.pack_start(dark_theme, false, false, 0);
-        content_box.add(dark_theme_box);
+
+        return content;
+    }
+
+    private class SettingsHeader : Gtk.Label {
+        public SettingsHeader (string text) {
+            label = text;
+            get_style_context ().add_class ("h4");
+            halign = Gtk.Align.START;
+        }
+    }
+
+    private class SettingsLabel : Gtk.Label {
+        public SettingsLabel (string text) {
+            label = text;
+            halign = Gtk.Align.END;
+            margin_start = 12;
+        }
+    }
+
+    private class SettingsSwitch : Gtk.Switch {
+        public SettingsSwitch (string setting) {
+            halign = Gtk.Align.START;
+            Sequeler.settings.schema.bind (setting, this, "active", SettingsBindFlags.DEFAULT);
+        }
     }
 
 }
