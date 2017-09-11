@@ -30,6 +30,7 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
         Object (
             use_header_bar: 0,
             border_width: 20,
+            modal: true,
             deletable: false,
             resizable: false,
             title: _("Preferences"),

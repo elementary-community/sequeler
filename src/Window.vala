@@ -60,9 +60,13 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     private void build_headerbar () {
         var headerbar = Sequeler.HeaderBar.get_instance ();
 
-        headerbar.preferences_selected.connect(() => {
+        headerbar.preferences_selected.connect (() => {
             var settings_dialog = new Sequeler.Widgets.SettingsDialog (this, settings);
             settings_dialog.show_all();
+        });
+
+        headerbar.quick_connection.connect (() => {
+            quick_connect ();
         });
         
         set_titlebar (headerbar);
@@ -101,7 +105,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     public void quick_connect () {
-        var quick_connect_dialog = new Sequeler.Widgets.QuickConnectionDialog (this, settings);
+        var quick_connect_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
         quick_connect_dialog.show_all();
     }
 

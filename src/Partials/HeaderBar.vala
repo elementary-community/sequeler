@@ -30,6 +30,7 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     private Gtk.MenuButton open_menu;
 
     public signal void preferences_selected();
+    public signal void quick_connection();
 
     private HeaderBar () {
         set_title (APP_NAME);
@@ -50,6 +51,10 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
         // Add some buttons in the HeaderBar
         new_connection = new HeaderBarButton ("star-new-symbolic", _("New Connection"));
+        new_connection.clicked.connect (() => {
+            quick_connection ();
+        });
+        
         search = new HeaderBarButton ("system-search-symbolic", _("Search Connection"));
         terminal = new HeaderBarButton ("utilities-terminal-symbolic", _("Connection in Terminal"));
 

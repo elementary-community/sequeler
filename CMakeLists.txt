@@ -54,7 +54,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Settings.vala
 
     src/Widgets/SettingsDialog.vala
-    src/Widgets/QuickConnectionDialog.vala
+    src/Widgets/ConnectionDialog.vala
 
 # tell what libraries to use when compiling
 PACKAGES
