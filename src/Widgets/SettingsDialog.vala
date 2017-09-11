@@ -53,8 +53,9 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
         main_stackswitcher.halign = Gtk.Align.CENTER;
 
         var main_grid = new Gtk.Grid ();
-        main_grid.attach (main_stackswitcher, 0, 0, 1, 1);
-        main_grid.attach (main_stack, 0, 1, 1, 1);
+        main_grid.halign = Gtk.Align.CENTER;
+        main_grid.attach (main_stackswitcher, 1, 1, 1, 1);
+        main_grid.attach (main_stack, 1, 2, 1, 1);
 
         get_content_area ().add (main_grid);
 
@@ -127,7 +128,7 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
 
     private class SettingsSwitch : Gtk.Switch {
         public SettingsSwitch (string setting) {
-            halign = Gtk.Align.END;
+            halign = Gtk.Align.START;
             Sequeler.settings.schema.bind (setting, this, "active", SettingsBindFlags.DEFAULT);
         }
     }

@@ -33,6 +33,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         build_ui ();
         build_headerbar ();
         build_panels ();
+        handle_shortcuts ();
 
         // Update UI based on user settings
         move (settings.pos_x, settings.pos_y);
@@ -61,8 +62,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var headerbar = Sequeler.HeaderBar.get_instance ();
 
         headerbar.preferences_selected.connect (() => {
-            var settings_dialog = new Sequeler.Widgets.SettingsDialog (this, settings);
-            settings_dialog.show_all();
+            open_preference ();
         });
 
         headerbar.quick_connection.connect (() => {
@@ -104,9 +104,46 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         add(vbox);
     }
 
+    private void handle_shortcuts () {
+        this.key_press_event.connect ( (e) => {
+            bool handled = false;
+
+            // Was the control key pressed?
+            if((e.state & Gdk.ModifierType.CONTROL_MASK) != 0) {
+                switch (e.keyval) {
+                    case Gdk.Key.q:
+                        this.destroy();
+                        handled = true;
+                        break;
+                    case Gdk.Key.n:
+                        quick_connect ();
+                        handled = true;
+                        break;
+                    case Gdk.Key.f:
+                        //  on_show_search ();
+                        handled = true;
+                        break;
+                    case Gdk.Key.comma:
+                        open_preference ();
+                        handled = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return handled;
+        });
+    }
+
+    public void open_preference () {
+        var settings_dialog = new Sequeler.Widgets.SettingsDialog (this, settings);
+        settings_dialog.show_all ();
+    }
+
     public void quick_connect () {
         var quick_connect_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
-        quick_connect_dialog.show_all();
+        quick_connect_dialog.show_all ();
     }
 
     protected override bool delete_event (Gdk.EventAny event) {
