@@ -83,8 +83,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Gtk.Widget get_socket_box () {
         var grid = new DialogGrid ();        
 
-        grid.attach (new DialogHeader (_("Connect to a Local Socket")), 1, 1, 1, 1);
-        grid.attach (new SettingsView(), 0, 2, 20, 40);
+        grid.attach (new SettingsView(), 0, 1, 40, 40);
 
         return grid;
     }
