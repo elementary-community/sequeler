@@ -75,20 +75,20 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
                 Gtk.show_uri (null, "https://github.com/alecaddd/sequeler/issues", 0);
             } catch (Error error) {}
         });
-        menu.add(report_problem_item);
+        menu.add (report_problem_item);
 
-        menu.add(new Gtk.SeparatorMenuItem());
+        menu.add (new Gtk.SeparatorMenuItem ());
 
-        var preferences_item = new Gtk.MenuItem.with_label(_("Preferences"));
-        preferences_item.activate.connect(() => {
-            preferences_selected();
+        var preferences_item = new Gtk.MenuItem.with_label (_("Preferences"));
+        preferences_item.activate.connect (() => {
+            preferences_selected ();
         });
-        menu.add(preferences_item);
+        menu.add (preferences_item);
 
-        menu.show_all();
+        menu.show_all  ();
         
         // Create the AppMenu
-        open_menu = new Gtk.MenuButton();
+        open_menu = new Gtk.MenuButton ();
         open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
         open_menu.set_tooltip_text ("Settings");
 
@@ -99,10 +99,10 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
         terminal.sensitive = false;
 
         // add button to headerbar
-        pack_start(new_connection);
-        pack_end(open_menu);
-        pack_end(search);
-        pack_end(terminal);
+        pack_start (new_connection);
+        pack_end (open_menu);
+        pack_end (search);
+        pack_end (terminal);
     }
 
     protected class HeaderBarButton : Gtk.Button {
