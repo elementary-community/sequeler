@@ -8,3 +8,13 @@ GtkButton.btn-headerbar:active {
     border-color: rgba(0, 0, 0, 0.2);
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+GtkButton.safe-action {
+    background-color: #2DC000;
+    border-color: #269900;
+    color: #ffffff;
+}
+
+GtkButton.safe-action:active {
+    background-color: #269900;
+}

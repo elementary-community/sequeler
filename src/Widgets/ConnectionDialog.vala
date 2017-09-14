@@ -63,8 +63,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var test_button = new DialogButton (_("Test Connection"));
         test_button.sensitive = false;
 
-        var save_button = new DialogButton (_("Save Connection"));
-        save_button.sensitive = false;
+        var save_button = new SecondaryButton (_("Save Connection"));
 
         var connect_button = new PrimaryButton (_("Connect"));
         connect_button.sensitive = false;
@@ -143,6 +142,14 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             label = text;
             var style_context = this.get_style_context ();
             style_context.add_class ("suggested-action");
+        }
+    }
+
+    private class SecondaryButton : Gtk.Button {
+        public SecondaryButton (string text) {
+            label = text;
+            var style_context = this.get_style_context ();
+            style_context.add_class ("safe-action");
         }
     }
 

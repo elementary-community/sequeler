@@ -66,7 +66,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         });
 
         headerbar.quick_connection.connect (() => {
-            quick_connect ();
+            create_connection ();
         });
         
         set_titlebar (headerbar);
@@ -74,19 +74,16 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     private void build_panels () {
         welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
-        welcome.append ("bookmark-new", _("Quick Connect"), _("Quickly connect to a database you don't need to save in your Library."));
-        welcome.append ("document-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
+        welcome.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
         welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
         //  welcome.activated.connect(on_welcome);
 
         welcome.activated.connect ((index) => {
             switch (index) {
                 case 0:
-                    quick_connect ();
+                    create_connection ();
                     break;
                 case 1:
-                    break;
-                case 2:
                     break;
              }
         });
@@ -116,7 +113,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                         handled = true;
                         break;
                     case Gdk.Key.n:
-                        quick_connect ();
+                        create_connection ();
                         handled = true;
                         break;
                     case Gdk.Key.f:
@@ -141,9 +138,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         settings_dialog.show_all ();
     }
 
-    public void quick_connect () {
-        var quick_connect_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
-        quick_connect_dialog.show_all ();
+    public void create_connection () {
+        var connection_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
+        connection_dialog.show_all ();
     }
 
     protected override bool delete_event (Gdk.EventAny event) {
