@@ -26,7 +26,6 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
     public int pos_y { get; set; }
     public int window_width { get; set; }
     public int window_height { get; set; }
-    public string[] last_connections { get; set; }
     public string[] saved_connections { get; set; }
     public bool dark_theme { get; set; }
     public bool save_quick { get; set; }
@@ -46,21 +45,21 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
         base ("com.github.alecaddd.sequeler");
     }
 
-    //  public void add_connection (string connection) {
-    //      var current_connections = last_connections;
+    public void add_connection (string connection) {
+        var current_connections = saved_connections;
 
-    //      Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-    //      existing_connections.add_all_array (current_connections);
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (current_connections);
 
-    //      if (connection in current_connections) {
-    //          existing_connections.remove (connection);
-    //      }
+        if (connection in current_connections) {
+            existing_connections.remove (connection);
+        }
 
-    //      existing_connections.insert (0, connection);
-    //      if (existing_connections.size > 10) {
-    //          existing_connections = existing_connections.slice (0, 10);
-    //      }
+        existing_connections.insert (0, connection);
+        if (existing_connections.size > 10) {
+            existing_connections = existing_connections.slice (0, 10);
+        }
 
-    //      last_connections = existing_connections.to_array ();
-    //  }
+        saved_connections = existing_connections.to_array ();
+    }
 }

@@ -21,6 +21,19 @@
 
 public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
+    public Sequeler.Partials.ButtonType test_button;
+    public Sequeler.Partials.ButtonType connect_button;
+
+    private Entry title_entry;
+    private Entry description_entry;
+    private Gtk.ColorButton color_entry;
+    private Gtk.ComboBox db_type_entry;
+    private Entry db_name_entry;
+    private Entry db_username_entry;
+    private Entry db_password_entry;
+
+    public signal void save_connection (Gee.HashMap data);
+
     public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Services.Settings settings) {
         
         Object (
@@ -36,6 +49,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     construct {
+        SettingsView.dialog = this;
 
         var main_stack = new Gtk.Stack ();
         main_stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
@@ -60,12 +74,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         var cancel_button = new Sequeler.Partials.ButtonType (_("Cancel"), null);
 
-        var test_button = new Sequeler.Partials.ButtonType (_("Test Connection"), null);
+        test_button = new Sequeler.Partials.ButtonType (_("Test Connection"), null);
         test_button.sensitive = false;
 
-        var save_button = new Sequeler.Partials.ButtonType (_("Save Connection"), "safe-action");
+        var save_button = new Sequeler.Partials.ButtonType (_("Save Connection"), "suggested-action");
 
-        var connect_button = new Sequeler.Partials.ButtonType (_("Connect"), "suggested-action");
+        connect_button = new Sequeler.Partials.ButtonType (_("Connect"), "safe-action");
         connect_button.sensitive = false;
 
         add_action_widget (cancel_button, 1);
@@ -116,12 +130,31 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 //  test_connection ();
                 break;
             case 3:
-                //  save_connection ();
+                create_data ();
                 break;
             case 4:
                 //  init_connection ();
                 break;
         }
+    }
+
+    public void create_data () {
+        var data = new Gee.HashMap<string, string> ();
+
+        data.set ("name", title_entry.text);
+
+        save_connection (data);
+    }
+
+    public void change_sensitivity () {
+        if ( db_name_entry.text != "" && db_username_entry.text != "" && db_password_entry.text != "") {
+            test_button.sensitive = true;
+            connect_button.sensitive = true;
+            return;
+        }
+
+        test_button.sensitive = false;
+        connect_button.sensitive = false;
     }
 
     private class DialogGrid : Gtk.Grid {
@@ -142,6 +175,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
     public class SettingsView : Granite.SimpleSettingsPage {
 
+        public static ConnectionDialog dialog;
+
         string[] dbs = {"MySql", "MariaDB", "PostgreSql", "SqlLite"};
 
         enum Column {
@@ -149,6 +184,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         }
 
         public SettingsView () {
+
             Object (
                 activatable: false,
                 description: "New connection to localhost",
@@ -157,13 +193,13 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             );
     
             var title_label = new Label (_("Name:"));
-            var title_entry = new Entry (_("Connection's name"), title);
+            dialog.title_entry = new Entry (_("Connection's name"), title);
     
             var description_label = new Label (_("Description:"));
-            var description_entry = new Entry (_("Connection's description"), description);
+            dialog.description_entry = new Entry (_("Connection's description"), description);
 
             var color_label = new Label (_("Color:"));
-            var color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
+            dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
 
             var db_type_label = new Label (_("Database Type:"));
             Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
@@ -174,49 +210,58 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 liststore.set (iter, Column.DISTRO, dbs[i]);
             }
     
-            Gtk.ComboBox db_type_entry = new Gtk.ComboBox.with_model (liststore);
+            dialog.db_type_entry = new Gtk.ComboBox.with_model (liststore);
             Gtk.CellRendererText cell = new Gtk.CellRendererText ();
-            db_type_entry.pack_start (cell, false);
+            dialog.db_type_entry.pack_start (cell, false);
     
-            db_type_entry.set_attributes (cell, "text", Column.DISTRO);
+            dialog.db_type_entry.set_attributes (cell, "text", Column.DISTRO);
     
             /* Set the first item in the list to be selected (active). */
-            db_type_entry.set_active (0);
+            dialog.db_type_entry.set_active (0);
 
             var db_name_label = new Label (_("Database Name:"));
-            var db_name_entry = new Entry ("", null);
+            dialog.db_name_entry = new Entry ("", null);
+            dialog.db_name_entry.changed.connect (() => { 
+                dialog.change_sensitivity ();
+            });
 
             var db_username_label = new Label (_("Username:"));
-            var db_username_entry = new Entry ("", null);
+            dialog.db_username_entry = new Entry ("", null);
+            dialog.db_username_entry.changed.connect (() => { 
+                dialog.change_sensitivity ();
+            });
 
             var db_password_label = new Label (_("Password:"));
-            var db_password_entry = new Entry ("", null);
-            db_password_entry.set_visibility (false);
+            dialog.db_password_entry = new Entry ("", null);
+            dialog.db_password_entry.set_visibility (false);
+            dialog.db_password_entry.changed.connect (() => { 
+                dialog.change_sensitivity ();
+            });
 
             content_area.attach (title_label, 0, 0, 1, 1);
-            content_area.attach (title_entry, 1, 0, 1, 1);
+            content_area.attach (dialog.title_entry, 1, 0, 1, 1);
             content_area.attach (description_label, 0, 1, 1, 1);
-            content_area.attach (description_entry, 1, 1, 1, 1);
+            content_area.attach (dialog.description_entry, 1, 1, 1, 1);
             content_area.attach (color_label, 0, 2, 1, 1);
-            content_area.attach (color_entry, 1, 2, 1, 1);
+            content_area.attach (dialog.color_entry, 1, 2, 1, 1);
 
             content_area.attach (new Gtk.SeparatorMenuItem (), 0, 3, 2, 1);
 
             content_area.attach (db_type_label, 0, 4, 1, 1);
-            content_area.attach (db_type_entry, 1, 4, 1, 1);
-            content_area.attach (db_name_entry, 1, 5, 1, 1);
+            content_area.attach (dialog.db_type_entry, 1, 4, 1, 1);
             content_area.attach (db_name_label, 0, 5, 1, 1);
+            content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
             content_area.attach (db_username_label, 0, 6, 1, 1);
-            content_area.attach (db_username_entry, 1, 6, 1, 1);
+            content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
             content_area.attach (db_password_label, 0, 7, 1, 1);
-            content_area.attach (db_password_entry, 1, 7, 1, 1);
+            content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
 
-            title_entry.changed.connect (() => {
-                title = title_entry.text;
+            dialog.title_entry.changed.connect (() => {
+                title = dialog.title_entry.text;
             });
 
-            description_entry.changed.connect (() => {
-                description = description_entry.text;
+            dialog.description_entry.changed.connect (() => {
+                description = dialog.description_entry.text;
             });
 
         }

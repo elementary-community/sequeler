@@ -53,6 +53,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Partials/ButtonType.vala
 
     src/Services/Settings.vala
+    src/Services/FileManager.vala
+    src/Services/Connect.vala
 
     src/Widgets/SettingsDialog.vala
     src/Widgets/ConnectionDialog.vala

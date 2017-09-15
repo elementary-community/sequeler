@@ -140,11 +140,27 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     public void create_connection () {
         var connection_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
+
+        connection_dialog.save_connection.connect ((data) => {
+            save_connection (data);
+        });
+        
         connection_dialog.show_all ();
     }
 
-    protected override bool delete_event (Gdk.EventAny event) {
+    public void save_connection (Gee.HashMap data) {
+        var file = Sequeler.Services.FileManager.new_connection (data);
+    }
 
+    public void connect (string data) {
+        var connection = Sequeler.Services.Connect.connect (data);
+
+        if (connection != null) {
+            //  panels.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_RIGHT);
+        }
+    }
+
+    protected override bool delete_event (Gdk.EventAny event) {
         int width, height, x, y;
 
         get_size (out width, out height);

@@ -24,12 +24,6 @@
             <description>The saved height of the window. Must be greater than 500, or it will not take effect.</description>
         </key>
 
-        <key name="last-connections" type="as">
-            <default>[]</default>
-            <summary>The last configured conenctions</summary>
-            <description>The last 5 connections you openeded are here</description>
-        </key>
-
         <key name="saved-connections" type="as">
             <default>[]</default>
             <summary>The saved configured conenctions</summary>
