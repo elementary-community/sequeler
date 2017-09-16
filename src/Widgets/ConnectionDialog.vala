@@ -77,9 +77,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         test_button = new Sequeler.Partials.ButtonType (_("Test Connection"), null);
         test_button.sensitive = false;
 
-        var save_button = new Sequeler.Partials.ButtonType (_("Save Connection"), "suggested-action");
+        var save_button = new Sequeler.Partials.ButtonType (_("Save Connection"), null);
 
-        connect_button = new Sequeler.Partials.ButtonType (_("Connect"), "safe-action");
+        connect_button = new Sequeler.Partials.ButtonType (_("Connect"), "suggested-action");
         connect_button.sensitive = false;
 
         add_action_widget (cancel_button, 1);

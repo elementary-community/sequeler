@@ -142,14 +142,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var connection_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
 
         connection_dialog.save_connection.connect ((data) => {
-            save_connection (data);
+            settings.add_connection (data);
         });
         
         connection_dialog.show_all ();
-    }
-
-    public void save_connection (Gee.HashMap<string, string> data) {
-        settings.add_connection (data);
     }
 
     public void connect (string data) {
