@@ -45,8 +45,9 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
         base ("com.github.alecaddd.sequeler");
     }
 
-    public void add_connection (string connection) {
+    public void add_connection (Gee.HashMap<string, string> data) {
         var current_connections = saved_connections;
+        var connection = stringify_data (data);
 
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
         existing_connections.add_all_array (current_connections);
@@ -56,10 +57,28 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
         }
 
         existing_connections.insert (0, connection);
-        if (existing_connections.size > 10) {
-            existing_connections = existing_connections.slice (0, 10);
-        }
 
         saved_connections = existing_connections.to_array ();
+
+        foreach (var conn in saved_connections) {
+            stdout.printf ("%s\n", conn);
+        }
+    }
+
+    public static string stringify_data (Gee.HashMap<string, string> data) {
+        string result = "";
+
+        foreach (var entry in data.entries) {
+            string values = "%s=%s\n".printf (entry.key, entry.value);
+            result = result + values;
+        }
+
+        return result;
+
+    }
+
+    public void clear_connections () {
+        Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
+        saved_connections = empty_connection.to_array ();
     }
 }

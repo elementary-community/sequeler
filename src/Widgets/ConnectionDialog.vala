@@ -83,9 +83,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         connect_button.sensitive = false;
 
         add_action_widget (cancel_button, 1);
-        add_action_widget (test_button, 0);
-        add_action_widget (save_button, 0);
-        add_action_widget (connect_button, 0);
+        add_action_widget (test_button, 2);
+        add_action_widget (save_button, 3);
+        add_action_widget (connect_button, 4);
 
         get_content_area ().add (main_grid);
 
@@ -141,7 +141,13 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     public void create_data () {
         var data = new Gee.HashMap<string, string> ();
 
-        data.set ("name", title_entry.text);
+        data.set ("title", title_entry.text);
+        data.set ("description", description_entry.text);
+        data.set ("color", color_entry.rgba.to_string ());
+        data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
+        data.set ("name", db_name_entry.text);
+        data.set ("username", db_username_entry.text);
+        data.set ("password", db_password_entry.text);
 
         save_connection (data);
     }
@@ -177,7 +183,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         public static ConnectionDialog dialog;
 
-        string[] dbs = {"MySql", "MariaDB", "PostgreSql", "SqlLite"};
+        public static string[] dbs = {"MySql", "MariaDB", "PostgreSql", "SqlLite"};
 
         enum Column {
             DISTRO

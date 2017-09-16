@@ -148,8 +148,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         connection_dialog.show_all ();
     }
 
-    public void save_connection (Gee.HashMap data) {
-        var file = Sequeler.Services.FileManager.new_connection (data);
+    public void save_connection (Gee.HashMap<string, string> data) {
+        settings.add_connection (data);
     }
 
     public void connect (string data) {

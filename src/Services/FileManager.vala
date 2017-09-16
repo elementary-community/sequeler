@@ -20,45 +20,55 @@
 */
 
 public class Sequeler.Services.FileManager {
-    public const string FILE_EXTENSION = ".dbconn";
+    //  public const string FILE_EXTENSION = ".txt";
 
-    public static File? current_file = null;
+    //  public static File? current_file = null;
 
-    public static File? new_connection (Gee.HashMap data) {
-        File? result = null;
+    //  public static File? new_connection (Gee.HashMap<string, string> data) {
+    //      File? result = null;
 
-        var documents = Environment.get_user_special_dir (UserDirectory.DOCUMENTS) + "/%s".printf (_("Connections"));
-        DirUtils.create_with_parents (documents, 0775);
+    //      var documents = Environment.get_user_special_dir (UserDirectory.DOCUMENTS) + "/%s".printf (_("Connections"));
+    //      DirUtils.create_with_parents (documents, 0775);
 
-        int id = 1;
-        do {
-            result = File.new_for_path ("%s/%s %d%s".printf (documents, _("Untitled Connection"), id++, FILE_EXTENSION));
-        } while (result.query_exists ());
+    //      result = File.new_for_path ("%s/%s%s".printf (documents, data["title"], FILE_EXTENSION));
 
-        var to_save = serialize_data (data);
+    //      if (result.query_exists ()) {
+    //          result.delete ();
+    //      }
 
-        GLib.FileUtils.set_data (result.get_path (), to_save);
+    //      var to_save = serialize_data (data);
 
-        settings.add_connection (result.get_path ());
+    //      GLib.FileUtils.set_data (result.get_path (), to_save);
 
-        return result;
-    }
+    //      settings.add_connection (result.get_path ());
 
-    public static string serialize_data (Gee.HashMap data) {
-        var result = "";
+    //      return result;
+    //  }
 
-        foreach (var item in data.entries) {
-            
-        }
+    //  public static uint8[] serialize_data (Gee.HashMap<string, string> data) {
+    //      string result = "";
 
-        return result;
+    //      foreach (var entry in data.entries) {
 
-    }
+    //          if (entry.key == "password") {
+    //              store_password (data["username"], data["name"], entry.value);
+    //              continue;
+    //          }
 
-    public static void delete_connection (File file = current_file) {
-        if (file != null && file.query_exists () && file.get_basename ().contains (FILE_EXTENSION)) {
-            FileUtils.remove (file.get_path ());
-        }
-    }
+    //          string values = "%s=%s\n".printf (entry.key, entry.value);
+    //          result = result + values;
+    //      }
+
+    //      uint8[] test = result.data;
+
+    //      return test;
+
+    //  }
+
+    //  public static void delete_connection (File file = current_file) {
+    //      if (file != null && file.query_exists () && file.get_basename ().contains (FILE_EXTENSION)) {
+    //          FileUtils.remove (file.get_path ());
+    //      }
+    //  }
 
 }
