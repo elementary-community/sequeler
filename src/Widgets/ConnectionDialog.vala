@@ -28,6 +28,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Entry description_entry;
     private Gtk.ColorButton color_entry;
     private Gtk.ComboBox db_type_entry;
+    private Entry db_host_entry;
     private Entry db_name_entry;
     private Entry db_username_entry;
     private Entry db_password_entry;
@@ -41,36 +42,20 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             border_width: 20,
             modal: true,
             deletable: false,
-            resizable: false,
-            title: _("Quick Connection"),
+            resizable: true,
+            title: _("New Connection"),
             transient_for: parent
         );
 
     }
 
-    construct {
+    construct { 
         SettingsView.dialog = this;
+        set_default_size (350, 700);
+        set_size_request (350, 700);
 
         var main_stack = new Gtk.Stack ();
-        main_stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
-        main_stack.set_transition_duration(320);
-        main_stack.halign = Gtk.Align.CENTER;
-        main_stack.margin = 6;
-        main_stack.margin_bottom = 25;
-        main_stack.margin_top = 15;
-
-        main_stack.add_titled (get_socket_box (), "socket", _("Socket"));
-        main_stack.add_titled (get_ftp_box (), "ftp", _("FTP"));
-        main_stack.add_titled (get_ssh_box (), "ssh", _("SSH"));
-
-        var main_stackswitcher = new Gtk.StackSwitcher ();
-        main_stackswitcher.set_stack (main_stack);
-        main_stackswitcher.halign = Gtk.Align.CENTER;
-
-        var main_grid = new Gtk.Grid ();
-        main_grid.halign = Gtk.Align.CENTER;
-        main_grid.attach (main_stackswitcher, 1, 1, 1, 1);
-        main_grid.attach (main_stack, 1, 2, 1, 1);
+        var settings_view = new SettingsView ();
 
         var cancel_button = new Sequeler.Partials.ButtonType (_("Cancel"), null);
 
@@ -87,34 +72,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         add_action_widget (save_button, 3);
         add_action_widget (connect_button, 4);
 
-        get_content_area ().add (main_grid);
+        get_content_area ().add (settings_view);
 
         connect_signals ();
 
-    }
-
-    private Gtk.Widget get_socket_box () {
-        var grid = new DialogGrid ();        
-
-        grid.attach (new SettingsView(), 0, 1, 40, 70);
-
-        return grid;
-    }
-
-    private Gtk.Widget get_ftp_box () {
-        var grid = new DialogGrid ();        
-
-        grid.attach (new DialogHeader (_("Connect to a Remote Host")), 1, 1, 1, 1);        
-
-        return grid;
-    }
-
-    private Gtk.Widget get_ssh_box () {
-        var grid = new DialogGrid ();
-
-        grid.attach (new DialogHeader (_("Connect via SSH")), 1, 1, 1, 1);        
-
-        return grid;
     }
 
     private void connect_signals () {
@@ -145,6 +106,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         data.set ("description", description_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
         data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
+        data.set ("host", db_host_entry.text);
         data.set ("name", db_name_entry.text);
         data.set ("username", db_username_entry.text);
         data.set ("password", db_password_entry.text);
@@ -153,7 +115,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     public void change_sensitivity () {
-        if ( db_name_entry.text != "" && db_username_entry.text != "" && db_password_entry.text != "") {
+        if (db_name_entry.text != "" && db_username_entry.text != "" && db_host_entry.text != "") {
             test_button.sensitive = true;
             connect_button.sensitive = true;
             return;
@@ -207,6 +169,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             var color_label = new Label (_("Color:"));
             dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
 
+            var db_host_label = new Label (_("Host:"));
+            dialog.db_host_entry = new Entry (_("127.0.0.1"), null);
+
             var db_type_label = new Label (_("Database Type:"));
             Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
             
@@ -253,14 +218,17 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
             content_area.attach (new Gtk.SeparatorMenuItem (), 0, 3, 2, 1);
 
-            content_area.attach (db_type_label, 0, 4, 1, 1);
-            content_area.attach (dialog.db_type_entry, 1, 4, 1, 1);
-            content_area.attach (db_name_label, 0, 5, 1, 1);
-            content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
-            content_area.attach (db_username_label, 0, 6, 1, 1);
-            content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
-            content_area.attach (db_password_label, 0, 7, 1, 1);
-            content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
+            content_area.attach (db_host_label, 0, 4, 1, 1);
+            content_area.attach (dialog.db_host_entry, 1, 4, 1, 1);
+
+            content_area.attach (db_type_label, 0, 5, 1, 1);
+            content_area.attach (dialog.db_type_entry, 1, 5, 1, 1);
+            content_area.attach (db_name_label, 0, 6, 1, 1);
+            content_area.attach (dialog.db_name_entry, 1, 6, 1, 1);
+            content_area.attach (db_username_label, 0, 7, 1, 1);
+            content_area.attach (dialog.db_username_entry, 1, 7, 1, 1);
+            content_area.attach (db_password_label, 0, 8, 1, 1);
+            content_area.attach (dialog.db_password_entry, 1, 8, 1, 1);
 
             dialog.title_entry.changed.connect (() => {
                 title = dialog.title_entry.text;
