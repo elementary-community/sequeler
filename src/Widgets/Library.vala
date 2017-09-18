@@ -19,14 +19,41 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Library : Gtk.ScrolledWindow {
+public class Sequeler.Library : Gtk.Box {
 
     private Gtk.FlowBox item_box;
     private Gtk.FlowBoxChild item;
     private Gtk.Box box;
 
+    public signal void go_back ();
+    public signal void delete_all_connections ();
+
     public Library () {
-        hscrollbar_policy = Gtk.PolicyType.NEVER;
+        orientation = Gtk.Orientation.VERTICAL;
+
+        var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        toolbar.get_style_context ().add_class ("toolbar");
+
+        var go_back_button = new Gtk.Button.with_label (_("Go Back"));
+        go_back_button.clicked.connect (() => { 
+            go_back (); 
+        });
+        go_back_button.get_style_context().add_class ("back-button");
+        go_back_button.margin = 6;
+
+        var delete_all = new Gtk.Button.with_label (_("Delete All"));
+        delete_all.clicked.connect (() => {
+            delete_all_connections ();
+        });
+        delete_all.margin = 6;
+
+        toolbar.pack_start (go_back_button, false, false, 0);
+        toolbar.pack_end (delete_all, false, false, 0);
+        this.pack_start (toolbar, false, true, 0);
+
+
+        var scroll = new Gtk.ScrolledWindow (null, null);
+        scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
         item_box = new Gtk.FlowBox ();
 
@@ -36,12 +63,13 @@ public class Sequeler.Library : Gtk.ScrolledWindow {
         item_box.margin = 12;
         item_box.expand = false;
 
-        add (item_box);
+        scroll.add (item_box);
         
         foreach (var conn in settings.saved_connections) {
             add_item (conn);           
-            //  stdout.printf ("%s\n", conn);
         }
+
+        this.pack_end (scroll, true, true, 0);
     }
 
     public void add_item (string connection) {

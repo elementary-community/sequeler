@@ -25,7 +25,7 @@ public class Sequeler.Welcome : Gtk.Box {
     private Sequeler.Library? library = null;
 
     private Gtk.Separator separator;
-    private Gtk.Stack welcome_stack;
+    public Gtk.Stack welcome_stack;
 
     public signal void create_connection ();
 
@@ -45,6 +45,10 @@ public class Sequeler.Welcome : Gtk.Box {
 
         library = new Sequeler.Library ();
 
+        library.go_back.connect (() => {
+            welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_LEFT);
+        });
+
         welcome_stack = new Gtk.Stack ();
         welcome_stack.add_named (welcome, "welcome");
         welcome_stack.add_named (library, "library");
@@ -59,7 +63,7 @@ public class Sequeler.Welcome : Gtk.Box {
                     create_connection ();
                     break;
                 case 1:
-                    welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
+                    welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
                     break;
                 }
         });

@@ -112,6 +112,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                         create_connection ();
                         handled = true;
                         break;
+                    case Gdk.Key.l:
+                        show_library ();
+                        handled = true;
+                        break;
                     case Gdk.Key.f:
                         //  on_show_search ();
                         handled = true;
@@ -142,6 +146,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         });
         
         connection_dialog.show_all ();
+    }
+
+    public void show_library () {
+        welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
     }
 
     public void connect (string data) {
