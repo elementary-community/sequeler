@@ -63,6 +63,8 @@ public class Sequeler.Settings : Granite.Services.Settings {
         //  foreach (var conn in saved_connections) {
         //      stdout.printf ("%s\n", conn);
         //  }
+
+        library.add_item (connection);
     }
 
     public static string stringify_data (Gee.HashMap<string, string> data) {
@@ -89,6 +91,8 @@ public class Sequeler.Settings : Granite.Services.Settings {
         }
 
         saved_connections = existing_connections.to_array ();
+
+        library.add_item (connection);
     }
 
     public void clear_connections () {

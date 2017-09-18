@@ -26,3 +26,8 @@ GtkButton.safe-action:insensitive {
     border-color: alpha (@theme_text_color, 0.3);
     text-shadow: none;
 }
+
+.library-toolbar {
+    background: #E2E2E2;
+    border-bottom: none;
+}

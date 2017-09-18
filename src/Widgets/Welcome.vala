@@ -74,23 +74,31 @@ public class Sequeler.Welcome : Gtk.Box {
     //      welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.NONE);
 
     //      if (library != null) {
+    //          welcome_stack.remove (library);
     //          remove (library);
     //          library.destroy ();
     //          library = null;
     //      }
 
-    //      if (connections.length > 0 ) {
-    //          library = new Sequeler.Library (connections);
-    //          add (library);
+    //      if (connections.length > 0) {
+    //          library = new Sequeler.Library ();
 
-    //          library.item_selected.connect ((connection) => {
-    //              connect_to (connection);
+    //          library.go_back.connect (() => {
+    //              welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_LEFT);
     //          });
+
+    //          welcome_stack.add_named (library, "library");
+    //      }
+        
+    //      if(connections.length > 0 && settings.show_library) {
+    //          add (library);
+            
+    //          //  library.item_selected.connect ((connection) => {
+    //          //      connect_to (connection);
+    //          //  });
 
     //          separator.visible = true;
     //          separator.no_show_all = false;
-
-    //          this.show_all ();
     //      } else {
     //          separator.visible = false;
     //          separator.no_show_all = true;

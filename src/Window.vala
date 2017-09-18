@@ -60,7 +60,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     private void build_headerbar () {
-        var headerbar = Sequeler.HeaderBar.get_instance ();
+        headerbar = Sequeler.HeaderBar.get_instance ();
 
         headerbar.preferences_selected.connect (() => {
             open_preference ();

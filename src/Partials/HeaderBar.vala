@@ -29,8 +29,8 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     private HeaderBarButton terminal;
     private Gtk.MenuButton open_menu;
 
-    public signal void preferences_selected();
-    public signal void quick_connection();
+    public signal void preferences_selected ();
+    public signal void quick_connection ();
 
     private HeaderBar () {
         set_title (APP_NAME);

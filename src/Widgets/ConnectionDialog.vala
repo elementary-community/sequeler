@@ -24,6 +24,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public Sequeler.ButtonType test_button;
     public Sequeler.ButtonType connect_button;
 
+    private Gtk.Entry connection_id;
     private Entry title_entry;
     private Entry description_entry;
     private Gtk.ColorButton color_entry;
@@ -51,6 +52,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
     construct { 
         SettingsView.dialog = this;
+
         set_default_size (350, 700);
         set_size_request (350, 700);
 
@@ -102,6 +104,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public void create_data () {
         var data = new Gee.HashMap<string, string> ();
 
+        data.set ("id", connection_id.text);
         data.set ("title", title_entry.text);
         data.set ("description", description_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
@@ -159,6 +162,10 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 icon_name: "drive-multidisk",
                 title: "New Connection"
             );
+
+            var id = settings.saved_connections.length;
+            dialog.connection_id = new Gtk.Entry ();
+            dialog.connection_id.text = id.to_string ();
     
             var title_label = new Label (_("Name:"));
             dialog.title_entry = new Entry (_("Connection's name"), title);

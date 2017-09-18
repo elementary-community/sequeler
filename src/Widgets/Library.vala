@@ -24,6 +24,7 @@ public class Sequeler.Library : Gtk.Box {
     private Gtk.FlowBox item_box;
     private Gtk.FlowBoxChild item;
     private Gtk.Box box;
+    private Gtk.ScrolledWindow scroll;
 
     public signal void go_back ();
     public signal void delete_all_connections ();
@@ -33,43 +34,60 @@ public class Sequeler.Library : Gtk.Box {
 
         var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         toolbar.get_style_context ().add_class ("toolbar");
+        toolbar.get_style_context ().add_class ("library-toolbar");
 
         var go_back_button = new Gtk.Button.with_label (_("Go Back"));
         go_back_button.clicked.connect (() => { 
-            go_back (); 
+            go_back ();
+            reload_library ();
         });
         go_back_button.get_style_context().add_class ("back-button");
-        go_back_button.margin = 6;
+        go_back_button.can_focus = false;
+        go_back_button.margin = 12;
 
+        var delete_image = new Gtk.Image.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
         var delete_all = new Gtk.Button.with_label (_("Delete All"));
+        delete_all.always_show_image = true;
+        delete_all.set_image (delete_image);
         delete_all.clicked.connect (() => {
             delete_all_connections ();
         });
-        delete_all.margin = 6;
+        delete_all.can_focus = false;
+        delete_all.margin = 12;
 
         toolbar.pack_start (go_back_button, false, false, 0);
         toolbar.pack_end (delete_all, false, false, 0);
         this.pack_start (toolbar, false, true, 0);
 
-
-        var scroll = new Gtk.ScrolledWindow (null, null);
+        scroll = new Gtk.ScrolledWindow (null, null);
         scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
-        item_box = new Gtk.FlowBox ();
+        reload_library ();
 
+        this.pack_end (scroll, true, true, 0);
+    }
+
+    public void reload_library () {
+        stdout.printf ("Called!\n");
+        if (item_box != null) {
+            scroll.remove (item_box);
+            item_box.destroy ();
+            item_box = null;
+        }
+
+        item_box = new Gtk.FlowBox ();
+        
         item_box.valign = Gtk.Align.START;
         item_box.min_children_per_line = 2;
-        item_box.max_children_per_line = 2;
+        item_box.max_children_per_line = 5;
         item_box.margin = 12;
         item_box.expand = false;
 
         scroll.add (item_box);
         
         foreach (var conn in settings.saved_connections) {
-            add_item (conn);           
+            add_item (conn);
         }
-
-        this.pack_end (scroll, true, true, 0);
     }
 
     public void add_item (string connection) {
