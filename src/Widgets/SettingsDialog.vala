@@ -19,13 +19,13 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
+public class Sequeler.SettingsDialog : Gtk.Dialog {
 
     private Gtk.Stack main_stack;
     private Gtk.Switch dark_theme_switch;
     public Gtk.Box content_box;
 
-    public SettingsDialog (Gtk.ApplicationWindow parent, Sequeler.Services.Settings settings) {
+    public SettingsDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings) {
 
         Object (
             use_header_bar: 0,
@@ -75,19 +75,17 @@ public class Sequeler.Widgets.SettingsDialog : Gtk.Dialog {
 
         general_grid.attach (new SettingsHeader (_("General")), 0, 0, 2, 1);
 
-        general_grid.attach (new SettingsLabel (_("Automatically Save Quick Connections:")), 0, 1, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Automatically Save New Connections:")), 0, 1, 1, 1);
         general_grid.attach (new SettingsSwitch ("save-quick"), 1, 1, 1, 1);
 
         general_grid.attach (new SettingsHeader (_("Welcome Screen")), 0, 2, 2, 1);
 
-        general_grid.attach (new SettingsLabel (_("Show Recent Connections:")), 0, 3, 1, 1);
-        general_grid.attach (new SettingsSwitch ("show-recent"), 1, 3, 1, 1);
-        general_grid.attach (new SettingsLabel (_("Show Library:")), 0, 4, 1, 1);
-        general_grid.attach (new SettingsSwitch ("show-library"), 1, 4, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Show Library:")), 0, 3, 1, 1);
+        general_grid.attach (new SettingsSwitch ("show-library"), 1, 3, 1, 1);
 
-        general_grid.attach (new SettingsHeader (_("Startup Behaviour")), 0, 5, 2, 1);
-        general_grid.attach (new SettingsLabel (_("Reconnect to the Latest Database:")), 0, 6, 1, 1);
-        general_grid.attach (new SettingsSwitch ("reconnect"), 1, 6, 1, 1);
+        general_grid.attach (new SettingsHeader (_("Startup Behaviour")), 0, 4, 2, 1);
+        general_grid.attach (new SettingsLabel (_("Reconnect to the Latest Database:")), 0, 5, 1, 1);
+        general_grid.attach (new SettingsSwitch ("reconnect"), 1, 5, 1, 1);
 
         return general_grid;
     }

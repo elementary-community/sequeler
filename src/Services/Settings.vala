@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Services.Settings : Granite.Services.Settings {
+public class Sequeler.Settings : Granite.Services.Settings {
     private static Settings? instance = null;
 
     public int pos_x { get; set; }

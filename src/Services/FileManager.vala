@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Services.FileManager {
+public class Sequeler.FileManager {
     //  public const string FILE_EXTENSION = ".txt";
 
     //  public static File? current_file = null;

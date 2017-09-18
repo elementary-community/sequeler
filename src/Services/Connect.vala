@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Services.Connect {
+public class Sequeler.Connect {
 
     public static File? connect (string data) {
         File? result = null;

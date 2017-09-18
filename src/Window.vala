@@ -22,6 +22,7 @@
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
     /* Core Componenets */
+    private Gtk.Overlay overlay;
     private Gtk.Stack panels;
     private Granite.Widgets.Welcome welcome;
 
@@ -54,7 +55,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         );
 
-        set_border_width (10);
+        set_border_width (0);
         destroy.connect (Gtk.main_quit);
     }
 
@@ -88,17 +89,21 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
              }
         });
 
-        panels = new Gtk.Stack();
+        overlay = new Gtk.Overlay ();
+        panels = new Gtk.Stack ();
         panels.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
         panels.transition_duration = 300;
+        panels.homogeneous = false;
 
-        panels.add_titled(welcome, "welcome", _("Welcome"));
+        panels.add_titled (welcome, "welcome", _("Welcome"));
 
         // add stackswitcher to vertical box
-        Gtk.Box vbox = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+        Gtk.Box vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         vbox.pack_start(panels, true, true, 0);
 
-        add(vbox);
+        overlay.add (vbox);
+
+        add(overlay);
     }
 
     private void handle_shortcuts () {
@@ -134,12 +139,12 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     public void open_preference () {
-        var settings_dialog = new Sequeler.Widgets.SettingsDialog (this, settings);
+        var settings_dialog = new Sequeler.SettingsDialog (this, settings);
         settings_dialog.show_all ();
     }
 
     public void create_connection () {
-        var connection_dialog = new Sequeler.Widgets.ConnectionDialog (this, settings);
+        var connection_dialog = new Sequeler.ConnectionDialog (this, settings);
 
         connection_dialog.save_connection.connect ((data) => {
             settings.add_connection (data);
@@ -149,7 +154,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     public void connect (string data) {
-        var connection = Sequeler.Services.Connect.connect (data);
+        var connection = Sequeler.Connect.connect (data);
 
         if (connection != null) {
             //  panels.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_RIGHT);

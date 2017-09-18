@@ -19,10 +19,10 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
+public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
-    public Sequeler.Partials.ButtonType test_button;
-    public Sequeler.Partials.ButtonType connect_button;
+    public Sequeler.ButtonType test_button;
+    public Sequeler.ButtonType connect_button;
 
     private Entry title_entry;
     private Entry description_entry;
@@ -35,7 +35,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
     public signal void save_connection (Gee.HashMap data);
 
-    public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Services.Settings settings) {
+    public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings) {
         
         Object (
             use_header_bar: 0,
@@ -57,14 +57,14 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var main_stack = new Gtk.Stack ();
         var settings_view = new SettingsView ();
 
-        var cancel_button = new Sequeler.Partials.ButtonType (_("Cancel"), null);
+        var cancel_button = new Sequeler.ButtonType (_("Cancel"), null);
 
-        test_button = new Sequeler.Partials.ButtonType (_("Test Connection"), null);
+        test_button = new Sequeler.ButtonType (_("Test Connection"), null);
         test_button.sensitive = false;
 
-        var save_button = new Sequeler.Partials.ButtonType (_("Save Connection"), null);
+        var save_button = new Sequeler.ButtonType (_("Save Connection"), null);
 
-        connect_button = new Sequeler.Partials.ButtonType (_("Connect"), "suggested-action");
+        connect_button = new Sequeler.ButtonType (_("Connect"), "suggested-action");
         connect_button.sensitive = false;
 
         add_action_widget (cancel_button, 1);

@@ -21,7 +21,7 @@
 
 namespace Sequeler { 
     public Sequeler.Window window;
-    public Sequeler.Services.Settings settings;
+    public Sequeler.Settings settings;
     //  public Sequeler.Widgets.SettingsDialog settings_dialog;
 }
 
@@ -45,7 +45,7 @@ public class Sequeler.Application : Granite.Application {
     protected override void activate () {
 
         if (!running) {
-            settings = Sequeler.Services.Settings.get_instance ();
+            settings = Sequeler.Settings.get_instance ();
             window = new Sequeler.Window (this);
             this.add_window (window);
 

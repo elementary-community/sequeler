@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Partials.ButtonType : Gtk.Button {
+public class Sequeler.ButtonType : Gtk.Button {
 
     public ButtonType (string text, string* class) {
         label = text;
