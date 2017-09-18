@@ -56,6 +56,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/FileManager.vala
     src/Services/Connect.vala
 
+    src/Widgets/Welcome.vala
+    src/Widgets/Library.vala
     src/Widgets/SettingsDialog.vala
     src/Widgets/ConnectionDialog.vala
 

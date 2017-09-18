@@ -24,7 +24,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     /* Core Componenets */
     private Gtk.Overlay overlay;
     private Gtk.Stack panels;
-    private Granite.Widgets.Welcome welcome;
+    private Sequeler.Welcome welcome;
 
     public Window (Gtk.Application app) {
         // Store the main app to be used
@@ -74,19 +74,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     private void build_panels () {
-        welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
-        welcome.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
-        welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
-        //  welcome.activated.connect(on_welcome);
-
-        welcome.activated.connect ((index) => {
-            switch (index) {
-                case 0:
-                    create_connection ();
-                    break;
-                case 1:
-                    break;
-             }
+        welcome = new Sequeler.Welcome ();
+        
+        welcome.create_connection.connect (() => {
+            create_connection ();
         });
 
         overlay = new Gtk.Overlay ();
