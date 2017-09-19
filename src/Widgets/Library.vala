@@ -22,8 +22,8 @@
 public class Sequeler.Library : Gtk.Box {
 
     private Gtk.FlowBox item_box;
-    private Gtk.FlowBoxChild item;
-    private Gtk.Box box;
+    //  private Gtk.FlowBoxChild item;
+    //  private Gtk.Box box;
     private Gtk.ScrolledWindow scroll;
 
     public signal void go_back ();
@@ -39,8 +39,8 @@ public class Sequeler.Library : Gtk.Box {
         var go_back_button = new Gtk.Button.with_label (_("Go Back"));
         go_back_button.clicked.connect (() => { 
             go_back ();
-            reload_library ();
         });
+
         go_back_button.get_style_context().add_class ("back-button");
         go_back_button.can_focus = false;
         go_back_button.margin = 12;
@@ -62,19 +62,6 @@ public class Sequeler.Library : Gtk.Box {
         scroll = new Gtk.ScrolledWindow (null, null);
         scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
-        reload_library ();
-
-        this.pack_end (scroll, true, true, 0);
-    }
-
-    public void reload_library () {
-        stdout.printf ("Called!\n");
-        if (item_box != null) {
-            scroll.remove (item_box);
-            item_box.destroy ();
-            item_box = null;
-        }
-
         item_box = new Gtk.FlowBox ();
         
         item_box.valign = Gtk.Align.START;
@@ -84,19 +71,57 @@ public class Sequeler.Library : Gtk.Box {
         item_box.expand = false;
 
         scroll.add (item_box);
-        
-        foreach (var conn in settings.saved_connections) {
-            add_item (conn);
-        }
+
+        //  foreach (var conn in settings.saved_connections) {
+        //      add_item (conn);
+        //  }
+
+        this.pack_end (scroll, true, true, 0);
     }
 
-    public void add_item (string connection) {
-        item = new Gtk.FlowBoxChild ();
-        box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+    //  public void add_item (string connection) {
+    //      var item = new Gtk.FlowBoxChild ();
+    //      var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+    //      box.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
+    //      box.margin = 10;
 
-        box.pack_start (new Gtk.Label (connection), false, false, 0);
+    //      box.pack_start (new Gtk.Label (connection), true, true, 10);
 
-        item.add (box);
-        item_box.add (item);
+    //      var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+
+    //      var edit_button = new BoxButton ("emblem-system-symbolic", _("Edit Connection"));
+    //      var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
+
+    //      button_box.pack_start (edit_button, false, true, 10);
+    //      button_box.pack_end (delete_button, false, true, 10);
+
+    //      box.pack_end (button_box, true, false, 10);
+
+    //      item.add (box);
+    //      item_box.add (item);
+    //  }
+
+    public void add_new_item (Gee.HashMap<string, string> data) {
+
+    }
+
+    protected class BoxButton : Gtk.Button {
+        
+        public BoxButton (string icon_name, string tooltip) {
+            can_focus = false;
+
+            Gtk.Image image;
+
+            if (icon_name.contains ("/")) {
+                image = new Gtk.Image.from_resource (icon_name);
+            } else {
+                image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
+            }
+
+            image.margin = 3;
+
+            set_tooltip_text (tooltip);
+            this.add (image);
+        }
     }
 }

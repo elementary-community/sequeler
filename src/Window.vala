@@ -94,7 +94,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
         overlay.add (vbox);
 
-        add(overlay);
+        add (overlay);
     }
 
     private void handle_shortcuts () {
@@ -149,7 +149,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     public void show_library () {
-        welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
+        welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
     }
 
     public void connect (string data) {

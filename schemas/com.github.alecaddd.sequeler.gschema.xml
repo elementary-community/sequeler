@@ -36,12 +36,6 @@
             <description>Automatically Save a Quick Connections into the Database Library.</description>
         </key>
 
-        <key name="show-recent" type="b">
-            <default>false</default>
-            <summary>Show Recent Connections</summary>
-            <description>Show a list of recent connections in the Welcome Screen.</description>
-        </key>
-
         <key name="show-library" type="b">
             <default>false</default>
             <summary>Show Library</summary>
