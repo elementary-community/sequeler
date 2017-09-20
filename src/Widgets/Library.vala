@@ -22,8 +22,6 @@
 public class Sequeler.Library : Gtk.Box {
 
     private Gtk.FlowBox item_box;
-    //  private Gtk.FlowBoxChild item;
-    //  private Gtk.Box box;
     private Gtk.ScrolledWindow scroll;
 
     public signal void go_back ();
@@ -72,37 +70,33 @@ public class Sequeler.Library : Gtk.Box {
 
         scroll.add (item_box);
 
-        //  foreach (var conn in settings.saved_connections) {
-        //      add_item (conn);
-        //  }
+        foreach (var conn in settings.saved_connections) {
+            add_item (conn);
+        }
 
         this.pack_end (scroll, true, true, 0);
     }
 
-    //  public void add_item (string connection) {
-    //      var item = new Gtk.FlowBoxChild ();
-    //      var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-    //      box.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
-    //      box.margin = 10;
+    public void add_item (string connection) {
+        var item = new Gtk.FlowBoxChild ();
+        var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
+        box.margin = 10;
 
-    //      box.pack_start (new Gtk.Label (connection), true, true, 10);
+        box.pack_start (new Gtk.Label (connection), true, true, 10);
 
-    //      var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 
-    //      var edit_button = new BoxButton ("emblem-system-symbolic", _("Edit Connection"));
-    //      var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
+        var edit_button = new BoxButton ("emblem-system-symbolic", _("Edit Connection"));
+        var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
 
-    //      button_box.pack_start (edit_button, false, true, 10);
-    //      button_box.pack_end (delete_button, false, true, 10);
+        button_box.pack_start (edit_button, false, true, 10);
+        button_box.pack_end (delete_button, false, true, 10);
 
-    //      box.pack_end (button_box, true, false, 10);
+        box.pack_end (button_box, true, false, 10);
 
-    //      item.add (box);
-    //      item_box.add (item);
-    //  }
-
-    public void add_new_item (Gee.HashMap<string, string> data) {
-
+        item.add (box);
+        item_box.add (item);
     }
 
     protected class BoxButton : Gtk.Button {

@@ -23,7 +23,6 @@ namespace Sequeler {
     public Sequeler.Window window;
     public Sequeler.Settings settings;
     public Sequeler.HeaderBar headerbar; 
-    public Sequeler.Library library; 
 }
 
 public class Sequeler.Application : Granite.Application {

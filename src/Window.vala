@@ -22,9 +22,9 @@
 public class Sequeler.Window : Gtk.ApplicationWindow {
 
     /* Core Componenets */
-    private Gtk.Overlay overlay;
-    private Gtk.Stack panels;
-    private Sequeler.Welcome welcome;
+    public Gtk.Overlay overlay;
+    public Gtk.Stack panels;
+    public Sequeler.Welcome welcome;
 
     public Window (Gtk.Application app) {
         // Store the main app to be used
@@ -143,6 +143,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
         connection_dialog.save_connection.connect ((data) => {
             settings.add_connection (data);
+            welcome.reload (data);
         });
         
         connection_dialog.show_all ();

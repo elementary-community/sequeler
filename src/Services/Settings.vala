@@ -26,7 +26,7 @@ public class Sequeler.Settings : Granite.Services.Settings {
     public int pos_y { get; set; }
     public int window_width { get; set; }
     public int window_height { get; set; }
-    public Gee.ArrayList<Gee.HashMap> saved_connections { get; set; }
+    public string[] saved_connections { get; set; }
     public bool dark_theme { get; set; }
     public bool save_quick { get; set; }
     public bool show_library { get; set; }
@@ -51,64 +51,49 @@ public class Sequeler.Settings : Granite.Services.Settings {
     }
 
     public void add_connection (Gee.HashMap<string, string> data) {
-        //  var current_connections = saved_connections;
-        //  var connection = stringify_data (data);
-        var connection = data;
+        var current_connections = saved_connections;
+        var connection = stringify_data (data);
+        
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (current_connections);
 
-        //  Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        //  existing_connections.add_all_array (current_connections);
-
-        //  if (connection in current_connections) {
-        if (connection in saved_connections) {
-            //  existing_connections.remove (connection);
-            saved_connections.remove (connection);
+        if (connection in current_connections) {
+            existing_connections.remove (connection);
         }
 
-        saved_connections.add (connection);
+        existing_connections.add (connection);
 
-        //  saved_connections = saved_connections;
-
-        //  foreach (var conn in saved_connections) {
-        //      stdout.printf ("%s\n", conn);
-        //  }
-
-        library.add_new_item (connection);
+        saved_connections = existing_connections.to_array ();
     }
 
-    public void get_size () {
-        stdout.printf ("%s\n", instance.saved_connections.size.to_string ());
+    public static string stringify_data (Gee.HashMap<string, string> data) {
+        string result = "";
+
+        foreach (var entry in data.entries) {
+            string values = "%s=%s\n".printf (entry.key, entry.value);
+            result = result + values;
+        }
+
+        return result;
+
     }
 
-    //  public static string stringify_data (Gee.HashMap<string, string> data) {
-    //      string result = "";
+    public void delete_connection (Gee.HashMap<string, string> data) {
+        var current_connections = saved_connections;
+        var connection = stringify_data (data);
 
-    //      foreach (var entry in data.entries) {
-    //          string values = "%s=%s\n".printf (entry.key, entry.value);
-    //          result = result + values;
-    //      }
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (current_connections);
 
-    //      return result;
+        if (connection in current_connections) {
+            existing_connections.remove (connection);
+        }
 
-    //  }
+        saved_connections = existing_connections.to_array ();
+    }
 
-    //  public void delete_connection (Gee.HashMap<string, string> data) {
-    //      var current_connections = saved_connections;
-    //      var connection = stringify_data (data);
-
-    //      Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-    //      existing_connections.add_all_array (current_connections);
-
-    //      if (connection in current_connections) {
-    //          existing_connections.remove (connection);
-    //      }
-
-    //      saved_connections = existing_connections.to_array ();
-
-    //      library.add_item (connection);
-    //  }
-
-    //  public void clear_connections () {
-    //      Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
-    //      saved_connections = empty_connection.to_array ();
-    //  }
+    public void clear_connections () {
+        Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
+        saved_connections = empty_connection.to_array ();
+    }
 }

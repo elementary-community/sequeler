@@ -163,7 +163,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 title: "New Connection"
             );
 
-            var id = settings.saved_connections.size;
+            var id = settings.saved_connections.length;
             dialog.connection_id = new Gtk.Entry ();
             dialog.connection_id.text = id.to_string ();
     

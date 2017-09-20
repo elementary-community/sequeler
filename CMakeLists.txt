@@ -23,7 +23,7 @@ set (VERSION "0.1")
 set (VERSION_INFO "Freindly SQL Client")
 
 # disable C compiler warnings
-# add_definitions(-w)
+add_definitions(-w)
 
 # we're about to use pkgconfig to make sure dependencies are installed so let's find pkgconfig first
 find_package(PkgConfig)
@@ -40,7 +40,7 @@ find_package(Vala REQUIRED)
 # make sure we use vala
 include(ValaVersion)
 # make sure it's the desired version of vala
-ensure_vala_version("0.16" MINIMUM)
+ensure_vala_version("0.36.2" MINIMUM)
 
 # files we want to compile
 include(ValaPrecompile)
