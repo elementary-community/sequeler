@@ -37,12 +37,6 @@ public class Sequeler.Settings : Granite.Services.Settings {
             instance = new Settings ();
         }
 
-        //  foreach (Gee.HashMap<string, string> conn in instance.saved_connections) {
-        //      foreach (var entry in conn.entries) {
-        //          stdout.printf ("%s=> %s\n", entry.key.to_string (), entry.value);
-        //      }
-        //  }
-
         return instance;
     }
 
@@ -76,6 +70,23 @@ public class Sequeler.Settings : Granite.Services.Settings {
 
         return result;
 
+    }
+
+    public static Gee.HashMap<string, string> arraify_data (string connection) {
+        var array = new Gee.HashMap<string, string> ();
+        var data = connection.split ("\n");
+
+        foreach (var d in data) {
+            var d2 = d.split ("=");
+
+            if (d2[0] == null) {
+                continue;
+            }
+
+            array.set (d2[0], d2[1]);
+        }
+
+        return array;
     }
 
     public void delete_connection (Gee.HashMap<string, string> data) {

@@ -45,6 +45,7 @@ public class Sequeler.Library : Gtk.Box {
 
         var delete_image = new Gtk.Image.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
         var delete_all = new Gtk.Button.with_label (_("Delete All"));
+        delete_all.get_style_context ().add_class ("destructive-action");
         delete_all.always_show_image = true;
         delete_all.set_image (delete_image);
         delete_all.clicked.connect (() => {
@@ -78,25 +79,74 @@ public class Sequeler.Library : Gtk.Box {
     }
 
     public void add_item (string connection) {
+        var data = Sequeler.Settings.arraify_data (connection);
+
         var item = new Gtk.FlowBoxChild ();
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        box.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
+        box.valign = Gtk.Align.START;
+        box.get_style_context ().add_class ("library-card");
         box.margin = 10;
 
-        box.pack_start (new Gtk.Label (connection), true, true, 10);
+        var color_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        color_box.pack_start (new Gtk.Label (""), true, true, 0);
+        color_box.get_style_context ().add_class ("library-colorbar");
+        var color = Gdk.RGBA ();
+        color.parse (data["color"]);
+        color_box.override_background_color (Gtk.StateFlags.NORMAL, color);
+
+        box.pack_start (color_box, true, false, 0);
+
+        var title = new Gtk.Label (data["title"]);
+        title.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+
+        box.pack_start (title, true, true, 10);
 
         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        button_box.margin_left = 10;
+        button_box.margin_right = 10;
+        button_box.margin_bottom = 10;
 
-        var edit_button = new BoxButton ("emblem-system-symbolic", _("Edit Connection"));
+        var connect_image = new Gtk.Image.from_icon_name ("go-jump-symbolic", Gtk.IconSize.BUTTON);
+        var connect_button = new Gtk.Button.with_label (_("Connect"));
+        connect_button.get_style_context ().add_class ("suggested-action");
+        connect_button.always_show_image = true;
+        connect_button.set_image (connect_image);
+
+        var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
+        edit_button.margin_right = 10;
         var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
+        delete_button.get_style_context ().add_class ("destructive-action");
 
-        button_box.pack_start (edit_button, false, true, 10);
-        button_box.pack_end (delete_button, false, true, 10);
+        button_box.pack_end (connect_button, false, true, 0);
+        button_box.pack_end (edit_button, false, true, 0);
+        button_box.pack_start (delete_button, false, true, 0);
 
-        box.pack_end (button_box, true, false, 10);
+        box.pack_end (button_box, true, false, 0);
 
         item.add (box);
         item_box.add (item);
+
+        delete_button.clicked.connect (() => {
+            confirm_delete (data);
+        });
+    }
+
+    public void confirm_delete (Gee.HashMap<string, string> data) {
+        Gtk.MessageDialog message_dialog = new Gtk.MessageDialog (window, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "Are you sure you want to proceed?\nBy deleting this connection you won't be able to recover this data.");
+        //  message_dialog = new Granite.MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed", "By deleting this conenction you won't be able to recover its data.", "dialog-warning", Gtk.ButtonsType.CANCEL);
+        //  message_dialog.transient_for = welcome;
+        
+        var confirm_button = new Gtk.Button.with_label ("Yes, Delete!");
+        confirm_button.get_style_context ().add_class ("destructive-action");
+        message_dialog.add_action_widget (confirm_button, Gtk.ResponseType.ACCEPT);
+
+        message_dialog.show_all ();
+        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
+            settings.delete_connection (data);
+            item_box.show_all ();
+        }
+        
+        message_dialog.destroy ();
     }
 
     protected class BoxButton : Gtk.Button {
