@@ -25,7 +25,6 @@ public class Sequeler.Library : Gtk.Box {
     private Gtk.ScrolledWindow scroll;
 
     public signal void go_back ();
-    public signal void delete_all_connections ();
 
     public Library () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -49,7 +48,7 @@ public class Sequeler.Library : Gtk.Box {
         delete_all.always_show_image = true;
         delete_all.set_image (delete_image);
         delete_all.clicked.connect (() => {
-            delete_all_connections ();
+            confirm_delete_all ();
         });
         delete_all.can_focus = false;
         delete_all.margin = 12;
@@ -124,22 +123,40 @@ public class Sequeler.Library : Gtk.Box {
         item_box.add (item);
 
         delete_button.clicked.connect (() => {
-            confirm_delete (data);
+            confirm_delete (item, data);
         });
     }
 
-    public void confirm_delete (Gee.HashMap<string, string> data) {
-        Gtk.MessageDialog message_dialog = new Gtk.MessageDialog (window, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.NONE, "Are you sure you want to proceed?\nBy deleting this connection you won't be able to recover this data.");
-        //  message_dialog = new Granite.MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed", "By deleting this conenction you won't be able to recover its data.", "dialog-warning", Gtk.ButtonsType.CANCEL);
-        //  message_dialog.transient_for = welcome;
+    public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
+        var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed?", "By deleting this connection you won't be able to recover this data.", "dialog-warning", Gtk.ButtonsType.CANCEL);
+        message_dialog.transient_for = window;
         
-        var confirm_button = new Gtk.Button.with_label ("Yes, Delete!");
-        confirm_button.get_style_context ().add_class ("destructive-action");
-        message_dialog.add_action_widget (confirm_button, Gtk.ResponseType.ACCEPT);
+        var suggested_button = new Gtk.Button.with_label ("Yes, Delete!");
+        suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+        message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
         message_dialog.show_all ();
         if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
             settings.delete_connection (data);
+            item_box.remove (item);
+            item_box.show_all ();
+        }
+        
+        message_dialog.destroy ();
+    }
+
+    public void confirm_delete_all () {
+        var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed?", "All the data will be deleted and you won't be able to recover it.", "dialog-warning", Gtk.ButtonsType.CANCEL);
+        message_dialog.transient_for = window;
+        
+        var suggested_button = new Gtk.Button.with_label ("Yes, Delete All!");
+        suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+        message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+        message_dialog.show_all ();
+        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
+            settings.clear_connections ();
+            item_box.forall ((item) => item_box.remove (item));
             item_box.show_all ();
         }
         
