@@ -82,6 +82,8 @@ public class Sequeler.Library : Gtk.Box {
         var data = Sequeler.Settings.arraify_data (connection);
 
         var item = new Gtk.FlowBoxChild ();
+        item.get_style_context ().add_class ("library-box");
+
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         box.valign = Gtk.Align.START;
         box.get_style_context ().add_class ("library-card");
@@ -106,20 +108,15 @@ public class Sequeler.Library : Gtk.Box {
         button_box.margin_right = 10;
         button_box.margin_bottom = 10;
 
-        var connect_image = new Gtk.Image.from_icon_name ("go-jump-symbolic", Gtk.IconSize.BUTTON);
-        var connect_button = new Gtk.Button.with_label (_("Connect"));
-        connect_button.get_style_context ().add_class ("suggested-action");
-        connect_button.always_show_image = true;
-        connect_button.set_image (connect_image);
+        var connect_button = new BoxButton ("go-jump-symbolic", _("Connect"));
 
         var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
         edit_button.margin_right = 10;
         var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
-        delete_button.get_style_context ().add_class ("destructive-action");
 
         button_box.pack_end (connect_button, false, true, 0);
-        button_box.pack_end (edit_button, false, true, 0);
         button_box.pack_start (delete_button, false, true, 0);
+        button_box.pack_start (edit_button, false, true, 0);
 
         box.pack_end (button_box, true, false, 0);
 
@@ -165,6 +162,7 @@ public class Sequeler.Library : Gtk.Box {
             image.margin = 3;
 
             set_tooltip_text (tooltip);
+            get_style_context ().add_class ("btn-headerbar");
             this.add (image);
         }
     }
