@@ -145,12 +145,14 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             settings.add_connection (data);
             welcome.reload (data);
         });
-        
+
         connection_dialog.show_all ();
     }
 
     public void show_library () {
         welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
+        headerbar.go_back_button.no_show_all = false;
+        headerbar.go_back_button.visible = true;
     }
 
     public void connect (string data) {

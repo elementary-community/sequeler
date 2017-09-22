@@ -194,7 +194,7 @@ public class Sequeler.Library : Gtk.Box {
             image.margin = 3;
 
             set_tooltip_text (tooltip);
-            get_style_context ().add_class ("btn-headerbar");
+            get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             this.add (image);
         }
     }

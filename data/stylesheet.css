@@ -1,4 +1,4 @@
-GtkButton.btn-headerbar {
+/* GtkButton.btn-headerbar {
     border: 1px solid transparent;
     background: none;
     box-shadow: none;
@@ -7,7 +7,7 @@ GtkButton.btn-headerbar {
 GtkButton.btn-headerbar:active {
     border-color: rgba(0, 0, 0, 0.2);
     background-color: rgba(0, 0, 0, 0.1);
-}
+} */
 
 GtkButton.safe-action {
     background: linear-gradient(#78E254, #2DC000);

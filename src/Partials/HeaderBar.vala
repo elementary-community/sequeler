@@ -24,6 +24,7 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     private static HeaderBar? instance = null;
 
     private Gtk.Menu menu;
+    public Gtk.Button go_back_button;
     private HeaderBarButton new_connection;
     private HeaderBarButton search;
     private HeaderBarButton terminal;
@@ -48,6 +49,9 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     }
 
     private void build_ui () {
+
+        go_back_button = new Gtk.Button.with_label (_("Back"));
+        go_back_button.get_style_context().add_class ("back-button");
 
         // Add some buttons in the HeaderBar
         new_connection = new HeaderBarButton ("star-new-symbolic", _("New Connection"));
@@ -99,10 +103,15 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
         terminal.sensitive = false;
 
         // add button to headerbar
+        pack_start (go_back_button);
         pack_start (new_connection);
         pack_end (open_menu);
         pack_end (search);
         pack_end (terminal);
+
+        go_back_button.no_show_all = true;
+        go_back_button.visible = false;
+        go_back_button.can_focus = false;
     }
 
     protected class HeaderBarButton : Gtk.Button {
@@ -120,7 +129,7 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
             image.margin = 3;
 
-            get_style_context ().add_class ("btn-headerbar");
+            get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             set_tooltip_text (tooltip);
             this.add (image);
         }
