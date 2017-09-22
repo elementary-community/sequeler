@@ -1,7 +1,3 @@
-.text-left {
-    text-align: left !important;
-}
-
 GtkButton.btn-headerbar {
     border: 1px solid transparent;
     background: none;

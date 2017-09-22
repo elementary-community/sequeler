@@ -39,9 +39,14 @@ public class Sequeler.Welcome : Gtk.Box {
         welcome.hexpand = true;
 
         welcome.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
-        welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
+
+        if (! settings.show_library) {
+            welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
+        }
 
         separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
+        separator.visible = false;
+        separator.no_show_all = true;
 
         library = new Sequeler.Library ();
 
@@ -51,11 +56,21 @@ public class Sequeler.Welcome : Gtk.Box {
 
         welcome_stack = new Gtk.Stack ();
         welcome_stack.add_named (welcome, "welcome");
-        welcome_stack.add_named (library, "library");
+
+        if (! settings.show_library) {
+            welcome_stack.add_named (library, "library");
+        }
+
         welcome_stack.set_visible_child (welcome);
 
-        add (welcome_stack);
+        if (settings.saved_connections.length > 0 && settings.show_library && library != null) {
+            add (library);
+            separator.visible = true;
+            separator.no_show_all = false;
+        }
+
         add (separator);
+        add (welcome_stack);
 
         welcome.activated.connect ((index) => {
             switch (index) {
@@ -70,42 +85,8 @@ public class Sequeler.Welcome : Gtk.Box {
     }
 
     public void reload (Gee.HashMap<string, string> data) {
-        //  stdout.printf ("Reloading! %s\n", Sequeler.Settings.stringify_data (data));
         library.add_item (Sequeler.Settings.stringify_data (data));
 
         library.show_all ();
-        //  stdout.printf ("Reloading!\n");
-        //  welcome_stack.forall ((element) => welcome_stack.remove (element));
-        //  var connections = settings.saved_connections;
-        //  welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.NONE);
-
-        //  if (library != null) {
-        //      welcome_stack.remove (library);
-        //      library.destroy ();
-        //      library = null;
-        //  }
-
-        //  library = new Sequeler.Library ();
-
-        //  library.go_back.connect (() => {
-        //      welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
-        //  });
-
-        //  welcome_stack.add_named (library, "library");
-        //  welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
-        
-        //  if(connections.length > 0 && settings.show_library) {
-        //      add (library);
-            
-        //      library.item_selected.connect ((connection) => {
-        //          connect_to (connection);
-        //      });
-
-        //      separator.visible = true;
-        //      separator.no_show_all = false;
-        //  } else {
-        //      separator.visible = false;
-        //      separator.no_show_all = true;
-        //  }
     }
 }

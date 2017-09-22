@@ -21,13 +21,16 @@
 
 public class Sequeler.Library : Gtk.Box {
 
-    private Gtk.FlowBox item_box;
-    private Gtk.ScrolledWindow scroll;
+    public Gtk.FlowBox item_box;
+    public Gtk.ScrolledWindow scroll;
+    public Gtk.Button delete_all;
 
     public signal void go_back ();
 
     public Library () {
         orientation = Gtk.Orientation.VERTICAL;
+
+        width_request = 300;
 
         var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         toolbar.get_style_context ().add_class ("toolbar");
@@ -43,7 +46,7 @@ public class Sequeler.Library : Gtk.Box {
         go_back_button.margin = 12;
 
         var delete_image = new Gtk.Image.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
-        var delete_all = new Gtk.Button.with_label (_("Delete All"));
+        delete_all = new Gtk.Button.with_label (_("Delete All"));
         delete_all.get_style_context ().add_class ("destructive-action");
         delete_all.always_show_image = true;
         delete_all.set_image (delete_image);
@@ -53,7 +56,13 @@ public class Sequeler.Library : Gtk.Box {
         delete_all.can_focus = false;
         delete_all.margin = 12;
 
-        toolbar.pack_start (go_back_button, false, false, 0);
+        if (settings.saved_connections.length == 0) {
+            delete_all.sensitive = false;
+        }
+
+        if (! settings.show_library) {
+            toolbar.pack_start (go_back_button, false, false, 0);
+        }
         toolbar.pack_end (delete_all, false, false, 0);
         this.pack_start (toolbar, false, true, 0);
 
@@ -63,8 +72,8 @@ public class Sequeler.Library : Gtk.Box {
         item_box = new Gtk.FlowBox ();
         
         item_box.valign = Gtk.Align.START;
-        item_box.min_children_per_line = 2;
-        item_box.max_children_per_line = 5;
+        item_box.min_children_per_line = 1;
+        item_box.max_children_per_line = 6;
         item_box.margin = 12;
         item_box.expand = false;
 
@@ -125,6 +134,8 @@ public class Sequeler.Library : Gtk.Box {
         delete_button.clicked.connect (() => {
             confirm_delete (item, data);
         });
+
+        delete_all.sensitive = true;
     }
 
     public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
@@ -140,6 +151,9 @@ public class Sequeler.Library : Gtk.Box {
             settings.delete_connection (data);
             item_box.remove (item);
             item_box.show_all ();
+            if (settings.saved_connections.length == 0) {
+                delete_all.sensitive = false;
+            }
         }
         
         message_dialog.destroy ();
@@ -158,6 +172,7 @@ public class Sequeler.Library : Gtk.Box {
             settings.clear_connections ();
             item_box.forall ((item) => item_box.remove (item));
             item_box.show_all ();
+            delete_all.sensitive = false;
         }
         
         message_dialog.destroy ();
