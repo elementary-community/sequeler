@@ -19,7 +19,7 @@ set (PKGDATADIR "${DATADIR}/com.github.alecaddd.sequeler")
 
 set (EXEC_NAME "com.github.alecaddd.sequeler")
 set (RELEASE_NAME "Sequeler")
-set (VERSION "0.1")
+set (VERSION "0.6.0")
 set (VERSION_INFO "Freindly SQL Client")
 
 # disable C compiler warnings
@@ -29,7 +29,7 @@ add_definitions(-w)
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 libxml-2.0 libgda-5.0)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -68,7 +68,12 @@ PACKAGES
     granite
     glib-2.0
     gee-0.8
+    libxml-2.0
+    libgda-5.0
+OPTIONS
+    --vapidir=${CMAKE_SOURCE_DIR}/vapi
 )
+
 
 include (GResource)
 glib_compile_resources(GLIB_RESOURCES_ICONS SOURCE /data/assets.gresource.xml)

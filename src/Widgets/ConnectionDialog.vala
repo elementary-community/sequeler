@@ -53,8 +53,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         set_default_size (350, 650);
         set_size_request (350, 650);
 
-        var main_stack = new Gtk.Stack ();
-
         var cancel_button = new Sequeler.ButtonType (_("Close"), null);
 
         test_button = new Sequeler.ButtonType (_("Test Connection"), null);

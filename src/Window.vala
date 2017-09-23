@@ -159,7 +159,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         headerbar.show_back_button ();
     }
 
-    public void connect (string data) {
+    public void open_connection (Gee.HashMap data) {
         var connection = Sequeler.Connect.connect (data);
 
         if (connection != null) {

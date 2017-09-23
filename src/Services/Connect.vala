@@ -21,9 +21,17 @@
 
 public class Sequeler.Connect {
 
-    public static File? connect (string data) {
+    public static File? connect (Gee.HashMap<string, string> data) {
         File? result = null;
 
         return result;
     }
+
+    // Test connection and show spinner
+    // true: return toast
+    // false: return warning
+
+    // Connect and show spinner
+    // true: open database view
+    // false: return warning
 }
