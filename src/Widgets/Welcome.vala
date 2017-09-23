@@ -22,12 +22,12 @@
 public class Sequeler.Welcome : Gtk.Box {
     
     private Granite.Widgets.Welcome welcome;
-    private Sequeler.Library? library = null;
+    public Sequeler.Library? library = null;
 
     private Gtk.Separator separator;
     public Gtk.Stack welcome_stack;
 
-    public signal void create_connection ();
+    public signal void create_connection (Gee.HashMap? data);
 
     public Welcome () {
         orientation = Gtk.Orientation.HORIZONTAL;
@@ -71,7 +71,7 @@ public class Sequeler.Welcome : Gtk.Box {
         welcome.activated.connect ((index) => {
             switch (index) {
                 case 0:
-                    create_connection ();
+                    create_connection (null);
                     break;
                 case 1:
                     welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
@@ -87,6 +87,10 @@ public class Sequeler.Welcome : Gtk.Box {
         headerbar.go_back.connect (() => {
             welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
             headerbar.go_back_button.visible = false;
+        });
+
+        library.edit_dialog.connect ((data) => {
+            create_connection (data);
         });
     }
 

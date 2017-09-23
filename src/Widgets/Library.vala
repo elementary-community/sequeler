@@ -25,7 +25,7 @@ public class Sequeler.Library : Gtk.Box {
     public Gtk.ScrolledWindow scroll;
     public Gtk.Button delete_all;
 
-    public signal void go_back ();
+    public signal void edit_dialog (Gee.HashMap data);
 
     public Library () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -117,6 +117,10 @@ public class Sequeler.Library : Gtk.Box {
 
         delete_button.clicked.connect (() => {
             confirm_delete (item, data);
+        });
+
+        edit_button.clicked.connect (() => {
+            edit_dialog (data);
         });
 
         delete_all.sensitive = true;

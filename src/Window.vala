@@ -68,7 +68,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         });
 
         headerbar.quick_connection.connect (() => {
-            create_connection ();
+            create_connection (null);
         });
         
         set_titlebar (headerbar);
@@ -77,8 +77,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     private void build_panels () {
         welcome = new Sequeler.Welcome ();
         
-        welcome.create_connection.connect (() => {
-            create_connection ();
+        welcome.create_connection.connect ((data) => {
+            create_connection (data);
         });
 
         overlay = new Gtk.Overlay ();
@@ -113,7 +113,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                         handled = true;
                         break;
                     case Gdk.Key.n:
-                        create_connection ();
+                        create_connection (null);
                         handled = true;
                         break;
                     case Gdk.Key.l:
@@ -143,8 +143,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         settings_dialog.show_all ();
     }
 
-    public void create_connection () {
-        var connection_dialog = new Sequeler.ConnectionDialog (this, settings);
+    public void create_connection (Gee.HashMap? data) {
+        var connection_dialog = new Sequeler.ConnectionDialog (this, settings, data);
 
         connection_dialog.save_connection.connect ((data) => {
             welcome.reload (data);
@@ -163,7 +163,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var connection = Sequeler.Connect.connect (data);
 
         if (connection != null) {
-            //  panels.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_RIGHT);
+            //  panels.set_visible_child_full ("database", Gtk.StackTransitionType.CROSSFADE);
         }
     }
 

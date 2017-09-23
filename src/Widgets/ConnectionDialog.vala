@@ -35,7 +35,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
     public signal void save_connection (Gee.HashMap data);
 
-    public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings) {
+    public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings, Gee.HashMap? data) {
         
         Object (
             use_header_bar: 0,
@@ -47,16 +47,13 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             transient_for: parent
         );
 
-    }
-
-    construct { 
         SettingsView.dialog = this;
+        SettingsView.data = data;
 
         set_default_size (350, 650);
         set_size_request (350, 650);
 
         var main_stack = new Gtk.Stack ();
-        var settings_view = new SettingsView ();
 
         var cancel_button = new Sequeler.ButtonType (_("Close"), null);
 
@@ -73,7 +70,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         add_action_widget (save_button, 3);
         add_action_widget (connect_button, 4);
 
-        get_content_area ().add (settings_view);
+        get_content_area ().add (new SettingsView ());
 
         connect_signals ();
 
@@ -145,6 +142,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public class SettingsView : Granite.SimpleSettingsPage {
 
         public static ConnectionDialog dialog;
+        public static Gee.HashMap<string, string>? data;
 
         public static string[] dbs = {"MySql", "MariaDB", "PostgreSql", "SqlLite"};
 
@@ -153,7 +151,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         }
 
         public SettingsView () {
-
             Object (
                 activatable: false,
                 icon_name: "drive-multidisk",
@@ -233,6 +230,17 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             dialog.title_entry.changed.connect (() => {
                 title = dialog.title_entry.text;
             });
+
+            if (data != null) {
+                dialog.connection_id.text = data["id"];
+                dialog.title_entry.text = data["title"];
+                // rgba
+                dialog.db_host_entry.text = data["host"];
+                // db
+                dialog.db_name_entry.text = data["name"];
+                dialog.db_username_entry.text = data["username"];
+                dialog.db_password_entry.text = data["password"];
+            }
 
         }
     }

@@ -57,7 +57,7 @@ public class Sequeler.Settings : Granite.Services.Settings {
 
     public void edit_connection (Gee.HashMap<string, string> new_data, Gee.HashMap<string, string> old_data) {
         var current_connections = saved_connections;
-        var new_connection = stringify_data (new_data);
+        //  var new_connection = stringify_data (new_data);
         
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
         existing_connections.add_all_array (current_connections);
@@ -66,7 +66,7 @@ public class Sequeler.Settings : Granite.Services.Settings {
         existing_connections.insert (0, stringify_data (new_data));
 
         saved_connections = existing_connections.to_array ();
-        stdout.printf ("Connection Edited\n");
+        //  stdout.printf ("Connection Edited\n");
     }
 
     public static string stringify_data (Gee.HashMap<string, string> data) {
