@@ -169,12 +169,18 @@ public class Sequeler.Library : Gtk.Box {
         foreach (var conn in settings.saved_connections) {
             var check = Sequeler.Settings.arraify_data (conn);
             if (check["id"] == data["id"]) {
+                settings.edit_connection (data, check);
+                item_box.forall ((item) => item_box.remove (item));
+                foreach (var new_conn in settings.saved_connections) {
+                    add_item (Sequeler.Settings.arraify_data (new_conn));
+                }
                 //  stdout.printf ("Connection exists: %s => %s\n", check["id"], data["id"]);
                 return;
             }
         }
+        settings.add_connection (data);
 
-        stdout.printf ("Connection saved\n");
+        //  stdout.printf ("Connection saved\n");
         add_item (data);
     }
 

@@ -148,7 +148,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
         connection_dialog.save_connection.connect ((data) => {
             welcome.reload (data);
-            settings.add_connection (data);
             toast_saved.send_notification ();
         });
 
