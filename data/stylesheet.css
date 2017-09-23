@@ -1,51 +1,16 @@
-/* GtkButton.btn-headerbar {
-    border: 1px solid transparent;
-    background: none;
-    box-shadow: none;
-}
-
-GtkButton.btn-headerbar:active {
-    border-color: rgba(0, 0, 0, 0.2);
-    background-color: rgba(0, 0, 0, 0.1);
-} */
-
-GtkButton.safe-action {
-    background: linear-gradient(#78E254, #2DC000);
-    border-color: #269900;
-    color: #ffffff;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
-}
-
-GtkButton.safe-action:active {
-    background: #2DC000;
-}
-
-GtkButton.safe-action:insensitive {
-    background: @insensitive_bg_color;
-    color: @insensitive_fg_color;
-    border-color: alpha (@theme_text_color, 0.3);
-    text-shadow: none;
+.text-bold {
+    font-weight: 600;
 }
 
 .library-box {
     background-color: transparent;
 }
 
-.library-box:selected .library-card {
-    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.35);
-}
-
 .library-toolbar {
-    background: #E2E2E2;
+    background: rgba(0, 0, 0, 0.05);
     border-bottom: none;
 }
 
-.library-card {
-    transition: 320ms ease;
-    background: #ffffff;
-    box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.2);
-}
-
 .library-colorbar {
-    font-size: 2px;
+    font-size: 3px;
 }

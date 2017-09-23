@@ -25,6 +25,8 @@ public class Sequeler.SettingsDialog : Gtk.Dialog {
     private Gtk.Switch dark_theme_switch;
     public Gtk.Box content_box;
 
+    public signal void welcome_library ();
+
     public SettingsDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings) {
 
         Object (
@@ -80,7 +82,7 @@ public class Sequeler.SettingsDialog : Gtk.Dialog {
 
         general_grid.attach (new SettingsHeader (_("Welcome Screen")), 0, 2, 2, 1);
 
-        general_grid.attach (new SettingsLabel (_("Show Library:")), 0, 3, 1, 1);
+        general_grid.attach (new SettingsLabel (_("Show Library (needs reload):")), 0, 3, 1, 1);
         general_grid.attach (new SettingsSwitch ("show-library"), 1, 3, 1, 1);
 
         general_grid.attach (new SettingsHeader (_("Startup Behaviour")), 0, 4, 2, 1);

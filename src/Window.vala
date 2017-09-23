@@ -25,6 +25,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     public Gtk.Overlay overlay;
     public Gtk.Stack panels;
     public Sequeler.Welcome welcome;
+    public Granite.Widgets.Toast toast_saved;
 
     public Window (Gtk.Application app) {
         // Store the main app to be used
@@ -92,6 +93,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         Gtk.Box vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         vbox.pack_start(panels, true, true, 0);
 
+        toast_saved = new Granite.Widgets.Toast (_("Connection Saved!"));
+        overlay.add_overlay (toast_saved);
+
         overlay.add (vbox);
 
         add (overlay);
@@ -135,6 +139,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     public void open_preference () {
         var settings_dialog = new Sequeler.SettingsDialog (this, settings);
+
         settings_dialog.show_all ();
     }
 
@@ -142,8 +147,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         var connection_dialog = new Sequeler.ConnectionDialog (this, settings);
 
         connection_dialog.save_connection.connect ((data) => {
-            settings.add_connection (data);
             welcome.reload (data);
+            settings.add_connection (data);
+            toast_saved.send_notification ();
         });
 
         connection_dialog.show_all ();
@@ -151,8 +157,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     public void show_library () {
         welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
-        headerbar.go_back_button.no_show_all = false;
-        headerbar.go_back_button.visible = true;
+        headerbar.show_back_button ();
     }
 
     public void connect (string data) {

@@ -50,10 +50,6 @@ public class Sequeler.Welcome : Gtk.Box {
 
         library = new Sequeler.Library ();
 
-        library.go_back.connect (() => {
-            welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
-        });
-
         welcome_stack = new Gtk.Stack ();
         welcome_stack.add_named (welcome, "welcome");
 
@@ -79,13 +75,23 @@ public class Sequeler.Welcome : Gtk.Box {
                     break;
                 case 1:
                     welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
+                    headerbar.show_back_button ();
                     break;
                 }
+        });
+
+        connect_signals ();
+    }
+
+    public void connect_signals () {
+        headerbar.go_back.connect (() => {
+            welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
+            headerbar.go_back_button.visible = false;
         });
     }
 
     public void reload (Gee.HashMap<string, string> data) {
-        library.add_item (Sequeler.Settings.stringify_data (data));
+        library.check_add_item (data);
 
         library.show_all ();
     }

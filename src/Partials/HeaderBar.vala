@@ -27,11 +27,12 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
     public Gtk.Button go_back_button;
     private HeaderBarButton new_connection;
     private HeaderBarButton search;
-    private HeaderBarButton terminal;
+    public HeaderBarButton terminal;
     private Gtk.MenuButton open_menu;
 
     public signal void preferences_selected ();
     public signal void quick_connection ();
+    public signal void go_back ();
 
     private HeaderBar () {
         set_title (APP_NAME);
@@ -52,6 +53,9 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
         go_back_button = new Gtk.Button.with_label (_("Back"));
         go_back_button.get_style_context().add_class ("back-button");
+        go_back_button.clicked.connect (() => { 
+            go_back ();
+        });
 
         // Add some buttons in the HeaderBar
         new_connection = new HeaderBarButton ("star-new-symbolic", _("New Connection"));
@@ -112,6 +116,10 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
         go_back_button.no_show_all = true;
         go_back_button.visible = false;
         go_back_button.can_focus = false;
+    }
+
+    public void show_back_button () {
+        headerbar.go_back_button.visible = true;
     }
 
     protected class HeaderBarButton : Gtk.Button {

@@ -36,18 +36,9 @@ public class Sequeler.Library : Gtk.Box {
         toolbar.get_style_context ().add_class ("toolbar");
         toolbar.get_style_context ().add_class ("library-toolbar");
 
-        var go_back_button = new Gtk.Button.with_label (_("Go Back"));
-        go_back_button.clicked.connect (() => { 
-            go_back ();
-        });
-
-        go_back_button.get_style_context().add_class ("back-button");
-        go_back_button.can_focus = false;
-        go_back_button.margin = 12;
-
         var delete_image = new Gtk.Image.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
         delete_all = new Gtk.Button.with_label (_("Delete All"));
-        delete_all.get_style_context ().add_class ("destructive-action");
+        delete_all.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
         delete_all.always_show_image = true;
         delete_all.set_image (delete_image);
         delete_all.clicked.connect (() => {
@@ -55,21 +46,16 @@ public class Sequeler.Library : Gtk.Box {
         });
         delete_all.can_focus = false;
         delete_all.margin = 12;
+        delete_all.sensitive = false;
 
-        if (settings.saved_connections.length == 0) {
-            delete_all.sensitive = false;
-        }
-
-        if (! settings.show_library) {
-            toolbar.pack_start (go_back_button, false, false, 0);
-        }
-        toolbar.pack_end (delete_all, false, false, 0);
-        this.pack_start (toolbar, false, true, 0);
+        toolbar.pack_start (delete_all, false, false, 0);
+        this.pack_end (toolbar, false, true, 0);
 
         scroll = new Gtk.ScrolledWindow (null, null);
         scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
         item_box = new Gtk.FlowBox ();
+        item_box.activate_on_single_click = false;
         
         item_box.valign = Gtk.Align.START;
         item_box.min_children_per_line = 1;
@@ -80,21 +66,23 @@ public class Sequeler.Library : Gtk.Box {
         scroll.add (item_box);
 
         foreach (var conn in settings.saved_connections) {
-            add_item (conn);
+            add_item (Sequeler.Settings.arraify_data (conn));
         }
 
         this.pack_end (scroll, true, true, 0);
+
+        item_box.child_activated.connect (() => {
+            stdout.printf ("Double Cliecked!\n");
+        });
     }
 
-    public void add_item (string connection) {
-        var data = Sequeler.Settings.arraify_data (connection);
-
+    public void add_item (Gee.HashMap<string, string> data) {
         var item = new Gtk.FlowBoxChild ();
         item.get_style_context ().add_class ("library-box");
+        item.expand = true;
 
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        box.valign = Gtk.Align.START;
-        box.get_style_context ().add_class ("library-card");
+        box.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
         box.margin = 10;
 
         var color_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
@@ -107,22 +95,18 @@ public class Sequeler.Library : Gtk.Box {
         box.pack_start (color_box, true, false, 0);
 
         var title = new Gtk.Label (data["title"]);
-        title.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+        title.get_style_context ().add_class ("text-bold");
+        title.halign = Gtk.Align.START;
+        title.margin_start = 10;
+        title.margin_end = 10;
 
         box.pack_start (title, true, true, 10);
 
         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-        button_box.margin_left = 10;
-        button_box.margin_right = 10;
-        button_box.margin_bottom = 10;
-
-        var connect_button = new BoxButton ("go-jump-symbolic", _("Connect"));
 
         var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
-        edit_button.margin_right = 10;
         var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
 
-        button_box.pack_end (connect_button, false, true, 0);
         button_box.pack_start (delete_button, false, true, 0);
         button_box.pack_start (edit_button, false, true, 0);
 
@@ -150,10 +134,7 @@ public class Sequeler.Library : Gtk.Box {
         if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
             settings.delete_connection (data);
             item_box.remove (item);
-            item_box.show_all ();
-            if (settings.saved_connections.length == 0) {
-                delete_all.sensitive = false;
-            }
+            reload_library ();
         }
         
         message_dialog.destroy ();
@@ -171,11 +152,30 @@ public class Sequeler.Library : Gtk.Box {
         if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
             settings.clear_connections ();
             item_box.forall ((item) => item_box.remove (item));
-            item_box.show_all ();
-            delete_all.sensitive = false;
+            reload_library ();
         }
         
         message_dialog.destroy ();
+    }
+
+    public void reload_library () {
+        item_box.show_all ();
+        if (settings.saved_connections.length == 0) {
+            delete_all.sensitive = false;
+        }
+    }
+
+    public void check_add_item (Gee.HashMap<string, string> data) {
+        foreach (var conn in settings.saved_connections) {
+            var check = Sequeler.Settings.arraify_data (conn);
+            if (check["id"] == data["id"]) {
+                //  stdout.printf ("Connection exists: %s => %s\n", check["id"], data["id"]);
+                return;
+            }
+        }
+
+        stdout.printf ("Connection saved\n");
+        add_item (data);
     }
 
     protected class BoxButton : Gtk.Button {

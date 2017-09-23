@@ -26,7 +26,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
     private Gtk.Entry connection_id;
     private Entry title_entry;
-    private Entry description_entry;
     private Gtk.ColorButton color_entry;
     private Gtk.ComboBox db_type_entry;
     private Entry db_host_entry;
@@ -53,13 +52,13 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     construct { 
         SettingsView.dialog = this;
 
-        set_default_size (350, 700);
-        set_size_request (350, 700);
+        set_default_size (350, 650);
+        set_size_request (350, 650);
 
         var main_stack = new Gtk.Stack ();
         var settings_view = new SettingsView ();
 
-        var cancel_button = new Sequeler.ButtonType (_("Cancel"), null);
+        var cancel_button = new Sequeler.ButtonType (_("Close"), null);
 
         test_button = new Sequeler.ButtonType (_("Test Connection"), null);
         test_button.sensitive = false;
@@ -106,7 +105,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
         data.set ("id", connection_id.text);
         data.set ("title", title_entry.text);
-        data.set ("description", description_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
         data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
         data.set ("host", db_host_entry.text);
@@ -158,7 +156,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
             Object (
                 activatable: false,
-                description: "New connection to localhost",
                 icon_name: "drive-multidisk",
                 title: "New Connection"
             );
@@ -169,9 +166,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     
             var title_label = new Label (_("Name:"));
             dialog.title_entry = new Entry (_("Connection's name"), title);
-    
-            var description_label = new Label (_("Description:"));
-            dialog.description_entry = new Entry (_("Connection's description"), description);
+
 
             var color_label = new Label (_("Color:"));
             dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
@@ -218,8 +213,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
             content_area.attach (title_label, 0, 0, 1, 1);
             content_area.attach (dialog.title_entry, 1, 0, 1, 1);
-            content_area.attach (description_label, 0, 1, 1, 1);
-            content_area.attach (dialog.description_entry, 1, 1, 1, 1);
             content_area.attach (color_label, 0, 2, 1, 1);
             content_area.attach (dialog.color_entry, 1, 2, 1, 1);
 
@@ -239,10 +232,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
             dialog.title_entry.changed.connect (() => {
                 title = dialog.title_entry.text;
-            });
-
-            dialog.description_entry.changed.connect (() => {
-                description = dialog.description_entry.text;
             });
 
         }
