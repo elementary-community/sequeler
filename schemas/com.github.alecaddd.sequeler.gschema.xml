@@ -30,6 +30,12 @@
             <description>All the configured connections you saved are here</description>
         </key>
 
+        <key name="tot-connections" type="i">
+            <default>0</default>
+            <summary>Total amount of saved connections.</summary>
+            <description>Increase the amount at every new connection, set a unique ID for every connection.</description>
+        </key>
+
         <key name="save-quick" type="b">
             <default>true</default>
             <summary>Save Quick Connections</summary>

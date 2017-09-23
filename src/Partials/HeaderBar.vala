@@ -110,8 +110,8 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
         pack_start (go_back_button);
         pack_start (new_connection);
         pack_end (open_menu);
-        pack_end (search);
-        pack_end (terminal);
+        //  pack_end (search);
+        //  pack_end (terminal);
 
         go_back_button.no_show_all = true;
         go_back_button.visible = false;

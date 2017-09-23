@@ -144,10 +144,10 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         public static ConnectionDialog dialog;
         public static Gee.HashMap<string, string>? data;
 
-        public static string[] dbs = {"MySql", "MariaDB", "PostgreSql", "SqlLite"};
+        public static Gee.HashMap<int, string> dbs;
 
         enum Column {
-            DISTRO
+            DBTYPE
         }
 
         public SettingsView () {
@@ -157,16 +157,22 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 title: "New Connection"
             );
 
-            var id = settings.saved_connections.length;
+            dbs = new Gee.HashMap<int, string> ();
+            dbs.set (0,"MySql");
+            dbs.set (1,"MariaDB");
+            dbs.set (2,"PostgreSql");
+            dbs.set (3,"SqlLite");
+
+            var id = settings.tot_connections;
             dialog.connection_id = new Gtk.Entry ();
             dialog.connection_id.text = id.to_string ();
     
             var title_label = new Label (_("Name:"));
             dialog.title_entry = new Entry (_("Connection's name"), title);
 
-
             var color_label = new Label (_("Color:"));
             dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
+            dialog.color_entry.set_use_alpha (true);
 
             var db_host_label = new Label (_("Host:"));
             dialog.db_host_entry = new Entry (_("127.0.0.1"), null);
@@ -174,17 +180,17 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             var db_type_label = new Label (_("Database Type:"));
             Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
             
-            for (int i = 0; i < dbs.length; i++){
+            for (int i = 0; i < dbs.size; i++){
                 Gtk.TreeIter iter;
                 liststore.append (out iter);
-                liststore.set (iter, Column.DISTRO, dbs[i]);
+                liststore.set (iter, Column.DBTYPE, dbs[i]);
             }
     
             dialog.db_type_entry = new Gtk.ComboBox.with_model (liststore);
             Gtk.CellRendererText cell = new Gtk.CellRendererText ();
             dialog.db_type_entry.pack_start (cell, false);
     
-            dialog.db_type_entry.set_attributes (cell, "text", Column.DISTRO);
+            dialog.db_type_entry.set_attributes (cell, "text", Column.DBTYPE);
     
             /* Set the first item in the list to be selected (active). */
             dialog.db_type_entry.set_active (0);
@@ -234,9 +240,19 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             if (data != null) {
                 dialog.connection_id.text = data["id"];
                 dialog.title_entry.text = data["title"];
-                // rgba
+
+                Gdk.RGBA color = Gdk.RGBA ();
+                color.parse (data["color"]);
+                dialog.color_entry.rgba = color;
+
                 dialog.db_host_entry.text = data["host"];
-                // db
+
+                foreach (var entry in dbs.entries) {
+                    if (entry.value == data["type"]) {
+                        dialog.db_type_entry.set_active (entry.key);
+                    }
+                }
+
                 dialog.db_name_entry.text = data["name"];
                 dialog.db_username_entry.text = data["username"];
                 dialog.db_password_entry.text = data["password"];

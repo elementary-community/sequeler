@@ -27,6 +27,7 @@ public class Sequeler.Settings : Granite.Services.Settings {
     public int window_width { get; set; }
     public int window_height { get; set; }
     public string[] saved_connections { get; set; }
+    public int tot_connections { get; set; }
     public bool dark_theme { get; set; }
     public bool save_quick { get; set; }
     public bool show_library { get; set; }
@@ -45,28 +46,22 @@ public class Sequeler.Settings : Granite.Services.Settings {
     }
 
     public void add_connection (Gee.HashMap<string, string> data) {
-        var current_connections = saved_connections;
-        var connection = stringify_data (data);
-        
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (current_connections);
+        existing_connections.add_all_array (saved_connections);
 
-        existing_connections.insert (0, connection);
+        existing_connections.insert (0, stringify_data (data));
         saved_connections = existing_connections.to_array ();
+        tot_connections = tot_connections + 1;
     }
 
-    public void edit_connection (Gee.HashMap<string, string> new_data, Gee.HashMap<string, string> old_data) {
-        var current_connections = saved_connections;
-        //  var new_connection = stringify_data (new_data);
-        
+    public void edit_connection (Gee.HashMap<string, string> new_data, Gee.HashMap<string, string> old_data) {  
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (current_connections);
+        existing_connections.add_all_array (saved_connections);
 
         existing_connections.remove ( stringify_data (old_data));
         existing_connections.insert (0, stringify_data (new_data));
 
         saved_connections = existing_connections.to_array ();
-        //  stdout.printf ("Connection Edited\n");
     }
 
     public static string stringify_data (Gee.HashMap<string, string> data) {
@@ -105,15 +100,13 @@ public class Sequeler.Settings : Granite.Services.Settings {
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
         existing_connections.add_all_array (current_connections);
 
-        if (connection in current_connections) {
-            existing_connections.remove (connection);
-        }
-
+        existing_connections.remove (connection);
         saved_connections = existing_connections.to_array ();
     }
 
     public void clear_connections () {
         Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
         saved_connections = empty_connection.to_array ();
+        tot_connections = 0;
     }
 }
