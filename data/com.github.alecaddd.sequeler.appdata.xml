@@ -7,7 +7,7 @@
 	<name>Sequeler</name>
 	<summary>Friendly SQL Client</summary>
 	<description>
-	<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
+		<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
 	</description>
 	<provides>
 		<binary>sequeler</binary>
@@ -27,6 +27,6 @@
 	<custom>
 		<value key="x-appcenter-color-primary">#C2D5FF</value>
 		<value key="x-appcenter-color-primary-text">#223b69</value>
-		<value key="x-appcenter-suggested-price">5</value>
+		<value key="x-appcenter-suggested-price">2</value>
 	</custom>
 </component>

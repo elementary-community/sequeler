@@ -33,13 +33,16 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     private Entry db_username_entry;
     private Entry db_password_entry;
 
+    public Gtk.Spinner spinner;
+    public ResponseMessage response_msg;
+
     public signal void save_connection (Gee.HashMap data);
 
     public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings, Gee.HashMap? data) {
         
         Object (
             use_header_bar: 0,
-            border_width: 20,
+            border_width: 10,
             modal: true,
             deletable: false,
             resizable: true,
@@ -50,8 +53,8 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         SettingsView.dialog = this;
         SettingsView.data = data;
 
-        set_default_size (350, 650);
-        set_size_request (350, 650);
+        set_default_size (350, 700);
+        set_size_request (350, 700);
 
         var cancel_button = new Sequeler.ButtonType (_("Close"), null);
 
@@ -70,6 +73,12 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
         get_content_area ().add (new SettingsView ());
 
+        response_msg = new ResponseMessage ();
+        spinner = new Gtk.Spinner ();
+
+        get_content_area ().add (spinner);
+        get_content_area ().add (response_msg);
+
         connect_signals ();
 
     }
@@ -87,7 +96,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 test_connection ();
                 break;
             case 3:
-                create_data ();
+                save_data ();
                 break;
             case 4:
                 //  init_connection ();
@@ -96,19 +105,31 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     }
 
     public void test_connection () {
+        spinner.start ();
+        response_msg.label = "Connecting...";
+
+        Gee.HashMap data = create_data ();
         Sequeler.DataBase db = new Sequeler.DataBase ();
-        stdout.printf("Test: Opening and initializing Database ...\n");
-        /* Opening and initializing DB */
+        db.set_data (data);
+
         try {
             db.open();
-            stdout.printf("CONNECTED!\n");
+            spinner.stop ();
+            response_msg.label = "Successfully Connected!";
+            db.cnn.close ();
         }
         catch (Error e) {
-            stdout.printf("ERROR: '%s'\n", e.message);
+            response_msg.label = e.message;
+            spinner.stop ();
         }
     }
 
-    public void create_data () {
+    public void save_data () {
+        Gee.HashMap data = create_data ();
+        save_connection (data);
+    }
+
+    public Gee.HashMap<string, string> create_data () {
         var data = new Gee.HashMap<string, string> ();
 
         data.set ("id", connection_id.text);
@@ -120,7 +141,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         data.set ("username", db_username_entry.text);
         data.set ("password", db_password_entry.text);
 
-        save_connection (data);
+        return data;
     }
 
     public void change_sensitivity () {
@@ -132,22 +153,6 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
         test_button.sensitive = false;
         connect_button.sensitive = false;
-    }
-
-    private class DialogGrid : Gtk.Grid {
-        public DialogGrid () {
-            column_spacing = 12;
-            row_spacing = 6;
-            halign = Gtk.Align.CENTER;
-        }
-    }
-
-    private class DialogHeader : Gtk.Label {
-        public DialogHeader (string text) {
-            label = text;
-            get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
-            halign = Gtk.Align.CENTER;
-        }
     }
 
     public class SettingsView : Granite.SimpleSettingsPage {
@@ -227,22 +232,22 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
             content_area.attach (title_label, 0, 0, 1, 1);
             content_area.attach (dialog.title_entry, 1, 0, 1, 1);
-            content_area.attach (color_label, 0, 2, 1, 1);
-            content_area.attach (dialog.color_entry, 1, 2, 1, 1);
+            content_area.attach (color_label, 0, 1, 1, 1);
+            content_area.attach (dialog.color_entry, 1, 1, 1, 1);
 
-            content_area.attach (new Gtk.SeparatorMenuItem (), 0, 3, 2, 1);
+            content_area.attach (new Gtk.SeparatorMenuItem (), 0, 2, 2, 1);
 
-            content_area.attach (db_host_label, 0, 4, 1, 1);
-            content_area.attach (dialog.db_host_entry, 1, 4, 1, 1);
+            content_area.attach (db_host_label, 0, 3, 1, 1);
+            content_area.attach (dialog.db_host_entry, 1, 3, 1, 1);
 
-            content_area.attach (db_type_label, 0, 5, 1, 1);
-            content_area.attach (dialog.db_type_entry, 1, 5, 1, 1);
-            content_area.attach (db_name_label, 0, 6, 1, 1);
-            content_area.attach (dialog.db_name_entry, 1, 6, 1, 1);
-            content_area.attach (db_username_label, 0, 7, 1, 1);
-            content_area.attach (dialog.db_username_entry, 1, 7, 1, 1);
-            content_area.attach (db_password_label, 0, 8, 1, 1);
-            content_area.attach (dialog.db_password_entry, 1, 8, 1, 1);
+            content_area.attach (db_type_label, 0, 4, 1, 1);
+            content_area.attach (dialog.db_type_entry, 1, 4, 1, 1);
+            content_area.attach (db_name_label, 0, 5, 1, 1);
+            content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
+            content_area.attach (db_username_label, 0, 6, 1, 1);
+            content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
+            content_area.attach (db_password_label, 0, 7, 1, 1);
+            content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
 
             dialog.title_entry.changed.connect (() => {
                 title = dialog.title_entry.text;
@@ -290,6 +295,12 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             if (val != null) {
                 text = val;
             }
+        }
+    }
+
+    public class ResponseMessage : Gtk.Label {
+        public ResponseMessage () {
+            get_style_context ().add_class ("h4");
         }
     }
 }

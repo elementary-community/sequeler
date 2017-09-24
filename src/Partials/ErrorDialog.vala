@@ -19,21 +19,15 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Connect {
+public class Sequeler.ErrorDialog {
 
-    public static File? connect (Gee.HashMap<string, string> data) {
-        File? result = null;
+    public ErrorDialog (string message) {
+        var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Connection Error", message, "dialog-warning", Gtk.ButtonsType.CANCEL);
+        message_dialog.transient_for = window;
 
-        return result;
+        message_dialog.show_all ();
+        
+        message_dialog.destroy ();
     }
 
-    // Connect to remote host with Soup
-
-    // Test connection and show spinner
-    // true: return toast
-    // false: return warning
-
-    // Connect and show spinner
-    // true: open database view
-    // false: return warning
 }
