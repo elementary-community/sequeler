@@ -2,7 +2,7 @@
 project (com.github.alecaddd.sequeler)
 
 # the oldest stable cmake version we support
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8)
 
 # enable testing
 enable_testing (true)
@@ -20,7 +20,7 @@ set (PKGDATADIR "${DATADIR}/com.github.alecaddd.sequeler")
 set (EXEC_NAME "com.github.alecaddd.sequeler")
 set (RELEASE_NAME "Sequeler")
 set (VERSION "0.6.0")
-set (VERSION_INFO "Freindly SQL Client")
+set (VERSION_INFO "Friendly SQL Client")
 
 # disable C compiler warnings
 add_definitions(-w)
@@ -29,7 +29,7 @@ add_definitions(-w)
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 libxml-2.0 libgda-5.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 gobject-2.0 libxml-2.0 libgda-5.0)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -56,6 +56,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Settings.vala
     src/Services/FileManager.vala
     src/Services/Connect.vala
+    src/Services/DataBase.vala
 
     src/Widgets/Welcome.vala
     src/Widgets/Library.vala
@@ -68,6 +69,7 @@ PACKAGES
     granite
     glib-2.0
     gee-0.8
+    gobject-2.0
     libxml-2.0
     libgda-5.0
 OPTIONS

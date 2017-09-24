@@ -84,7 +84,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 destroy ();
                 break;
             case 2:
-                //  test_connection ();
+                test_connection ();
                 break;
             case 3:
                 create_data ();
@@ -92,6 +92,19 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             case 4:
                 //  init_connection ();
                 break;
+        }
+    }
+
+    public void test_connection () {
+        Sequeler.DataBase db = new Sequeler.DataBase ();
+        stdout.printf("Test: Opening and initializing Database ...\n");
+        /* Opening and initializing DB */
+        try {
+            db.open();
+            stdout.printf("CONNECTED!\n");
+        }
+        catch (Error e) {
+            stdout.printf("ERROR: '%s'\n", e.message);
         }
     }
 
@@ -156,10 +169,10 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             );
 
             dbs = new Gee.HashMap<int, string> ();
-            dbs.set (0,"MySql");
+            dbs.set (0,"MySQL");
             dbs.set (1,"MariaDB");
-            dbs.set (2,"PostgreSql");
-            dbs.set (3,"SqlLite");
+            dbs.set (2,"PostgreSQL");
+            dbs.set (3,"SQLite");
 
             var id = settings.tot_connections;
             dialog.connection_id = new Gtk.Entry ();
