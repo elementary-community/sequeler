@@ -75,6 +75,9 @@ PACKAGES
     libgda-5.0
 OPTIONS
     --vapidir=${CMAKE_SOURCE_DIR}/vapi
+    --target-glib=2.39
+    --thread
+    --enable-experimental
 )
 
 

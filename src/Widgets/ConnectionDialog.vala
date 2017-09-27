@@ -21,6 +21,8 @@
 
 public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
+    public Sequeler.DataBase db;
+
     public Sequeler.ButtonType test_button;
     public Sequeler.ButtonType connect_button;
 
@@ -76,8 +78,8 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         response_msg = new ResponseMessage ();
         spinner = new Gtk.Spinner ();
 
-        get_content_area ().add (spinner);
         get_content_area ().add (response_msg);
+        get_content_area ().add (spinner);
 
         connect_signals ();
 
@@ -105,21 +107,32 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     }
 
     public void test_connection () {
+        db = new DataBase ();
+
         spinner.start ();
         response_msg.label = "Connecting...";
 
         Gee.HashMap data = create_data ();
-        Sequeler.DataBase db = new Sequeler.DataBase ();
-        db.set_data (data);
+        db.set_constr_data (data);
 
         try {
+            test_initdb ();
+        }
+            catch  (GLib.Error e){
+            stdout.printf("ERROR: '%s'\n", e.message);
+        }
+    }
+    
+    public void test_initdb () throws Error {
+        try {
             db.open();
-            spinner.stop ();
             response_msg.label = "Successfully Connected!";
             db.cnn.close ();
+            spinner.stop ();
         }
         catch (Error e) {
             response_msg.label = e.message;
+            stdout.printf("ERROR: '%s'\n", e.message);
             spinner.stop ();
         }
     }
@@ -135,11 +148,11 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         data.set ("id", connection_id.text);
         data.set ("title", title_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
-        data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
+        data.set ("type", Gda.rfc1738_encode (SettingsView.dbs [db_type_entry.get_active ()]));
         data.set ("host", db_host_entry.text);
-        data.set ("name", db_name_entry.text);
-        data.set ("username", db_username_entry.text);
-        data.set ("password", db_password_entry.text);
+        data.set ("name", Gda.rfc1738_encode (db_name_entry.text));
+        data.set ("username", Gda.rfc1738_encode (db_username_entry.text));
+        data.set ("password", Gda.rfc1738_encode (db_password_entry.text));
 
         return data;
     }
@@ -301,6 +314,10 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public class ResponseMessage : Gtk.Label {
         public ResponseMessage () {
             get_style_context ().add_class ("h4");
+            halign = Gtk.Align.CENTER;
+            valign = Gtk.Align.CENTER;
+            set_justify (Gtk.Justification.CENTER);
+            set_line_wrap (true);
         }
     }
 }

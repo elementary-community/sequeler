@@ -81,7 +81,7 @@ public class Sequeler.Settings : Granite.Services.Settings {
         var data = connection.split ("\n");
 
         foreach (var d in data) {
-            var d2 = d.split ("=");
+            var d2 = d.split ("=", 2);
 
             if (d2[0] == null) {
                 continue;

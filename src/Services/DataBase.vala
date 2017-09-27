@@ -20,24 +20,30 @@
 */
 
 public class Sequeler.DataBase : Object {
-    public string constr { set; get; default = "SQLite://DB_DIR=.;DB_NAME=test"; } 
+    public string constr { set; get; }
+    public string provider { set; get; default = "SQLite"; }
+    public string auth_string;
     public Gda.Connection cnn;
 
-    public void set_data (Gee.HashMap<string, string> data) {
-        var type = data["type"];
+    public void set_constr_data (Gee.HashMap<string, string> data) {
+        provider = data["type"];
 
         if (data["type"] == "MariaDB") {
-                type = "MySQL";
+            provider = "MySQL";
         }
-        this.constr = type + "://DB_NAME=" + data["name"] +";HOST=" + data["host"] +";USERNAME=" + data["username"] +";PASSWORD=" + data["password"];
+
+        auth_string = "USERNAME=" + data["username"] +";PASSWORD=" + data["password"] + "";
+        //  constr = db_type + "://DB_NAME=" + data["name"] +";HOST=" + data["host"] +";USERNAME=" + data["username"] +";PASSWORD=" + data["password"];
+        constr = "DB_NAME=" + data["name"] +";HOST=" + data["host"] +"";
     }
 
     public void open () throws Error {
-        this.cnn = Gda.Connection.open_from_string (null, this.constr, null, Gda.ConnectionOptions.NONE);
+        stdout.printf("Connecting: %s\n", constr);
+        cnn = Gda.Connection.open_from_string (provider, constr, auth_string, Gda.ConnectionOptions.NONE);
     }
 
-    public int run_query (string query) throws Error requires (this.cnn.is_opened()) {
-        stdout.printf("Executing query: [%s]\n", query);
-        return this.cnn.execute_non_select_command (query);
+    public int run_query (string query) throws Error requires (cnn.is_opened ()) {
+        stdout.printf("Executing query: %s\n", query);
+        return cnn.execute_non_select_command (query);
     }
 }
