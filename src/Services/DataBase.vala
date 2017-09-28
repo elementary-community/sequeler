@@ -32,14 +32,22 @@ public class Sequeler.DataBase : Object {
             provider = "MySQL";
         }
 
-        auth_string = "USERNAME=" + data["username"] +";PASSWORD=" + data["password"] + "";
-        //  constr = db_type + "://DB_NAME=" + data["name"] +";HOST=" + data["host"] +";USERNAME=" + data["username"] +";PASSWORD=" + data["password"];
-        constr = "DB_NAME=" + data["name"] +";HOST=" + data["host"] +"";
+        switch (provider) {
+            case "MySQL":
+                constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
+                break;
+            case "PostgreSQL":
+                constr = "";
+                break;
+            case "SQLite":
+                constr = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
+                break;
+        }
     }
 
     public void open () throws Error {
         stdout.printf("Connecting: %s\n", constr);
-        cnn = Gda.Connection.open_from_string (provider, constr, auth_string, Gda.ConnectionOptions.NONE);
+        cnn = Gda.Connection.open_from_string (null, constr, null, Gda.ConnectionOptions.NONE);
     }
 
     public int run_query (string query) throws Error requires (cnn.is_opened ()) {

@@ -110,31 +110,28 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         db = new DataBase ();
 
         spinner.start ();
-        response_msg.label = "Connecting...";
+        response_msg.label = "Testing Connection...";
 
         Gee.HashMap data = create_data ();
         db.set_constr_data (data);
 
-        try {
+        GLib.Timeout.add_seconds(1, () => { 
             test_initdb ();
-        }
-            catch  (GLib.Error e){
-            stdout.printf("ERROR: '%s'\n", e.message);
-        }
+            return false; 
+        });
     }
     
-    public void test_initdb () throws Error {
+    public void test_initdb () {
         try {
             db.open();
             response_msg.label = "Successfully Connected!";
             db.cnn.close ();
-            spinner.stop ();
         }
         catch (Error e) {
             response_msg.label = e.message;
             stdout.printf("ERROR: '%s'\n", e.message);
-            spinner.stop ();
         }
+        spinner.stop ();
     }
 
     public void save_data () {
@@ -148,8 +145,8 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         data.set ("id", connection_id.text);
         data.set ("title", title_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
-        data.set ("type", Gda.rfc1738_encode (SettingsView.dbs [db_type_entry.get_active ()]));
-        data.set ("host", db_host_entry.text);
+        data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
+        data.set ("host", Gda.rfc1738_encode (db_host_entry.text));
         data.set ("name", Gda.rfc1738_encode (db_name_entry.text));
         data.set ("username", Gda.rfc1738_encode (db_username_entry.text));
         data.set ("password", Gda.rfc1738_encode (db_password_entry.text));
