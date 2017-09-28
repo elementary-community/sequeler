@@ -37,7 +37,7 @@ public class Sequeler.DataBase : Object {
                 constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
                 break;
             case "PostgreSQL":
-                constr = "";
+                constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
                 break;
             case "SQLite":
                 constr = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
@@ -46,12 +46,16 @@ public class Sequeler.DataBase : Object {
     }
 
     public void open () throws Error {
-        stdout.printf("Connecting: %s\n", constr);
+        //  stdout.printf("Connecting: %s\n", constr);
         cnn = Gda.Connection.open_from_string (null, constr, null, Gda.ConnectionOptions.NONE);
     }
 
     public int run_query (string query) throws Error requires (cnn.is_opened ()) {
-        stdout.printf("Executing query: %s\n", query);
+        //  stdout.printf("Executing query: %s\n", query);
         return cnn.execute_non_select_command (query);
+    }
+
+    public void close () {
+        cnn.close ();
     }
 }

@@ -26,6 +26,7 @@ public class Sequeler.Library : Gtk.Box {
     public Gtk.Button delete_all;
 
     public signal void edit_dialog (Gee.HashMap data);
+    public signal void connect_to (Gee.HashMap data);
 
     public Library () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -70,10 +71,6 @@ public class Sequeler.Library : Gtk.Box {
         }
 
         this.pack_end (scroll, true, true, 0);
-
-        item_box.child_activated.connect (() => {
-            stdout.printf ("Double Cliecked!\n");
-        });
     }
 
     public void add_item (Gee.HashMap<string, string> data) {
@@ -90,7 +87,16 @@ public class Sequeler.Library : Gtk.Box {
         color_box.get_style_context ().add_class ("library-colorbar");
         var color = Gdk.RGBA ();
         color.parse (data["color"]);
-        color_box.override_background_color (Gtk.StateFlags.NORMAL, color);
+        try
+        {
+            var style = new Gtk.CssProvider ();
+            style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
+            color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
+        catch (Error e)
+        {
+            debug ("Internal error loading session chooser style: %s", e.message);
+        }
 
         box.pack_start (color_box, true, false, 0);
 
@@ -106,9 +112,11 @@ public class Sequeler.Library : Gtk.Box {
 
         var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
         var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
+        var connect_button = new BoxButton ("go-next-symbolic", _("Connect"));
 
         button_box.pack_start (delete_button, false, true, 0);
         button_box.pack_start (edit_button, false, true, 0);
+        button_box.pack_end (connect_button, false, true, 0);
 
         box.pack_end (button_box, true, false, 0);
 
@@ -121,6 +129,10 @@ public class Sequeler.Library : Gtk.Box {
 
         edit_button.clicked.connect (() => {
             edit_dialog (data);
+        });
+
+        connect_button.clicked.connect (() => {
+            connect_to (data);
         });
 
         delete_all.sensitive = true;

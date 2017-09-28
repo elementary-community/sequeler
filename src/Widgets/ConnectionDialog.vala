@@ -112,7 +112,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         spinner.start ();
         response_msg.label = "Testing Connection...";
 
-        Gee.HashMap data = create_data ();
+        Gee.HashMap data = create_data (true);
         db.set_constr_data (data);
 
         GLib.Timeout.add_seconds(1, () => { 
@@ -125,31 +125,39 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         try {
             db.open();
             response_msg.label = "Successfully Connected!";
-            db.cnn.close ();
+            db.close ();
         }
         catch (Error e) {
             response_msg.label = e.message;
-            stdout.printf("ERROR: '%s'\n", e.message);
+            //  stdout.printf("ERROR: '%s'\n", e.message);
         }
         spinner.stop ();
     }
 
     public void save_data () {
-        Gee.HashMap data = create_data ();
+        Gee.HashMap data = create_data (false);
         save_connection (data);
     }
 
-    public Gee.HashMap<string, string> create_data () {
+    public Gee.HashMap<string, string> create_data (bool? encrypt) {
         var data = new Gee.HashMap<string, string> ();
 
         data.set ("id", connection_id.text);
         data.set ("title", title_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
         data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
-        data.set ("host", Gda.rfc1738_encode (db_host_entry.text));
-        data.set ("name", Gda.rfc1738_encode (db_name_entry.text));
-        data.set ("username", Gda.rfc1738_encode (db_username_entry.text));
-        data.set ("password", Gda.rfc1738_encode (db_password_entry.text));
+
+        if (encrypt) {
+            data.set ("host", Gda.rfc1738_encode (db_host_entry.text));
+            data.set ("name", Gda.rfc1738_encode (db_name_entry.text));
+            data.set ("username", Gda.rfc1738_encode (db_username_entry.text));
+            data.set ("password", Gda.rfc1738_encode (db_password_entry.text));
+        } else {
+            data.set ("host", db_host_entry.text);
+            data.set ("name", db_name_entry.text);
+            data.set ("username", db_username_entry.text);
+            data.set ("password", db_password_entry.text);
+        }
 
         return data;
     }

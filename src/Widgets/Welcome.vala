@@ -28,6 +28,7 @@ public class Sequeler.Welcome : Gtk.Box {
     public Gtk.Stack welcome_stack;
 
     public signal void create_connection (Gee.HashMap? data);
+    public signal void init_connection (Gee.HashMap? data);
 
     public Welcome () {
         orientation = Gtk.Orientation.HORIZONTAL;
@@ -91,6 +92,10 @@ public class Sequeler.Welcome : Gtk.Box {
 
         library.edit_dialog.connect ((data) => {
             create_connection (data);
+        });
+
+        library.connect_to.connect ((data) => {
+            init_connection (data);
         });
     }
 

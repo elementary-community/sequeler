@@ -23,6 +23,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     /* Core Componenets */
     public Gtk.Overlay overlay;
+    public Granite.Widgets.OverlayBar overlaybar;
     public Gtk.Stack panels;
     public Sequeler.Welcome welcome;
     public Granite.Widgets.Toast toast_saved;
@@ -79,6 +80,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         
         welcome.create_connection.connect ((data) => {
             create_connection (data);
+        });
+
+        welcome.init_connection.connect ((data) => {
+            init_connection (data);
         });
 
         overlay = new Gtk.Overlay ();
@@ -159,12 +164,28 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         headerbar.show_back_button ();
     }
 
-    public void open_connection (Gee.HashMap data) {
-        var connection = Sequeler.Connect.connect (data);
+    public void init_connection (Gee.HashMap<string, string> data) {
+        data.set ("host", Gda.rfc1738_encode (data["host"]));
+        data.set ("name", Gda.rfc1738_encode (data["name"]));
+        data.set ("username", Gda.rfc1738_encode (data["username"]));
+        data.set ("password", Gda.rfc1738_encode (data["password"]));
 
-        if (connection != null) {
-            //  panels.set_visible_child_full ("database", Gtk.StackTransitionType.CROSSFADE);
-        }
+        //  var db = new Sequeler.DataBase ();
+
+        //  db.set_constr_data (data);
+
+        //  GLib.Timeout.add_seconds(1, () => { 
+        //      db.open ();
+        //      return false; 
+        //  });
+
+        //  if (db.cnn.is_opened ()) {
+        //      open_database_view ();
+        //  }
+    }
+
+    public void open_database_view () {
+        panels.set_visible_child_full ("database", Gtk.StackTransitionType.CROSSFADE);
     }
 
     protected override bool delete_event (Gdk.EventAny event) {
