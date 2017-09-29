@@ -29,7 +29,7 @@ public class Sequeler.Welcome : Gtk.Box {
     public Gtk.Stack welcome_stack;
 
     public signal void create_connection (Gee.HashMap? data);
-    public signal void init_connection (Gee.HashMap? data);
+    public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.Button button);
 
     public Welcome () {
         orientation = Gtk.Orientation.HORIZONTAL;
@@ -98,8 +98,8 @@ public class Sequeler.Welcome : Gtk.Box {
             create_connection (data);
         });
 
-        library.connect_to.connect ((data) => {
-            init_connection (data);
+        library.connect_to.connect ((data, spinner, button) => {
+            init_connection (data, spinner, button);
         });
     }
 

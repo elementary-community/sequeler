@@ -26,7 +26,7 @@ public class Sequeler.Library : Gtk.Box {
     public Gtk.Button delete_all;
 
     public signal void edit_dialog (Gee.HashMap data);
-    public signal void connect_to (Gee.HashMap data);
+    public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Button button);
 
     public Library () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -113,10 +113,12 @@ public class Sequeler.Library : Gtk.Box {
         var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
         var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
         var connect_button = new BoxButton ("go-next-symbolic", _("Connect"));
+        var spinner = new Gtk.Spinner ();
 
         button_box.pack_start (delete_button, false, true, 0);
         button_box.pack_start (edit_button, false, true, 0);
         button_box.pack_end (connect_button, false, true, 0);
+        button_box.pack_end (spinner, false, true, 0);
 
         box.pack_end (button_box, true, false, 0);
 
@@ -132,7 +134,9 @@ public class Sequeler.Library : Gtk.Box {
         });
 
         connect_button.clicked.connect (() => {
-            connect_to (data);
+            spinner.start ();
+            connect_button.sensitive = false;
+            connect_to (data, spinner, connect_button);
         });
 
         delete_all.sensitive = true;

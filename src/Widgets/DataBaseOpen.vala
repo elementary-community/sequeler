@@ -22,7 +22,7 @@
 public class Sequeler.DataBaseOpen : Gtk.Box {
 
     public DataBaseOpen () {
-        orientation = Gtk.Orientation.HORIZONTAL;
+        orientation = Gtk.Orientation.VERTICAL;
 
         var button = new Gtk.Button.with_label (_("Test Button"));
 

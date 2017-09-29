@@ -77,9 +77,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
             headerbar.logout_button.visible = false;
             headerbar.show_back_button ();
-            //  if (db.cnn.is_opened ()) {
-            //      db.close ();
-            //  }
+            if (db.cnn.is_opened ()) {
+                db.close ();
+            }
         });
         
         set_titlebar (headerbar);
@@ -92,8 +92,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             create_connection (data);
         });
 
-        welcome.init_connection.connect ((data) => {
-            init_connection (data);
+        welcome.init_connection.connect ((data, spinner, button) => {
+            init_connection (data, spinner, button);
         });
 
         overlay = new Gtk.Overlay ();
@@ -174,59 +174,50 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         headerbar.show_back_button ();
     }
 
-    public void init_connection (Gee.HashMap<string, string> data) {
+    public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Button button) {
         data.set ("host", Gda.rfc1738_encode (data["host"]));
         data.set ("name", Gda.rfc1738_encode (data["name"]));
         data.set ("username", Gda.rfc1738_encode (data["username"]));
         data.set ("password", Gda.rfc1738_encode (data["password"]));
 
         db = new Sequeler.DataBase ();
-
         db.set_constr_data (data);
 
-        //  connection_message_dialog (data["title"]);
+        GLib.Timeout.add_seconds(1, () => {
+            try {
+                db.open();
+                if (db.cnn.is_opened ()) {
+                    open_database_view (data);
+                }
+            }
+            catch (Error e) {
+                stdout.printf("ERROR: '%s'\n", e.message);
+                connection_warning (e, data["title"]);
+            }
+            spinner.stop ();
+            button.sensitive = true;
+            return false;
+        });
 
-        open_database_view ();
-
-        //  GLib.Timeout.add_seconds(1, () => {
-        //      try {
-        //          db.open();
-        //      }
-        //      catch (Error e) {
-        //          stdout.printf("ERROR: '%s'\n", e.message);
-        //      }
-        //      return false; 
-        //  });
-
-        //  if (db.cnn.is_opened ()) {
-        //      open_database_view ();
-        //  }
     }
 
-    public void connection_message_dialog (string title) {
-        var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Connecting to " + title + "...", "Please, buckle up and be ready to write some code!", "network-workgroup", Gtk.ButtonsType.NONE);
-        message_dialog.transient_for = this;
-
-        var spinner = new Gtk.Spinner ();
-        message_dialog.get_content_area ().add (spinner);
-
-        spinner.start ();
+    public void connection_warning (Error e, string title) {
+        var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Unable to Connect to " + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+        message_dialog.transient_for = window;
         
-        var suggested_button = new Gtk.Button.with_label ("Cancel Connection");
+        var suggested_button = new Gtk.Button.with_label ("Close");
         message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
         message_dialog.show_all ();
-        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
-            if (db.cnn.is_opened ()) {
-                db.close ();
-            }
-        }
+        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
         
         message_dialog.destroy ();
     }
 
-    public void open_database_view () {
+    public void open_database_view (Gee.HashMap<string, string> data) {
         welcome.welcome_stack.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_LEFT);
+        headerbar.title = "Connected to " + data["title"];
+        headerbar.subtitle = data["username"] + "@" + data["host"];
         headerbar.go_back_button.visible = false;
         headerbar.show_logout_button ();
     }

@@ -61,7 +61,9 @@ public class Sequeler.HeaderBar : Gtk.HeaderBar {
 
         logout_button = new Gtk.Button.with_label (_("Logout"));
         logout_button.get_style_context().add_class ("back-button");
-        logout_button.clicked.connect (() => { 
+        logout_button.clicked.connect (() => {
+            headerbar.title = APP_NAME;
+            headerbar.subtitle = null;
             logout ();
         });
 
