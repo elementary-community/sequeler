@@ -74,9 +74,15 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         });
 
         headerbar.logout.connect (() => {
-            welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
-            headerbar.logout_button.visible = false;
-            headerbar.show_back_button ();
+            if (! settings.show_library) {
+                welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
+                headerbar.logout_button.visible = false;
+                headerbar.show_back_button ();
+            } else {
+                welcome.welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
+                headerbar.logout_button.visible = false;
+            }
+
             if (db.cnn.is_opened ()) {
                 db.close ();
             }
@@ -132,7 +138,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                         handled = true;
                         break;
                     case Gdk.Key.l:
-                        show_library ();
+                        if (! settings.show_library) {
+                            show_library ();
+                        }
                         handled = true;
                         break;
                     case Gdk.Key.f:
@@ -161,9 +169,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     public void create_connection (Gee.HashMap? data) {
         var connection_dialog = new Sequeler.ConnectionDialog (this, settings, data);
 
-        connection_dialog.save_connection.connect ((data) => {
+        connection_dialog.save_connection.connect ((data, trigger) => {
             welcome.reload (data);
-            toast_saved.send_notification ();
+            if (trigger) {
+                toast_saved.send_notification ();
+            }
         });
 
         connection_dialog.show_all ();

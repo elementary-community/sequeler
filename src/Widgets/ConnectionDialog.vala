@@ -38,7 +38,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public Gtk.Spinner spinner;
     public ResponseMessage response_msg;
 
-    public signal void save_connection (Gee.HashMap data);
+    public signal void save_connection (Gee.HashMap data, bool trigger);
 
     public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings, Gee.HashMap? data) {
         
@@ -98,7 +98,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 test_connection ();
                 break;
             case 3:
-                save_data ();
+                save_data (true);
                 break;
             case 4:
                 init_connection ();
@@ -134,6 +134,10 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     }
 
     public void init_connection () {
+        if (settings.save_quick) {
+            save_data (false);
+        }
+
         db = new DataBase ();
         
         spinner.start ();
@@ -160,9 +164,9 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         spinner.stop ();
     }
 
-    public void save_data () {
+    public void save_data (bool trigger) {
         Gee.HashMap data = create_data (false);
-        save_connection (data);
+        save_connection (data, trigger);
     }
 
     public Gee.HashMap<string, string> create_data (bool? encrypt) {
