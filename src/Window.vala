@@ -191,7 +191,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                 }
             }
             catch (Error e) {
-                stdout.printf("ERROR: '%s'\n", e.message);
                 connection_warning (e, data["title"]);
             }
             spinner.stop ();

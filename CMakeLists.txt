@@ -52,10 +52,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Partials/HeaderBar.vala
     src/Partials/ButtonType.vala
     src/Partials/MessageDialog.vala
-    src/Partials/ErrorDialog.vala
 
     src/Services/Settings.vala
-    src/Services/FileManager.vala
     src/Services/DataBase.vala
 
     src/Widgets/Welcome.vala

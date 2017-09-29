@@ -194,13 +194,11 @@ public class Sequeler.Library : Gtk.Box {
                 foreach (var new_conn in settings.saved_connections) {
                     add_item (Sequeler.Settings.arraify_data (new_conn));
                 }
-                //  stdout.printf ("Connection exists: %s => %s\n", check["id"], data["id"]);
                 return;
             }
         }
         settings.add_connection (data);
 
-        //  stdout.printf ("Connection saved\n");
         add_item (data);
     }
 

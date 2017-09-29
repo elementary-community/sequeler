@@ -46,12 +46,10 @@ public class Sequeler.DataBase : Object {
     }
 
     public void open () throws Error {
-        //  stdout.printf("Connecting: %s\n", constr);
         cnn = Gda.Connection.open_from_string (null, constr, null, Gda.ConnectionOptions.NONE);
     }
 
     public int run_query (string query) throws Error requires (cnn.is_opened ()) {
-        //  stdout.printf("Executing query: %s\n", query);
         return cnn.execute_non_select_command (query);
     }
 

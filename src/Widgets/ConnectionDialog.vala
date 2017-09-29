@@ -101,7 +101,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
                 save_data ();
                 break;
             case 4:
-                //  init_connection ();
+                init_connection ();
                 break;
         }
     }
@@ -129,7 +129,33 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         }
         catch (Error e) {
             response_msg.label = e.message;
-            //  stdout.printf("ERROR: '%s'\n", e.message);
+        }
+        spinner.stop ();
+    }
+
+    public void init_connection () {
+        db = new DataBase ();
+        
+        spinner.start ();
+        response_msg.label = "Connection...";
+
+        Gee.HashMap data = create_data (true);
+        db.set_constr_data (data);
+
+        GLib.Timeout.add_seconds(1, () => { 
+            initdb (data);
+            return false; 
+        });
+    }
+
+    public void initdb (Gee.HashMap data) {
+        try {
+            db.open();
+            destroy ();
+            window.open_database_view (data);
+        }
+        catch (Error e) {
+            response_msg.label = e.message;
         }
         spinner.stop ();
     }
