@@ -19,21 +19,13 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Connect {
+public class Sequeler.DataBaseOpen : Gtk.Box {
 
-    public static File? connect (Gee.HashMap<string, string> data) {
-        File? result = null;
+    public DataBaseOpen () {
+        orientation = Gtk.Orientation.HORIZONTAL;
 
-        return result;
+        var button = new Gtk.Button.with_label (_("Test Button"));
+
+        add (button);
     }
-
-    // Connect to remote host with Soup
-
-    // Test connection and show spinner
-    // true: return toast
-    // false: return warning
-
-    // Connect and show spinner
-    // true: open database view
-    // false: return warning
 }

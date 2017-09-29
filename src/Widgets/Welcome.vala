@@ -23,6 +23,7 @@ public class Sequeler.Welcome : Gtk.Box {
     
     private Granite.Widgets.Welcome welcome;
     public Sequeler.Library? library = null;
+    public Sequeler.DataBaseOpen database;
 
     private Gtk.Separator separator;
     public Gtk.Stack welcome_stack;
@@ -57,6 +58,9 @@ public class Sequeler.Welcome : Gtk.Box {
         if (! settings.show_library) {
             welcome_stack.add_named (library, "library");
         }
+
+        database = new Sequeler.DataBaseOpen ();
+        welcome_stack.add_named (database, "database");
 
         welcome_stack.set_visible_child (welcome);
 
