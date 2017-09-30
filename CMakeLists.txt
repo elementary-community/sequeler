@@ -19,7 +19,7 @@ set (PKGDATADIR "${DATADIR}/com.github.alecaddd.sequeler")
 
 set (EXEC_NAME "com.github.alecaddd.sequeler")
 set (RELEASE_NAME "Sequeler")
-set (VERSION "0.6.0")
+set (VERSION "0.5.0")
 set (VERSION_INFO "Friendly SQL Client")
 
 # disable C compiler warnings
@@ -29,7 +29,7 @@ add_definitions(-w)
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 gobject-2.0 libxml-2.0 libgda-5.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 gobject-2.0 libxml-2.0 libgda-5.0 gtksourceview-3.0)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -52,6 +52,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Partials/HeaderBar.vala
     src/Partials/ButtonType.vala
     src/Partials/MessageDialog.vala
+    src/Partials/QueryBuilder.vala
 
     src/Services/Settings.vala
     src/Services/DataBase.vala
@@ -71,6 +72,7 @@ PACKAGES
     gobject-2.0
     libxml-2.0
     libgda-5.0
+    gtksourceview-3.0
 OPTIONS
     --vapidir=${CMAKE_SOURCE_DIR}/vapi
     --target-glib=2.39

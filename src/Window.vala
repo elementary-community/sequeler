@@ -102,6 +102,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             init_connection (data, spinner, button);
         });
 
+        welcome.execute_query.connect((query) => {
+            db.run_query (query);
+        });
+
         overlay = new Gtk.Overlay ();
         panels = new Gtk.Stack ();
         panels.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
