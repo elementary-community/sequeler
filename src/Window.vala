@@ -30,7 +30,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     public Granite.Widgets.Toast toast_saved;
 
     public int output_query;
-    public Object output_select;
+    public Gda.DataModel output_select;
 
     public Window (Gtk.Application app) {
         // Store the main app to be used
@@ -247,7 +247,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         return output_query;
     }
 
-    public Object run_select (string query) {
+    public Gda.DataModel run_select (string query) {
         try
         {
             output_select = db.run_select (query);

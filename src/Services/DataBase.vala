@@ -50,15 +50,11 @@ public class Sequeler.DataBase : Object {
     }
 
     public int run_query (string query) throws Error requires (cnn.is_opened ()) {
-        //  stdout.printf("Executing query: [%s]\n", query);
         return cnn.execute_non_select_command (query);
-        //  return 1;
     }
 
-    public Object run_select (string query) throws Error requires (cnn.is_opened ()) {
-        //  stdout.printf("Executing select: [%s]\n", query);
+    public Gda.DataModel run_select (string query) throws Error requires (cnn.is_opened ()) {
         return cnn.execute_select_command (query);
-        //  return new Gtk.Stack ();
     }
 
     public void close () {

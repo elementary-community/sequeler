@@ -24,10 +24,12 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.Paned pane;
     public Gtk.Box toolbar;
     public Gtk.Button run_button;
+    public Gtk.Spinner spinner;
+    public Gtk.Label loading_msg;
     public Sequeler.QueryBuilder query_builder;
 
     public signal int execute_query (string query);
-    public signal Object execute_select (string query);
+    public signal Gda.DataModel execute_select (string query);
 
     public DataBaseOpen () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -75,9 +77,17 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         run_button.always_show_image = true;
         run_button.set_image (run_image);
         run_button.can_focus = false;
-        run_button.margin = 12;
+        run_button.margin = 10;
         run_button.sensitive = false;
 
+        spinner = new Gtk.Spinner ();
+
+        loading_msg = new Gtk.Label ("running query...");
+        loading_msg.visible = false;
+        loading_msg.no_show_all = true;
+
+        toolbar.pack_start (spinner, false, false, 10);
+        toolbar.pack_start (loading_msg, false, false, 10);
         toolbar.pack_end (run_button, false, false, 0);
     }
 
@@ -91,16 +101,26 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
     public void connect_signals () {
         run_button.clicked.connect (() => {
-            var query = query_builder.get_text ();
-            //  query.replace ("\"", "\\");
-            query.replace ("\"", "\\");
-            stdout.printf ("%s\n", query);
 
-            //  if ("select" in query.down ()) {
-            //      execute_select (query);
-            //  } else {
-            //      execute_query (query);
-            //  }
+            spinner.start ();
+            loading_msg.visible = true;
+
+            GLib.Timeout.add_seconds(0, () => {                 
+                var query = query_builder.get_text ();
+
+                if ("select" in query.down ()) {
+                    var response = execute_select (query);
+                    stdout.printf("Query: '%s'\n", response.dump_as_string ());
+                    spinner.stop ();
+                    loading_msg.visible = false;
+                } else {
+                    var response = execute_query (query);
+                    stdout.printf("Query: '%i'\n", response);
+                    spinner.stop ();
+                    loading_msg.visible = false;
+                }
+                return false; 
+            });
         });
     }
 }
