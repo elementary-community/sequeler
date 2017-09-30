@@ -74,7 +74,17 @@ public class Sequeler.QueryBuilder : Gtk.SourceView {
 
         Gtk.drag_dest_add_uri_targets (this);
 
-        override_font (Pango.FontDescription.from_string (font));
+        try
+        {
+            var style = new Gtk.CssProvider ();
+            style.load_from_data ("* {font: %s;}".printf (font), -1);
+            get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
+        catch (Error e)
+        {
+            debug ("Internal error loading session chooser style: %s", e.message);
+        }
+
         buffer.style_scheme = style_scheme_manager.get_scheme ("oblivion");
 
         language = manager.get_language ("sql");

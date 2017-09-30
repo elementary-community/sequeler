@@ -30,7 +30,8 @@ public class Sequeler.Welcome : Gtk.Box {
 
     public signal void create_connection (Gee.HashMap? data);
     public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.Button button);
-    public signal void execute_query (string query);
+    public signal int execute_query (string query);
+    public signal Object execute_select (string query);
 
     public Welcome () {
         orientation = Gtk.Orientation.HORIZONTAL;
@@ -104,7 +105,11 @@ public class Sequeler.Welcome : Gtk.Box {
         });
 
         database.execute_query.connect((query) => {
-            execute_query (query);
+            return execute_query (query);
+        });
+
+        database.execute_select.connect((query) => {
+            return execute_select (query);
         });
     }
 

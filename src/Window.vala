@@ -29,6 +29,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     public Sequeler.DataBase db;
     public Granite.Widgets.Toast toast_saved;
 
+    public int output_query;
+    public Object output_select;
+
     public Window (Gtk.Application app) {
         // Store the main app to be used
         Object (application: app);
@@ -85,6 +88,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
             if (db.cnn.is_opened ()) {
                 db.close ();
+                db = null;
             }
         });
         
@@ -103,7 +107,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         });
 
         welcome.execute_query.connect((query) => {
-            db.run_query (query);
+            return run_query (query);
+        });
+
+        welcome.execute_select.connect((query) => {
+            return run_select (query);
         });
 
         overlay = new Gtk.Overlay ();
@@ -142,15 +150,15 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                         handled = true;
                         break;
                     case Gdk.Key.l:
-                        if (! settings.show_library) {
+                        if (! settings.show_library && db == null) {
                             show_library ();
                         }
                         handled = true;
                         break;
-                    case Gdk.Key.f:
-                        //  on_show_search ();
-                        handled = true;
-                        break;
+                    //  case Gdk.Key.f:
+                    //      on_show_search ();
+                    //      handled = true;
+                    //      break;
                     case Gdk.Key.comma:
                         open_preference ();
                         handled = true;
@@ -216,6 +224,43 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     public void connection_warning (Error e, string title) {
         var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Unable to Connect to " + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+        message_dialog.transient_for = window;
+        
+        var suggested_button = new Gtk.Button.with_label ("Close");
+        message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+        message_dialog.show_all ();
+        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
+        
+        message_dialog.destroy ();
+    }
+
+    public int run_query (string query) {
+        try
+        {
+            output_query = db.run_query (query);
+        }
+        catch (Error e)
+        {
+            query_error (e);
+        }
+        return output_query;
+    }
+
+    public Object run_select (string query) {
+        try
+        {
+            output_select = db.run_select (query);
+        }
+        catch (Error e)
+        {
+            query_error (e);
+        }
+        return output_select;
+    }
+
+    public void query_error (Error e) {
+        var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Unable to Execute Query", e.message, "dialog-error", Gtk.ButtonsType.NONE);
         message_dialog.transient_for = window;
         
         var suggested_button = new Gtk.Button.with_label ("Close");

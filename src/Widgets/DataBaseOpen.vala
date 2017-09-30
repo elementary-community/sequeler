@@ -26,7 +26,8 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.Button run_button;
     public Sequeler.QueryBuilder query_builder;
 
-    public signal void execute_query (string query);
+    public signal int execute_query (string query);
+    public signal Object execute_select (string query);
 
     public DataBaseOpen () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -90,7 +91,16 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
     public void connect_signals () {
         run_button.clicked.connect (() => {
-            execute_query (query_builder.get_text ());
+            var query = query_builder.get_text ();
+            //  query.replace ("\"", "\\");
+            query.replace ("\"", "\\");
+            stdout.printf ("%s\n", query);
+
+            //  if ("select" in query.down ()) {
+            //      execute_select (query);
+            //  } else {
+            //      execute_query (query);
+            //  }
         });
     }
 }
