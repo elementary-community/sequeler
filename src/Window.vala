@@ -278,6 +278,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         headerbar.subtitle = data["username"] + "@" + data["host"];
         headerbar.go_back_button.visible = false;
         headerbar.show_logout_button ();
+        welcome.database.spinner.stop ();
+        welcome.database.loading_msg.visible = false;
+        welcome.database.query_builder.buffer.text = "";
     }
 
     protected override bool delete_event (Gdk.EventAny event) {

@@ -25,7 +25,9 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.Box toolbar;
     public Gtk.Button run_button;
     public Gtk.Spinner spinner;
+    public Gtk.Label result_message;
     public Gtk.Label loading_msg;
+    public Gtk.TreeView results_view;
     public Sequeler.QueryBuilder query_builder;
 
     public signal int execute_query (string query);
@@ -94,7 +96,21 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public void build_treeview () {
         var results = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         results.height_request = 100;
+
         results.add (toolbar);
+
+        var scroll = new Gtk.ScrolledWindow (null, null);
+        scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+
+        result_message = new Gtk.Label (_("No Results Available"));
+        result_message.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+        result_message.valign = Gtk.Align.CENTER;
+
+        scroll.add (result_message);
+
+        results_view = new Gtk.TreeView ();
+
+        results.pack_start (scroll, true, true, 0);
 
         pane.pack2 (results, true, false);
     }
@@ -104,23 +120,40 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
             spinner.start ();
             loading_msg.visible = true;
+            result_message.visible = false;
+            result_message.no_show_all = true;
 
             GLib.Timeout.add_seconds(0, () => {                 
                 var query = query_builder.get_text ();
 
                 if ("select" in query.down ()) {
                     var response = execute_select (query);
-                    stdout.printf("Query: '%s'\n", response.dump_as_string ());
                     spinner.stop ();
                     loading_msg.visible = false;
+                    handle_select_response (response);
                 } else {
                     var response = execute_query (query);
-                    stdout.printf("Query: '%i'\n", response);
                     spinner.stop ();
                     loading_msg.visible = false;
+                    handle_query_response (response);
                 }
                 return false; 
             });
         });
+    }
+
+    public void handle_query_response (int response) {
+        if (response == 0) {
+            result_message.visible = false;
+            result_message.no_show_all = true;
+        } else if (response == 1) {
+            result_message.visible = true;
+            result_message.no_show_all = false;
+            result_message.label = _("Query Successfully Executed!");
+        }
+    }
+
+    public void handle_select_response (Gda.DataModel response) {
+
     }
 }
