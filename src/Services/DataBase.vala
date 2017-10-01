@@ -47,6 +47,7 @@ public class Sequeler.DataBase : Object {
 
     public void open () throws Error {
         cnn = Gda.Connection.open_from_string (null, constr, null, Gda.ConnectionOptions.NONE);
+        cnn.execution_timer = true;
     }
 
     public int run_query (string query) throws Error requires (cnn.is_opened ()) {

@@ -27,6 +27,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.Spinner spinner;
     public Gtk.Label result_message;
     public Gtk.Label loading_msg;
+    public Gtk.ScrolledWindow scroll_results;
     public Gtk.TreeView results_view;
     public Sequeler.QueryBuilder query_builder;
 
@@ -99,18 +100,21 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
         results.add (toolbar);
 
-        var scroll = new Gtk.ScrolledWindow (null, null);
-        scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-
         result_message = new Gtk.Label (_("No Results Available"));
         result_message.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+        result_message.margin_top = 30;
         result_message.valign = Gtk.Align.CENTER;
 
-        scroll.add (result_message);
+        //  results.add (result_message);
 
-        results_view = new Gtk.TreeView ();
+        scroll_results = new Gtk.ScrolledWindow (null, null);
+        scroll_results.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
-        results.pack_start (scroll, true, true, 0);
+        //  results_view = new ResultsView ();
+
+        //  scroll_results.add (results_view);
+
+        results.pack_start (scroll_results, true, true, 0);
 
         pane.pack2 (results, true, false);
     }
@@ -154,6 +158,89 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     }
 
     public void handle_select_response (Gda.DataModel response) {
+        if (results_view != null) {
+            scroll_results.remove (results_view);
+            results_view = null;
+        }
 
+        Gtk.TreeModel data_model = Gdaui.DataStore.new (response);
+
+        //  Gda.DataModelIter _iter = response.create_iter ();
+        
+        //  while (_iter.move_next ()) {
+            //  stdout.printf ("%s\n",_iter.get_value_at (2).get_string ());
+            //  data_model.append (out _iter);
+        //  }
+
+        results_view = new Gtk.TreeView.with_model (data_model);
+
+        for (int i = 0; i < response.get_n_columns (); i++) {
+            results_view.insert_column_with_attributes (-1, response.get_column_name (i), new Gtk.CellRendererText ());
+        }
+
+        scroll_results.add (results_view);
+
+        scroll_results.show_all ();
+
+        //  Gtk.TreeView view = new Gtk.TreeView.with_model (model);
+        //  Gda.DataModelIter _iter = response.create_iter ();
+
+        //  setup_tree_view (response, _iter);
+
+        //  while (_iter.move_next ()) {
+        //      stdout.printf ("%s\n",_iter.get_row ().to_string ());
+        //  }
+
+        //  stdout.printf ("%s\n",response.dump_as_string ());
+        //  stdout.printf ("Rows: %s\n",response.get_n_rows ().to_string ());
+        //  stdout.printf ("Columns: %s\n",response.get_n_columns ().to_string ());
     }
+
+    //  public Gda.DataModelIter create_data_iterator (Gda.DataModel model) {
+    //      this.iter = model.create_iter ();
+    //      this._current_pos = -1;
+    //      this.pos_init = 0;
+    //      this.maxpos = this.iter.data_model.get_n_columns () * this.iter.data_model.get_n_rows ();
+    //      this.filtered = false;
+    //  }
+
+    public void setup_tree_view (Gda.DataModel data, Gda.DataModelIter _iter) {
+        //  var listmodel = new Gtk.ListStore (data.get_n_columns ());
+        //  results_view.set_model (listmodel);
+
+        //  for (int i = 0; i < data.get_n_columns (); i++) {
+        //      results_view.insert_column_with_attributes (-1, data.get_column_name (i), new Gtk.CellRendererText (), "text", i);
+        //  }
+
+        //  while (_iter.move_next ()) {
+        //      results_view.insert_column_with_attributes (-1, "Account Name", new Gtk.CellRendererText (), "text", _iter.get_row ());
+        //  }
+
+        //  results_view.insert_column_with_attributes (-1, "Account Name", new Gtk.CellRendererText (), "text", 0);
+        //  results_view.insert_column_with_attributes (-1, "Type", new Gtk.CellRendererText (), "text", 1);
+        //  results_view.insert_column_with_attributes (-1, "Balance", new Gtk.CellRendererText (), "text", 2, "foreground", 3);
+
+        //  Gtk.TreeIter iter;
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Visacard", 1, "card", 2, "102,10", 3, "red");
+
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+
+        //  listmodel.append (out iter);
+        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+    }
+
 }
