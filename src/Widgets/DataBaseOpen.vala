@@ -150,8 +150,6 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public void handle_select_response (Gda.DataModel? response) {
         hide_loading ();
 
-        stdout.printf ("Response: %s\n", response.dump_as_string ());
-
         if (response == null) {
             result_message.label = _("Unable to process Query!");
             return;

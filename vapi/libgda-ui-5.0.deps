@@ -1,4 +1,5 @@
 glib-2.0
 gobject-2.0
 libxml-2.0
+libgda-ui-5.0
 gtk+-3.0
