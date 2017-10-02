@@ -8,10 +8,5 @@ Icon=com.github.alecaddd.sequeler
 Terminal=false
 Type=Application
 X-GNOME-Gettext-Domain=sequeler
-Keywords=SQL;MySql;Database;MariaDB;S3;
+Keywords=SQL;MySql;Database;MariaDB;S3;PostgreSQL;
 X-GNOME-UsesNotifications=true
-Actions=AboutDialog;
-
-[Desktop Action AboutDialog]
-Exec=com.github.alecaddd.sequeler --about
-Name=About Sequeler

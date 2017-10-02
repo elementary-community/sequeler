@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
 Upstream-Name: sequeler
-Source: https://github.com/Alecaddd/sequeler
+Source: https://github.com/alecaddd/sequeler
 
 Files: src/* data/* cmake/* debian/*
 Copyright: 2013 elementary LLC.
