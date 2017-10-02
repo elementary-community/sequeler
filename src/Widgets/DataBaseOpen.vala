@@ -33,7 +33,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public int column_pos;
 
     public signal int execute_query (string query);
-    public signal Gda.DataModel execute_select (string query);
+    public signal Gda.DataModel? execute_select (string query);
 
     public DataBaseOpen () {
         orientation = Gtk.Orientation.VERTICAL;
@@ -85,10 +85,8 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         run_button.sensitive = false;
 
         spinner = new Gtk.Spinner ();
-        spinner.visible = false;
-        spinner.no_show_all = true;
 
-        loading_msg = new Gtk.Label ("running query...");
+        loading_msg = new Gtk.Label (_("Running Query..."));
         loading_msg.visible = false;
         loading_msg.no_show_all = true;
 
@@ -96,9 +94,9 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         result_message.visible = false;
         result_message.no_show_all = true;
 
-        toolbar.pack_start (spinner, false, false, 10);
         toolbar.pack_start (loading_msg, false, false, 10);
         toolbar.pack_start (result_message, false, false, 10);
+        toolbar.pack_start (spinner, false, false, 10);
         toolbar.pack_end (run_button, false, false, 0);
     }
 
@@ -119,21 +117,20 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public void connect_signals () {
         run_button.clicked.connect (() => {
 
-            spinner.start ();
-            loading_msg.visible = true;
-            loading_msg.no_show_all = false;
-            spinner.visible = true;
-            result_message.visible = false;
+            show_loading ();
 
-            GLib.Timeout.add_seconds(0, () => {                 
+            if (results_view != null) {
+                scroll_results.remove (results_view);
+                results_view = null;
+            }
+
+            GLib.Timeout.add_seconds(0, () => {
                 var query = query_builder.get_text ();
 
                 if ("select" in query.down ()) {
-                    var response = execute_select (query);
-                    handle_select_response (response);
+                    handle_select_response (execute_select (query));
                 } else {
-                    var response = execute_query (query);
-                    handle_query_response (response);
+                    handle_query_response (execute_query (query));
                 }
                 return false; 
             });
@@ -141,11 +138,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     }
 
     public void handle_query_response (int response) {
-        spinner.stop ();
-        spinner.no_show_all = true;
-        loading_msg.visible = false;
-        result_message.visible = true;
-        result_message.no_show_all = false;
+        hide_loading ();
 
         if (response == 0) {
             result_message.label = _("Unable to process Query!");
@@ -154,17 +147,15 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         }
     }
 
-    public void handle_select_response (Gda.DataModel response) {
-        if (results_view != null) {
-            scroll_results.remove (results_view);
-            results_view = null;
-        }
+    public void handle_select_response (Gda.DataModel? response) {
+        hide_loading ();
 
-        spinner.stop ();
-        spinner.no_show_all = true;
-        loading_msg.visible = false;
-        result_message.visible = true;
-        result_message.no_show_all = false;
+        stdout.printf ("Response: %s\n", response.dump_as_string ());
+
+        if (response == null) {
+            result_message.label = _("Unable to process Query!");
+            return;
+        }
         
         results_view = new Gdaui.RawGrid (response);
         results_view.enable_grid_lines = Gtk.TreeViewGridLines.HORIZONTAL;
@@ -176,6 +167,24 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         scroll_results.show_all ();
 
         result_message.label = _("Query Successfully Executed!");
+    }
+
+    public void hide_loading () {
+        spinner.stop ();
+        loading_msg.visible = false;
+        loading_msg.no_show_all = true;
+
+        result_message.visible = true;
+        result_message.no_show_all = false;
+    }
+
+    public void show_loading () {
+        spinner.start ();
+        loading_msg.visible = true;
+        loading_msg.no_show_all = false;
+
+        result_message.visible = false;
+        result_message.no_show_all = true;
     }
 
 }

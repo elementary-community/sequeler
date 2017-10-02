@@ -54,7 +54,7 @@ public class Sequeler.DataBase : Object {
         return cnn.execute_non_select_command (query);
     }
 
-    public Gda.DataModel run_select (string query) throws Error requires (cnn.is_opened ()) {
+    public Gda.DataModel? run_select (string query) throws Error requires (cnn.is_opened ()) {
         return cnn.execute_select_command (query);
     }
 

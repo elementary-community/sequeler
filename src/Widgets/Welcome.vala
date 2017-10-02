@@ -31,7 +31,7 @@ public class Sequeler.Welcome : Gtk.Box {
     public signal void create_connection (Gee.HashMap? data);
     public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.Button button);
     public signal int execute_query (string query);
-    public signal Gda.DataModel execute_select (string query);
+    public signal Gda.DataModel? execute_select (string query);
 
     public Welcome () {
         orientation = Gtk.Orientation.HORIZONTAL;
