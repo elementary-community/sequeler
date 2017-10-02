@@ -30,6 +30,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.ScrolledWindow scroll_results;
     public Gtk.TreeView results_view;
     public Sequeler.QueryBuilder query_builder;
+    public int column_pos;
 
     public signal int execute_query (string query);
     public signal Gda.DataModel execute_select (string query);
@@ -84,13 +85,20 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         run_button.sensitive = false;
 
         spinner = new Gtk.Spinner ();
+        spinner.visible = false;
+        spinner.no_show_all = true;
 
         loading_msg = new Gtk.Label ("running query...");
         loading_msg.visible = false;
         loading_msg.no_show_all = true;
 
+        result_message = new Gtk.Label (_("No Results Available"));
+        result_message.visible = false;
+        result_message.no_show_all = true;
+
         toolbar.pack_start (spinner, false, false, 10);
         toolbar.pack_start (loading_msg, false, false, 10);
+        toolbar.pack_start (result_message, false, false, 10);
         toolbar.pack_end (run_button, false, false, 0);
     }
 
@@ -100,19 +108,8 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
         results.add (toolbar);
 
-        result_message = new Gtk.Label (_("No Results Available"));
-        result_message.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
-        result_message.margin_top = 30;
-        result_message.valign = Gtk.Align.CENTER;
-
-        //  results.add (result_message);
-
         scroll_results = new Gtk.ScrolledWindow (null, null);
         scroll_results.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-
-        //  results_view = new ResultsView ();
-
-        //  scroll_results.add (results_view);
 
         results.pack_start (scroll_results, true, true, 0);
 
@@ -124,21 +121,18 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
             spinner.start ();
             loading_msg.visible = true;
+            loading_msg.no_show_all = false;
+            spinner.visible = true;
             result_message.visible = false;
-            result_message.no_show_all = true;
 
             GLib.Timeout.add_seconds(0, () => {                 
                 var query = query_builder.get_text ();
 
                 if ("select" in query.down ()) {
                     var response = execute_select (query);
-                    spinner.stop ();
-                    loading_msg.visible = false;
                     handle_select_response (response);
                 } else {
                     var response = execute_query (query);
-                    spinner.stop ();
-                    loading_msg.visible = false;
                     handle_query_response (response);
                 }
                 return false; 
@@ -147,12 +141,15 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     }
 
     public void handle_query_response (int response) {
+        spinner.stop ();
+        spinner.no_show_all = true;
+        loading_msg.visible = false;
+        result_message.visible = true;
+        result_message.no_show_all = false;
+
         if (response == 0) {
-            result_message.visible = false;
-            result_message.no_show_all = true;
+            result_message.label = _("Unable to process Query!");
         } else if (response == 1) {
-            result_message.visible = true;
-            result_message.no_show_all = false;
             result_message.label = _("Query Successfully Executed!");
         }
     }
@@ -163,84 +160,22 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
             results_view = null;
         }
 
-        Gtk.TreeModel data_model = Gdaui.DataStore.new (response);
-
-        //  Gda.DataModelIter _iter = response.create_iter ();
+        spinner.stop ();
+        spinner.no_show_all = true;
+        loading_msg.visible = false;
+        result_message.visible = true;
+        result_message.no_show_all = false;
         
-        //  while (_iter.move_next ()) {
-            //  stdout.printf ("%s\n",_iter.get_value_at (2).get_string ());
-            //  data_model.append (out _iter);
-        //  }
-
-        results_view = new Gtk.TreeView.with_model (data_model);
-
-        for (int i = 0; i < response.get_n_columns (); i++) {
-            results_view.insert_column_with_attributes (-1, response.get_column_name (i), new Gtk.CellRendererText ());
-        }
+        results_view = new Gdaui.RawGrid (response);
+        results_view.enable_grid_lines = Gtk.TreeViewGridLines.HORIZONTAL;
+        results_view.rules_hint = true;
+        results_view.show_expanders = true;
 
         scroll_results.add (results_view);
 
         scroll_results.show_all ();
 
-        //  Gtk.TreeView view = new Gtk.TreeView.with_model (model);
-        //  Gda.DataModelIter _iter = response.create_iter ();
-
-        //  setup_tree_view (response, _iter);
-
-        //  while (_iter.move_next ()) {
-        //      stdout.printf ("%s\n",_iter.get_row ().to_string ());
-        //  }
-
-        //  stdout.printf ("%s\n",response.dump_as_string ());
-        //  stdout.printf ("Rows: %s\n",response.get_n_rows ().to_string ());
-        //  stdout.printf ("Columns: %s\n",response.get_n_columns ().to_string ());
-    }
-
-    //  public Gda.DataModelIter create_data_iterator (Gda.DataModel model) {
-    //      this.iter = model.create_iter ();
-    //      this._current_pos = -1;
-    //      this.pos_init = 0;
-    //      this.maxpos = this.iter.data_model.get_n_columns () * this.iter.data_model.get_n_rows ();
-    //      this.filtered = false;
-    //  }
-
-    public void setup_tree_view (Gda.DataModel data, Gda.DataModelIter _iter) {
-        //  var listmodel = new Gtk.ListStore (data.get_n_columns ());
-        //  results_view.set_model (listmodel);
-
-        //  for (int i = 0; i < data.get_n_columns (); i++) {
-        //      results_view.insert_column_with_attributes (-1, data.get_column_name (i), new Gtk.CellRendererText (), "text", i);
-        //  }
-
-        //  while (_iter.move_next ()) {
-        //      results_view.insert_column_with_attributes (-1, "Account Name", new Gtk.CellRendererText (), "text", _iter.get_row ());
-        //  }
-
-        //  results_view.insert_column_with_attributes (-1, "Account Name", new Gtk.CellRendererText (), "text", 0);
-        //  results_view.insert_column_with_attributes (-1, "Type", new Gtk.CellRendererText (), "text", 1);
-        //  results_view.insert_column_with_attributes (-1, "Balance", new Gtk.CellRendererText (), "text", 2, "foreground", 3);
-
-        //  Gtk.TreeIter iter;
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Visacard", 1, "card", 2, "102,10", 3, "red");
-
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
-
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
-
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
-
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
-
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
-
-        //  listmodel.append (out iter);
-        //  listmodel.set (iter, 0, "My Mastercard", 1, "card", 2, "10,20", 3, "red");
+        result_message.label = _("Query Successfully Executed!");
     }
 
 }
