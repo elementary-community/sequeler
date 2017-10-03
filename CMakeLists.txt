@@ -85,13 +85,13 @@ glib_compile_resources(GLIB_RESOURCES_ICONS SOURCE /data/assets.gresource.xml)
 add_executable(${EXEC_NAME} ${VALA_C} ${GLIB_RESOURCES_ICONS})
 
 # uninstall target
-# configure_file (
-#     "${CMAKE_SOURCE_DIR}/cmake/src/Uninstall.cmake"
-#     "${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake"
-#     IMMEDIATE @ONLY)
+configure_file (
+    "${CMAKE_SOURCE_DIR}/cmake/Uninstall.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake"
+    IMMEDIATE @ONLY)
 
-# add_custom_target (uninstall
-#     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake)
+add_custom_target (uninstall
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake)
 
 # install the binaries we just made
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
