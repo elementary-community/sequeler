@@ -1,4 +1,4 @@
-Source: com.github.alecaddd.squeler
+Source: com.github.alecaddd.sequeler
 Section: editors
 Priority: optional
 Maintainer: Alessandro Castellani <castellani.ale@gmail.com>
@@ -13,7 +13,7 @@ Build-Depends: cmake,
                libevdev-dev
 
 Standards-Version: 3.9.6
-Package: com.github.alecaddd.squeler
+Package: com.github.alecaddd.sequeler
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Pre-Depends: dpkg (>= 1.15.6)
