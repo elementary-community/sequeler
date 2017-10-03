@@ -10,7 +10,11 @@ Build-Depends: cmake,
                libgranite-dev,
                libjson-glib-dev,
                libgudev-1.0-dev,
-               libevdev-dev
+               libevdev-dev,
+               libgtksourceview-3.0-dev,
+               libxml2-dev,
+               libglib2.0-dev,
+               libgda-5.0-dev,
 
 Standards-Version: 3.9.6
 Package: com.github.alecaddd.sequeler
