@@ -205,7 +205,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
 }
 
-public class SettingsView : Granite.SimpleSettingsPage {
+public class SettingsView : Sequeler.SimpleSettingsPage {
     
     public static Sequeler.ConnectionDialog dialog;
     public static Gee.HashMap<string, string>? data;
