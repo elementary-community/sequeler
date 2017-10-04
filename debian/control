@@ -17,7 +17,6 @@ Build-Depends: cmake (>= 2.8),
                libxml2-dev,
                libglib2.0-dev,
                libgda-5.0-dev
-
 Standards-Version: 3.9.3
 
 Package: com.github.alecaddd.sequeler
