@@ -12,16 +12,18 @@
 	<provides>
 		<binary>sequeler</binary>
 	</provides>
-	<release version="0.1.0" date="2017-10-02">
-      <description>
-        <p>Initial Release</p>
-        <ul>
-          <li>Store your Database connections</li>
-          <li>Quickly connect to a Local or Remote Database</li>
-          <li>Write SQL queries in the built-in code editor</li>
-        </ul>
-      </description>
-    </release>
+	<releases>
+		<release version="0.1.0" date="2017-10-02">
+			<description>
+				<p>Initial Release</p>
+				<ul>
+				<li>Store your Database connections</li>
+				<li>Quickly connect to a Local or Remote Database</li>
+				<li>Write SQL queries in the built-in code editor</li>
+				</ul>
+			</description>
+		</release>
+	<releases>
 	<screenshots>
 		<screenshot type="default">
 			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot.png</image>
