@@ -80,7 +80,7 @@ OPTIONS
     --target-glib=2.38
 )
 
-include (GResource)
+include (gresource)
 glib_compile_resources(GLIB_RESOURCES_ICONS SOURCE /data/assets.gresource.xml)
 
 # tell cmake what to call the executable we just made
