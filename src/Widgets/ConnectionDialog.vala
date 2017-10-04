@@ -26,14 +26,14 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public Sequeler.ButtonType test_button;
     public Sequeler.ButtonType connect_button;
 
-    private Gtk.Entry connection_id;
-    private Entry title_entry;
-    private Gtk.ColorButton color_entry;
-    private Gtk.ComboBox db_type_entry;
-    private Entry db_host_entry;
-    private Entry db_name_entry;
-    private Entry db_username_entry;
-    private Entry db_password_entry;
+    public Gtk.Entry connection_id;
+    public Entry title_entry;
+    public Gtk.ColorButton color_entry;
+    public Gtk.ComboBox db_type_entry;
+    public Entry db_host_entry;
+    public Entry db_name_entry;
+    public Entry db_username_entry;
+    public Entry db_password_entry;
 
     public Gtk.Spinner spinner;
     public ResponseMessage response_msg;
@@ -73,7 +73,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         add_action_widget (save_button, 3);
         add_action_widget (connect_button, 4);
 
-        get_content_area ().add (new SettingsView ());
+        get_content_area ().add (new SettingsView (settings));
 
         response_msg = new ResponseMessage ();
         spinner = new Gtk.Spinner ();
@@ -203,156 +203,157 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         connect_button.sensitive = false;
     }
 
-    public class SettingsView : Granite.SimpleSettingsPage {
+}
 
-        public static ConnectionDialog dialog;
-        public static Gee.HashMap<string, string>? data;
+public class SettingsView : Granite.SimpleSettingsPage {
+    
+    public static Sequeler.ConnectionDialog dialog;
+    public static Gee.HashMap<string, string>? data;
 
-        public static Gee.HashMap<int, string> dbs;
+    public static Gee.HashMap<int, string> dbs;
 
-        enum Column {
-            DBTYPE
+    enum Column {
+        DBTYPE
+    }
+
+    public SettingsView (Sequeler.Settings settings) {
+        Object (
+            activatable: false,
+            icon_name: "drive-multidisk",
+            title: "New Connection"
+        );
+
+        dbs = new Gee.HashMap<int, string> ();
+        dbs.set (0,"MySQL");
+        dbs.set (1,"MariaDB");
+        dbs.set (2,"PostgreSQL");
+        dbs.set (3,"SQLite");
+
+        var id = settings.tot_connections;
+        dialog.connection_id = new Gtk.Entry ();
+        dialog.connection_id.text = id.to_string ();
+
+        var title_label = new Label (_("Name:"));
+        dialog.title_entry = new Entry (_("Connection's name"), title);
+
+        var color_label = new Label (_("Color:"));
+        dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
+        dialog.color_entry.set_use_alpha (true);
+
+        var db_host_label = new Label (_("Host:"));
+        dialog.db_host_entry = new Entry (_("127.0.0.1"), null);
+
+        var db_type_label = new Label (_("Database Type:"));
+        Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
+        
+        for (int i = 0; i < dbs.size; i++){
+            Gtk.TreeIter iter;
+            liststore.append (out iter);
+            liststore.set (iter, Column.DBTYPE, dbs[i]);
         }
 
-        public SettingsView () {
-            Object (
-                activatable: false,
-                icon_name: "drive-multidisk",
-                title: "New Connection"
-            );
+        dialog.db_type_entry = new Gtk.ComboBox.with_model (liststore);
+        Gtk.CellRendererText cell = new Gtk.CellRendererText ();
+        dialog.db_type_entry.pack_start (cell, false);
 
-            dbs = new Gee.HashMap<int, string> ();
-            dbs.set (0,"MySQL");
-            dbs.set (1,"MariaDB");
-            dbs.set (2,"PostgreSQL");
-            dbs.set (3,"SQLite");
+        dialog.db_type_entry.set_attributes (cell, "text", Column.DBTYPE);
 
-            var id = settings.tot_connections;
-            dialog.connection_id = new Gtk.Entry ();
-            dialog.connection_id.text = id.to_string ();
-    
-            var title_label = new Label (_("Name:"));
-            dialog.title_entry = new Entry (_("Connection's name"), title);
+        /* Set the first item in the list to be selected (active). */
+        dialog.db_type_entry.set_active (0);
 
-            var color_label = new Label (_("Color:"));
-            dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
-            dialog.color_entry.set_use_alpha (true);
+        var db_name_label = new Label (_("Database Name:"));
+        dialog.db_name_entry = new Entry ("", null);
+        dialog.db_name_entry.changed.connect (() => { 
+            dialog.change_sensitivity ();
+        });
 
-            var db_host_label = new Label (_("Host:"));
-            dialog.db_host_entry = new Entry (_("127.0.0.1"), null);
+        var db_username_label = new Label (_("Username:"));
+        dialog.db_username_entry = new Entry ("", null);
+        dialog.db_username_entry.changed.connect (() => { 
+            dialog.change_sensitivity ();
+        });
 
-            var db_type_label = new Label (_("Database Type:"));
-            Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
-            
-            for (int i = 0; i < dbs.size; i++){
-                Gtk.TreeIter iter;
-                liststore.append (out iter);
-                liststore.set (iter, Column.DBTYPE, dbs[i]);
-            }
-    
-            dialog.db_type_entry = new Gtk.ComboBox.with_model (liststore);
-            Gtk.CellRendererText cell = new Gtk.CellRendererText ();
-            dialog.db_type_entry.pack_start (cell, false);
-    
-            dialog.db_type_entry.set_attributes (cell, "text", Column.DBTYPE);
-    
-            /* Set the first item in the list to be selected (active). */
-            dialog.db_type_entry.set_active (0);
+        var db_password_label = new Label (_("Password:"));
+        dialog.db_password_entry = new Entry ("", null);
+        dialog.db_password_entry.set_visibility (false);
+        dialog.db_password_entry.changed.connect (() => { 
+            dialog.change_sensitivity ();
+        });
 
-            var db_name_label = new Label (_("Database Name:"));
-            dialog.db_name_entry = new Entry ("", null);
-            dialog.db_name_entry.changed.connect (() => { 
-                dialog.change_sensitivity ();
-            });
+        content_area.attach (title_label, 0, 0, 1, 1);
+        content_area.attach (dialog.title_entry, 1, 0, 1, 1);
+        content_area.attach (color_label, 0, 1, 1, 1);
+        content_area.attach (dialog.color_entry, 1, 1, 1, 1);
 
-            var db_username_label = new Label (_("Username:"));
-            dialog.db_username_entry = new Entry ("", null);
-            dialog.db_username_entry.changed.connect (() => { 
-                dialog.change_sensitivity ();
-            });
+        content_area.attach (new Gtk.SeparatorMenuItem (), 0, 2, 2, 1);
 
-            var db_password_label = new Label (_("Password:"));
-            dialog.db_password_entry = new Entry ("", null);
-            dialog.db_password_entry.set_visibility (false);
-            dialog.db_password_entry.changed.connect (() => { 
-                dialog.change_sensitivity ();
-            });
+        content_area.attach (db_host_label, 0, 3, 1, 1);
+        content_area.attach (dialog.db_host_entry, 1, 3, 1, 1);
 
-            content_area.attach (title_label, 0, 0, 1, 1);
-            content_area.attach (dialog.title_entry, 1, 0, 1, 1);
-            content_area.attach (color_label, 0, 1, 1, 1);
-            content_area.attach (dialog.color_entry, 1, 1, 1, 1);
+        content_area.attach (db_type_label, 0, 4, 1, 1);
+        content_area.attach (dialog.db_type_entry, 1, 4, 1, 1);
+        content_area.attach (db_name_label, 0, 5, 1, 1);
+        content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
+        content_area.attach (db_username_label, 0, 6, 1, 1);
+        content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
+        content_area.attach (db_password_label, 0, 7, 1, 1);
+        content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
 
-            content_area.attach (new Gtk.SeparatorMenuItem (), 0, 2, 2, 1);
+        dialog.title_entry.changed.connect (() => {
+            title = dialog.title_entry.text;
+        });
 
-            content_area.attach (db_host_label, 0, 3, 1, 1);
-            content_area.attach (dialog.db_host_entry, 1, 3, 1, 1);
+        if (data != null) {
+            dialog.connection_id.text = data["id"];
+            dialog.title_entry.text = data["title"];
 
-            content_area.attach (db_type_label, 0, 4, 1, 1);
-            content_area.attach (dialog.db_type_entry, 1, 4, 1, 1);
-            content_area.attach (db_name_label, 0, 5, 1, 1);
-            content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
-            content_area.attach (db_username_label, 0, 6, 1, 1);
-            content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
-            content_area.attach (db_password_label, 0, 7, 1, 1);
-            content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
+            Gdk.RGBA color = Gdk.RGBA ();
+            color.parse (data["color"]);
+            dialog.color_entry.rgba = color;
 
-            dialog.title_entry.changed.connect (() => {
-                title = dialog.title_entry.text;
-            });
+            dialog.db_host_entry.text = data["host"];
 
-            if (data != null) {
-                dialog.connection_id.text = data["id"];
-                dialog.title_entry.text = data["title"];
-
-                Gdk.RGBA color = Gdk.RGBA ();
-                color.parse (data["color"]);
-                dialog.color_entry.rgba = color;
-
-                dialog.db_host_entry.text = data["host"];
-
-                foreach (var entry in dbs.entries) {
-                    if (entry.value == data["type"]) {
-                        dialog.db_type_entry.set_active (entry.key);
-                    }
+            foreach (var entry in dbs.entries) {
+                if (entry.value == data["type"]) {
+                    dialog.db_type_entry.set_active (entry.key);
                 }
-
-                dialog.db_name_entry.text = data["name"];
-                dialog.db_username_entry.text = data["username"];
-                dialog.db_password_entry.text = data["password"];
             }
 
+            dialog.db_name_entry.text = data["name"];
+            dialog.db_username_entry.text = data["username"];
+            dialog.db_password_entry.text = data["password"];
+        }
+
+    }
+}
+
+public class Label : Gtk.Label {
+    public Label (string text) {
+        label = text;
+        xalign = 1;
+    }
+}
+
+public class Entry : Gtk.Entry {
+    public Entry (string* placeholder, string* val) {
+        hexpand = true;
+
+        if (placeholder != null) {
+            placeholder_text = placeholder;
+        }
+
+        if (val != null) {
+            text = val;
         }
     }
+}
 
-    private class Label : Gtk.Label {
-        public Label (string text) {
-            label = text;
-            xalign = 1;
-        }
-    }
-    
-    private class Entry : Gtk.Entry {
-        public Entry (string* placeholder, string* val) {
-            hexpand = true;
-
-            if (placeholder != null) {
-                placeholder_text = placeholder;
-            }
-
-            if (val != null) {
-                text = val;
-            }
-        }
-    }
-
-    public class ResponseMessage : Gtk.Label {
-        public ResponseMessage () {
-            get_style_context ().add_class ("h4");
-            halign = Gtk.Align.CENTER;
-            valign = Gtk.Align.CENTER;
-            set_justify (Gtk.Justification.CENTER);
-            set_line_wrap (true);
-        }
+public class ResponseMessage : Gtk.Label {
+    public ResponseMessage () {
+        get_style_context ().add_class ("h4");
+        halign = Gtk.Align.CENTER;
+        valign = Gtk.Align.CENTER;
+        set_justify (Gtk.Justification.CENTER);
+        set_line_wrap (true);
     }
 }
