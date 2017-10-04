@@ -28,7 +28,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.Label result_message;
     public Gtk.Label loading_msg;
     public Gtk.ScrolledWindow scroll_results;
-    public Gtk.TreeView results_view;
+    public Gtk.TextView results_view;
     public Sequeler.QueryBuilder query_builder;
     public int column_pos;
 
@@ -155,10 +155,11 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
             return;
         }
         
-        results_view = new Gdaui.RawGrid (response);
-        results_view.enable_grid_lines = Gtk.TreeViewGridLines.HORIZONTAL;
-        results_view.rules_hint = true;
-        results_view.show_expanders = true;
+        results_view = new Gtk.TextView ();
+        results_view.editable = false;
+        results_view.cursor_visible = false;
+
+        results_view.buffer.text = response.dump_as_string ();
 
         scroll_results.add (results_view);
 

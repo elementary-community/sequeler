@@ -1,3 +1,9 @@
+Format: http://dep.debian.net/deps/dep5
+Upstream-Name: com.github.alecaddd.sequeler
+Source: https://github.com/Alecaddd/sequeler
+
+Files: src/* data/* cmake/* debian/* schemas/*
+
 Upstream Author(s):
 
     Alessandro Castellani <castellani.ale@gmail.com>

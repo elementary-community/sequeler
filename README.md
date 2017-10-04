@@ -19,13 +19,12 @@ You can install Sequeler by compiling from the source, here's the list of depend
  - `gobject-2.0`
  - `libxml-2.0`
  - `libgda-5.0`
- - `libgda-ui-5.0`
  - `gtksourceview-3.0`
 
 ## Building
 ```
 mkdir build/ && cd build
-cmake ..
+cmake -DCMAKE_INSTALL_PREFIX=/usr ../
 make && sudo make install
 ```
 

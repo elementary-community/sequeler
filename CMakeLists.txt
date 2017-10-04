@@ -29,7 +29,7 @@ add_definitions(-w)
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 gobject-2.0 libxml-2.0 libgda-5.0 libgda-ui-5.0 gtksourceview-3.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite glib-2.0 gee-0.8 gobject-2.0 libxml-2.0 libgda-5.0 gtksourceview-3.0)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -72,7 +72,6 @@ PACKAGES
     gobject-2.0
     libxml-2.0
     libgda-5.0
-    libgda-ui-5.0
     gtksourceview-3.0
 OPTIONS
     --vapidir=${CMAKE_SOURCE_DIR}/vapi
