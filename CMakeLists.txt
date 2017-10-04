@@ -74,7 +74,10 @@ PACKAGES
     libgda-5.0
     gtksourceview-3.0
 OPTIONS
+    -g
     --vapidir=${CMAKE_SOURCE_DIR}/vapi
+    --thread
+    --target-glib=2.38
 )
 
 include (GResource)
