@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com> -->
 <component type="desktop">
-	<id>com.github.alecaddd.sequeler.desktop</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0+</project_license>
-	<name>Sequeler</name>
-	<summary>Friendly SQL Client</summary>
-	<description>
-		<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
-	</description>
-	<provides>
-		<binary>sequeler</binary>
-	</provides>
-	<releases>
-		<release version="0.1.0" date="2017-10-02">
-			<description>
-				<p>Initial Release</p>
-				<ul>
-				<li>Store your Database connections</li>
-				<li>Quickly connect to a Local or Remote Database</li>
-				<li>Write SQL queries in the built-in code editor</li>
-				</ul>
-			</description>
-		</release>
-	<releases>
-	<screenshots>
-		<screenshot type="default">
-			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot1.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot2.png</image>
-		</screenshot>
-		<screenshot>
-			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot3.png</image>
-		</screenshot>
-	</screenshots>
-	<developer_name>Alessandro "Alecaddd" Castellani</developer_name>
-	<url type="homepage">https://github.com/Alecaddd/sequeler</url>
-	<url type="bugtracker">https://github.com/Alecaddd/sequeler/issues</url>
-	<url type="help">https://github.com/Alecaddd/sequeler/wiki</url>
-	<update_contact>castellani.ale@gmail.com</update_contact>
-	<custom>
-		<value key="x-appcenter-color-primary">#223b69</value>
-		<value key="x-appcenter-color-primary-text">#00abd3</value>
-		<value key="x-appcenter-suggested-price">2</value>
-	</custom>
+  <id>com.github.alecaddd.sequeler.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Sequeler</name>
+  <summary>Friendly SQL Client</summary>
+  <description>
+    <p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
+  </description>
+  <provides>
+    <binary>sequeler</binary>
+  </provides>
+  <releases>
+    <release version="0.1.3" date="2017-10-02">
+      <description>
+        <p>Initial Release</p>
+        <ul>
+        <li>Store your Database connections</li>
+        <li>Quickly connect to a Local or Remote Database</li>
+        <li>Write SQL queries in the built-in code editor</li>
+        </ul>
+      </description>
+    </release>
+  <releases>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/sequeler-screenshot3.png</image>
+    </screenshot>
+  </screenshots>
+  <developer_name>Alessandro "Alecaddd" Castellani</developer_name>
+  <url type="homepage">https://github.com/Alecaddd/sequeler</url>
+  <url type="bugtracker">https://github.com/Alecaddd/sequeler/issues</url>
+  <url type="help">https://github.com/Alecaddd/sequeler/wiki</url>
+  <update_contact>castellani.ale@gmail.com</update_contact>
+  <custom>
+    <value key="x-appcenter-color-primary">#223b69</value>
+    <value key="x-appcenter-color-primary-text">#00abd3</value>
+    <value key="x-appcenter-suggested-price">2</value>
+  </custom>
 </component>
