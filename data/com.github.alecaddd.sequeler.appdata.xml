@@ -10,10 +10,10 @@
 		<p>Easily connect to your local or remote database, manage structure and data of your tables, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.</p>
 	</description>
 	<provides>
-		<binary>sequeler</binary>
+		<binary>com.github.alecaddd.sequeler</binary>
 	</provides>
 	<releases>
-		<release version="0.1.0" date="2017-10-02">
+		<release version="0.1.2" date="2017-10-04">
 			<description>
 				<p>Initial Release</p>
 				<ul>
