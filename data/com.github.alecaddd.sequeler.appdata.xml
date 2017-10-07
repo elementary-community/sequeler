@@ -28,7 +28,7 @@
   <releases>
     <release version="0.1.5" date="2017-10-06">
       <description>
-        <p>UI fixes
+        <p>UI fixes</p>
         <ul>
           <li>Visual improvements to the library view</li>
         </ul>
