@@ -75,7 +75,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         toolbar.get_style_context ().add_class ("toolbar");
         toolbar.get_style_context ().add_class ("library-toolbar");
 
-        var run_image = new Gtk.Image.from_icon_name ("application-x-executable-symbolic", Gtk.IconSize.BUTTON);
+        var run_image = new Gtk.Image.from_icon_name ("system-run-symbolic", Gtk.IconSize.BUTTON);
         run_button = new Gtk.Button.with_label (_("Run Query"));
         run_button.get_style_context ().add_class ("suggested-action");
         run_button.always_show_image = true;

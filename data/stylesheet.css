@@ -6,6 +6,11 @@
     background-color: transparent;
 }
 
+.library-inner-box {
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
 .library-toolbar {
     background: rgba(0, 0, 0, 0.05);
     border-bottom: none;

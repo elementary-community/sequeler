@@ -44,7 +44,7 @@ public class Sequeler.Application : Granite.Application {
         exec_name = "com.github.alecaddd.sequeler";
         app_launcher = "com.github.alecaddd.sequeler.desktop";
 
-        build_version = "0.1.0";
+        build_version = "0.1.5";
         app_icon = "com.github.alecaddd.sequeler";
         main_url = "https://github.com/Alecaddd/sequeler/";
         bug_url = "https://github.com/Alecaddd/sequeler/issues";

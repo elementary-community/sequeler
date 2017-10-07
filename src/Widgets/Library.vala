@@ -79,7 +79,7 @@ public class Sequeler.Library : Gtk.Box {
         item.expand = true;
 
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        box.get_style_context ().add_class ("h4");
+        box.get_style_context ().add_class ("library-inner-box");
         box.margin = 10;
 
         var color_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
