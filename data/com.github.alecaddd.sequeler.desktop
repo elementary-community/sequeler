@@ -1,7 +1,9 @@
 [Desktop Entry]
 Name=Sequeler
 GenericName=Sequeler App
+GenericName[lt]=Sequeler programa
 Comment=Friendly SQL Client
+Comment[lt]=Draugiška SQL kliento programa
 Categories=Utility;Development;
 Exec=com.github.alecaddd.sequeler
 Icon=com.github.alecaddd.sequeler
