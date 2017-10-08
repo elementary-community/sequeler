@@ -68,9 +68,9 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         connect_button = new Sequeler.ButtonType (_("Connect"), "suggested-action");
         connect_button.sensitive = false;
 
-        add_action_widget (cancel_button, 1);
-        add_action_widget (test_button, 2);
-        add_action_widget (save_button, 3);
+        add_action_widget (test_button, 1);
+        add_action_widget (save_button, 2);
+        add_action_widget (cancel_button, 3);
         add_action_widget (connect_button, 4);
 
         get_content_area ().add (new SettingsView (settings));
@@ -92,13 +92,13 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case 1:
-                destroy ();
-                break;
-            case 2:
                 test_connection ();
                 break;
-            case 3:
+            case 2:
                 save_data (true);
+                break;
+            case 3:
+                destroy ();
                 break;
             case 4:
                 init_connection ();
@@ -107,7 +107,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     }
 
     public void test_connection () {
-        db = new DataBase ();
+        db = new Sequeler.DataBase ();
 
         spinner.start ();
         response_msg.label = "Testing Connection...";
@@ -138,7 +138,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             save_data (false);
         }
 
-        db = new DataBase ();
+        db = new Sequeler.DataBase ();
         
         spinner.start ();
         response_msg.label = "Connection...";
