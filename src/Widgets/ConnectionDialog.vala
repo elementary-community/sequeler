@@ -30,9 +30,17 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public Entry title_entry;
     public Gtk.ColorButton color_entry;
     public Gtk.ComboBox db_type_entry;
+
+    public Label db_host_label;
     public Entry db_host_entry;
+
+    public Label db_name_label;
     public Entry db_name_entry;
+
+    public Label db_username_label;
     public Entry db_username_entry;
+
+    public Label db_password_label;
     public Entry db_password_entry;
 
     public Gtk.Spinner spinner;
@@ -193,7 +201,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     }
 
     public void change_sensitivity () {
-        if (db_name_entry.text != "" && db_username_entry.text != "" && db_host_entry.text != "") {
+        if (db_name_entry.text != "" && db_host_entry.text != "") {
             test_button.sensitive = true;
             connect_button.sensitive = true;
             return;
@@ -201,6 +209,26 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
         test_button.sensitive = false;
         connect_button.sensitive = false;
+    }
+
+    public void type_changed () {
+        if ( db_type_entry.get_active () == 3) {
+            db_host_label.label = _("Directory:");
+            db_host_entry.placeholder_text = "./";
+            db_name_label.label = _("File Name:");
+            db_username_label.visible = false;
+            db_username_entry.visible = false;
+            db_password_label.visible = false;
+            db_password_entry.visible = false;
+            return;
+        }
+        db_host_label.label = _("Host:");
+        db_host_entry.placeholder_text = "127.0.0.1";
+        db_name_label.label = _("Database Name:");
+        db_username_label.visible = true;
+        db_username_entry.visible = true;
+        db_password_label.visible = true;
+        db_password_entry.visible = true;
     }
 
 }
@@ -240,8 +268,11 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
         dialog.color_entry = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
         dialog.color_entry.set_use_alpha (true);
 
-        var db_host_label = new Label (_("Host:"));
+        dialog.db_host_label = new Label (_("Host:"));
         dialog.db_host_entry = new Entry (_("127.0.0.1"), null);
+        dialog.db_host_entry.changed.connect (() => { 
+            dialog.change_sensitivity ();
+        });
 
         var db_type_label = new Label (_("Database Type:"));
         Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
@@ -257,28 +288,23 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
         dialog.db_type_entry.pack_start (cell, false);
 
         dialog.db_type_entry.set_attributes (cell, "text", Column.DBTYPE);
-
-        /* Set the first item in the list to be selected (active). */
         dialog.db_type_entry.set_active (0);
+        dialog.db_type_entry.changed.connect (() => { 
+            dialog.type_changed ();
+        });
 
-        var db_name_label = new Label (_("Database Name:"));
+        dialog.db_name_label = new Label (_("Database Name:"));
         dialog.db_name_entry = new Entry ("", null);
         dialog.db_name_entry.changed.connect (() => { 
             dialog.change_sensitivity ();
         });
 
-        var db_username_label = new Label (_("Username:"));
+        dialog.db_username_label = new Label (_("Username:"));
         dialog.db_username_entry = new Entry ("", null);
-        dialog.db_username_entry.changed.connect (() => { 
-            dialog.change_sensitivity ();
-        });
 
-        var db_password_label = new Label (_("Password:"));
+        dialog.db_password_label = new Label (_("Password:"));
         dialog.db_password_entry = new Entry ("", null);
         dialog.db_password_entry.set_visibility (false);
-        dialog.db_password_entry.changed.connect (() => { 
-            dialog.change_sensitivity ();
-        });
 
         content_area.attach (title_label, 0, 0, 1, 1);
         content_area.attach (dialog.title_entry, 1, 0, 1, 1);
@@ -287,16 +313,17 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
 
         content_area.attach (new Gtk.SeparatorMenuItem (), 0, 2, 2, 1);
 
-        content_area.attach (db_host_label, 0, 3, 1, 1);
-        content_area.attach (dialog.db_host_entry, 1, 3, 1, 1);
+        content_area.attach (db_type_label, 0, 3, 1, 1);
+        content_area.attach (dialog.db_type_entry, 1, 3, 1, 1);
 
-        content_area.attach (db_type_label, 0, 4, 1, 1);
-        content_area.attach (dialog.db_type_entry, 1, 4, 1, 1);
-        content_area.attach (db_name_label, 0, 5, 1, 1);
+        content_area.attach (dialog.db_host_label, 0, 4, 1, 1);
+        content_area.attach (dialog.db_host_entry, 1, 4, 1, 1);
+
+        content_area.attach (dialog.db_name_label, 0, 5, 1, 1);
         content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
-        content_area.attach (db_username_label, 0, 6, 1, 1);
+        content_area.attach (dialog.db_username_label, 0, 6, 1, 1);
         content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
-        content_area.attach (db_password_label, 0, 7, 1, 1);
+        content_area.attach (dialog.db_password_label, 0, 7, 1, 1);
         content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
 
         dialog.title_entry.changed.connect (() => {
@@ -322,7 +349,10 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
             dialog.db_name_entry.text = data["name"];
             dialog.db_username_entry.text = data["username"];
             dialog.db_password_entry.text = data["password"];
+
         }
+
+        dialog.type_changed ();
 
     }
 }
