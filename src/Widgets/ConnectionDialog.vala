@@ -55,7 +55,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
             border_width: 10,
             modal: true,
             deletable: false,
-            resizable: true,
+            resizable: false,
             title: _("New Connection"),
             transient_for: parent
         );
@@ -63,7 +63,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         SettingsView.dialog = this;
         SettingsView.data = data;
 
-        set_default_size (350, 700);
+        //  set_default_size (350, 700);
         set_size_request (350, 700);
 
         var cancel_button = new Sequeler.ButtonType (_("Close"), null);
@@ -213,15 +213,23 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
     public void type_changed () {
         if ( db_type_entry.get_active () == 3) {
+            set_size_request (350, 600);
+
             db_host_label.label = _("Directory:");
             db_host_entry.placeholder_text = "./";
             db_name_label.label = _("File Name:");
             db_username_label.visible = false;
+            db_username_label.no_show_all = true;
             db_username_entry.visible = false;
+            db_username_entry.no_show_all = true;
             db_password_label.visible = false;
+            db_password_label.no_show_all = true;
             db_password_entry.visible = false;
+            db_password_entry.no_show_all = true;
             return;
         }
+        set_size_request (350, 700);
+
         db_host_label.label = _("Host:");
         db_host_entry.placeholder_text = "127.0.0.1";
         db_name_label.label = _("Database Name:");
