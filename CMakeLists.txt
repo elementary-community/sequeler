@@ -73,8 +73,6 @@ PACKAGES
     gobject-2.0
     libxml-2.0
     libgda-5.0
-    libgda-mysql-5.0
-    libgda-postgres-5.0
     gtksourceview-3.0
 OPTIONS
     -g

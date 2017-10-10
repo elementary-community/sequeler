@@ -129,6 +129,7 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
                 switch (e.keyval) {
                     case 65293:
                         init_query ();
+                        handled = true;
                         break;
                     default:
                         break;
