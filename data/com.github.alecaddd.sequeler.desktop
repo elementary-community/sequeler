@@ -2,8 +2,10 @@
 Name=Sequeler
 GenericName=Sequeler App
 GenericName[lt]=Sequeler programa
+GenericName[es]=Aplicación Sequeler
 Comment=Friendly SQL Client
 Comment[lt]=Draugiška SQL kliento programa
+Comment[es]=Cliente SQL amigable
 Categories=Utility;Development;
 Exec=com.github.alecaddd.sequeler
 Icon=com.github.alecaddd.sequeler
