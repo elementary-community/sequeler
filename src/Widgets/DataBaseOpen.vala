@@ -28,7 +28,8 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
     public Gtk.Label result_message;
     public Gtk.Label loading_msg;
     public Gtk.ScrolledWindow scroll_results;
-    public Gtk.TextView results_view;
+    public Gtk.TreeView results_view;
+    public Gtk.ListStore store;
     public Sequeler.QueryBuilder query_builder;
     public int column_pos;
 
@@ -181,12 +182,35 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
             result_message.label = _("Unable to process Query!");
             return;
         }
-        
-        results_view = new Gtk.TextView ();
-        results_view.editable = false;
-        results_view.cursor_visible = false;
 
-        results_view.buffer.text = response.dump_as_string ();
+        // generate ListStore with proper amount of type based on columns
+        GLib.Type[] theTypes = new GLib.Type[response.get_n_columns ()];
+        for (int col = 0; col < response.get_n_columns (); col++) {
+            theTypes[col] = typeof (string);
+        }
+        store = new Gtk.ListStore.newv (theTypes);
+
+        Gtk.TreeIter iter;
+        Gda.DataModelIter _iter = response.create_iter ();
+        while (_iter.move_next ()) {
+            store.append (out iter);
+            for (int i = 0; i < response.get_n_columns (); i++) {
+                store.set_value (iter, i, _iter.get_value_at (i));
+            }
+        }
+
+        results_view = new Gtk.TreeView.with_model (store);
+        
+        // generate columns
+        for (int i = 0; i < response.get_n_columns (); i++) {
+            var title = response.get_column_title (i).replace ("_", "__");
+            var column = new Gtk.TreeViewColumn ();
+            column.clickable = true;
+            column.resizable = true;
+            column.expand = true;
+            column.set_title (title);
+            results_view.append_column (column);
+        }
 
         scroll_results.add (results_view);
 
