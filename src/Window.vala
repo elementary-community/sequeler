@@ -181,12 +181,42 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             }
         });
 
+        connection_dialog.connect_to.connect ((data, spinner, dialog, response) => {
+            init_connection_from_dialog (data, spinner, dialog, response);
+        });
+
         connection_dialog.show_all ();
     }
 
     public void show_library () {
         welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
         headerbar.show_back_button ();
+    }
+
+    public void init_connection_from_dialog (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response) {
+        data.set ("host", Gda.rfc1738_encode (data["host"]));
+        data.set ("name", Gda.rfc1738_encode (data["name"]));
+        data.set ("username", Gda.rfc1738_encode (data["username"]));
+        data.set ("password", Gda.rfc1738_encode (data["password"]));
+
+        db = new Sequeler.DataBase ();
+        db.set_constr_data (data);
+
+        GLib.Timeout.add_seconds(1, () => {
+            try {
+                db.open();
+                if (db.cnn.is_opened ()) {
+                    dialog.destroy ();
+                    open_database_view (data);
+                }
+            }
+            catch (Error e) {
+                response.label = e.message;
+            }
+            spinner.stop ();
+            return false;
+        });
+
     }
 
     public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Button button) {
@@ -274,7 +304,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         headerbar.show_logout_button ();
         welcome.database.spinner.stop ();
         welcome.database.loading_msg.visible = false;
+        welcome.database.result_message.label = "";
         welcome.database.query_builder.buffer.text = "";
+        welcome.database.clear_results ();
     }
 
     protected override bool delete_event (Gdk.EventAny event) {

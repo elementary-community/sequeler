@@ -47,6 +47,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public ResponseMessage response_msg;
 
     public signal void save_connection (Gee.HashMap data, bool trigger);
+    public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response);
 
     public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Settings settings, Gee.HashMap? data) {
         
@@ -120,7 +121,11 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         spinner.start ();
         response_msg.label = "Testing Connection...";
 
-        Gee.HashMap data = create_data (true);
+        var data = create_data ();
+        data.set ("host", Gda.rfc1738_encode (data["host"]));
+        data.set ("name", Gda.rfc1738_encode (data["name"]));
+        data.set ("username", Gda.rfc1738_encode (data["username"]));
+        data.set ("password", Gda.rfc1738_encode (data["password"]));
         db.set_constr_data (data);
 
         GLib.Timeout.add_seconds(1, () => { 
@@ -145,57 +150,29 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         if (settings.save_quick) {
             save_data (false);
         }
-
-        db = new Sequeler.DataBase ();
         
         spinner.start ();
-        response_msg.label = "Connection...";
+        response_msg.label = "Connecting...";
 
-        Gee.HashMap data = create_data (true);
-        db.set_constr_data (data);
-
-        GLib.Timeout.add_seconds(1, () => { 
-            initdb (data);
-            return false; 
-        });
-    }
-
-    public void initdb (Gee.HashMap data) {
-        try {
-            db.open();
-            destroy ();
-            window.open_database_view (data);
-        }
-        catch (Error e) {
-            response_msg.label = e.message;
-        }
-        spinner.stop ();
+        connect_to (create_data (), spinner, this, response_msg);
     }
 
     public void save_data (bool trigger) {
-        Gee.HashMap data = create_data (false);
+        var data = create_data ();
         save_connection (data, trigger);
     }
 
-    public Gee.HashMap<string, string> create_data (bool? encrypt) {
+    public Gee.HashMap<string, string> create_data () {
         var data = new Gee.HashMap<string, string> ();
 
         data.set ("id", connection_id.text);
         data.set ("title", title_entry.text);
         data.set ("color", color_entry.rgba.to_string ());
         data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
-
-        if (encrypt) {
-            data.set ("host", Gda.rfc1738_encode (db_host_entry.text));
-            data.set ("name", Gda.rfc1738_encode (db_name_entry.text));
-            data.set ("username", Gda.rfc1738_encode (db_username_entry.text));
-            data.set ("password", Gda.rfc1738_encode (db_password_entry.text));
-        } else {
-            data.set ("host", db_host_entry.text);
-            data.set ("name", db_name_entry.text);
-            data.set ("username", db_username_entry.text);
-            data.set ("password", db_password_entry.text);
-        }
+        data.set ("host", db_host_entry.text);
+        data.set ("name", db_name_entry.text);
+        data.set ("username", db_username_entry.text);
+        data.set ("password", db_password_entry.text);
 
         return data;
     }
