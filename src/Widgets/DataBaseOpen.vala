@@ -204,11 +204,11 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         // generate columns
         for (int i = 0; i < response.get_n_columns (); i++) {
             var title = response.get_column_title (i).replace ("_", "__");
-            var column = new Gtk.TreeViewColumn ();
+            var column = new Gtk.TreeViewColumn.with_attributes (title, new Gtk.CellRendererText (), "text", i, null);
             column.clickable = true;
             column.resizable = true;
             column.expand = true;
-            column.set_title (title);
+            //  column.set_title (title);
             results_view.append_column (column);
         }
 
