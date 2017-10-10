@@ -26,6 +26,18 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.2.0" date="2017-10-10">
+      <description>
+        <p>Major Update: Releasing a sweet table to view Query Results!</p>
+        <ul>
+          <li>Did I say we got a sweet table to view query results?</li>
+          <li>New shortcut (ctrl+enter) to execute query</li>
+          <li>Solved bug while connecting to DB directly from the Connection Dialog</li>
+          <li>UI Improvements to Connection Dialog</li>
+          <li>Added Spanish and Lithuanian translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.1.5" date="2017-10-06">
       <description>
         <p>UI fixes</p>
