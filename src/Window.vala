@@ -156,6 +156,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                     //      on_show_search ();
                     //      handled = true;
                     //      break;
+                    //  case 65293:
+                    //      Sequeler.DataBaseOpen.trigger_query ();
+                    //      break;
                     case Gdk.Key.comma:
                         open_preference ();
                         handled = true;
