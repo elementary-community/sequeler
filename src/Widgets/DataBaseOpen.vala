@@ -49,6 +49,8 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
         build_treeview ();
 
         connect_signals ();
+
+        handle_shortcuts ();
     }
 
     public void build_editor () {
@@ -116,34 +118,59 @@ public class Sequeler.DataBaseOpen : Gtk.Box {
 
     public void connect_signals () {
         run_button.clicked.connect (() => {
+            init_query ();
+        });
+    }
 
-            show_loading ();
-
-            if (results_view != null) {
-                scroll_results.remove (results_view);
-                results_view = null;
+    private void handle_shortcuts () {
+        query_builder.key_press_event.connect ( (e) => {
+            bool handled = false;
+            if((e.state & Gdk.ModifierType.CONTROL_MASK) != 0) {
+                switch (e.keyval) {
+                    case 65293:
+                        init_query ();
+                        handled = true;
+                        break;
+                    default:
+                        break;
+                }
             }
 
-            GLib.Timeout.add_seconds(0, () => {
-                var query = query_builder.get_text ();
+            return handled;
+        });
+    }
 
-                if ("select" in query.down ()) {
-                    handle_select_response (execute_select (query));
-                } else {
-                    handle_query_response (execute_query (query));
-                }
-                return false; 
-            });
+    public void init_query () {
+        show_loading ();
+        
+        if (results_view != null) {
+            scroll_results.remove (results_view);
+            results_view = null;
+        }
+
+        GLib.Timeout.add_seconds(0, () => {
+            var query = query_builder.get_text ();
+
+            if ("select" in query.down ()) {
+                handle_select_response (execute_select (query));
+            } else {
+                handle_query_response (execute_query (query));
+            }
+            return false; 
         });
     }
 
     public void handle_query_response (int response) {
         hide_loading ();
 
+        stdout.printf ("Response: %s\n", response.to_string ());
+
         if (response == 0) {
             result_message.label = _("Unable to process Query!");
-        } else if (response == 1) {
-            result_message.label = _("Query Successfully Executed!");
+        } else if (response < 0) {
+            result_message.label = _("Query Executed!");
+        } else {
+            result_message.label = _("Query Successfully Executed! Rows affected: ") + response.to_string ();
         }
     }
 

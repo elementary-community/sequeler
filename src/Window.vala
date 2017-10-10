@@ -77,6 +77,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         });
 
         headerbar.logout.connect (() => {
+            db.close ();
+
             if (! settings.show_library) {
                 welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
                 headerbar.logout_button.visible = false;
@@ -84,11 +86,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             } else {
                 welcome.welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
                 headerbar.logout_button.visible = false;
-            }
-
-            if (db.cnn.is_opened ()) {
-                db.close ();
-                db = null;
             }
         });
         
@@ -155,10 +152,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
                         }
                         handled = true;
                         break;
-                    //  case Gdk.Key.f:
-                    //      on_show_search ();
-                    //      handled = true;
-                    //      break;
                     case Gdk.Key.comma:
                         open_preference ();
                         handled = true;
