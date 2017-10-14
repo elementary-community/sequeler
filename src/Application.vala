@@ -19,57 +19,41 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-namespace Sequeler { 
+namespace Sequeler {
     public Sequeler.Window window;
     public Sequeler.Settings settings;
     public Sequeler.HeaderBar headerbar; 
-}
 
-public class Sequeler.Application : Granite.Application {
+    public class Application : Granite.Application {
+        // Avoid multiple instances
+        public bool running = false;
 
-    public const string PROGRAM_NAME = "Sequeler";
-    public const string ABOUT_STOCK = "About Sequeler";
+        construct {
+            flags |= ApplicationFlags.HANDLES_OPEN;
+            build_data_dir = Constants.DATADIR;
+            build_pkg_data_dir = Constants.PKGDATADIR;
+            build_release_name = Constants.RELEASE_NAME;
+            build_version = Constants.VERSION;
+            build_version_info = Constants.VERSION_INFO;
 
-    // Avoid multiple instances
-    public bool running = false;
-
-    construct {
-        flags |= ApplicationFlags.HANDLES_OPEN;
-
-        application_id = "com.github.alecaddd.sequeler";
-        program_name = PROGRAM_NAME;
-        app_years = "2017";
-        exec_name = "sequeler";
-        app_launcher = "com.github.alecaddd.sequeler";
-        exec_name = "com.github.alecaddd.sequeler";
-        app_launcher = "com.github.alecaddd.sequeler.desktop";
-
-        build_version = "0.2.0";
-        app_icon = "com.github.alecaddd.sequeler";
-        main_url = "https://github.com/Alecaddd/sequeler/";
-        bug_url = "https://github.com/Alecaddd/sequeler/issues";
-        help_url = "https://github.com/Alecaddd/sequeler/";
-        translate_url = "https://github.com/Alecaddd/sequeler/tree/master/po";
-        about_authors = {"Alessandro Castellani <castellani.ale@gmail.com>", null};
-        about_translators = _("translator-credits");
-
-        about_license_type = Gtk.License.GPL_3_0;
-
-    }
-
-    protected override void activate () {
-
-        if (!running) {
-            settings = Sequeler.Settings.get_instance ();
-            window = new Sequeler.Window (this);
-            this.add_window (window);
-
-            running = true;
-
-            return;
+            program_name = "Sequeler";
+            exec_name = "com.github.alecaddd.sequeler";
+            app_icon = "com.github.alecaddd.sequeler";
+            app_launcher = "com.github.alecaddd.sequeler.desktop";
+            application_id = "com.github.alecaddd.sequeler";
         }
 
-        window.show_app ();
+        protected override void activate () {
+            if (!running) {
+                settings = Sequeler.Settings.get_instance ();
+                window = new Sequeler.Window (this);
+                this.add_window (window);
 
+                running = true;
+
+                return;
+            }
+            window.show_app ();
+        }
     }
 }
