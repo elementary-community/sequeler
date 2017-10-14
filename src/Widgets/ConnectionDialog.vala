@@ -34,6 +34,9 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
     public Label db_host_label;
     public Entry db_host_entry;
 
+    public Label db_port_label;
+    public Entry db_port_entry;
+
     public Label db_name_label;
     public Entry db_name_entry;
 
@@ -123,6 +126,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
         var data = create_data ();
         data.set ("host", Gda.rfc1738_encode (data["host"]));
+        data.set ("port", Gda.rfc1738_encode (data["port"]));
         data.set ("name", Gda.rfc1738_encode (data["name"]));
         data.set ("username", Gda.rfc1738_encode (data["username"]));
         data.set ("password", Gda.rfc1738_encode (data["password"]));
@@ -170,6 +174,7 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
         data.set ("color", color_entry.rgba.to_string ());
         data.set ("type", SettingsView.dbs [db_type_entry.get_active ()]);
         data.set ("host", db_host_entry.text);
+        data.set ("port", db_port_entry.text);
         data.set ("name", db_name_entry.text);
         data.set ("username", db_username_entry.text);
         data.set ("password", db_password_entry.text);
@@ -194,6 +199,10 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
             db_host_label.label = _("Directory:");
             db_host_entry.placeholder_text = "./";
+            db_port_label.visible = false;
+            db_port_label.no_show_all = true;
+            db_port_entry.visible = false;
+            db_port_entry.no_show_all = true;
             db_name_label.label = _("File Name:");
             db_username_label.visible = false;
             db_username_label.no_show_all = true;
@@ -209,6 +218,8 @@ public class Sequeler.ConnectionDialog : Gtk.Dialog {
 
         db_host_label.label = _("Host:");
         db_host_entry.placeholder_text = "127.0.0.1";
+        db_port_label.visible = true;
+        db_port_entry.visible = true;
         db_name_label.label = _("Database Name:");
         db_username_label.visible = true;
         db_username_entry.visible = true;
@@ -259,6 +270,9 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
             dialog.change_sensitivity ();
         });
 
+        dialog.db_port_label = new Label (_("Port:"));
+        dialog.db_port_entry = new Entry (_("3306"), null);
+
         var db_type_label = new Label (_("Database Type:"));
         Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
         
@@ -304,12 +318,15 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
         content_area.attach (dialog.db_host_label, 0, 4, 1, 1);
         content_area.attach (dialog.db_host_entry, 1, 4, 1, 1);
 
-        content_area.attach (dialog.db_name_label, 0, 5, 1, 1);
-        content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
-        content_area.attach (dialog.db_username_label, 0, 6, 1, 1);
-        content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
-        content_area.attach (dialog.db_password_label, 0, 7, 1, 1);
-        content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
+        content_area.attach (dialog.db_port_label, 0, 5, 1, 1);
+        content_area.attach (dialog.db_port_entry, 1, 5, 1, 1);
+
+        content_area.attach (dialog.db_name_label, 0, 6, 1, 1);
+        content_area.attach (dialog.db_name_entry, 1, 6, 1, 1);
+        content_area.attach (dialog.db_username_label, 0, 7, 1, 1);
+        content_area.attach (dialog.db_username_entry, 1, 7, 1, 1);
+        content_area.attach (dialog.db_password_label, 0, 8, 1, 1);
+        content_area.attach (dialog.db_password_entry, 1, 8, 1, 1);
 
         dialog.title_entry.changed.connect (() => {
             title = dialog.title_entry.text;
@@ -324,6 +341,7 @@ public class SettingsView : Sequeler.SimpleSettingsPage {
             dialog.color_entry.rgba = color;
 
             dialog.db_host_entry.text = data["host"];
+            dialog.db_port_entry.text = data["port"];
 
             foreach (var entry in dbs.entries) {
                 if (entry.value == data["type"]) {
