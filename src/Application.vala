@@ -20,9 +20,9 @@
 */
 
 namespace Sequeler {
-    public Sequeler.Window window;
-    public Sequeler.Settings settings;
-    public Sequeler.HeaderBar headerbar; 
+    public Window window;
+    public Settings settings;
+    public HeaderBar headerbar; 
 
     public class Application : Granite.Application {
         // Avoid multiple instances
@@ -45,8 +45,8 @@ namespace Sequeler {
 
         protected override void activate () {
             if (!running) {
-                settings = Sequeler.Settings.get_instance ();
-                window = new Sequeler.Window (this);
+                settings = Settings.get_instance ();
+                window = new Window (this);
                 this.add_window (window);
 
                 running = true;
