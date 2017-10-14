@@ -18,8 +18,8 @@
 *
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
+
 namespace Sequeler { 
-    
     public class HeaderBar : Gtk.HeaderBar {
         private static HeaderBar? instance = null;
         private Gtk.Menu menu;
@@ -51,7 +51,6 @@ namespace Sequeler {
         }
 
         private void build_ui () {
-
             go_back_button = new Gtk.Button.with_label (_("Back"));
             go_back_button.get_style_context().add_class ("back-button");
             go_back_button.clicked.connect (() => { 
@@ -144,7 +143,6 @@ namespace Sequeler {
         }
 
         protected class HeaderBarButton : Gtk.Button {
-
             public HeaderBarButton (string icon_name, string tooltip) {
                 can_focus = false;
 

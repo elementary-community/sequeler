@@ -25,7 +25,7 @@ namespace Sequeler {
         public Granite.Widgets.OverlayBar overlaybar;
         public Gtk.Stack panels;
         public Welcome welcome;
-        public Sequeler.DataBase db;
+        public DataBase db;
         public Granite.Widgets.Toast toast_saved;
 
         public int output_query;
@@ -165,12 +165,12 @@ namespace Sequeler {
         }
 
         public void open_preference () {
-            var settings_dialog = new Sequeler.SettingsDialog (this, settings);
+            var settings_dialog = new SettingsDialog (this, settings);
             settings_dialog.show_all ();
         }
 
         public void create_connection (Gee.HashMap? data) {
-            var connection_dialog = new Sequeler.ConnectionDialog (this, settings, data);
+            var connection_dialog = new ConnectionDialog (this, settings, data);
 
             connection_dialog.save_connection.connect ((data, trigger) => {
                 welcome.reload (data);
@@ -197,7 +197,7 @@ namespace Sequeler {
             data.set ("username", Gda.rfc1738_encode (data["username"]));
             data.set ("password", Gda.rfc1738_encode (data["password"]));
 
-            db = new Sequeler.DataBase ();
+            db = new DataBase ();
             db.set_constr_data (data);
 
             GLib.Timeout.add_seconds(1, () => {
@@ -223,7 +223,7 @@ namespace Sequeler {
             data.set ("username", Gda.rfc1738_encode (data["username"]));
             data.set ("password", Gda.rfc1738_encode (data["password"]));
 
-            db = new Sequeler.DataBase ();
+            db = new DataBase ();
             db.set_constr_data (data);
 
             GLib.Timeout.add_seconds(1, () => {
@@ -244,7 +244,7 @@ namespace Sequeler {
         }
 
         public void connection_warning (Error e, string title) {
-            var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Unable to Connect to " + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+            var message_dialog = new MessageDialog.with_image_from_icon_name ("Unable to Connect to " + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");
@@ -282,7 +282,7 @@ namespace Sequeler {
         }
 
         public void query_error (Error e) {
-            var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Unable to Execute Query", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+            var message_dialog = new MessageDialog.with_image_from_icon_name ("Unable to Execute Query", e.message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");

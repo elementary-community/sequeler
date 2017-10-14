@@ -144,7 +144,7 @@ namespace Sequeler {
         }
 
         public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
-            var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed?", "By deleting this connection you won't be able to recover this data.", "dialog-warning", Gtk.ButtonsType.CANCEL);
+            var message_dialog = new MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed?", "By deleting this connection you won't be able to recover this data.", "dialog-warning", Gtk.ButtonsType.CANCEL);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Yes, Delete!");
@@ -162,7 +162,7 @@ namespace Sequeler {
         }
 
         public void confirm_delete_all () {
-            var message_dialog = new Sequeler.MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed?", "All the data will be deleted and you won't be able to recover it.", "dialog-warning", Gtk.ButtonsType.CANCEL);
+            var message_dialog = new MessageDialog.with_image_from_icon_name ("Are you sure you want to proceed?", "All the data will be deleted and you won't be able to recover it.", "dialog-warning", Gtk.ButtonsType.CANCEL);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Yes, Delete All!");

@@ -19,7 +19,6 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 namespace Sequeler { 
-
     public class Settings : Granite.Services.Settings {
         private static Settings? instance = null;
 

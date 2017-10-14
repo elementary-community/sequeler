@@ -21,8 +21,8 @@
 namespace Sequeler { 
     public class Welcome : Gtk.Box {
         private Granite.Widgets.Welcome welcome;
-        public Sequeler.Library? library = null;
-        public Sequeler.DataBaseOpen database;
+        public Library? library = null;
+        public DataBaseOpen database;
 
         private Gtk.Separator separator;
         public Gtk.Stack welcome_stack;
@@ -51,7 +51,7 @@ namespace Sequeler {
             separator.visible = false;
             separator.no_show_all = true;
 
-            library = new Sequeler.Library ();
+            library = new Library ();
 
             welcome_stack = new Gtk.Stack ();
             welcome_stack.add_named (welcome, "welcome");
@@ -60,7 +60,7 @@ namespace Sequeler {
                 welcome_stack.add_named (library, "library");
             }
 
-            database = new Sequeler.DataBaseOpen ();
+            database = new DataBaseOpen ();
             welcome_stack.add_named (database, "database");
 
             welcome_stack.set_visible_child (welcome);

@@ -18,9 +18,10 @@
 *
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
+namespace Sequeler {
+    public class FileManager {
+        // Import Sql dump
 
-public class Sequeler.FileManager {
-    // Import Sql dump
-
-    // Export Sql dump
+        // Export Sql dump
+    }
 }
