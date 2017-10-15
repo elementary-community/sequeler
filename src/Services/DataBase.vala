@@ -21,13 +21,14 @@
 
 namespace Sequeler { 
     public class DataBase : Object {
-        public string constr { set; get; }
-        public string provider { set; get; default = "SQLite"; }
-        public string auth_string;
         public Gda.Connection cnn;
+        public string cnc_string { set; get; }
+        public string provider { set; get; default = "SQLite"; }
+        public string port { set; get; default = "3306"; }
 
         public void set_constr_data (Gee.HashMap<string, string> data) {
             provider = data["type"];
+            port = data["port"] != "" ? data["port"] : port;
 
             if (data["type"] == "MariaDB") {
                 provider = "MySQL";
@@ -35,20 +36,26 @@ namespace Sequeler {
 
             switch (provider) {
                 case "MySQL":
-                    constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
+                    cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + port;
                     break;
                 case "PostgreSQL":
-                    constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
+                    cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + port;
                     break;
                 case "SQLite":
-                    constr = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
+                    cnc_string = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
                     break;
             }
         }
 
         public void open () throws Error {
-            cnn = Gda.Connection.open_from_string (null, constr, null, Gda.ConnectionOptions.NONE);
-            cnn.execution_timer = true;
+            try {
+                cnn = Gda.Connection.open_from_string (null, cnc_string, null, Gda.ConnectionOptions.NONE);
+            } catch ( Error e ) {
+				throw e;
+            }
+            if (cnn.is_opened ()) {
+                cnn.execution_timer = true;
+            }
         }
 
         public int run_query (string query) throws Error requires (cnn.is_opened ()) {

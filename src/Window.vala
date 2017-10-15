@@ -191,21 +191,25 @@ namespace Sequeler {
             headerbar.show_back_button ();
         }
 
-        public void init_connection_from_dialog (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response) {
+        public Gee.HashMap<string, string> encode_data (Gee.HashMap<string, string> data){
             data.set ("host", Gda.rfc1738_encode (data["host"]));
             data.set ("name", Gda.rfc1738_encode (data["name"]));
             data.set ("username", Gda.rfc1738_encode (data["username"]));
             data.set ("password", Gda.rfc1738_encode (data["password"]));
+            return data;
+        }
 
+        public void init_connection_from_dialog (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response) {
             db = new DataBase ();
-            db.set_constr_data (data);
+            var encode_data = encode_data (data);
+            db.set_constr_data (encode_data);
 
             GLib.Timeout.add_seconds(1, () => {
                 try {
                     db.open();
                     if (db.cnn.is_opened ()) {
                         dialog.destroy ();
-                        open_database_view (data);
+                        open_database_view (encode_data);
                     }
                 }
                 catch (Error e) {
@@ -218,23 +222,19 @@ namespace Sequeler {
         }
 
         public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Button button) {
-            data.set ("host", Gda.rfc1738_encode (data["host"]));
-            data.set ("name", Gda.rfc1738_encode (data["name"]));
-            data.set ("username", Gda.rfc1738_encode (data["username"]));
-            data.set ("password", Gda.rfc1738_encode (data["password"]));
-
             db = new DataBase ();
-            db.set_constr_data (data);
+            var encode_data = encode_data (data);
+            db.set_constr_data (encode_data);
 
             GLib.Timeout.add_seconds(1, () => {
                 try {
                     db.open();
                     if (db.cnn.is_opened ()) {
-                        open_database_view (data);
+                        open_database_view (encode_data);
                     }
                 }
                 catch (Error e) {
-                    connection_warning (e, data["title"]);
+                    connection_warning (e, encode_data["title"]);
                 }
                 spinner.stop ();
                 button.sensitive = true;
@@ -244,7 +244,7 @@ namespace Sequeler {
         }
 
         public void connection_warning (Error e, string title) {
-            var message_dialog = new MessageDialog.with_image_from_icon_name ("Unable to Connect to " + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+            var message_dialog = new MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");
@@ -282,7 +282,7 @@ namespace Sequeler {
         }
 
         public void query_error (Error e) {
-            var message_dialog = new MessageDialog.with_image_from_icon_name ("Unable to Execute Query", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+            var message_dialog = new MessageDialog.with_image_from_icon_name (_("Unable to Execute Query"), e.message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");
@@ -296,7 +296,7 @@ namespace Sequeler {
 
         public void open_database_view (Gee.HashMap<string, string> data) {
             welcome.welcome_stack.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_LEFT);
-            headerbar.title = "Connected to " + data["title"];
+            headerbar.title = _("Connected to ") + data["title"];
             headerbar.subtitle = data["username"] + "@" + data["host"];
             headerbar.go_back_button.visible = false;
             headerbar.show_logout_button ();

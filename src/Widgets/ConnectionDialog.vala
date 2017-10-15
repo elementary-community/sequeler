@@ -20,7 +20,6 @@
 */
 namespace Sequeler {
     public class ConnectionDialog : Gtk.Dialog {
-
         public DataBase db;
 
         public ButtonType test_button;
@@ -43,14 +42,16 @@ namespace Sequeler {
         public Label db_password_label;
         public Entry db_password_entry;
 
+        public Label db_port_label;
+        public Entry db_port_entry;
+
         public Gtk.Spinner spinner;
         public ResponseMessage response_msg;
 
         public signal void save_connection (Gee.HashMap data, bool trigger);
         public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response);
 
-        public ConnectionDialog (Gtk.ApplicationWindow parent, Settings settings, Gee.HashMap? data) {
-            
+        public ConnectionDialog (Gtk.ApplicationWindow parent, Settings settings, Gee.HashMap? data) { 
             Object (
                 use_header_bar: 0,
                 border_width: 10,
@@ -64,7 +65,6 @@ namespace Sequeler {
             SettingsView.dialog = this;
             SettingsView.data = data;
 
-            //  set_default_size (350, 700);
             set_size_request (350, 700);
 
             var cancel_button = new ButtonType (_("Close"), null);
@@ -91,7 +91,6 @@ namespace Sequeler {
             get_content_area ().add (spinner);
 
             connect_signals ();
-
         }
 
         private void connect_signals () {
@@ -173,6 +172,7 @@ namespace Sequeler {
             data.set ("name", db_name_entry.text);
             data.set ("username", db_username_entry.text);
             data.set ("password", db_password_entry.text);
+            data.set ("port", db_port_entry.text);
 
             return data;
         }
@@ -195,14 +195,7 @@ namespace Sequeler {
                 db_host_label.label = _("Directory:");
                 db_host_entry.placeholder_text = "./";
                 db_name_label.label = _("File Name:");
-                db_username_label.visible = false;
-                db_username_label.no_show_all = true;
-                db_username_entry.visible = false;
-                db_username_entry.no_show_all = true;
-                db_password_label.visible = false;
-                db_password_label.no_show_all = true;
-                db_password_entry.visible = false;
-                db_password_entry.no_show_all = true;
+                toggle_auth_info (false);
                 return;
             }
             set_size_request (350, 700);
@@ -210,19 +203,22 @@ namespace Sequeler {
             db_host_label.label = _("Host:");
             db_host_entry.placeholder_text = "127.0.0.1";
             db_name_label.label = _("Database Name:");
-            db_username_label.visible = true;
-            db_username_entry.visible = true;
-            db_password_label.visible = true;
-            db_password_entry.visible = true;
+            toggle_auth_info (true);
         }
 
+        public void toggle_auth_info (bool toggle) {
+            db_username_label.visible = toggle;
+            db_username_entry.visible = toggle;
+            db_password_label.visible = toggle;
+            db_password_entry.visible = toggle;
+            db_port_label.visible = toggle;
+            db_port_entry.visible = toggle;
+        }
     }
 
-    public class SettingsView : SimpleSettingsPage {
-        
+    public class SettingsView : SimpleSettingsPage {   
         public static ConnectionDialog dialog;
         public static Gee.HashMap<string, string>? data;
-
         public static Gee.HashMap<int, string> dbs;
 
         enum Column {
@@ -280,7 +276,7 @@ namespace Sequeler {
 
             dialog.db_name_label = new Label (_("Database Name:"));
             dialog.db_name_entry = new Entry ("", null);
-            dialog.db_name_entry.changed.connect (() => { 
+            dialog.db_name_entry.changed.connect (() => {
                 dialog.change_sensitivity ();
             });
 
@@ -289,7 +285,10 @@ namespace Sequeler {
 
             dialog.db_password_label = new Label (_("Password:"));
             dialog.db_password_entry = new Entry ("", null);
-            dialog.db_password_entry.set_visibility (false);
+            dialog.db_password_entry.visibility = false;
+
+            dialog.db_port_label = new Label (_("Port:"));
+            dialog.db_port_entry = new Entry ("3306", null);
 
             content_area.attach (title_label, 0, 0, 1, 1);
             content_area.attach (dialog.title_entry, 1, 0, 1, 1);
@@ -306,10 +305,13 @@ namespace Sequeler {
 
             content_area.attach (dialog.db_name_label, 0, 5, 1, 1);
             content_area.attach (dialog.db_name_entry, 1, 5, 1, 1);
+
             content_area.attach (dialog.db_username_label, 0, 6, 1, 1);
             content_area.attach (dialog.db_username_entry, 1, 6, 1, 1);
             content_area.attach (dialog.db_password_label, 0, 7, 1, 1);
             content_area.attach (dialog.db_password_entry, 1, 7, 1, 1);
+            content_area.attach (dialog.db_port_label, 0, 8, 1, 1);
+            content_area.attach (dialog.db_port_entry, 1, 8, 1, 1);
 
             dialog.title_entry.changed.connect (() => {
                 title = dialog.title_entry.text;
@@ -334,11 +336,9 @@ namespace Sequeler {
                 dialog.db_name_entry.text = data["name"];
                 dialog.db_username_entry.text = data["username"];
                 dialog.db_password_entry.text = data["password"];
-
             }
 
             dialog.type_changed ();
-
         }
     }
 
@@ -368,7 +368,7 @@ namespace Sequeler {
             get_style_context ().add_class ("h4");
             halign = Gtk.Align.CENTER;
             valign = Gtk.Align.CENTER;
-            set_justify (Gtk.Justification.CENTER);
+            justify = Gtk.Justification.CENTER;
             set_line_wrap (true);
         }
     }
