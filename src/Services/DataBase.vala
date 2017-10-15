@@ -34,10 +34,10 @@ public class Sequeler.DataBase : Object {
 
         switch (provider) {
             case "MySQL":
-                constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
+                constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + data["port"] + "";
                 break;
             case "PostgreSQL":
-                constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + "";
+                constr = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + data["port"] + "";
                 break;
             case "SQLite":
                 constr = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
