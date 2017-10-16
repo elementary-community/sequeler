@@ -73,14 +73,8 @@ namespace Sequeler {
             general_grid.row_spacing = 6;
 
             general_grid.attach (new SettingsHeader (_("General")), 0, 0, 2, 1);
-
             general_grid.attach (new SettingsLabel (_("Automatically Save New Connections:")), 0, 1, 1, 1);
             general_grid.attach (new SettingsSwitch ("save-quick"), 1, 1, 1, 1);
-
-            general_grid.attach (new SettingsHeader (_("Welcome Screen")), 0, 2, 2, 1);
-
-            general_grid.attach (new SettingsLabel (_("Show Library (needs reload):")), 0, 3, 1, 1);
-            general_grid.attach (new SettingsSwitch ("show-library"), 1, 3, 1, 1);
 
             return general_grid;
         }

@@ -70,7 +70,13 @@ namespace Sequeler {
 
             foreach (var conn in settings.saved_connections) {
                 add_item (Settings.arraify_data (conn));
+                //  var item = new LibraryItem (Settings.arraify_data (conn));
+                //  item_box.add (item);
             }
+
+            item_box.child_activated.connect ((child) => {
+                stdout.printf ("Clicked\n");
+            });
 
             this.pack_end (scroll, true, true, 0);
         }
@@ -84,9 +90,6 @@ namespace Sequeler {
             box.get_style_context ().add_class ("library-inner-box");
             box.margin = 4;
 
-            //  var color_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            //  color_box.pack_start (new Gtk.Label (""), true, true, 0);
-            //  color_box.get_style_context ().add_class ("library-colorbar");
             var color = Gdk.RGBA ();
             color.parse (data["color"]);
             try
@@ -100,8 +103,6 @@ namespace Sequeler {
                 debug ("Internal error loading session chooser style: %s", e.message);
             }
 
-            //  box.pack_start (color_box, true, false, 0);
-
             var title = new Gtk.Label (data["title"]);
             title.get_style_context ().add_class ("text-bold");
             title.halign = Gtk.Align.START;
@@ -112,6 +113,7 @@ namespace Sequeler {
             box.pack_start (title, true, true, 10);
 
             var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            button_box.get_style_context ().add_class ("button-box");
 
             var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
             var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));

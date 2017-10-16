@@ -21,6 +21,7 @@
 namespace Sequeler { 
     public class Welcome : Gtk.Box {
         private Granite.Widgets.Welcome welcome;
+        private Gtk.Box welcome_box;
         public Library? library = null;
         public DataBaseOpen database;
 
@@ -38,6 +39,7 @@ namespace Sequeler {
             width_request = 950;
             height_request = 500;
 
+            welcome_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
             welcome.hexpand = true;
 
@@ -47,20 +49,22 @@ namespace Sequeler {
             separator.visible = false;
             separator.no_show_all = true;;
 
-            welcome_stack = new Gtk.Stack ();
-            welcome_stack.add_named (welcome, "welcome");
-
-            database = new DataBaseOpen ();
-            welcome_stack.add_named (database, "database");
-
             library = new Library ();
             library.visible = false;
             library.no_show_all = true;
 
+            welcome_box.add (library);
+            welcome_box.add (separator);
+            welcome_box.add (welcome);
+
+            welcome_stack = new Gtk.Stack ();
+            welcome_stack.add_named (welcome_box, "welcome");
+
+            database = new DataBaseOpen ();
+            welcome_stack.add_named (database, "database");
+
             welcome_stack.set_visible_child (welcome);
 
-            add (library);
-            add (separator);
             add (welcome_stack);
 
             load_library ();

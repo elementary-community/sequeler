@@ -27,24 +27,15 @@ namespace Sequeler {
         public string port { set; get; default = "3306"; }
 
         public void set_constr_data (Gee.HashMap<string, string> data) {
-            provider = data["type"];
+            provider = data["type"] == "MariaDB"? "MySQL" : data["type"];
             port = data["port"] != "" ? data["port"] : port;
 
-            if (data["type"] == "MariaDB") {
-                provider = "MySQL";
+            if (provider == "SQLite") {
+                cnc_string = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
+                return;
             }
 
-            switch (provider) {
-                case "MySQL":
-                    cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + port;
-                    break;
-                case "PostgreSQL":
-                    cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + port;
-                    break;
-                case "SQLite":
-                    cnc_string = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
-                    break;
-            }
+            cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + port;
         }
 
         public void open () throws Error {
