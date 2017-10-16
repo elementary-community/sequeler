@@ -190,7 +190,7 @@ namespace Sequeler {
             foreach (var conn in settings.saved_connections) {
                 var check = Settings.arraify_data (conn);
                 if (check["id"] == data["id"]) {
-                    settings.edit_connection (data, check);
+                    settings.edit_connection (data, conn);
                     item_box.forall ((item) => item_box.remove (item));
                     foreach (var new_conn in settings.saved_connections) {
                         add_item (Settings.arraify_data (new_conn));

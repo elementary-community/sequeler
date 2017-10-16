@@ -31,7 +31,6 @@ namespace Sequeler {
         public bool dark_theme { get; set; }
         public bool save_quick { get; set; }
         public bool show_library { get; set; }
-        public bool reconnect { get; set; }
 
         public static Settings get_instance () {
             if (instance == null) {
@@ -54,11 +53,11 @@ namespace Sequeler {
             tot_connections = tot_connections + 1;
         }
 
-        public void edit_connection (Gee.HashMap<string, string> new_data, Gee.HashMap<string, string> old_data) {  
+        public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {  
             Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
             existing_connections.add_all_array (saved_connections);
 
-            existing_connections.remove ( stringify_data (old_data));
+            existing_connections.remove ( old_data);
             existing_connections.insert (0, stringify_data (new_data));
 
             saved_connections = existing_connections.to_array ();

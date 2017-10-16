@@ -336,6 +336,10 @@ namespace Sequeler {
                 dialog.db_name_entry.text = data["name"];
                 dialog.db_username_entry.text = data["username"];
                 dialog.db_password_entry.text = data["password"];
+
+                if (data["port"] != null) {
+                    dialog.db_port_entry.text = data["port"];
+                }
             }
 
             dialog.type_changed ();
