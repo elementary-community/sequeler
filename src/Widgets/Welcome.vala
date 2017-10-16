@@ -43,45 +43,32 @@ namespace Sequeler {
 
             welcome.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
 
-            if (! settings.show_library) {
-                welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
-            }
-
             separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
             separator.visible = false;
-            separator.no_show_all = true;
-
-            library = new Library ();
+            separator.no_show_all = true;;
 
             welcome_stack = new Gtk.Stack ();
             welcome_stack.add_named (welcome, "welcome");
 
-            if (! settings.show_library) {
-                welcome_stack.add_named (library, "library");
-            }
-
             database = new DataBaseOpen ();
             welcome_stack.add_named (database, "database");
 
+            library = new Library ();
+            library.visible = false;
+            library.no_show_all = true;
+
             welcome_stack.set_visible_child (welcome);
 
-            if (settings.saved_connections.length > 0 && settings.show_library && library != null) {
-                add (library);
-                separator.visible = true;
-                separator.no_show_all = false;
-            }
-
+            add (library);
             add (separator);
             add (welcome_stack);
+
+            load_library ();
 
             welcome.activated.connect ((index) => {
                 switch (index) {
                     case 0:
                         create_connection (null);
-                        break;
-                    case 1:
-                        welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
-                        headerbar.show_back_button ();
                         break;
                     }
             });
@@ -103,6 +90,10 @@ namespace Sequeler {
                 init_connection (data, spinner, button);
             });
 
+            library.reload_ui.connect (() => {
+                load_library ();
+            });
+
             database.execute_query.connect((query) => {
                 return execute_query (query);
             });
@@ -115,6 +106,23 @@ namespace Sequeler {
         public void reload (Gee.HashMap<string, string> data) {
             library.check_add_item (data);
             library.show_all ();
+            load_library ();
+        }
+
+        public void load_library () {
+            if (settings.saved_connections.length > 0) {
+                separator.visible = true;
+                separator.no_show_all = false;
+                library.visible = true;
+                library.no_show_all = false;
+            } else {
+                separator.visible = false;
+                separator.no_show_all = true;
+                library.visible = false;
+                library.no_show_all = true;
+            }
+
+            this.show_all ();
         }
     }
 }

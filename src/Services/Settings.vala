@@ -57,10 +57,30 @@ namespace Sequeler {
             Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
             existing_connections.add_all_array (saved_connections);
 
-            existing_connections.remove ( old_data);
+            existing_connections.remove (old_data);
             existing_connections.insert (0, stringify_data (new_data));
 
             saved_connections = existing_connections.to_array ();
+        }
+
+        public void delete_connection (Gee.HashMap<string, string> data) {
+            Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+            existing_connections.add_all_array (saved_connections);
+
+            foreach (var conn in saved_connections) {
+                var check = arraify_data (conn);
+                if (check["id"] == data["id"]) {
+                    existing_connections.remove (conn);
+                }
+            }
+
+            saved_connections = existing_connections.to_array ();
+        }
+
+        public void clear_connections () {
+            Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
+            saved_connections = empty_connection.to_array ();
+            tot_connections = 0;
         }
 
         public static string stringify_data (Gee.HashMap<string, string> data) {
@@ -90,23 +110,6 @@ namespace Sequeler {
             }
 
             return array;
-        }
-
-        public void delete_connection (Gee.HashMap<string, string> data) {
-            var current_connections = saved_connections;
-            var connection = stringify_data (data);
-
-            Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-            existing_connections.add_all_array (current_connections);
-
-            existing_connections.remove (connection);
-            saved_connections = existing_connections.to_array ();
-        }
-
-        public void clear_connections () {
-            Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
-            saved_connections = empty_connection.to_array ();
-            tot_connections = 0;
         }
     }
 }

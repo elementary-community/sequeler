@@ -77,15 +77,8 @@ namespace Sequeler {
 
             headerbar.logout.connect (() => {
                 db.close ();
-
-                if (! settings.show_library) {
-                    welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_RIGHT);
-                    headerbar.logout_button.visible = false;
-                    headerbar.show_back_button ();
-                } else {
-                    welcome.welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
-                    headerbar.logout_button.visible = false;
-                }
+                welcome.welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
+                headerbar.logout_button.visible = false;
             });
             
             set_titlebar (headerbar);
@@ -142,14 +135,10 @@ namespace Sequeler {
                             handled = true;
                             break;
                         case Gdk.Key.n:
-                            create_connection (null);
-                            handled = true;
-                            break;
-                        case Gdk.Key.l:
-                            if (! settings.show_library && db == null) {
-                                show_library ();
+                            if (db == null) {
+                                create_connection (null);
+                                handled = true;
                             }
-                            handled = true;
                             break;
                         case Gdk.Key.comma:
                             open_preference ();
@@ -184,11 +173,6 @@ namespace Sequeler {
             });
 
             connection_dialog.show_all ();
-        }
-
-        public void show_library () {
-            welcome.welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
-            headerbar.show_back_button ();
         }
 
         public Gee.HashMap<string, string> encode_data (Gee.HashMap<string, string> data){

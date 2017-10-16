@@ -25,13 +25,14 @@ namespace Sequeler {
         public Gtk.ScrolledWindow scroll;
         public Gtk.Button delete_all;
 
+        public signal void reload_ui ();
         public signal void edit_dialog (Gee.HashMap data);
         public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Button button);
 
         public Library () {
             orientation = Gtk.Orientation.VERTICAL;
 
-            width_request = 300;
+            width_request = 220;
 
             var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             toolbar.get_style_context ().add_class ("toolbar");
@@ -46,7 +47,7 @@ namespace Sequeler {
                 confirm_delete_all ();
             });
             delete_all.can_focus = false;
-            delete_all.margin = 12;
+            delete_all.margin = 6;
             delete_all.sensitive = false;
 
             toolbar.pack_start (delete_all, false, false, 0);
@@ -61,8 +62,8 @@ namespace Sequeler {
             
             item_box.valign = Gtk.Align.START;
             item_box.min_children_per_line = 1;
-            item_box.max_children_per_line = 6;
-            item_box.margin = 12;
+            item_box.max_children_per_line = 1;
+            item_box.margin = 6;
             item_box.expand = false;
 
             scroll.add (item_box);
@@ -81,31 +82,32 @@ namespace Sequeler {
 
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             box.get_style_context ().add_class ("library-inner-box");
-            box.margin = 10;
+            box.margin = 4;
 
-            var color_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            color_box.pack_start (new Gtk.Label (""), true, true, 0);
-            color_box.get_style_context ().add_class ("library-colorbar");
+            //  var color_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            //  color_box.pack_start (new Gtk.Label (""), true, true, 0);
+            //  color_box.get_style_context ().add_class ("library-colorbar");
             var color = Gdk.RGBA ();
             color.parse (data["color"]);
             try
             {
                 var style = new Gtk.CssProvider ();
                 style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
-                color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             }
             catch (Error e)
             {
                 debug ("Internal error loading session chooser style: %s", e.message);
             }
 
-            box.pack_start (color_box, true, false, 0);
+            //  box.pack_start (color_box, true, false, 0);
 
             var title = new Gtk.Label (data["title"]);
             title.get_style_context ().add_class ("text-bold");
             title.halign = Gtk.Align.START;
             title.margin_start = 10;
             title.margin_end = 10;
+            title.set_line_wrap (true);
 
             box.pack_start (title, true, true, 10);
 
@@ -181,9 +183,7 @@ namespace Sequeler {
 
         public void reload_library () {
             item_box.show_all ();
-            if (settings.saved_connections.length == 0) {
-                delete_all.sensitive = false;
-            }
+            reload_ui ();
         }
 
         public void check_add_item (Gee.HashMap<string, string> data) {
@@ -212,7 +212,7 @@ namespace Sequeler {
                 if (icon_name.contains ("/")) {
                     image = new Gtk.Image.from_resource (icon_name);
                 } else {
-                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
+                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.SMALL_TOOLBAR);
                 }
 
                 image.margin = 3;
