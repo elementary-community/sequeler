@@ -29,7 +29,7 @@ namespace Sequeler {
         public Gtk.Stack welcome_stack;
 
         public signal void create_connection (Gee.HashMap? data);
-        public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.Button button);
+        public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.MenuItem button);
         public signal int execute_query (string query);
         public signal Gda.DataModel? execute_select (string query);
 

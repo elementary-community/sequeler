@@ -23,21 +23,26 @@ namespace Sequeler {
     public class LibraryItem : Gtk.FlowBoxChild {
         public Gee.HashMap<string, string> data;
 
-        public BoxButton connect_button;
+        public Gtk.MenuItem connect_button;
         public Gtk.Spinner spinner;
 
         public signal void edit_dialog (Gee.HashMap data);
         public signal void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap data);
-        public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Button button);
+        public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
 
         public LibraryItem (Gee.HashMap<string, string> data) {
             this.data = data;
             get_style_context ().add_class ("library-box");
             expand = true;
 
-            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             box.get_style_context ().add_class ("library-inner-box");
             box.margin = 4;
+
+            var color_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            color_box.get_style_context ().add_class ("library-colorbox");
+            color_box.set_size_request (12, 12);
+            color_box.margin = 10;
 
             var color = Gdk.RGBA ();
             color.parse (data["color"]);
@@ -45,7 +50,7 @@ namespace Sequeler {
             {
                 var style = new Gtk.CssProvider ();
                 style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
-                box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             }
             catch (Error e)
             {
@@ -55,62 +60,57 @@ namespace Sequeler {
             var title = new Gtk.Label (data["title"]);
             title.get_style_context ().add_class ("text-bold");
             title.halign = Gtk.Align.START;
-            title.margin_start = 10;
             title.margin_end = 10;
             title.set_line_wrap (true);
 
-            box.pack_start (title, true, true, 10);
+            box.pack_start (color_box, false, false, 0);
+            box.pack_start (title, true, true, 0);
 
-            var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            button_box.get_style_context ().add_class ("button-box");
+            // Create the Menu
+            var menu = new Gtk.Menu ();
+            
+            connect_button = new Gtk.MenuItem.with_label (_("Connect"));
+            menu.add (connect_button);
 
-            var edit_button = new BoxButton ("applications-office-symbolic", _("Edit Connection"));
-            var delete_button = new BoxButton ("user-trash-symbolic", _("Delete Connection"));
-            connect_button = new BoxButton ("go-next-symbolic", _("Connect"));
+            var edit_button = new Gtk.MenuItem.with_label (_("Edit Connection"));
+            menu.add (edit_button);
+
+            menu.add (new Gtk.SeparatorMenuItem ());
+
+            var delete_button = new Gtk.MenuItem.with_label (_("Delete Connection"));
+            menu.add (delete_button);
+
+            menu.show_all  ();
+            
+            // Create the AppMenu
+            var open_menu = new Gtk.MenuButton ();
+            open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+            open_menu.set_tooltip_text ("Options");
+
+            open_menu.popup = menu;
+            open_menu.relief = Gtk.ReliefStyle.NONE;
+            open_menu.valign = Gtk.Align.CENTER;
+
             spinner = new Gtk.Spinner ();
 
-            button_box.pack_start (delete_button, false, true, 0);
-            button_box.pack_start (edit_button, false, true, 0);
-            button_box.pack_end (connect_button, false, true, 0);
-            button_box.pack_end (spinner, false, true, 0);
-
-            box.pack_end (button_box, true, false, 0);
+            box.pack_end (open_menu, false, false, 0);
+            box.pack_end (spinner, false, false, 0);
 
             this.add (box);
 
-            delete_button.clicked.connect (() => {
+            delete_button.activate.connect (() => {
                 confirm_delete (this, data);
             });
 
-            edit_button.clicked.connect (() => {
+            edit_button.activate.connect (() => {
                 edit_dialog (data);
             });
 
-            connect_button.clicked.connect (() => {
+            connect_button.activate.connect (() => {
                 spinner.start ();
                 connect_button.sensitive = false;
                 connect_to (data, spinner, connect_button);
             });
-        }
-
-        protected class BoxButton : Gtk.Button {         
-            public BoxButton (string icon_name, string tooltip) {
-                can_focus = false;
-
-                Gtk.Image image;
-
-                if (icon_name.contains ("/")) {
-                    image = new Gtk.Image.from_resource (icon_name);
-                } else {
-                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.SMALL_TOOLBAR);
-                }
-
-                image.margin = 3;
-
-                tooltip_text = tooltip;
-                get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-                this.add (image);
-            }
         }
     }
 }

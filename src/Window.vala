@@ -191,7 +191,7 @@ namespace Sequeler {
             });
         }
 
-        public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Button button) {
+        public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) {
             db = new DataBase ();
             var encode_data = encode_data (data);
             db.set_constr_data (encode_data);

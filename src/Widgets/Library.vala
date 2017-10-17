@@ -27,11 +27,19 @@ namespace Sequeler {
 
         public signal void reload_ui ();
         public signal void edit_dialog (Gee.HashMap data);
-        public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Button button);
+        public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
 
         public Library () {
             orientation = Gtk.Orientation.VERTICAL;
-            width_request = 220;
+            width_request = 240;
+
+            var titlebar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            titlebar.get_style_context ().add_class ("library-titlebar");
+            var title = new Gtk.Label (_("SAVED CONNECTIONS"));
+            title.get_style_context ().add_class ("h4");
+            title.halign = Gtk.Align.CENTER;
+            title.margin = 4;
+            titlebar.pack_start (title, true, true, 0);
 
             var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             toolbar.get_style_context ().add_class ("toolbar");
@@ -50,7 +58,6 @@ namespace Sequeler {
             delete_all.sensitive = false;
 
             toolbar.pack_start (delete_all, false, false, 0);
-            this.pack_end (toolbar, false, true, 0);
 
             scroll = new Gtk.ScrolledWindow (null, null);
             scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
@@ -81,7 +88,9 @@ namespace Sequeler {
                 connect_to (item.data, item.spinner, item.connect_button);
             });
 
-            this.pack_end (scroll, true, true, 0);
+            this.pack_start (titlebar, false, true, 0);
+            this.pack_start (scroll, true, true, 0);
+            this.pack_end (toolbar, false, true, 0);
         }
 
         public void add_item (Gee.HashMap<string, string> data) {

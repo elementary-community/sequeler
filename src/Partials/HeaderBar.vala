@@ -25,8 +25,6 @@ namespace Sequeler {
         private Gtk.Menu menu;
         public Gtk.Button logout_button;
         private HeaderBarButton new_connection;
-        private HeaderBarButton search;
-        public HeaderBarButton terminal;
         private Gtk.MenuButton open_menu;
 
         public signal void preferences_selected ();
@@ -65,9 +63,6 @@ namespace Sequeler {
             new_connection.clicked.connect (() => {
                 quick_connection ();
             });
-            
-            search = new HeaderBarButton ("system-search-symbolic", _("Search Connection"));
-            terminal = new HeaderBarButton ("utilities-terminal-symbolic", _("Connection in Terminal"));
 
             // Create the Menu
             menu = new Gtk.Menu ();
@@ -107,14 +102,9 @@ namespace Sequeler {
             open_menu.relief = Gtk.ReliefStyle.NONE;
             open_menu.valign = Gtk.Align.CENTER;
 
-            terminal.sensitive = false;
-
-            // add button to headerbar
             pack_start (logout_button);
             pack_end (open_menu);
             pack_end (new_connection);
-            //  pack_end (search);
-            //  pack_end (terminal);
 
             logout_button.no_show_all = true;
             logout_button.visible = false;

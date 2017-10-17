@@ -7,10 +7,14 @@
 }
 
 .library-inner-box {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 2px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.library-titlebar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .library-toolbar {
@@ -18,10 +22,15 @@
     border-bottom: none;
 }
 
-.library-colorbar {
-    font-size: 3px;
+.library-colorbox {
+    border-radius: 12px;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
 }
 
-.button-box {
-    background: rgba(255, 255, 255, 0.2);
+GtkTreeView row:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+GtkTreeView row:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.1);
 }
