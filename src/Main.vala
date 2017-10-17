@@ -23,7 +23,6 @@ public const string APP_NAME = "Sequeler";
 public const string TERMINAL_NAME = "sequeler";
 
 public static int main (string[] args) {
-
     Environment.set_application_name (APP_NAME);
     Environment.set_prgname (APP_NAME);
 

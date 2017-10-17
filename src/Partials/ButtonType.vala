@@ -19,16 +19,15 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.ButtonType : Gtk.Button {
+namespace Sequeler { 
+    public class ButtonType : Gtk.Button {
+        public ButtonType (string text, string* class) {
+            label = text;
 
-    public ButtonType (string text, string* class) {
-        label = text;
-
-        if (class != null) {
-            var style_context = this.get_style_context ();
-            style_context.add_class (class);
+            if (class != null) {
+                var style_context = this.get_style_context ();
+                style_context.add_class (class);
+            }   
         }
-        
     }
-
 }

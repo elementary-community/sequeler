@@ -60,9 +60,11 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Widgets/Welcome.vala
     src/Widgets/Library.vala
+    src/Widgets/LibraryItem.vala
     src/Widgets/SettingsDialog.vala
     src/Widgets/ConnectionDialog.vala
     src/Widgets/DataBaseOpen.vala
+    src/config.vala
 
 # tell what libraries to use when compiling
 PACKAGES
@@ -92,6 +94,9 @@ configure_file (
     "${CMAKE_SOURCE_DIR}/cmake/Uninstall.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake"
     IMMEDIATE @ONLY)
+configure_file (
+    ${CMAKE_SOURCE_DIR}/src/config.vala.cmake 
+    ${CMAKE_SOURCE_DIR}/src/config.vala)
 
 add_custom_target (uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake)

@@ -18,104 +18,110 @@
 *
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
+namespace Sequeler { 
+    public class Welcome : Gtk.Box {
+        private Granite.Widgets.Welcome welcome_widget;
+        private Gtk.Box welcome_box;
+        public Library? library = null;
+        public DataBaseOpen database;
 
-public class Sequeler.Welcome : Gtk.Box {
-    
-    private Granite.Widgets.Welcome welcome;
-    public Sequeler.Library? library = null;
-    public Sequeler.DataBaseOpen database;
+        private Gtk.Separator separator;
+        public Gtk.Stack welcome_stack;
 
-    private Gtk.Separator separator;
-    public Gtk.Stack welcome_stack;
+        public signal void create_connection (Gee.HashMap? data);
+        public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.MenuItem button);
+        public signal int execute_query (string query);
+        public signal Gda.DataModel? execute_select (string query);
 
-    public signal void create_connection (Gee.HashMap? data);
-    public signal void init_connection (Gee.HashMap? data , Gtk.Spinner spinner, Gtk.Button button);
-    public signal int execute_query (string query);
-    public signal Gda.DataModel? execute_select (string query);
+        public Welcome () {
+            orientation = Gtk.Orientation.HORIZONTAL;
 
-    public Welcome () {
-        orientation = Gtk.Orientation.HORIZONTAL;
+            width_request = 950;
+            height_request = 500;
 
-        width_request = 950;
-        height_request = 500;
+            welcome_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            welcome_widget = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
+            welcome_widget.hexpand = true;
 
-        welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
-        welcome.hexpand = true;
+            welcome_widget.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
 
-        welcome.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
+            separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
+            separator.visible = false;
+            separator.no_show_all = true;;
 
-        if (! settings.show_library) {
-            welcome.append ("preferences-system-network", _("Browse Library"), _("Browse through all your saved Databases."));
+            library = new Library ();
+            library.visible = false;
+            library.no_show_all = true;
+
+            welcome_box.add (library);
+            welcome_box.add (separator);
+            welcome_box.add (welcome_widget);
+
+            welcome_stack = new Gtk.Stack ();
+            welcome_stack.add_named (welcome_box, "welcome_box");
+
+            database = new DataBaseOpen ();
+            welcome_stack.add_named (database, "database");
+
+            welcome_stack.set_visible_child (welcome_box);
+
+            add (welcome_stack);
+
+            load_library ();
+
+            welcome_widget.activated.connect ((index) => {
+                switch (index) {
+                    case 0:
+                        create_connection (null);
+                        break;
+                    }
+            });
+
+            connect_signals ();
         }
 
-        separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
-        separator.visible = false;
-        separator.no_show_all = true;
+        public void connect_signals () {
+            library.edit_dialog.connect ((data) => {
+                create_connection (data);
+            });
 
-        library = new Sequeler.Library ();
+            library.connect_to.connect ((data, spinner, button) => {
+                init_connection (data, spinner, button);
+            });
 
-        welcome_stack = new Gtk.Stack ();
-        welcome_stack.add_named (welcome, "welcome");
+            library.reload_ui.connect (() => {
+                load_library ();
+            });
 
-        if (! settings.show_library) {
-            welcome_stack.add_named (library, "library");
+            database.execute_query.connect((query) => {
+                return execute_query (query);
+            });
+
+            database.execute_select.connect((query) => {
+                return execute_select (query);
+            });
         }
 
-        database = new Sequeler.DataBaseOpen ();
-        welcome_stack.add_named (database, "database");
-
-        welcome_stack.set_visible_child (welcome);
-
-        if (settings.saved_connections.length > 0 && settings.show_library && library != null) {
-            add (library);
-            separator.visible = true;
-            separator.no_show_all = false;
+        public void reload (Gee.HashMap<string, string> data) {
+            library.check_add_item (data);
+            library.show_all ();
+            load_library ();
         }
 
-        add (separator);
-        add (welcome_stack);
+        public void load_library () {
+            if (settings.saved_connections.length > 0) {
+                separator.visible = true;
+                separator.no_show_all = false;
+                library.visible = true;
+                library.no_show_all = false;
+            } else {
+                separator.visible = false;
+                separator.no_show_all = true;
+                library.visible = false;
+                library.no_show_all = true;
+            }
 
-        welcome.activated.connect ((index) => {
-            switch (index) {
-                case 0:
-                    create_connection (null);
-                    break;
-                case 1:
-                    welcome_stack.set_visible_child_full ("library", Gtk.StackTransitionType.SLIDE_LEFT);
-                    headerbar.show_back_button ();
-                    break;
-                }
-        });
-
-        connect_signals ();
-    }
-
-    public void connect_signals () {
-        headerbar.go_back.connect (() => {
-            welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
-            headerbar.go_back_button.visible = false;
-        });
-
-        library.edit_dialog.connect ((data) => {
-            create_connection (data);
-        });
-
-        library.connect_to.connect ((data, spinner, button) => {
-            init_connection (data, spinner, button);
-        });
-
-        database.execute_query.connect((query) => {
-            return execute_query (query);
-        });
-
-        database.execute_select.connect((query) => {
-            return execute_select (query);
-        });
-    }
-
-    public void reload (Gee.HashMap<string, string> data) {
-        library.check_add_item (data);
-
-        library.show_all ();
+            this.show_all ();
+        }
     }
 }
