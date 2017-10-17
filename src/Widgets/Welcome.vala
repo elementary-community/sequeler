@@ -20,7 +20,7 @@
 */
 namespace Sequeler { 
     public class Welcome : Gtk.Box {
-        private Granite.Widgets.Welcome welcome;
+        private Granite.Widgets.Welcome welcome_widget;
         private Gtk.Box welcome_box;
         public Library? library = null;
         public DataBaseOpen database;
@@ -40,10 +40,10 @@ namespace Sequeler {
             height_request = 500;
 
             welcome_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            welcome = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
-            welcome.hexpand = true;
+            welcome_widget = new Granite.Widgets.Welcome (_("Welcome to Sequeler"), _("Connect to any Local or Remote Database"));
+            welcome_widget.hexpand = true;
 
-            welcome.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
+            welcome_widget.append ("bookmark-new", _("Add New Database"), _("Connect to a Database and save it in your Library."));
 
             separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
             separator.visible = false;
@@ -55,21 +55,21 @@ namespace Sequeler {
 
             welcome_box.add (library);
             welcome_box.add (separator);
-            welcome_box.add (welcome);
+            welcome_box.add (welcome_widget);
 
             welcome_stack = new Gtk.Stack ();
-            welcome_stack.add_named (welcome_box, "welcome");
+            welcome_stack.add_named (welcome_box, "welcome_box");
 
             database = new DataBaseOpen ();
             welcome_stack.add_named (database, "database");
 
-            welcome_stack.set_visible_child (welcome);
+            welcome_stack.set_visible_child (welcome_box);
 
             add (welcome_stack);
 
             load_library ();
 
-            welcome.activated.connect ((index) => {
+            welcome_widget.activated.connect ((index) => {
                 switch (index) {
                     case 0:
                         create_connection (null);
@@ -81,11 +81,6 @@ namespace Sequeler {
         }
 
         public void connect_signals () {
-            headerbar.go_back.connect (() => {
-                welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
-                headerbar.go_back_button.visible = false;
-            });
-
             library.edit_dialog.connect ((data) => {
                 create_connection (data);
             });

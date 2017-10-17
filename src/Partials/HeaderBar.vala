@@ -23,7 +23,6 @@ namespace Sequeler {
     public class HeaderBar : Gtk.HeaderBar {
         private static HeaderBar? instance = null;
         private Gtk.Menu menu;
-        public Gtk.Button go_back_button;
         public Gtk.Button logout_button;
         private HeaderBarButton new_connection;
         private HeaderBarButton search;
@@ -32,7 +31,6 @@ namespace Sequeler {
 
         public signal void preferences_selected ();
         public signal void quick_connection ();
-        public signal void go_back ();
         public signal void logout ();
 
         private HeaderBar () {
@@ -51,12 +49,6 @@ namespace Sequeler {
         }
 
         private void build_ui () {
-            go_back_button = new Gtk.Button.with_label (_("Back"));
-            go_back_button.get_style_context().add_class ("back-button");
-            go_back_button.clicked.connect (() => { 
-                go_back ();
-            });
-
             var eject_image = new Gtk.Image.from_icon_name ("media-eject-symbolic", Gtk.IconSize.BUTTON);
             logout_button = new Gtk.Button.with_label (_("Logout"));
             logout_button.get_style_context().add_class ("back-button");
@@ -118,24 +110,15 @@ namespace Sequeler {
             terminal.sensitive = false;
 
             // add button to headerbar
-            pack_start (go_back_button);
             pack_start (logout_button);
             pack_end (open_menu);
             pack_end (new_connection);
             //  pack_end (search);
             //  pack_end (terminal);
 
-            go_back_button.no_show_all = true;
-            go_back_button.visible = false;
-            go_back_button.can_focus = false;
-
             logout_button.no_show_all = true;
             logout_button.visible = false;
             logout_button.can_focus = false;
-        }
-
-        public void show_back_button () {
-            headerbar.go_back_button.visible = true;
         }
 
         public void show_logout_button () {

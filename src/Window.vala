@@ -20,7 +20,6 @@
 */
 namespace Sequeler { 
     public class Window : Gtk.ApplicationWindow {
-        /* Core Componenets */
         public Gtk.Overlay overlay;
         public Granite.Widgets.OverlayBar overlaybar;
         public Gtk.Stack panels;
@@ -50,7 +49,6 @@ namespace Sequeler {
         }
 
         private void build_ui () {
-            // User can decide theme color
             Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
 
             var css_provider = new Gtk.CssProvider ();
@@ -77,7 +75,8 @@ namespace Sequeler {
 
             headerbar.logout.connect (() => {
                 db.close ();
-                welcome.welcome_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.SLIDE_RIGHT);
+                db = null;
+                welcome.welcome_stack.set_visible_child_full ("welcome_box", Gtk.StackTransitionType.SLIDE_RIGHT);
                 headerbar.logout_button.visible = false;
             });
             
@@ -104,22 +103,10 @@ namespace Sequeler {
             });
 
             overlay = new Gtk.Overlay ();
-            panels = new Gtk.Stack ();
-            panels.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
-            panels.transition_duration = 300;
-            panels.homogeneous = false;
-
-            panels.add_titled (welcome, "welcome", _("Welcome"));
-
-            // add stackswitcher to vertical box
-            Gtk.Box vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            vbox.pack_start(panels, true, true, 0);
-
             toast_saved = new Granite.Widgets.Toast (_("Connection Saved!"));
             overlay.add_overlay (toast_saved);
 
-            overlay.add (vbox);
-
+            overlay.add (welcome);
             add (overlay);
         }
 
@@ -202,7 +189,6 @@ namespace Sequeler {
                 spinner.stop ();
                 return false;
             });
-
         }
 
         public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Button button) {
@@ -282,7 +268,6 @@ namespace Sequeler {
             welcome.welcome_stack.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_LEFT);
             headerbar.title = _("Connected to ") + data["title"];
             headerbar.subtitle = data["username"] + "@" + data["host"];
-            headerbar.go_back_button.visible = false;
             headerbar.show_logout_button ();
             welcome.database.spinner.stop ();
             welcome.database.loading_msg.visible = false;
