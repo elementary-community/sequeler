@@ -164,8 +164,6 @@ namespace Sequeler {
         public void handle_query_response (int response) {
             hide_loading ();
 
-            //  stdout.printf ("Response: %s\n", response.to_string ());
-
             if (response == 0) {
                 result_message.label = _("Unable to process Query!");
             } else if (response < 0) {
