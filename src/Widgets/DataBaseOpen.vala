@@ -21,6 +21,7 @@
 namespace Sequeler { 
     public class DataBaseOpen : Gtk.Box {
 
+        public Gtk.Paned main_pane;
         public Gtk.Paned pane;
         public Gtk.Box toolbar;
         public Gtk.Button run_button;
@@ -33,15 +34,23 @@ namespace Sequeler {
         public QueryBuilder query_builder;
         public int column_pos;
 
+        public string db_name;
+
         public signal int execute_query (string query);
         public signal Gda.DataModel? execute_select (string query);
 
         public DataBaseOpen () {
             orientation = Gtk.Orientation.VERTICAL;
 
+            main_pane = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
+            main_pane.wide_handle = true;
+
+            build_sidebar ();
+
             pane = new Gtk.Paned (Gtk.Orientation.VERTICAL);
             pane.wide_handle = true;
-            this.pack_start (pane, true, true, 0);
+            
+            this.pack_start (main_pane, true, true, 0);
 
             build_editor ();
 
@@ -52,6 +61,28 @@ namespace Sequeler {
             connect_signals ();
 
             handle_shortcuts ();
+
+            main_pane.pack2 (pane, true, false);
+        }
+
+        public void build_sidebar () {
+            var scroll = new Gtk.ScrolledWindow (null, null);
+            scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+
+            main_pane.pack1 (scroll, true, false);
+        }
+
+        public void init_sidebar (string db_name) {
+            this.db_name = db_name;
+            var table_query = "SELECT table_name AS `Table`, ROUND(((data_length + index_length) / 1024 / 1024), 2) `Size (MB)` FROM information_schema.TABLES WHERE table_schema = '" + db_name + "' ORDER BY 'Table' DESC";
+
+            sidebar_table (execute_select (table_query));
+        }
+
+        public void sidebar_table (Gda.DataModel? response) {
+            if (response != null) {
+                stdout.printf ("%s\n", response.dump_as_string ());
+            }
         }
 
         public void build_editor () {

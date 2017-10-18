@@ -26,11 +26,3 @@
     border-radius: 12px;
     box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
 }
-
-GtkTreeView row:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-GtkTreeView row:nth-child(odd) {
-    background-color: rgba(255, 255, 255, 0.1);
-}
