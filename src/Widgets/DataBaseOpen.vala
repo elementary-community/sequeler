@@ -29,6 +29,7 @@ namespace Sequeler {
         public Gtk.Label result_message;
         public Gtk.Label loading_msg;
         public Gtk.ScrolledWindow scroll_results;
+        public Gtk.ScrolledWindow scroll_sidebar;
         public Gtk.TreeView results_view;
         public Gtk.ListStore store;
         public QueryBuilder query_builder;
@@ -44,6 +45,7 @@ namespace Sequeler {
 
             main_pane = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
             main_pane.wide_handle = true;
+            main_pane.set_position (240);
 
             build_sidebar ();
 
@@ -62,14 +64,15 @@ namespace Sequeler {
 
             handle_shortcuts ();
 
-            main_pane.pack2 (pane, true, false);
+            main_pane.add2 (pane);
         }
 
         public void build_sidebar () {
-            var scroll = new Gtk.ScrolledWindow (null, null);
-            scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+            scroll_sidebar = new Gtk.ScrolledWindow (null, null);
+            scroll_sidebar.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+            scroll_sidebar.set_min_content_width (240);
 
-            main_pane.pack1 (scroll, true, false);
+            main_pane.pack1 (scroll_sidebar, true, false);
         }
 
         public void init_sidebar (string db_name) {
@@ -80,9 +83,33 @@ namespace Sequeler {
         }
 
         public void sidebar_table (Gda.DataModel? response) {
-            if (response != null) {
-                stdout.printf ("%s\n", response.dump_as_string ());
+            if (response == null) {
+                return;
             }
+
+            Gtk.Grid grid = new Gtk.Grid ();
+            grid.column_spacing = 10;
+            grid.row_spacing = 0;
+            grid.column_homogeneous = true;
+
+            var column1 = new Gtk.Label (_("TABLE"));
+            column1.get_style_context ().add_class ("h4");
+            column1.get_style_context ().add_class ("schema-header");
+            column1.halign = Gtk.Align.START;
+            column1.margin = 6;
+
+            var column2 = new Gtk.Label (_("SIZE (MB)"));
+            column2.get_style_context ().add_class ("h4");
+            column2.get_style_context ().add_class ("schema-header");
+            column2.halign = Gtk.Align.END;
+            column2.margin = 6;
+
+            grid.attach (column1, 0, 0, 1, 1);
+            grid.attach (column2, 1, 0, 1, 1);
+            
+            scroll_sidebar.add (grid);
+
+            grid.show_all ();
         }
 
         public void build_editor () {
