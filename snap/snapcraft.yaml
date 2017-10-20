@@ -15,9 +15,9 @@ apps:
 
 parts:
   sequeler:
-    source: ../../build
+    source: ./build
     plugin: make
-    makefile: ../../build/Makefile
+    makefile: ./build/Makefile
     # build-packages:
     #   - build-essentials
     #   - cmake
