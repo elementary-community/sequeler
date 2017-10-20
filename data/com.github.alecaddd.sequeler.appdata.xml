@@ -26,6 +26,18 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.3.0" date="2017-10-20">
+      <description>
+        <p>This is so good you won't believe it. New Library UI, Schema Table, Custom Port, and more</p>
+        <ul>
+          <li>A brand new Library View directly in your home screen, super tight and organized</li>
+          <li>Custom Port field for those snazzy geeks who don't just use 3306</li>
+          <li>A shiny new Sidebar View to list all your DataBase Tables</li>
+          <li>Code cleanup and speed improvements</li>
+          <li>Usual abundance of bugs and issues for you to have fun with!</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.2.0" date="2017-10-10">
       <description>
         <p>Major Update: Releasing a sweet table to view Query Results!</p>
