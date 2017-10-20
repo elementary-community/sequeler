@@ -1,0 +1,39 @@
+name: sequeler
+version: '0.3'
+summary: Friendly SQL Client
+description: |
+  Store your Database Connections in the built-in library,
+  type and execute SQL commands directly in the App,
+  and do everything you need to do without the necessity of opening the terminal.
+
+grade: stable
+confinement: devmode
+
+apps:
+    sequeler:
+      command: bin/sequeler
+
+parts:
+  sequeler:
+    source: .
+    plugin: cmake
+    configflags: [-DCMAKE_INSTALL_PREFIX=/usr]
+    # makefile: ./build/Makefile
+    build-packages:
+      - build-essentials
+      - cmake
+      - debhelper
+      - libgtk-3-dev
+      - valac
+      - libgranite-dev
+      - libjson-glib-dev
+      - libgudev-1.0-dev
+      - libevdev-dev
+      - libgtksourceview-3.0-dev
+      - libxml2-dev
+      - libglib2.0-dev
+      - libgda-5.0-dev
+      - libmysqlclient-dev
+      - libpq-dev
+      - libgda-5.0-mysql
+      - libgda-5.0-postgres
