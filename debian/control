@@ -22,7 +22,7 @@ Build-Depends: cmake (>= 2.8),
 Standards-Version: 3.9.3
 Package: com.github.alecaddd.sequeler
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libgda-mysql-5.0, libgda-postgres-5.0
+Depends: ${misc:Depends}, ${shlibs:Depends}, libgda-5.0-mysql, libgda-5.0-postgres
 Pre-Depends: dpkg (>= 1.15.6)
 Description: Sequeler
  Friendly SQL Client
