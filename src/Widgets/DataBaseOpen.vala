@@ -24,6 +24,7 @@ namespace Sequeler {
         public Gtk.Paned main_pane;
         public Gtk.Paned pane;
         public Gtk.Box toolbar;
+        public Gtk.Box sidebar;
         public Gtk.Button run_button;
         public Gtk.Spinner spinner;
         public Gtk.Label result_message;
@@ -68,16 +69,15 @@ namespace Sequeler {
         }
 
         public void build_sidebar () {
-            scroll_sidebar = new Gtk.ScrolledWindow (null, null);
-            scroll_sidebar.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-            scroll_sidebar.set_min_content_width (240);
+            sidebar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            sidebar.width_request = 240;
 
-            main_pane.pack1 (scroll_sidebar, true, false);
+            main_pane.pack1 (sidebar, true, false);
         }
 
         public void init_sidebar (string db_name) {
             this.db_name = db_name;
-            var table_query = "SELECT table_name AS `Table`, ROUND(((data_length + index_length) / 1024 / 1024), 2) `Size (MB)` FROM information_schema.TABLES WHERE table_schema = '" + db_name + "' ORDER BY 'Table' DESC";
+            var table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + db_name + "' ORDER BY table_name DESC";
 
             sidebar_table (execute_select (table_query));
         }
@@ -87,29 +87,30 @@ namespace Sequeler {
                 return;
             }
 
+            var sidebar_title = new TitleBar (_("TABLES"));
+
+            scroll_sidebar = new Gtk.ScrolledWindow (null, null);
+            scroll_sidebar.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+
             Gtk.Grid grid = new Gtk.Grid ();
-            grid.column_spacing = 10;
+            grid.column_spacing = 0;
             grid.row_spacing = 0;
             grid.column_homogeneous = true;
 
-            var column1 = new Gtk.Label (_("TABLE"));
-            column1.get_style_context ().add_class ("h4");
-            column1.get_style_context ().add_class ("schema-header");
-            column1.halign = Gtk.Align.START;
-            column1.margin = 6;
+            Gda.DataModelIter _iter = response.create_iter ();
+            int top = 0;
+            while (_iter.move_next ()) {
+                grid.attach (new TableRow (_iter.get_value_at (0).get_string (), top), 0, top, 1, 1);             
+                top++;
+            }
 
-            var column2 = new Gtk.Label (_("SIZE (MB)"));
-            column2.get_style_context ().add_class ("h4");
-            column2.get_style_context ().add_class ("schema-header");
-            column2.halign = Gtk.Align.END;
-            column2.margin = 6;
-
-            grid.attach (column1, 0, 0, 1, 1);
-            grid.attach (column2, 1, 0, 1, 1);
-            
             scroll_sidebar.add (grid);
-
             grid.show_all ();
+
+            sidebar.pack_start (sidebar_title, false, true, 0);
+            sidebar.pack_start (scroll_sidebar, true, true, 0);
+
+            sidebar.show_all ();
         }
 
         public void build_editor () {
@@ -266,6 +267,11 @@ namespace Sequeler {
                 column.clickable = true;
                 column.resizable = true;
                 column.expand = true;
+                column.min_width = 10;
+                if (i > 0) {
+                    column.sizing = Gtk.TreeViewColumnSizing.FIXED;
+                    column.fixed_width = 150;
+                }
                 results_view.append_column (column);
             }
 
@@ -303,5 +309,17 @@ namespace Sequeler {
             }
         }
 
+        //  protected class TableLabel : Gtk.Label {
+        //      public TableLabel (string text, int type) {
+        //          label = text;
+        //          if (type % 2 == 0) {
+        //              get_style_context ().add_class ("row-odd");
+        //          } else {
+        //              get_style_context ().add_class ("row-even");
+        //          }
+        //          halign = Gtk.Align.START;
+        //          margin = 6;
+        //      }
+        //  }
     }
 }

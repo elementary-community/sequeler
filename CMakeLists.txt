@@ -51,6 +51,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Partials/HeaderBar.vala
     src/Partials/ButtonType.vala
+    src/Partials/HeaderTypes.vala
     src/Partials/MessageDialog.vala
     src/Partials/QueryBuilder.vala
     src/Partials/SimpleSettingsPage.vala

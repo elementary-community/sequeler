@@ -33,13 +33,7 @@ namespace Sequeler {
             orientation = Gtk.Orientation.VERTICAL;
             width_request = 240;
 
-            var titlebar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            titlebar.get_style_context ().add_class ("library-titlebar");
-            var title = new Gtk.Label (_("SAVED CONNECTIONS"));
-            title.get_style_context ().add_class ("h4");
-            title.halign = Gtk.Align.CENTER;
-            title.margin = 4;
-            titlebar.pack_start (title, true, true, 0);
+            var titlebar = new TitleBar (_("SAVED CONNECTIONS"));
 
             var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             toolbar.get_style_context ().add_class ("toolbar");
