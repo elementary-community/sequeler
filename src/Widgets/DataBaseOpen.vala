@@ -72,6 +72,9 @@ namespace Sequeler {
             sidebar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             sidebar.width_request = 240;
 
+            var sidebar_title = new TitleBar (_("TABLES"));
+            sidebar.pack_start (sidebar_title, false, true, 0);
+
             main_pane.pack1 (sidebar, true, false);
         }
 
@@ -87,7 +90,10 @@ namespace Sequeler {
                 return;
             }
 
-            var sidebar_title = new TitleBar (_("TABLES"));
+            if (scroll_sidebar != null) {
+                sidebar.remove (scroll_sidebar);
+                scroll_sidebar = null;
+            }
 
             scroll_sidebar = new Gtk.ScrolledWindow (null, null);
             scroll_sidebar.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
@@ -107,7 +113,6 @@ namespace Sequeler {
             scroll_sidebar.add (grid);
             grid.show_all ();
 
-            sidebar.pack_start (sidebar_title, false, true, 0);
             sidebar.pack_start (scroll_sidebar, true, true, 0);
 
             sidebar.show_all ();
