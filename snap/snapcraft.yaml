@@ -7,7 +7,9 @@ description: |
   and do everything you need to do without the necessity of opening the terminal.
 
 grade: stable
-confinement: devmode
+confinement: strict
+
+icon: com.github.alecaddd.sequeler.svg
 
 apps:
   sequeler:
