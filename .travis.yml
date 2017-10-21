@@ -17,8 +17,8 @@ services:
 before_install:
 - sudo apt-get update
 - sudo apt-get install rake
-- gem install bundler
-- bundle install
+- sudo -u git -H -i gem install bundler
+- sudo -u git -H -i bundle install
 deploy:
   'on':
     branch: master
