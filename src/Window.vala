@@ -25,7 +25,7 @@ namespace Sequeler {
         public Gtk.Stack panels;
         public Welcome welcome;
         public DataBase db;
-        public Granite.Widgets.Toast toast_saved;
+        //  public Granite.Widgets.Toast toast_saved;
 
         public int output_query;
         public Gda.DataModel? output_select;
@@ -103,8 +103,8 @@ namespace Sequeler {
             });
 
             overlay = new Gtk.Overlay ();
-            toast_saved = new Granite.Widgets.Toast (_("Connection Saved!"));
-            overlay.add_overlay (toast_saved);
+            //  toast_saved = new Granite.Widgets.Toast (_("Connection Saved!"));
+            //  overlay.add_overlay (toast_saved);
 
             overlay.add (welcome);
             add (overlay);
@@ -150,9 +150,9 @@ namespace Sequeler {
 
             connection_dialog.save_connection.connect ((data, trigger) => {
                 welcome.reload (data);
-                if (trigger) {
-                    toast_saved.send_notification ();
-                }
+                //  if (trigger) {
+                //      toast_saved.send_notification ();
+                //  }
             });
 
             connection_dialog.connect_to.connect ((data, spinner, dialog, response) => {
