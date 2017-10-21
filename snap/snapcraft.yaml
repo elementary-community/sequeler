@@ -39,7 +39,6 @@ parts:
     after: [elementary, desktop-gtk3]
     plugin: cmake
     source: https://github.com/Alecaddd/sequeler.git
-    source-tag: '0.3.3'
     build-packages:
       - build-essential
       - gettext
