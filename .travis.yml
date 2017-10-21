@@ -14,10 +14,6 @@ after_success:
 sudo: required
 services:
 - docker
-before_install:
-- sudo apt-get update
-- sudo apt-get install rake
-- sudo gem install bundler
 deploy:
   'on':
     branch: master
