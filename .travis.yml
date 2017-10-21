@@ -14,6 +14,8 @@ after_success:
 sudo: required
 services:
 - docker
+before_install:
+- sudo apt-get install rake
 deploy:
   'on':
     branch: master
