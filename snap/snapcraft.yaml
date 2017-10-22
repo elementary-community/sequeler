@@ -9,18 +9,17 @@ description: |
 grade: stable
 confinement: strict
 
-icon: sequeler.png
+icon: /usr/share/icons/hicolor/128x128/com.github.alecaddd.sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch $SNAP/squeler.wrapper
+    command: desktop-launch sequeler
+    desktop: usr/share/applications/com.github.alecaddd.sequeler.desktop
     plugs:
       - x11
       - unity7
       - home
       - gsettings
-      - pulseaudio
-      - opengl
       - network
 
 parts:
@@ -49,8 +48,9 @@ parts:
       apt dist-upgrade -y
   sequeler:
     after: [granite, elementary, desktop-gtk3]
-    plugin: cmake
     source: https://github.com/Alecaddd/sequeler.git
+    plugin: cmake
+    configflags: [-DCMAKE_INSTALL_PREFIX=/usr]
     build-packages:
       - build-essential
       - gettext

@@ -4,7 +4,7 @@ GenericName=Sequeler App
 Comment=Friendly SQL Client
 Categories=Utility;Development;
 Exec=sequeler %u
-Icon==${SNAP}/meta/gui/sequeler.png
+Icon==${SNAP}/meta/gui/com.github.alecaddd.sequeler.png
 Terminal=false
 Type=Application
 X-GNOME-Gettext-Domain=sequeler
