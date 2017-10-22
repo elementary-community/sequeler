@@ -9,7 +9,7 @@ description: |
 grade: stable
 confinement: strict
 
-icon: /usr/share/icons/hicolor/128x128/com.github.alecaddd.sequeler.png
+icon: com.github.alecaddd.sequeler.png
 
 apps:
   sequeler:
