@@ -9,11 +9,11 @@ description: |
 grade: stable
 confinement: strict
 
-icon: com.github.alecaddd.sequeler.svg
+icon: sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch $SNAP/bin/com.github.alecaddd.sequeler
+    command: desktop-launch $SNAP/bin/sequeler
     plugs:
       - x11
       - unity7
