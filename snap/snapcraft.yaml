@@ -13,7 +13,7 @@ icon: sequeler.png
 
 apps:
   sequeler:
-    command: $SNAP/bin/sequeler
+    command: desktop-launch $SNAP/sequeler.wrapper
     plugs:
       - x11
       - unity7
