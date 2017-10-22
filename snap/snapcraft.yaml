@@ -9,12 +9,11 @@ description: |
 grade: stable
 confinement: strict
 
-icon: com.github.alecaddd.sequeler.png
+icon: sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch sequeler
-    desktop: usr/share/applications/com.github.alecaddd.sequeler.desktop
+    command: desktop-launch $SNAP/usr/bin/sequeler
     plugs:
       - x11
       - unity7
@@ -73,3 +72,10 @@ parts:
       - libgda-5.0-postgres
     organize:
       share/glib-2.0: usr/share/glib-2.0
+    prime:
+      - usr/bin/sequeler
+      - usr/share/applications/com.github.alecaddd.sequeler.desktop
+      - usr/share/glib-2.0/schemas/com.github.alecaddd.sequeler.gschema.xml
+      - usr/share/icons/**/sequeler.png
+      - usr/share/locale/**/sequeler*
+      - usr/share/metainfo/com.github.alecaddd.sequeler.appdata.xml
