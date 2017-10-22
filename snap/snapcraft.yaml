@@ -13,7 +13,7 @@ icon: sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch launch-sequeler
+    command: bin/sequeler
     plugs:
       - x11
       - unity7
@@ -76,11 +76,3 @@ parts:
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
     snap:
       - usr/share
-  
-  launcher:
-    plugin: dump
-    source: data/snapcraft/
-    organize:
-      launch-sequeler: bin/launch-sequeler
-    install: |
-      chmod 0755 $SNAPCRAFT_PART_INSTALL/launch-sequeler
