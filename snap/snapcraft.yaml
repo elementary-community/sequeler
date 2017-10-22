@@ -13,13 +13,14 @@ icon: sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch $SNAP/usr/bin/sequeler
+    command: sequeler-launch usr/bin/sequeler
     plugs:
       - x11
       - unity7
       - home
       - gsettings
       - network
+      - granite
 
 parts:
   granite:
@@ -70,12 +71,11 @@ parts:
       - libpq-dev
       - libgda-5.0-mysql
       - libgda-5.0-postgres
-    organize:
-      share/glib-2.0: usr/share/glib-2.0
-    prime:
-      - usr/bin/sequeler
-      - usr/share/applications/com.github.alecaddd.sequeler.desktop
-      - usr/share/glib-2.0/schemas/com.github.alecaddd.sequeler.gschema.xml
-      - usr/share/icons/**/sequeler.png
-      - usr/share/locale/**/sequeler*
-      - usr/share/metainfo/com.github.alecaddd.sequeler.appdata.xml
+    snap:
+      - usr/share
+      - -usr/share/doc
+
+  launcher:
+    plugin: copy
+    files:
+      sequeler-launch: bin/sequeler-launch
