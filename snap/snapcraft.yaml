@@ -1,5 +1,5 @@
 name: sequeler
-version: '0.3'
+version: '0.3.3'
 summary: Friendly SQL Client
 description: |
   Store your Database Connections in the built-in library,
@@ -13,7 +13,7 @@ icon: sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch $SNAP/bin/sequeler
+    command: desktop-launch $SNAP/squeler.wrapper
     plugs:
       - x11
       - unity7
@@ -24,6 +24,16 @@ apps:
       - network
 
 parts:
+  granite:
+    plugin: cmake
+    source: lp:granite/0.4
+    source-type: bzr
+    configflags: [-DCMAKE_BUILD_TYPE=Release, -DCMAKE_INSTALL_PREFIX=/usr, -DCMAKE_INSTALL_LIBDIR=/usr/lib]
+    build-packages:
+      - build-essential
+      - valac
+    stage-packages:
+      - valac-0.30-vapi
   elementary:
     plugin: nil
     prepare: |
@@ -38,7 +48,7 @@ parts:
       apt update
       apt dist-upgrade -y
   sequeler:
-    after: [elementary, desktop-gtk3]
+    after: [granite, elementary, desktop-gtk3]
     plugin: cmake
     source: https://github.com/Alecaddd/sequeler.git
     build-packages:
