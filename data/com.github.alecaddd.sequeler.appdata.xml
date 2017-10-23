@@ -26,6 +26,16 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.3.4" date="2017-10-23">
+      <description>
+        <p>Bug Fixes and Improvements</p>
+        <ul>
+          <li>Display Table lists for SQLite and PostgreSQL</li>
+          <li>Refresh Table List view if tables change</li>
+          <li>Removed unused GSettings</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.3.3" date="2017-10-20">
       <description>
         <p>This is so good you won't believe it. New Library UI, Schema Table, Custom Port, and more</p>
