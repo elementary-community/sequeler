@@ -23,9 +23,6 @@ apps:
       - home
       - gsettings
       - network
-    gsettings:
-      command: desktop-launch gsettings
-      plugs: [gsettings]
 
 parts:
   granite:
