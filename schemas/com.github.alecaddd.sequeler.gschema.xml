@@ -30,28 +30,10 @@
             <description>All the configured connections you saved are here</description>
         </key>
 
-        <key name="tot-connections" type="i">
-            <default>0</default>
-            <summary>Total amount of saved connections.</summary>
-            <description>Increase the amount at every new connection, set a unique ID for every connection.</description>
-        </key>
-
         <key name="save-quick" type="b">
             <default>true</default>
             <summary>Save Quick Connections</summary>
             <description>Automatically Save a Quick Connections into the Database Library.</description>
-        </key>
-
-        <key name="show-library" type="b">
-            <default>false</default>
-            <summary>Show Library</summary>
-            <description>Show the connections library in the Welcome Screen.</description>
-        </key>
-
-        <key name="reconnect" type="b">
-            <default>false</default>
-            <summary>Automatically Reconnect</summary>
-            <description>Automatically Reconnect to the Latest Database.</description>
         </key>
 
         <key name="dark-theme" type="b">
