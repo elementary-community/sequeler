@@ -94,7 +94,7 @@ namespace Sequeler {
             }
 
             if (data["type"] == "PostgreSQL") {
-                table_query = "";
+                table_query = "SELECT * FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name DESC";
             }
             sidebar_table (execute_select (table_query));
         }
