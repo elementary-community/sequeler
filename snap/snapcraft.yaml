@@ -13,13 +13,19 @@ icon: sequeler.png
 
 apps:
   sequeler:
-    command: desktop-launch $SNAP/sequeler
+    command: desktop-launch sequeler
     plugs:
       - x11
+      - desktop
+      - desktop-legacy
+      - wayland
       - unity7
       - home
       - gsettings
       - network
+    gsettings:
+      command: desktop-launch gsettings
+      plugs: [gsettings]
 
 parts:
   granite:
