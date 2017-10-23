@@ -36,7 +36,7 @@ namespace Sequeler {
         public QueryBuilder query_builder;
         public int column_pos;
 
-        public string db_name;
+        public Gee.HashMap<string,string> data;
 
         public signal int execute_query (string query);
         public signal Gda.DataModel? execute_select (string query);
@@ -68,6 +68,10 @@ namespace Sequeler {
             main_pane.add2 (pane);
         }
 
+        public void set_database_data (Gee.HashMap<string,string> data){
+            this.data = data;
+        }
+
         public void build_sidebar () {
             sidebar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             sidebar.width_request = 240;
@@ -78,10 +82,20 @@ namespace Sequeler {
             main_pane.pack1 (sidebar, true, false);
         }
 
-        public void init_sidebar (string db_name) {
-            this.db_name = db_name;
-            var table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + db_name + "' ORDER BY table_name DESC";
+        public void init_sidebar () {
+            var table_query = "";
 
+            if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
+                table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + data["name"] + "' ORDER BY table_name DESC";
+            }
+
+            if (data["type"] == "SQLite") {
+                table_query = "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
+            }
+
+            if (data["type"] == "PostgreSQL") {
+                table_query = "";
+            }
             sidebar_table (execute_select (table_query));
         }
 
@@ -234,6 +248,10 @@ namespace Sequeler {
                 result_message.label = _("Query Executed!");
             } else {
                 result_message.label = _("Query Successfully Executed! Rows affected: ") + response.to_string ();
+            }
+
+            if (response != 0) {
+                init_sidebar ();
             }
         }
 

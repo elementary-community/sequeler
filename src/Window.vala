@@ -271,7 +271,8 @@ namespace Sequeler {
             welcome.database.result_message.label = "";
             welcome.database.query_builder.buffer.text = "";
             welcome.database.clear_results ();
-            welcome.database.init_sidebar (data["name"]);
+            welcome.database.set_database_data (data);
+            welcome.database.init_sidebar ();
         }
 
         protected override bool delete_event (Gdk.EventAny event) {
