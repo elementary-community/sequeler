@@ -30,7 +30,6 @@ namespace Sequeler {
         public int tot_connections { get; set; }
         public bool dark_theme { get; set; }
         public bool save_quick { get; set; }
-        public bool show_library { get; set; }
 
         public static Settings get_instance () {
             if (instance == null) {
