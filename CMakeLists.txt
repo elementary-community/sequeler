@@ -19,7 +19,7 @@ set (PKGDATADIR "${DATADIR}/com.github.alecaddd.sequeler")
 
 set (EXEC_NAME "com.github.alecaddd.sequeler")
 set (RELEASE_NAME "Sequeler")
-set (VERSION "0.3.4")
+set (VERSION "0.3.6")
 set (VERSION_INFO "Friendly SQL Client")
 
 # disable C compiler warnings

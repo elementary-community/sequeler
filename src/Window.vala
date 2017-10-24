@@ -153,7 +153,26 @@ namespace Sequeler {
             });
 
             connection_dialog.connect_to.connect ((data, spinner, dialog, response) => {
-                init_connection_from_dialog (data, spinner, dialog, response);
+                db = new DataBase ();
+                var encode_data = encode_data (data);
+                db.set_constr_data (encode_data);
+
+                var loop = new MainLoop();
+                init_connection_from_dialog.begin(spinner, response, (obj, res) => {
+                    try {
+                        bool result = init_connection_from_dialog.end(res);
+                        if (result) {
+                            loop.quit ();
+                            dialog.destroy ();
+                            open_database_view (encode_data);
+                        }
+                    } catch (ThreadError e) {
+                        response.label = e.message;
+                        spinner.stop ();
+                    }
+                    loop.quit ();
+                });
+                loop.run();
             });
 
             connection_dialog.show_all ();
@@ -167,25 +186,29 @@ namespace Sequeler {
             return data;
         }
 
-        public void init_connection_from_dialog (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response) {
-            db = new DataBase ();
-            var encode_data = encode_data (data);
-            db.set_constr_data (encode_data);
+        public async bool init_connection_from_dialog (Gtk.Spinner spinner, Gtk.Label response) throws ThreadError {
+            bool output = false;
+            SourceFunc callback = init_connection_from_dialog.callback;
 
-            GLib.Timeout.add_seconds(1, () => {
+            new Thread <void*> (null, () => {
+                bool result = false;
                 try {
                     db.open();
                     if (db.cnn.is_opened ()) {
-                        dialog.destroy ();
-                        open_database_view (encode_data);
+                        result = true;
                     }
                 }
                 catch (Error e) {
                     response.label = e.message;
+                    spinner.stop ();
                 }
-                spinner.stop ();
-                return false;
+                Idle.add((owned) callback);
+                output = result;
+                return null;
             });
+
+            yield;
+            return output;
         }
 
         public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) {
