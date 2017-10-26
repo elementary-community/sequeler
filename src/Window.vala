@@ -90,7 +90,28 @@ namespace Sequeler {
             });
 
             welcome.init_connection.connect ((data, spinner, button) => {
-                init_connection (data, spinner, button);
+                db = new DataBase ();
+                var encode_data = encode_data (data);
+                db.set_constr_data (encode_data);
+
+                var loop = new MainLoop ();
+                init_connection.begin(encode_data, spinner, button, (obj, res) => {
+                    try {
+                        bool result = init_connection.end (res);
+                        if (result) {
+                            spinner.stop ();
+                            button.sensitive = true;
+                            open_database_view (encode_data);
+                        }
+                    } catch (ThreadError e) {
+                        connection_warning (e.message, encode_data["title"]);
+                        button.sensitive = true;
+                        spinner.stop ();
+                    }
+                    loop.quit ();
+                });
+                loop.run();
+                //  init_connection (data, spinner, button);
             });
 
             welcome.execute_query.connect((query) => {
@@ -157,7 +178,7 @@ namespace Sequeler {
                 var encode_data = encode_data (data);
                 db.set_constr_data (encode_data);
 
-                var loop = new MainLoop();
+                var loop = new MainLoop ();
                 init_connection_from_dialog.begin(spinner, response, (obj, res) => {
                     try {
                         bool result = init_connection_from_dialog.end(res);
@@ -211,30 +232,34 @@ namespace Sequeler {
             return output;
         }
 
-        public void init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) {
-            db = new DataBase ();
-            var encode_data = encode_data (data);
-            db.set_constr_data (encode_data);
+        public async bool init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) throws ThreadError {
+            bool output = false;
+            SourceFunc callback = init_connection.callback;
 
-            GLib.Timeout.add_seconds(1, () => {
+            new Thread <void*> (null, () => {
+                bool result = false;
                 try {
                     db.open();
                     if (db.cnn.is_opened ()) {
-                        open_database_view (encode_data);
+                        result = true;
                     }
                 }
                 catch (Error e) {
-                    connection_warning (e, encode_data["title"]);
+                    //  connection_warning ("Damn it!!!", data["title"]);
+                    button.sensitive = true;
+                    spinner.stop ();
                 }
-                spinner.stop ();
-                button.sensitive = true;
-                return false;
+                Idle.add((owned) callback);
+                output = result;
+                return null;
             });
 
+            yield;
+            return output;
         }
 
-        public void connection_warning (Error e, string title) {
-            var message_dialog = new MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", e.message, "dialog-error", Gtk.ButtonsType.NONE);
+        public void connection_warning (string message, string title) {
+            var message_dialog = new MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");
