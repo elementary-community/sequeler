@@ -85,6 +85,7 @@ namespace Sequeler {
             // Create the AppMenu
             var open_menu = new Gtk.MenuButton ();
             open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+            open_menu.get_style_context ().add_class ("library-btn");
             open_menu.set_tooltip_text ("Options");
 
             open_menu.popup = menu;
@@ -96,7 +97,9 @@ namespace Sequeler {
             box.pack_end (open_menu, false, false, 0);
             box.pack_end (spinner, false, false, 0);
 
-            this.add (box);
+            var event_box = new Gtk.EventBox ();
+            event_box.add (box);
+            this.add (event_box);
 
             delete_button.activate.connect (() => {
                 confirm_delete (this, data);
@@ -110,6 +113,18 @@ namespace Sequeler {
                 spinner.start ();
                 connect_button.sensitive = false;
                 connect_to (data, spinner, connect_button);
+            });
+
+            event_box.enter_notify_event.connect ((event) => {
+                box.get_style_context ().add_class ("hover");
+                return false;
+            });
+
+            event_box.leave_notify_event.connect ((event) => {
+                if (event.detail != Gdk.NotifyType.INFERIOR && event.detail != Gdk.NotifyType.VIRTUAL) {
+                    box.get_style_context ().remove_class ("hover");
+                }
+                return false;
             });
         }
     }
