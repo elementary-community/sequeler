@@ -97,11 +97,15 @@ namespace Sequeler {
                 var loop = new MainLoop ();
                 init_connection.begin(encode_data, spinner, button, (obj, res) => {
                     try {
-                        bool result = init_connection.end (res);
-                        if (result) {
+                        Gee.HashMap<string, string> result = init_connection.end (res);
+                        if (result["status"] == "true") {
                             spinner.stop ();
                             button.sensitive = true;
                             open_database_view (encode_data);
+                        } else {
+                            connection_warning (result["msg"], encode_data["title"]);
+                            button.sensitive = true;
+                            spinner.stop ();
                         }
                     } catch (ThreadError e) {
                         connection_warning (e.message, encode_data["title"]);
@@ -111,7 +115,6 @@ namespace Sequeler {
                     loop.quit ();
                 });
                 loop.run();
-                //  init_connection (data, spinner, button);
             });
 
             welcome.execute_query.connect((query) => {
@@ -181,11 +184,14 @@ namespace Sequeler {
                 var loop = new MainLoop ();
                 init_connection_from_dialog.begin(spinner, response, (obj, res) => {
                     try {
-                        bool result = init_connection_from_dialog.end(res);
-                        if (result) {
+                        Gee.HashMap<string, string> result = init_connection_from_dialog.end (res);
+                        if (result["status"] == "true") {
                             loop.quit ();
                             dialog.destroy ();
                             open_database_view (encode_data);
+                        } else {
+                            response.label = result["msg"];
+                            spinner.stop ();
                         }
                     } catch (ThreadError e) {
                         response.label = e.message;
@@ -207,12 +213,14 @@ namespace Sequeler {
             return data;
         }
 
-        public async bool init_connection_from_dialog (Gtk.Spinner spinner, Gtk.Label response) throws ThreadError {
-            bool output = false;
+        public async Gee.HashMap<string, string> init_connection_from_dialog (Gtk.Spinner spinner, Gtk.Label response) throws ThreadError {
+            var output = new Gee.HashMap<string, string> ();
+            output["status"] = "false";
             SourceFunc callback = init_connection_from_dialog.callback;
 
             new Thread <void*> (null, () => {
                 bool result = false;
+                string msg = "";
                 try {
                     db.open();
                     if (db.cnn.is_opened ()) {
@@ -220,11 +228,12 @@ namespace Sequeler {
                     }
                 }
                 catch (Error e) {
-                    response.label = e.message;
-                    spinner.stop ();
+                    result = false;
+                    msg = e.message;
                 }
                 Idle.add((owned) callback);
-                output = result;
+                output["status"] = result.to_string ();
+                output["msg"] = msg;
                 return null;
             });
 
@@ -232,12 +241,14 @@ namespace Sequeler {
             return output;
         }
 
-        public async bool init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) throws ThreadError {
-            bool output = false;
+        public async Gee.HashMap<string, string> init_connection (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) throws ThreadError {
+            var output = new Gee.HashMap<string, string> ();
+            output["status"] = "false";
             SourceFunc callback = init_connection.callback;
 
             new Thread <void*> (null, () => {
                 bool result = false;
+                string msg = "";
                 try {
                     db.open();
                     if (db.cnn.is_opened ()) {
@@ -245,12 +256,12 @@ namespace Sequeler {
                     }
                 }
                 catch (Error e) {
-                    //  connection_warning ("Damn it!!!", data["title"]);
-                    button.sensitive = true;
-                    spinner.stop ();
+                    result = false;
+                    msg = e.message;
                 }
                 Idle.add((owned) callback);
-                output = result;
+                output["status"] = result.to_string ();
+                output["msg"] = msg;
                 return null;
             });
 
