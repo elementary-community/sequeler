@@ -208,11 +208,17 @@ namespace Sequeler {
 
         public void toggle_auth_info (bool toggle) {
             db_username_label.visible = toggle;
+            db_username_label.no_show_all = !toggle;
             db_username_entry.visible = toggle;
+            db_username_entry.no_show_all = !toggle;
             db_password_label.visible = toggle;
+            db_password_label.no_show_all = !toggle;
             db_password_entry.visible = toggle;
+            db_password_entry.no_show_all = !toggle;
             db_port_label.visible = toggle;
+            db_port_label.no_show_all = !toggle;
             db_port_entry.visible = toggle;
+            db_port_entry.no_show_all = !toggle;
         }
     }
 
@@ -342,7 +348,7 @@ namespace Sequeler {
                 }
             }
 
-            dialog.type_changed ();
+            //  dialog.type_changed ();
         }
     }
 
