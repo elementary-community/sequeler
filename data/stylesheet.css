@@ -17,12 +17,17 @@
     opacity: 0;
 }
 
-.library-inner-box.hover {
+.library-inner-box:hover {
     background: rgba(0, 0, 0, 0.1);
 }
 
-.library-inner-box.hover .library-btn {
+.library-inner-box:hover .library-btn {
     opacity: 1;
+}
+
+.library-btn:active,
+.library-btn:focus {
+    background-color: transparent;
 }
 
 .library-titlebar {

@@ -116,13 +116,13 @@ namespace Sequeler {
             });
 
             event_box.enter_notify_event.connect ((event) => {
-                box.get_style_context ().add_class ("hover");
+                box.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
                 return false;
             });
 
             event_box.leave_notify_event.connect ((event) => {
-                if (event.detail != Gdk.NotifyType.INFERIOR && event.detail != Gdk.NotifyType.VIRTUAL) {
-                    box.get_style_context ().remove_class ("hover");
+                if (event.detail != Gdk.NotifyType.INFERIOR) {
+                    box.set_state_flags (Gtk.StateFlags.NORMAL, true);
                 }
                 return false;
             });

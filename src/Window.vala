@@ -62,6 +62,10 @@ namespace Sequeler {
         }
 
         private void build_headerbar () {
+            Gtk.Box secondary_bar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+
+            var test = new Gtk.Label ("Test Label");
+
             headerbar = HeaderBar.get_instance ();
 
             headerbar.preferences_selected.connect (() => {
@@ -78,6 +82,9 @@ namespace Sequeler {
                 welcome.welcome_stack.set_visible_child_full ("welcome_box", Gtk.StackTransitionType.SLIDE_RIGHT);
                 headerbar.logout_button.visible = false;
             });
+
+            //  secondary_bar.pack_start (headerbar, false, false, 10);
+            //  secondary_bar.pack_end (test, false, false, 10);
             
             set_titlebar (headerbar);
         }
