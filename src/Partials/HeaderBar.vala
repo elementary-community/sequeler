@@ -34,6 +34,10 @@ namespace Sequeler {
         private HeaderBar () {
             set_title (APP_NAME);
             set_show_close_button (true);
+            margin_end = 5;
+            margin_start = 5;
+            margin_top = 6;
+            margin_bottom = 6;
 
             build_ui ();
         }

@@ -23,6 +23,7 @@ namespace Sequeler {
     public Window window;
     public Settings settings;
     public HeaderBar headerbar; 
+    public ToolBar toolbar; 
 
     public class Application : Granite.Application {
         // Avoid multiple instances

@@ -50,6 +50,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Window.vala
 
     src/Partials/HeaderBar.vala
+    src/Partials/ToolBar.vala
     src/Partials/ButtonType.vala
     src/Partials/HeaderTypes.vala
     src/Partials/MessageDialog.vala

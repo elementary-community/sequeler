@@ -20,6 +20,7 @@
 */
 namespace Sequeler { 
     public class Window : Gtk.ApplicationWindow {
+        public Gtk.Box topbar;
         public Gtk.Overlay overlay;
         public Granite.Widgets.OverlayBar overlaybar;
         public Gtk.Stack panels;
@@ -62,11 +63,10 @@ namespace Sequeler {
         }
 
         private void build_headerbar () {
-            Gtk.Box secondary_bar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-
-            var test = new Gtk.Label ("Test Label");
+            topbar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 
             headerbar = HeaderBar.get_instance ();
+            toolbar = ToolBar.get_instance ();
 
             headerbar.preferences_selected.connect (() => {
                 open_preference ();
@@ -81,12 +81,15 @@ namespace Sequeler {
                 db = null;
                 welcome.welcome_stack.set_visible_child_full ("welcome_box", Gtk.StackTransitionType.SLIDE_RIGHT);
                 headerbar.logout_button.visible = false;
+                topbar.remove (toolbar);
+                topbar.show_all ();
+                set_titlebar (topbar);
             });
 
-            //  secondary_bar.pack_start (headerbar, false, false, 10);
-            //  secondary_bar.pack_end (test, false, false, 10);
+            topbar.add (headerbar);
+            //  topbar.add (toolbar);
             
-            set_titlebar (headerbar);
+            set_titlebar (topbar);
         }
 
         private void build_panels () {
@@ -328,6 +331,9 @@ namespace Sequeler {
         }
 
         public void open_database_view (Gee.HashMap<string, string> data) {
+            topbar.add (toolbar);
+            topbar.show_all ();
+            set_titlebar (topbar);
             welcome.welcome_stack.set_visible_child_full ("database", Gtk.StackTransitionType.SLIDE_LEFT);
             headerbar.title = _("Connected to ") + data["title"];
             headerbar.subtitle = data["username"] + "@" + data["host"];

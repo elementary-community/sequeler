@@ -5,6 +5,6 @@ services:
 script:
 - wget -O- https://raw.githubusercontent.com/harisvsulaiman/element-build/master/script.sh
   | sh -
-branches: null
+branches: master
 except:
 - /^debian\/\d/
