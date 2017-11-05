@@ -30,7 +30,7 @@ namespace Sequeler {
         }
 
         private ToolBar () {
-            margin = 5;
+            margin = 10;
 
             build_ui ();
             build_dropdown ();
@@ -54,6 +54,8 @@ namespace Sequeler {
         }
 
         private void build_dropdown () {
+            var schema_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            schema_box.margin_end = 10;
             schema_list = new Gtk.ListStore (1, typeof (string));
 
             for (int i = 0; i < 2; i++){
@@ -69,19 +71,23 @@ namespace Sequeler {
             schema_list_combo.set_attributes (cell, "text", Column.SCHEMAS);
             schema_list_combo.set_active (0);
 
-            toolbar_pane.pack1 (schema_list_combo, true, false);
+            schema_box.pack_start (schema_list_combo, true, true, 0);
+            toolbar_pane.pack1 (schema_box, true, false);
         }
 
         private void build_tabs () {
-            var tab_pane = new Granite.Widgets.ModeButton ();
-            tab_pane.append_icon ("view-grid-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            tab_pane.append_icon ("view-list-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            tab_pane.append_icon ("view-column-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            tab_pane.append_icon ("view-grid-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            tab_pane.append_icon ("view-list-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            tab_pane.append_icon ("view-column-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            var tab_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            tab_box.margin_start = 10;
 
-            toolbar_pane.pack2 (tab_pane, true, false);
+            var tab_pane = new Granite.Widgets.ModeButton ();
+            tab_pane.append_icon ("view-list-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("edit-copy-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("network-wireless-hotspot-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("network-workgroup-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("accessories-text-editor-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+
+            tab_box.pack_start (tab_pane, false, false, 0);
+            toolbar_pane.pack2 (tab_box, true, false);
         }
     }
 }
