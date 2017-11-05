@@ -105,7 +105,7 @@ namespace Sequeler {
                 db.set_constr_data (encode_data);
 
                 var loop = new MainLoop ();
-                init_connection.begin(encode_data, spinner, button, (obj, res) => {
+                init_connection.begin (encode_data, spinner, button, (obj, res) => {
                     try {
                         Gee.HashMap<string, string> result = init_connection.end (res);
                         if (result["status"] == "true") {
@@ -132,7 +132,18 @@ namespace Sequeler {
             });
 
             welcome.execute_select.connect((query) => {
-                return run_select (query);
+                Gda.DataModel? result = null;
+                var loop = new MainLoop ();
+                run_select.begin (query, (obj, res) => {
+                    try {
+                        result = run_select.end (res);
+                    } catch (ThreadError e) {
+                        result = null;
+                    }
+                    loop.quit ();
+                });
+                loop.run ();
+                return result;
             });
 
             overlay = new Gtk.Overlay ();
@@ -192,7 +203,7 @@ namespace Sequeler {
                 db.set_constr_data (encode_data);
 
                 var loop = new MainLoop ();
-                init_connection_from_dialog.begin(spinner, response, (obj, res) => {
+                init_connection_from_dialog.begin (spinner, response, (obj, res) => {
                     try {
                         Gee.HashMap<string, string> result = init_connection_from_dialog.end (res);
                         if (result["status"] == "true") {
@@ -304,17 +315,36 @@ namespace Sequeler {
             return output_query;
         }
 
-        public Gda.DataModel? run_select (string query) {
-            try
-            {
-                output_select = db.run_select (query);
-                return output_select;
-            }
-            catch (Error e)
-            {
-                query_error (e);
-            }
-            return null;
+        public async Gda.DataModel? run_select (string query) throws ThreadError {
+            //  try
+            //  {
+            //      output_select = db.run_select (query);
+            //      return output_select;
+            //  }
+            //  catch (Error e)
+            //  {
+            //      query_error (e);
+            //  }
+            //  return null;
+
+            output_select = null;
+            SourceFunc callback = run_select.callback;
+
+            new Thread <void*> (null, () => {
+                Gda.DataModel? result = null;
+                try {
+                    result = db.run_select (query);
+                }
+                catch (Error e) {
+                    result = null;
+                }
+                Idle.add((owned) callback);
+                output_select = result;
+                return null;
+            });
+
+            yield;
+            return output_select;
         }
 
         public void query_error (Error e) {

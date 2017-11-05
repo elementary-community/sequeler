@@ -53,7 +53,7 @@ namespace Sequeler {
         private void build_ui () {
             var eject_image = new Gtk.Image.from_icon_name ("media-eject-symbolic", Gtk.IconSize.BUTTON);
             logout_button = new Gtk.Button.with_label (_("Logout"));
-            logout_button.get_style_context().add_class ("back-button");
+            logout_button.get_style_context ().add_class ("back-button");
             logout_button.always_show_image = true;
             logout_button.set_image (eject_image);
             logout_button.clicked.connect (() => {
