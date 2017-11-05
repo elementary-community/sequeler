@@ -22,11 +22,19 @@
 namespace Sequeler { 
     public class ToolBar : Gtk.Box {
         private static ToolBar? instance = null;
+        public Gtk.Paned toolbar_pane;
+        public Gtk.ListStore schema_list;
+
+        enum Column {
+            SCHEMAS
+        }
 
         private ToolBar () {
             margin = 5;
 
             build_ui ();
+            build_dropdown ();
+            build_tabs ();
         }
 
         public static ToolBar get_instance () {
@@ -38,8 +46,42 @@ namespace Sequeler {
         }
 
         private void build_ui () {
-            var label = new Gtk.Label ("test");
-            add (label);
+            toolbar_pane = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
+            toolbar_pane.wide_handle = true;
+            toolbar_pane.set_position (230);
+
+            this.pack_start (toolbar_pane, true, true, 0);
+        }
+
+        private void build_dropdown () {
+            schema_list = new Gtk.ListStore (1, typeof (string));
+
+            for (int i = 0; i < 2; i++){
+                Gtk.TreeIter iter;
+                schema_list.append (out iter);
+                schema_list.set (iter, Column.SCHEMAS, "Table Schema");
+            }
+
+            var schema_list_combo = new Gtk.ComboBox.with_model (schema_list);
+            Gtk.CellRendererText cell = new Gtk.CellRendererText ();
+            schema_list_combo.pack_start (cell, false);
+
+            schema_list_combo.set_attributes (cell, "text", Column.SCHEMAS);
+            schema_list_combo.set_active (0);
+
+            toolbar_pane.pack1 (schema_list_combo, true, false);
+        }
+
+        private void build_tabs () {
+            var tab_pane = new Granite.Widgets.ModeButton ();
+            tab_pane.append_icon ("view-grid-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("view-list-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("view-column-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("view-grid-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("view-list-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            tab_pane.append_icon ("view-column-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+
+            toolbar_pane.pack2 (tab_pane, true, false);
         }
     }
 }
