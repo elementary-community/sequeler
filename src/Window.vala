@@ -280,7 +280,7 @@ namespace Sequeler {
         }
 
         public void connection_warning (string message, string title) {
-            var message_dialog = new MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
+            var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");
@@ -318,7 +318,7 @@ namespace Sequeler {
         }
 
         public void query_error (Error e) {
-            var message_dialog = new MessageDialog.with_image_from_icon_name (_("Unable to Execute Query"), e.message, "dialog-error", Gtk.ButtonsType.NONE);
+            var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Execute Query"), e.message, "dialog-error", Gtk.ButtonsType.NONE);
             message_dialog.transient_for = window;
             
             var suggested_button = new Gtk.Button.with_label ("Close");
