@@ -87,7 +87,6 @@ namespace Sequeler {
             });
 
             topbar.add (headerbar);
-            //  topbar.add (toolbar);
             
             set_titlebar (topbar);
         }
@@ -128,7 +127,18 @@ namespace Sequeler {
             });
 
             welcome.execute_query.connect((query) => {
-                return run_query (query);
+                int result = 0;
+                var loop = new MainLoop ();
+                run_query.begin (query, (obj, res) => {
+                    try {
+                        result = run_query.end (res);
+                    } catch (ThreadError e) {
+                        result = 0;
+                    }
+                    loop.quit ();
+                });
+                loop.run ();
+                return result;
             });
 
             welcome.execute_select.connect((query) => {
@@ -303,30 +313,28 @@ namespace Sequeler {
             message_dialog.destroy ();
         }
 
-        public int run_query (string query) {
-            try
-            {
-                output_query = db.run_query (query);
-            }
-            catch (Error e)
-            {
-                query_error (e);
-            }
+        public async int run_query (string query) throws ThreadError {
+            output_query = 0;
+            SourceFunc callback = run_query.callback;
+
+            new Thread <void*> (null, () => {
+                int result = 0;
+                try {
+                    result = db.run_query (query);
+                }
+                catch (Error e) {
+                    result = 0;
+                }
+                Idle.add((owned) callback);
+                output_query = result;
+                return null;
+            });
+
+            yield;
             return output_query;
         }
 
         public async Gda.DataModel? run_select (string query) throws ThreadError {
-            //  try
-            //  {
-            //      output_select = db.run_select (query);
-            //      return output_select;
-            //  }
-            //  catch (Error e)
-            //  {
-            //      query_error (e);
-            //  }
-            //  return null;
-
             output_select = null;
             SourceFunc callback = run_select.callback;
 
