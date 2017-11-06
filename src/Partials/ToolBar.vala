@@ -24,6 +24,7 @@ namespace Sequeler {
         private static ToolBar? instance = null;
         public Gtk.Paned toolbar_pane;
         public Gtk.ListStore schema_list;
+        public Gtk.TreeIter iter;
 
         enum Column {
             SCHEMAS
@@ -58,11 +59,8 @@ namespace Sequeler {
             schema_box.margin_end = 10;
             schema_list = new Gtk.ListStore (1, typeof (string));
 
-            for (int i = 0; i < 2; i++){
-                Gtk.TreeIter iter;
-                schema_list.append (out iter);
-                schema_list.set (iter, Column.SCHEMAS, "Table Schema");
-            }
+            schema_list.append (out iter);
+            schema_list.set (iter, Column.SCHEMAS, _("- Select Database -"));
 
             var schema_list_combo = new Gtk.ComboBox.with_model (schema_list);
             Gtk.CellRendererText cell = new Gtk.CellRendererText ();
@@ -88,6 +86,23 @@ namespace Sequeler {
 
             tab_box.pack_start (tab_pane, false, false, 0);
             toolbar_pane.pack2 (tab_box, true, false);
+        }
+
+        public void set_table_schema (Gda.DataModel? response) {
+            if (response == null) {
+                return;
+            }
+
+            Gda.DataModelIter _iter = response.create_iter ();
+            while (_iter.move_next ()) {
+                schema_list.append (out iter);
+                schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
+            }
+
+            //  for (int i = 0; i < tables.size; i++){
+            //      schema_list.append (out iter);
+            //      schema_list.set (iter, Column.SCHEMAS, tables[i]);
+            //  }
         }
     }
 }

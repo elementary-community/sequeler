@@ -23,7 +23,7 @@ namespace Sequeler {
 
         public Gtk.Paned main_pane;
         public Gtk.Paned pane;
-        public Gtk.Box toolbar;
+        public Gtk.Box query_bar;
         public Gtk.Box sidebar;
         public Gtk.Button run_button;
         public Gtk.Spinner spinner;
@@ -57,7 +57,7 @@ namespace Sequeler {
 
             build_editor ();
 
-            build_toolbar ();
+            build_query_bar ();
 
             build_treeview ();
 
@@ -85,18 +85,24 @@ namespace Sequeler {
         public void init_sidebar () {
             var table_query = "";
 
-            if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
-                table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + data["name"] + "' ORDER BY table_name DESC";
-            }
-
             if (data["type"] == "SQLite") {
                 table_query = "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
+                sidebar_table (execute_select (table_query));
+                return;
+            }
+
+            if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
+                //  table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + data["name"] + "' ORDER BY table_name DESC";
+                table_query = "SHOW SCHEMAS";
             }
 
             if (data["type"] == "PostgreSQL") {
-                table_query = "SELECT * FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name DESC";
+                //  table_query = "SELECT * FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name DESC";
+                table_query = "SELECT schema_name FROM information_schema.schemata";
             }
-            sidebar_table (execute_select (table_query));
+
+            toolbar.set_table_schema (execute_select (table_query));
+            //  sidebar_table (execute_select (table_query));
         }
 
         public void sidebar_table (Gda.DataModel? response) {
@@ -151,10 +157,10 @@ namespace Sequeler {
             pane.pack1 (editor, true, false);
         }
 
-        public void build_toolbar () {
-            toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-            toolbar.get_style_context ().add_class ("toolbar");
-            toolbar.get_style_context ().add_class ("library-toolbar");
+        public void build_query_bar () {
+            query_bar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            query_bar.get_style_context ().add_class ("query_bar");
+            query_bar.get_style_context ().add_class ("library-query_bar");
 
             var run_image = new Gtk.Image.from_icon_name ("system-run-symbolic", Gtk.IconSize.BUTTON);
             run_button = new Gtk.Button.with_label (_("Run Query"));
@@ -175,17 +181,17 @@ namespace Sequeler {
             result_message.visible = false;
             result_message.no_show_all = true;
 
-            toolbar.pack_start (loading_msg, false, false, 10);
-            toolbar.pack_start (result_message, false, false, 10);
-            toolbar.pack_start (spinner, false, false, 10);
-            toolbar.pack_end (run_button, false, false, 0);
+            query_bar.pack_start (loading_msg, false, false, 10);
+            query_bar.pack_start (result_message, false, false, 10);
+            query_bar.pack_start (spinner, false, false, 10);
+            query_bar.pack_end (run_button, false, false, 0);
         }
 
         public void build_treeview () {
             var results = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             results.height_request = 100;
 
-            results.add (toolbar);
+            results.add (query_bar);
 
             scroll_results = new Gtk.ScrolledWindow (null, null);
             scroll_results.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
