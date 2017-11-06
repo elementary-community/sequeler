@@ -102,11 +102,30 @@ namespace Sequeler {
             }
 
             toolbar.set_table_schema (execute_select (table_query));
-            //  sidebar_table (execute_select (table_query));
+
+            toolbar.selected_table.connect ((i) => {
+                populate_sidebar_table (toolbar.schemas[i]);
+                stdout.printf ("%s 1\n", toolbar.schemas[i]);
+            });
+        }
+
+        public void populate_sidebar_table (string? table) {
+            var table_query = "";
+
+            if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
+                table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + table + "' ORDER BY table_name DESC";
+            }
+
+            if (data["type"] == "PostgreSQL") {
+                table_query = "SELECT * FROM information_schema.tables WHERE table_schema = '" + table + "' ORDER BY table_name DESC";
+            }
+
+            sidebar_table (execute_select (table_query));
         }
 
         public void sidebar_table (Gda.DataModel? response) {
             if (response == null) {
+                stdout.printf ("Null\n");
                 return;
             }
 

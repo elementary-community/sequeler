@@ -347,8 +347,6 @@ namespace Sequeler {
                     dialog.db_port_entry.text = data["port"];
                 }
             }
-
-            //  dialog.type_changed ();
         }
     }
 
