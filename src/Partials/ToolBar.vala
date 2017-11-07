@@ -57,7 +57,7 @@ namespace Sequeler {
         }
 
         private void build_dropdown () {
-            var schema_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            var schema_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             schema_box.margin_end = 10;
             schema_list = new Gtk.ListStore (1, typeof (string));
 
@@ -71,7 +71,7 @@ namespace Sequeler {
 
             schema_list_combo.set_active (0);
 
-            schema_box.pack_start (schema_list_combo, true, true, 0);
+            schema_box.pack_start (schema_list_combo, true, false, 0);
             toolbar_pane.pack1 (schema_box, true, false);
         }
 
@@ -116,7 +116,7 @@ namespace Sequeler {
                 if (icon_name.contains ("/")) {
                     image = new Gtk.Image.from_resource (icon_name);
                 } else {
-                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.LARGE_TOOLBAR);
+                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.DND);
                 }
 
                 image.margin = 0;
