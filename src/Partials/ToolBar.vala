@@ -28,8 +28,6 @@ namespace Sequeler {
         public Gtk.TreeIter iter;
         public Gee.HashMap<int, string> schemas;
 
-        public signal void selected_table (int table);
-
         enum Column {
             SCHEMAS
         }
@@ -63,10 +61,15 @@ namespace Sequeler {
             schema_box.margin_end = 10;
             schema_list = new Gtk.ListStore (1, typeof (string));
 
+            schema_list.append (out iter);
+            schema_list.set (iter, Column.SCHEMAS, _("- Select Database -"));
+
             schema_list_combo = new Gtk.ComboBox.with_model (schema_list);
             Gtk.CellRendererText cell = new Gtk.CellRendererText ();
             schema_list_combo.pack_start (cell, false);
             schema_list_combo.set_attributes (cell, "text", Column.SCHEMAS);
+
+            schema_list_combo.set_active (0);
 
             schema_box.pack_start (schema_list_combo, true, true, 0);
             toolbar_pane.pack1 (schema_box, true, false);
@@ -76,15 +79,10 @@ namespace Sequeler {
             var tab_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             tab_box.margin_start = 10;
 
-            //  var tab_pane = new Granite.Widgets.ModeButton ();
-            //  tab_pane.append_icon ("view-list-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            //  tab_pane.append_icon ("edit-copy-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            //  tab_pane.append_icon ("network-wireless-hotspot-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            //  tab_pane.append_icon ("network-workgroup-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-            //  tab_pane.append_icon ("accessories-text-editor-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
-
-            //  tab_box.pack_start (tab_pane, false, false, 0);
-            toolbar_pane.pack2 (tab_box, true, false);
+            tab_box.pack_start (new ToolBarButton ("x-office-spreadsheet-template", "Table Structure", 1), false, false, 2);
+            tab_box.pack_start (new ToolBarButton ("x-office-document", "Table Data", 2), false, false, 2);
+            tab_box.pack_start (new ToolBarButton ("accessories-text-editor", "Write Query", 3), false, false, 2);
+            toolbar_pane.pack2 (tab_box, false, false);
         }
 
         public void set_table_schema (Gda.DataModel? response) {
@@ -107,10 +105,26 @@ namespace Sequeler {
             }
 
             schema_list_combo.set_active (0);
+        }
 
-            schema_list_combo.changed.connect (() => { 
-                selected_table (schema_list_combo.get_active ());
-            });
+        protected class ToolBarButton : Gtk.Button {
+            public ToolBarButton (string icon_name, string tooltip, int id) {
+                can_focus = false;
+
+                Gtk.Image image;
+
+                if (icon_name.contains ("/")) {
+                    image = new Gtk.Image.from_resource (icon_name);
+                } else {
+                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.LARGE_TOOLBAR);
+                }
+
+                image.margin = 0;
+
+                get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+                set_tooltip_text (tooltip);
+                this.add (image);
+            }
         }
     }
 }

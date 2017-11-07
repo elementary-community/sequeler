@@ -92,20 +92,20 @@ namespace Sequeler {
             }
 
             if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
-                //  table_query = "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + data["name"] + "' ORDER BY table_name DESC";
                 table_query = "SHOW SCHEMAS";
             }
 
             if (data["type"] == "PostgreSQL") {
-                //  table_query = "SELECT * FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name DESC";
                 table_query = "SELECT schema_name FROM information_schema.schemata";
             }
 
             toolbar.set_table_schema (execute_select (table_query));
 
-            toolbar.selected_table.connect ((i) => {
-                populate_sidebar_table (toolbar.schemas[i]);
-                stdout.printf ("%s 1\n", toolbar.schemas[i]);
+            toolbar.schema_list_combo.changed.connect (() => {
+                if (toolbar.schema_list_combo.get_active () == 0) {
+                    return;
+                }
+                populate_sidebar_table (toolbar.schemas[toolbar.schema_list_combo.get_active ()]);
             });
         }
 
