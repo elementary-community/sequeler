@@ -76,8 +76,8 @@ namespace Sequeler {
             sidebar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             sidebar.width_request = 240;
 
-            var sidebar_title = new TitleBar (_("TABLES"));
-            sidebar.pack_start (sidebar_title, false, true, 0);
+            //  var sidebar_title = new TitleBar (_("TABLES"));
+            //  sidebar.pack_start (sidebar_title, false, true, 0);
 
             main_pane.pack1 (sidebar, true, false);
         }
@@ -137,20 +137,28 @@ namespace Sequeler {
             scroll_sidebar = new Gtk.ScrolledWindow (null, null);
             scroll_sidebar.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
 
-            Gtk.Grid grid = new Gtk.Grid ();
-            grid.column_spacing = 0;
-            grid.row_spacing = 0;
-            grid.column_homogeneous = true;
+            var source_list = new Granite.Widgets.SourceList ();
+            var tables_category = new Granite.Widgets.SourceList.ExpandableItem (_("TABLES"));
+            tables_category.expand_all ();
+
+            //  Gtk.Grid grid = new Gtk.Grid ();
+            //  grid.column_spacing = 0;
+            //  grid.row_spacing = 0;
+            //  grid.column_homogeneous = true;
 
             Gda.DataModelIter _iter = response.create_iter ();
             int top = 0;
             while (_iter.move_next ()) {
-                grid.attach (new TableRow (_iter.get_value_at (0).get_string (), top), 0, top, 1, 1);             
+                //  grid.attach (new TableRow (_iter.get_value_at (0).get_string (), top), 0, top, 1, 1);
+                tables_category.add (new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ()));      
                 top++;
             }
 
-            scroll_sidebar.add (grid);
-            grid.show_all ();
+            source_list.root.add (tables_category);
+            scroll_sidebar.add (source_list);
+
+            //  scroll_sidebar.add (grid);
+            //  grid.show_all ();
 
             sidebar.pack_start (scroll_sidebar, true, true, 0);
 
