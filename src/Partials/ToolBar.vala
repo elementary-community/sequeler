@@ -19,10 +19,12 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-namespace Sequeler { 
+namespace Sequeler {
     public class ToolBar : Gtk.Box {
         private static ToolBar? instance = null;
         public Gtk.Paned toolbar_pane;
+        public Gtk.Box tab_box;
+        public Granite.Widgets.ModeButton tabs;
         public Gtk.ComboBox schema_list_combo;
         public Gtk.ListStore schema_list;
         public Gtk.TreeIter iter;
@@ -33,7 +35,9 @@ namespace Sequeler {
         }
 
         private ToolBar () {
-            margin = 10;
+            margin_start = 10;
+            margin_end = 10;
+            margin_bottom = 6;
 
             build_ui ();
             build_dropdown ();
@@ -76,12 +80,17 @@ namespace Sequeler {
         }
 
         private void build_tabs () {
-            var tab_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            tab_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             tab_box.margin_start = 10;
 
-            tab_box.pack_start (new ToolBarButton ("x-office-spreadsheet-template", "Table Structure", 1), false, false, 2);
-            tab_box.pack_start (new ToolBarButton ("x-office-document", "Table Data", 2), false, false, 2);
-            tab_box.pack_start (new ToolBarButton ("accessories-text-editor", "Write Query", 3), false, false, 2);
+            tabs = new Granite.Widgets.ModeButton ();
+            tabs.append (new ToolBarButton ("x-office-spreadsheet-template", "Table Structure"));
+            tabs.append (new ToolBarButton ("x-office-document", "Table Data"));
+            tabs.append (new ToolBarButton ("accessories-text-editor", "Write Query"));
+            tabs.sensitive = false;
+
+            tab_box.add (tabs);
+
             toolbar_pane.pack2 (tab_box, false, false);
         }
 
@@ -107,23 +116,28 @@ namespace Sequeler {
             schema_list_combo.set_active (0);
         }
 
-        protected class ToolBarButton : Gtk.Button {
-            public ToolBarButton (string icon_name, string tooltip, int id) {
-                can_focus = false;
-
+        protected class ToolBarButton : Gtk.Box {
+            public ToolBarButton (string icon_name, string tooltip) {
+                Gtk.Label label;
                 Gtk.Image image;
+
+                orientation = Gtk.Orientation.VERTICAL;
+                margin = 0;
 
                 if (icon_name.contains ("/")) {
                     image = new Gtk.Image.from_resource (icon_name);
                 } else {
-                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.DND);
+                    image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.LARGE_TOOLBAR);
                 }
-
                 image.margin = 0;
 
-                get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-                set_tooltip_text (tooltip);
-                this.add (image);
+                label = new Gtk.Label(tooltip);
+
+                pack_start(image, false, false, 0);
+                pack_start(label, false, false, 0);
+
+                image.show();
+                label.show();
             }
         }
     }

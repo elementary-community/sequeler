@@ -76,9 +76,6 @@ namespace Sequeler {
             sidebar = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             sidebar.width_request = 240;
 
-            //  var sidebar_title = new TitleBar (_("TABLES"));
-            //  sidebar.pack_start (sidebar_title, false, true, 0);
-
             main_pane.pack1 (sidebar, true, false);
         }
 
@@ -141,24 +138,15 @@ namespace Sequeler {
             var tables_category = new Granite.Widgets.SourceList.ExpandableItem (_("TABLES"));
             tables_category.expand_all ();
 
-            //  Gtk.Grid grid = new Gtk.Grid ();
-            //  grid.column_spacing = 0;
-            //  grid.row_spacing = 0;
-            //  grid.column_homogeneous = true;
-
             Gda.DataModelIter _iter = response.create_iter ();
             int top = 0;
             while (_iter.move_next ()) {
-                //  grid.attach (new TableRow (_iter.get_value_at (0).get_string (), top), 0, top, 1, 1);
                 tables_category.add (new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ()));      
                 top++;
             }
 
             source_list.root.add (tables_category);
             scroll_sidebar.add (source_list);
-
-            //  scroll_sidebar.add (grid);
-            //  grid.show_all ();
 
             sidebar.pack_start (scroll_sidebar, true, true, 0);
 
@@ -364,18 +352,5 @@ namespace Sequeler {
                 results_view = null;
             }
         }
-
-        //  protected class TableLabel : Gtk.Label {
-        //      public TableLabel (string text, int type) {
-        //          label = text;
-        //          if (type % 2 == 0) {
-        //              get_style_context ().add_class ("row-odd");
-        //          } else {
-        //              get_style_context ().add_class ("row-even");
-        //          }
-        //          halign = Gtk.Align.START;
-        //          margin = 6;
-        //      }
-        //  }
     }
 }
