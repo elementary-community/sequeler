@@ -84,9 +84,11 @@ namespace Sequeler {
             tab_box.margin_start = 10;
 
             tabs = new Granite.Widgets.ModeButton ();
-            tabs.append (new ToolBarButton ("x-office-spreadsheet-template", "Table Structure"));
-            tabs.append (new ToolBarButton ("x-office-document", "Table Data"));
-            tabs.append (new ToolBarButton ("accessories-text-editor", "Write Query"));
+            tabs.append (new ToolBarButton ("x-office-spreadsheet-template", "Structure"));
+            tabs.append (new ToolBarButton ("x-office-document", "Content"));
+            tabs.append (new ToolBarButton ("preferences-system-windows", "Relations"));
+            tabs.append (new ToolBarButton ("accessories-text-editor", "Query"));
+            tabs.set_active (0);
             tabs.sensitive = false;
 
             tab_box.add (tabs);
@@ -132,6 +134,7 @@ namespace Sequeler {
                 image.margin = 0;
 
                 label = new Gtk.Label(tooltip);
+                name = tooltip;
 
                 pack_start(image, false, false, 0);
                 pack_start(label, false, false, 0);

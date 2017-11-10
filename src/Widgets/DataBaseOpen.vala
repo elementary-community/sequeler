@@ -23,8 +23,12 @@ namespace Sequeler {
 
         public Gtk.Paned main_pane;
         public Gtk.Paned pane;
+        public Gtk.Stack db_stack;
         public Gtk.Box query_bar;
         public Gtk.Box sidebar;
+        public Gtk.Box db_structure;
+        public Gtk.Box db_content;
+        public Gtk.Box db_relations;
         public Gtk.Button run_button;
         public Gtk.Spinner spinner;
         public Gtk.Label result_message;
@@ -48,24 +52,29 @@ namespace Sequeler {
             main_pane.wide_handle = true;
             main_pane.set_position (240);
 
-            build_sidebar ();
-
             pane = new Gtk.Paned (Gtk.Orientation.VERTICAL);
             pane.wide_handle = true;
             
             this.pack_start (main_pane, true, true, 0);
 
+            build_sidebar ();
             build_editor ();
-
             build_query_bar ();
-
             build_treeview ();
+            build_structure ();
+            build_content ();
+            build_relations ();
 
             connect_signals ();
-
             handle_shortcuts ();
 
-            main_pane.add2 (pane);
+            db_stack = new Gtk.Stack ();
+            db_stack.add_named (db_structure, "Structure");
+            db_stack.add_named (db_content, "Content");
+            db_stack.add_named (db_relations, "Relations");
+            db_stack.add_named (pane, "Query");
+
+            main_pane.add2 (db_stack);
         }
 
         public void set_database_data (Gee.HashMap<string,string> data){
@@ -151,6 +160,7 @@ namespace Sequeler {
             sidebar.pack_start (scroll_sidebar, true, true, 0);
 
             sidebar.show_all ();
+            toolbar.tabs.sensitive = true;
         }
 
         public void build_editor () {
@@ -214,6 +224,21 @@ namespace Sequeler {
             results.pack_start (scroll_results, true, true, 0);
 
             pane.pack2 (results, true, false);
+        }
+
+        public void build_structure () {
+            db_structure = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            db_structure.add (new Gtk.Label ("Structure"));
+        }
+
+        public void build_content () {
+            db_content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            db_content.add (new Gtk.Label ("Content"));
+        }
+
+        public void build_relations () {
+            db_relations = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            db_relations.add (new Gtk.Label ("Relations"));
         }
 
         public void connect_signals () {

@@ -86,6 +86,10 @@ namespace Sequeler {
                 set_titlebar (topbar);
             });
 
+            toolbar.tabs.mode_changed.connect ((tab) => {
+                welcome.database.db_stack.set_visible_child_name (tab.name);
+            });
+
             topbar.add (headerbar);
             
             set_titlebar (topbar);
