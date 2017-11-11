@@ -59,6 +59,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Services/Settings.vala
     src/Services/DataBase.vala
+    src/Services/TreeBuilder.vala
 
     src/Widgets/Welcome.vala
     src/Widgets/Library.vala

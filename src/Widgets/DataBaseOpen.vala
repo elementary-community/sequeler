@@ -36,7 +36,7 @@ namespace Sequeler {
         public Gtk.ScrolledWindow scroll_results;
         public Gtk.ScrolledWindow scroll_sidebar;
         public Gtk.TreeView results_view;
-        public Gtk.ListStore store;
+        public Gtk.TreeView structure_results;
         public QueryBuilder query_builder;
         public int column_pos;
         public string? selected_table { set; get; default = null; }
@@ -60,8 +60,8 @@ namespace Sequeler {
 
             build_sidebar ();
             build_structure ();
-            build_content ();
-            build_relations ();
+            //  build_content ();
+            //  build_relations ();
             build_editor ();
             build_query_bar ();
             build_treeview ();
@@ -71,8 +71,8 @@ namespace Sequeler {
 
             db_stack = new Gtk.Stack ();
             db_stack.add_named (db_structure, "Structure");
-            db_stack.add_named (db_content, "Content");
-            db_stack.add_named (db_relations, "Relations");
+            //  db_stack.add_named (db_content, "Content");
+            //  db_stack.add_named (db_relations, "Relations");
             db_stack.add_named (pane, "Query");
 
             main_pane.add2 (db_stack);
@@ -267,19 +267,45 @@ namespace Sequeler {
             selected_table = table;
             toolbar.selected_table = table;
 
-            db_structure.add (new Gtk.Label ("Structure"));
+            var structure_scroll = new Gtk.ScrolledWindow (null, null);
+            structure_scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+            db_structure.pack_start (structure_scroll, true, true, 0);
+
+            // query 
+            // build structure
+            structure_results = new Sequeler.TreeBuilder (structure_query (selected_table));
+            structure_scroll.add (structure_results);
+
             db_structure.show_all ();
         }
 
-        public void build_content () {
-            db_content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            db_content.add (new Gtk.Label ("Content"));
+        public Gda.DataModel? structure_query(string table) {
+            var table_query = "";
+
+            if (data["type"] == "SQLite") {
+                table_query = "SELECT * FROM sqlite_master WHERE name='" + table + "';";
+            }
+
+            if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
+                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "'";
+            }
+
+            if (data["type"] == "PostgreSQL") {
+                table_query = "SELECT schema_name FROM information_schema.schemata";
+            }
+
+            return execute_select (table_query);
         }
 
-        public void build_relations () {
-            db_relations = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            db_relations.add (new Gtk.Label ("Relations"));
-        }
+        //  public void build_content () {
+        //      db_content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        //      db_content.add (new Gtk.Label ("Content"));
+        //  }
+
+        //  public void build_relations () {
+        //      db_relations = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        //      db_relations.add (new Gtk.Label ("Relations"));
+        //  }
 
         public void connect_signals () {
             run_button.clicked.connect (() => {
@@ -348,44 +374,8 @@ namespace Sequeler {
                 result_message.label = _("Unable to process Query!");
                 return;
             }
-
-            var tot_columns = response.get_n_columns ();
-
-            // generate ListStore with proper amount of type based on columns
-            GLib.Type[] theTypes = new GLib.Type[tot_columns];
-            for (int col = 0; col < tot_columns; col++) {
-                theTypes[col] = typeof (string);
-            }
-            store = new Gtk.ListStore.newv (theTypes);
-
-            Gtk.TreeIter iter;
-            Gda.DataModelIter _iter = response.create_iter ();
-            while (_iter.move_next ()) {
-                store.append (out iter);
-                for (int i = 0; i < tot_columns; i++) {
-                    store.set_value (iter, i, _iter.get_value_at (i));
-                }
-            }
-
-            results_view = new Gtk.TreeView ();
             
-            // generate columns
-            for (int i = 0; i < tot_columns; i++) {
-                var title = response.get_column_title (i).replace ("_", "__");
-                var column = new Gtk.TreeViewColumn.with_attributes (title, new Gtk.CellRendererText (), "text", i, null);
-                column.clickable = true;
-                column.resizable = true;
-                column.expand = true;
-                column.min_width = 10;
-                if (i > 0) {
-                    column.sizing = Gtk.TreeViewColumnSizing.FIXED;
-                    column.fixed_width = 150;
-                }
-                results_view.append_column (column);
-            }
-
-            results_view.set_model (store);
-
+            results_view = new Sequeler.TreeBuilder (response);
             scroll_results.add (results_view);
 
             scroll_results.show_all ();

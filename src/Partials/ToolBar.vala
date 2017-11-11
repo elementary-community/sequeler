@@ -86,8 +86,8 @@ namespace Sequeler {
 
             tabs = new Granite.Widgets.ModeButton ();
             tabs.append (new ToolBarButton ("x-office-spreadsheet-template", "Structure"));
-            tabs.append (new ToolBarButton ("x-office-document", "Content"));
-            tabs.append (new ToolBarButton ("preferences-system-windows", "Relations"));
+            //  tabs.append (new ToolBarButton ("x-office-document", "Content"));
+            //  tabs.append (new ToolBarButton ("preferences-system-windows", "Relations"));
             tabs.append (new ToolBarButton ("accessories-text-editor", "Query"));
             tabs.set_active (0);
             tabs.sensitive = false;
