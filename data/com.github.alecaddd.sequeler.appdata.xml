@@ -26,6 +26,19 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.4.0" date="2017-11-10">
+      <description>
+        <p>Summoning the power of async methods!</p>
+        <ul>
+          <li>All DataBase queries are now async methods, super fast.</li>
+          <li>The UI doesn't freeze anymore during a long process</li>
+          <li>Granite SourceList to display list of tables</li>
+          <li>Tabs to switch between the Query Builder and the Table Structure</li>
+          <li>ComboBox to select table schemas from the open connection</li>
+          <li>Many more bugs and issues for you to have fun with</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.3.4" date="2017-10-23">
       <description>
         <p>Bug Fixes and Improvements</p>
