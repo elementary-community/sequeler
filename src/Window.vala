@@ -88,6 +88,7 @@ namespace Sequeler {
 
             toolbar.tabs.mode_changed.connect ((tab) => {
                 welcome.database.db_stack.set_visible_child_name (tab.name);
+                welcome.database.reload_data (tab.name);
             });
 
             topbar.add (headerbar);

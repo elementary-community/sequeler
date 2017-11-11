@@ -39,6 +39,7 @@ namespace Sequeler {
         public Gtk.ListStore store;
         public QueryBuilder query_builder;
         public int column_pos;
+        public string? selected_table { set; get; default = null; }
 
         public Gee.HashMap<string,string> data;
 
@@ -58,12 +59,12 @@ namespace Sequeler {
             this.pack_start (main_pane, true, true, 0);
 
             build_sidebar ();
-            build_editor ();
-            build_query_bar ();
-            build_treeview ();
             build_structure ();
             build_content ();
             build_relations ();
+            build_editor ();
+            build_query_bar ();
+            build_treeview ();
 
             connect_signals ();
             handle_shortcuts ();
@@ -157,10 +158,18 @@ namespace Sequeler {
             source_list.root.add (tables_category);
             scroll_sidebar.add (source_list);
 
+            source_list.item_selected.connect ((item) => {
+                if (item == null) {
+                    return;
+                }
+                fill_structure (item.name);
+            });
+
             sidebar.pack_start (scroll_sidebar, true, true, 0);
 
             sidebar.show_all ();
             toolbar.tabs.sensitive = true;
+            toolbar.tabs.set_active (0);
         }
 
         public void build_editor () {
@@ -226,9 +235,40 @@ namespace Sequeler {
             pane.pack2 (results, true, false);
         }
 
+        public void reload_data (string tab) {
+            switch (tab) {
+                case "Structure":
+                    fill_structure (toolbar.selected_table);
+                    break;
+                case "Content":
+                    break;
+                case "Relations":
+                    break;
+                case "Query":
+                    break;
+            }
+        }
+
         public void build_structure () {
             db_structure = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            var structure_intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
+            db_structure.add (structure_intro);
+        }
+
+        public void fill_structure (string? table) {
+            if (table == selected_table || table == null) {
+                return;
+            }
+
+            if (db_structure != null) {
+                db_structure.forall ((element) => db_structure.remove (element));
+            }
+
+            selected_table = table;
+            toolbar.selected_table = table;
+
             db_structure.add (new Gtk.Label ("Structure"));
+            db_structure.show_all ();
         }
 
         public void build_content () {

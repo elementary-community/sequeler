@@ -29,6 +29,7 @@ namespace Sequeler {
         public Gtk.ListStore schema_list;
         public Gtk.TreeIter iter;
         public Gee.HashMap<int, string> schemas;
+        public string? selected_table { set; get; default = null; }
 
         enum Column {
             SCHEMAS
