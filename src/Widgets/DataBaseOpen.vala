@@ -55,10 +55,12 @@ namespace Sequeler {
 
             pane = new Gtk.Paned (Gtk.Orientation.VERTICAL);
             pane.wide_handle = true;
-            
+
             this.pack_start (main_pane, true, true, 0);
 
             build_sidebar ();
+
+            db_structure = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             build_structure ();
             //  build_content ();
             //  build_relations ();
@@ -95,6 +97,7 @@ namespace Sequeler {
             if (data["type"] == "SQLite") {
                 table_query = "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
                 sidebar_table (execute_select (table_query));
+                toolbar.clear_table_schema ();
                 return;
             }
 
@@ -132,7 +135,6 @@ namespace Sequeler {
 
         public void sidebar_table (Gda.DataModel? response) {
             if (response == null) {
-                stdout.printf ("Null\n");
                 return;
             }
 
@@ -250,9 +252,9 @@ namespace Sequeler {
         }
 
         public void build_structure () {
-            db_structure = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             var structure_intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
             db_structure.add (structure_intro);
+            db_structure.show_all ();
         }
 
         public void fill_structure (string? table) {
@@ -271,8 +273,6 @@ namespace Sequeler {
             structure_scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
             db_structure.pack_start (structure_scroll, true, true, 0);
 
-            // query 
-            // build structure
             structure_results = new Sequeler.TreeBuilder (structure_query (selected_table));
             structure_scroll.add (structure_results);
 
@@ -283,15 +283,15 @@ namespace Sequeler {
             var table_query = "";
 
             if (data["type"] == "SQLite") {
-                table_query = "SELECT * FROM sqlite_master WHERE name='" + table + "';";
+                table_query = "PRAGMA table_info('" + table + "');";
             }
 
             if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
-                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "'";
+                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "';";
             }
 
             if (data["type"] == "PostgreSQL") {
-                table_query = "SELECT schema_name FROM information_schema.schemata";
+                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "';";
             }
 
             return execute_select (table_query);
@@ -405,6 +405,14 @@ namespace Sequeler {
             if (results_view != null) {
                 scroll_results.remove (results_view);
                 results_view = null;
+            }
+            if (db_structure != null) {
+                db_structure.forall ((element) => db_structure.remove (element));
+                build_structure ();
+            }
+            if (scroll_sidebar != null) {
+                sidebar.remove (scroll_sidebar);
+                scroll_sidebar = null;
             }
         }
     }

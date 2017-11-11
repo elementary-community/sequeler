@@ -39,8 +39,6 @@ namespace Sequeler {
                     store.set_value (iter, i, _iter.get_value_at (i));
                 }
             }
-
-            //  var results_view = new Gtk.TreeView ();
             
             for (int i = 0; i < tot_columns; i++) {
                 var title = response.get_column_title (i).replace ("_", "__");

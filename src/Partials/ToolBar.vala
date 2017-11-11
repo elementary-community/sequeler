@@ -97,6 +97,14 @@ namespace Sequeler {
             toolbar_pane.pack2 (tab_box, false, false);
         }
 
+        public void clear_table_schema () {
+            schema_list.clear ();
+            schema_list.append (out iter);
+            schema_list.set (iter, Column.SCHEMAS, _("SQLite"));
+            schema_list_combo.set_active (0);
+            schema_list_combo.sensitive = false;
+        }
+
         public void set_table_schema (Gda.DataModel? response) {
             if (response == null) {
                 return;
@@ -117,6 +125,7 @@ namespace Sequeler {
             }
 
             schema_list_combo.set_active (0);
+            schema_list_combo.sensitive = true;
         }
 
         protected class ToolBarButton : Gtk.Box {
