@@ -127,7 +127,8 @@ namespace Sequeler {
             }
 
             if (data["type"] == "PostgreSQL") {
-                table_query = "SELECT * FROM information_schema.tables WHERE table_schema = '" + table + "' ORDER BY table_name DESC";
+                //  table_query = "SELECT * FROM information_schema.tables WHERE table_schema = '" + table + "' ORDER BY table_name DESC";
+                table_query = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'information_schema' AND schemaname != 'pg_catalog' ORDER BY tablename DESC";
             }
 
             sidebar_table (execute_select (table_query));
@@ -287,7 +288,7 @@ namespace Sequeler {
             }
 
             if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
-                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "';";
+                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "' AND table_schema = '" + data["name"] + "';";
             }
 
             if (data["type"] == "PostgreSQL") {
