@@ -13,7 +13,7 @@ Sequeler, is primarly availabe from the AppCenter of elementary OS. Download it 
 ## Install it from source
 You can install Sequeler by compiling from the source, here's the list of dependecies required:
  - `gtk+-3.0>=3.9.10`
- - `granite>=0.4.1`
+ - `granite>=0.5.0`
  - `glib-2.0`
  - `gee-0.8`
  - `gobject-2.0`
