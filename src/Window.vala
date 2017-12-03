@@ -138,6 +138,7 @@ namespace Sequeler {
                     try {
                         result = run_query.end (res);
                     } catch (ThreadError e) {
+                        render_error (e.message);
                         result = 0;
                     }
                     loop.quit ();
@@ -153,6 +154,7 @@ namespace Sequeler {
                     try {
                         result = run_select.end (res);
                     } catch (ThreadError e) {
+                        render_error (e.message);
                         result = null;
                     }
                     loop.quit ();
@@ -165,6 +167,12 @@ namespace Sequeler {
 
             overlay.add (welcome);
             add (overlay);
+        }
+
+        public void render_error (string? error) {
+            // update wp_users set user_nicename = 'alex' where user_something = 1
+            // warning (error);
+            welcome.database.render_query_error (error);
         }
 
         private void handle_shortcuts () {
@@ -328,6 +336,7 @@ namespace Sequeler {
                     result = db.run_query (query);
                 }
                 catch (Error e) {
+                    render_error (e.message);
                     result = 0;
                 }
                 Idle.add((owned) callback);
@@ -349,6 +358,7 @@ namespace Sequeler {
                     result = db.run_select (query);
                 }
                 catch (Error e) {
+                    render_error (e.message);
                     result = null;
                 }
                 Idle.add((owned) callback);

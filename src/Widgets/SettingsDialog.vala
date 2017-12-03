@@ -87,7 +87,7 @@ namespace Sequeler {
             content.attach (new SettingsHeader (_("Theme")), 0, 0, 2, 1);
 
             content.attach (new SettingsLabel (_("Use Dark Theme:")), 0, 1, 1, 1);
-            dark_theme_switch = new SettingsSwitch (_("dark-theme"));
+            dark_theme_switch = new SettingsSwitch ("dark-theme");
             content.attach (dark_theme_switch, 1, 1, 1, 1);
 
             dark_theme_switch.notify.connect (() => {
