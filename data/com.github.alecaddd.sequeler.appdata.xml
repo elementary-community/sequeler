@@ -26,6 +26,18 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.4.1" date="2017-12-02">
+      <description>
+        <p>New Icon, Better error messages!</p>
+        <ul>
+          <li>New shiny icon</li>
+          <li>View SQL error message on error</li>
+          <li>FIX: Show proper PostgreSql Schema Table in Sidebar</li>
+          <li>Snappiest query execution ever for local databases</li>
+          <li>The usual bundle of bugs for you to discover</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.4.0" date="2017-11-10">
       <description>
         <p>Summoning the power of async methods!</p>
