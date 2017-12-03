@@ -1,3 +1,5 @@
+.snapcraft
+.vscode
 src/config.vala
 build/
 *~

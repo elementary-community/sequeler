@@ -36,6 +36,7 @@ namespace Sequeler {
         public Gtk.ScrolledWindow scroll_results;
         public Gtk.ScrolledWindow scroll_sidebar;
         public Gtk.TreeView results_view;
+        public Gtk.Label error_view;
         public Gtk.TreeView structure_results;
         public QueryBuilder query_builder;
         public int column_pos;
@@ -127,7 +128,8 @@ namespace Sequeler {
             }
 
             if (data["type"] == "PostgreSQL") {
-                table_query = "SELECT * FROM information_schema.tables WHERE table_schema = '" + table + "' ORDER BY table_name DESC";
+                //  table_query = "SELECT * FROM information_schema.tables WHERE table_schema = '" + table + "' ORDER BY table_name DESC";
+                table_query = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'information_schema' AND schemaname != 'pg_catalog' ORDER BY tablename DESC";
             }
 
             sidebar_table (execute_select (table_query));
@@ -287,7 +289,7 @@ namespace Sequeler {
             }
 
             if (data["type"] == "MySQL" || data["type"] == "MariaDB") {
-                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "';";
+                table_query = "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "' AND table_schema = '" + data["name"] + "';";
             }
 
             if (data["type"] == "PostgreSQL") {
@@ -339,16 +341,18 @@ namespace Sequeler {
                 results_view = null;
             }
 
-            GLib.Timeout.add_seconds(0, () => {
-                var query = query_builder.get_text ();
+            if (error_view != null) {
+                query_bar.remove (error_view);
+                error_view = null;
+            }
 
-                if ("select" in query.down ()) {
-                    handle_select_response (execute_select (query));
-                } else {
-                    handle_query_response (execute_query (query));
-                }
-                return false; 
-            });
+            var query = query_builder.get_text ();
+
+            if ("select" in query.down ()) {
+                handle_select_response (execute_select (query));
+            } else {
+                handle_query_response (execute_query (query));
+            }
         }
 
         public void handle_query_response (int response) {
@@ -383,6 +387,13 @@ namespace Sequeler {
             result_message.label = _("Query Successfully Executed!");
         }
 
+        public void render_query_error (string error) {
+            error_view = new Gtk.Label (error);
+
+            query_bar.add (error_view);
+            query_bar.show_all ();
+        }
+
         public void hide_loading () {
             spinner.stop ();
             loading_msg.visible = false;
@@ -405,6 +416,10 @@ namespace Sequeler {
             if (results_view != null) {
                 scroll_results.remove (results_view);
                 results_view = null;
+            }
+            if (error_view != null) {
+                query_bar.remove (error_view);
+                error_view = null;
             }
             if (db_structure != null) {
                 db_structure.forall ((element) => db_structure.remove (element));
