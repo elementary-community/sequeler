@@ -389,6 +389,8 @@ namespace Sequeler {
 
         public void render_query_error (string error) {
             error_view = new Gtk.Label (error);
+            error_view.halign = Gtk.Align.START;
+            error_view.wrap = true;
 
             query_bar.add (error_view);
             query_bar.show_all ();
