@@ -170,8 +170,6 @@ namespace Sequeler {
         }
 
         public void render_error (string? error) {
-            // update wp_users set user_nicename = 'alex' where user_something = 1
-            // warning (error);
             welcome.database.render_query_error (error);
         }
 
