@@ -2,4 +2,8 @@
 .vscode
 src/config.vala
 build/
+parts/
+prime/
+stage/
 *~
+*.snap
