@@ -73,7 +73,7 @@ msgstr "Color:"
 
 #: ../src/Widgets/ConnectionDialog.vala:241
 msgid "Host:"
-msgstr "Anfitrión:"
+msgstr "Anfitrión (host):"
 
 #: ../src/Widgets/ConnectionDialog.vala:242
 msgid "127.0.0.1"
@@ -150,7 +150,7 @@ msgstr "Usar tema oscuro:"
 #: ../src/Widgets/SettingsDialog.vala:103
 #, fuzzy
 msgid "dark-theme"
-msgstr "dark-theme"
+msgstr "tema-oscuro"
 
 #: ../src/Widgets/Library.vala:41
 msgid "Delete All"
@@ -166,11 +166,11 @@ msgstr "Eliminar Conexión"
 
 #: ../src/Partials/HeaderBar.vala:56
 msgid "Back"
-msgstr "Atras"
+msgstr "Atrás"
 
 #: ../src/Partials/HeaderBar.vala:62
 msgid "Logout"
-msgstr "Cerrar sesion"
+msgstr "Cerrar sesión"
 
 #: ../src/Partials/HeaderBar.vala:76
 msgid "Search Connection"
