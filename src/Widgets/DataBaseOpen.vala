@@ -118,6 +118,13 @@ namespace Sequeler {
                 }
                 populate_sidebar_table (toolbar.schemas[toolbar.schema_list_combo.get_active ()]);
             });
+
+            foreach (var entry in toolbar.schemas.entries) {
+                if (data["name"] == entry.value) {
+                    toolbar.schema_list_combo.set_active (entry.key);
+                    return;
+                }
+            }
         }
 
         public void populate_sidebar_table (string? table) {
