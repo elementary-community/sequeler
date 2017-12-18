@@ -1,5 +1,5 @@
 name: sequeler
-version: '0.3.3'
+version: '0.4.1'
 summary: Friendly SQL Client
 description: |
   Store your Database Connections in the built-in library,
@@ -73,8 +73,8 @@ parts:
       - libpq-dev
       - libgda-5.0-mysql
       - libgda-5.0-postgres
-    # install: |
-    #   cp schemas/com.github.alecaddd.gschema.xml $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
-    #   glib-compile-schemas $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
+    install: |
+      cp schemas/com.github.alecaddd.gschema.xml $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
+      glib-compile-schemas $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
     snap:
       - usr/share
