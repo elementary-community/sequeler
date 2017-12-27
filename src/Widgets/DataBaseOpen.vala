@@ -112,19 +112,19 @@ namespace Sequeler {
 
             toolbar.set_table_schema (execute_select (table_query));
 
+            //  foreach (var entry in toolbar.schemas.entries) {
+            //      if (data["name"] == entry.value) {
+            //          toolbar.schema_list_combo.set_active (entry.key);
+            //          populate_sidebar_table (toolbar.schemas[toolbar.schema_list_combo.get_active ()]);
+            //      }
+            //  }
+
             toolbar.schema_list_combo.changed.connect (() => {
                 if (toolbar.schema_list_combo.get_active () == 0) {
                     return;
                 }
                 populate_sidebar_table (toolbar.schemas[toolbar.schema_list_combo.get_active ()]);
             });
-
-            foreach (var entry in toolbar.schemas.entries) {
-                if (data["name"] == entry.value) {
-                    toolbar.schema_list_combo.set_active (entry.key);
-                    return;
-                }
-            }
         }
 
         public void populate_sidebar_table (string? table) {
