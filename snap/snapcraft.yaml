@@ -11,9 +11,21 @@ confinement: strict
 
 icon: sequeler.png
 
+plugs:
+  elementary-platform-loki:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: elementary-platform-loki:elementary-platform-loki
+
+slots:
+  sequeler:
+    interface: dbus
+    bus: session
+    name: com.github.alecaddd.sequeler
+
 apps:
   sequeler:
-    command: desktop-launch sequeler
+    command: desktop-launch $SNAP/usr/bin/com.github.alecaddd.sequeler
     plugs:
       - x11
       - desktop
@@ -23,6 +35,7 @@ apps:
       - home
       - gsettings
       - network
+    desktop: usr/share/applications/com.github.alecaddd.sequeler
 
 parts:
   granite:
@@ -54,6 +67,8 @@ parts:
     plugin: cmake
     configflags: [-DCMAKE_INSTALL_PREFIX=/usr]
     build-packages:
+      - appstream
+      - desktop-file-utils
       - build-essential
       - gettext
       - libgee-0.8-dev
@@ -76,5 +91,7 @@ parts:
     install: |
       cp schemas/com.github.alecaddd.gschema.xml $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/share/glib-2.0/schemas
-    snap:
+    prime:
       - usr/share
+    organize:
+      share/glib-2.0: usr/share/glib-2.0
