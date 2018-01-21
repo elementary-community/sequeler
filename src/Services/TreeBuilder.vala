@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-namespace Sequeler { 
+namespace Sequeler {
     public class TreeBuilder : Gtk.TreeView {
 
         public TreeBuilder (Gda.DataModel response) {
@@ -36,10 +36,14 @@ namespace Sequeler {
             while (_iter.move_next ()) {
                 store.append (out iter);
                 for (int i = 0; i < tot_columns; i++) {
-                    store.set_value (iter, i, _iter.get_value_at (i));
+                    try {
+                        store.set_value (iter, i, _iter.get_value_at_e (i));
+                    } catch (Error e) {
+                        print("Error %d: %s\n",e.code, e.message);
+                    }
                 }
             }
-            
+
             for (int i = 0; i < tot_columns; i++) {
                 var title = response.get_column_title (i).replace ("_", "__");
                 var column = new Gtk.TreeViewColumn.with_attributes (title, new Gtk.CellRendererText (), "text", i, null);
