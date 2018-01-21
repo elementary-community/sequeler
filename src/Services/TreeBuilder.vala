@@ -27,26 +27,43 @@ namespace Sequeler {
 
             GLib.Type[] theTypes = new GLib.Type[tot_columns];
             for (int col = 0; col < tot_columns; col++) {
-                theTypes[col] = typeof (string);
+                //  warning (response.describe_column (col).get_g_type ().name ());
+                var type = response.describe_column (col).get_g_type ().name ();
+                if (type == "gint") {
+                    theTypes[col] = typeof (int64);
+                } else {
+                    theTypes[col] = typeof (string);
+                }
             }
+            
             Gtk.ListStore store = new Gtk.ListStore.newv (theTypes);
-
-            Gtk.TreeIter iter;
             Gda.DataModelIter _iter = response.create_iter ();
+            Gtk.TreeIter iter;
+
             while (_iter.move_next ()) {
                 store.append (out iter);
                 for (int i = 0; i < tot_columns; i++) {
                     try {
                         store.set_value (iter, i, _iter.get_value_at_e (i));
                     } catch (Error e) {
-                        print("Error %d: %s\n",e.code, e.message);
+                        var val = GLib.Value (typeof (string));
+                        val.set_string ("Error " + e.code.to_string () + ": " + e.message.to_string ());
+                        store.set_value (iter, i, val);
                     }
                 }
             }
 
+            var renderer = new Gtk.CellRendererText ();
+            Gtk.TreeViewColumn column;
+
             for (int i = 0; i < tot_columns; i++) {
                 var title = response.get_column_title (i).replace ("_", "__");
-                var column = new Gtk.TreeViewColumn.with_attributes (title, new Gtk.CellRendererText (), "text", i, null);
+                var type = response.describe_column (i).get_g_type ().name ();
+                if (type == "gint") {
+                    column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", i, null);
+                } else {
+                    column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", i, null);
+                }
                 column.clickable = true;
                 column.resizable = true;
                 column.expand = true;
