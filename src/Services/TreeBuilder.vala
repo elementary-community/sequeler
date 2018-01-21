@@ -23,11 +23,25 @@ namespace Sequeler {
     public class TreeBuilder : Gtk.TreeView {
 
         public TreeBuilder (Gda.DataModel response) {
+            Gtk.TreeViewColumn column;
+            var renderer = new Gtk.CellRendererText ();
             var tot_columns = response.get_n_columns ();
 
             GLib.Type[] theTypes = new GLib.Type[tot_columns];
             for (int col = 0; col < tot_columns; col++) {
                 theTypes[col] = response.describe_column (col).get_g_type ();
+
+                var title = response.get_column_title (col).replace ("_", "__");
+                column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", col, null);
+                column.clickable = true;
+                column.resizable = true;
+                column.expand = true;
+                column.min_width = 10;
+                if (col > 0) {
+                    column.sizing = Gtk.TreeViewColumnSizing.FIXED;
+                    column.fixed_width = 150;
+                }
+                this.append_column (column);
             }
             
             Gtk.ListStore store = new Gtk.ListStore.newv (theTypes);
@@ -42,29 +56,11 @@ namespace Sequeler {
                     } catch (Error e) {
                         var val = GLib.Value (typeof (string));
                         val.set_string ("Error " + e.code.to_string () + ": " + e.message.to_string ());
-                        store.set_value (iter, i, val);
                     }
                 }
             }
 
             this.set_model (store);
-
-            var renderer = new Gtk.CellRendererText ();
-            Gtk.TreeViewColumn column;
-
-            for (int i = 0; i < tot_columns; i++) {
-                var title = response.get_column_title (i).replace ("_", "__");
-                column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", i, null);
-                column.clickable = true;
-                column.resizable = true;
-                column.expand = true;
-                column.min_width = 10;
-                if (i > 0) {
-                    column.sizing = Gtk.TreeViewColumnSizing.FIXED;
-                    column.fixed_width = 150;
-                }
-                this.append_column (column);
-            }
         }
     }
 }
