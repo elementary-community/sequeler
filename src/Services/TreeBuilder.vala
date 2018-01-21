@@ -27,13 +27,7 @@ namespace Sequeler {
 
             GLib.Type[] theTypes = new GLib.Type[tot_columns];
             for (int col = 0; col < tot_columns; col++) {
-                //  warning (response.describe_column (col).get_g_type ().name ());
-                var type = response.describe_column (col).get_g_type ().name ();
-                if (type == "gint") {
-                    theTypes[col] = typeof (int64);
-                } else {
-                    theTypes[col] = typeof (string);
-                }
+                theTypes[col] = response.describe_column (col).get_g_type ();
             }
             
             Gtk.ListStore store = new Gtk.ListStore.newv (theTypes);
@@ -53,17 +47,14 @@ namespace Sequeler {
                 }
             }
 
+            this.set_model (store);
+
             var renderer = new Gtk.CellRendererText ();
             Gtk.TreeViewColumn column;
 
             for (int i = 0; i < tot_columns; i++) {
                 var title = response.get_column_title (i).replace ("_", "__");
-                var type = response.describe_column (i).get_g_type ().name ();
-                if (type == "gint") {
-                    column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", i, null);
-                } else {
-                    column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", i, null);
-                }
+                column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", i, null);
                 column.clickable = true;
                 column.resizable = true;
                 column.expand = true;
@@ -74,8 +65,6 @@ namespace Sequeler {
                 }
                 this.append_column (column);
             }
-
-            this.set_model (store);
         }
     }
 }
