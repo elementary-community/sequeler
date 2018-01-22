@@ -1,3 +1,13 @@
+com.github.alecaddd.sequeler (0.4.2) xenial; urgency=medium
+
+  * Better error handling, less crashes!
+  * The app doesn't crash when dealing with big values.
+  * Handling errors related to columns.
+  * Quicker response on big select queries.
+  * Some small clean up.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 21 Jan 2018 16:28:00 -0500
+
 com.github.alecaddd.sequeler (0.1) precise; urgency=low
 
   * Initial Release.
