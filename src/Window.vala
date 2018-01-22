@@ -151,12 +151,10 @@ namespace Sequeler {
                 if (query.length == 0) {
                     return null;
                 }
-                warning (query);
 
                 Gda.DataModel? result = null;
                 var loop = new MainLoop ();
                 run_select.begin (query, (obj, res) => {
-                    warning ("loop");
                     try {
                         result = run_select.end (res);
                     } catch (ThreadError e) {

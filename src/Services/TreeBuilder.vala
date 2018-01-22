@@ -47,6 +47,7 @@ namespace Sequeler {
             Gtk.ListStore store = new Gtk.ListStore.newv (theTypes);
             Gda.DataModelIter _iter = response.create_iter ();
             Gtk.TreeIter iter;
+            var error_message = GLib.Value (typeof (string));
 
             while (_iter.move_next ()) {
                 store.append (out iter);
@@ -54,12 +55,16 @@ namespace Sequeler {
                     try {
                         store.set_value (iter, i, _iter.get_value_at_e (i));
                     } catch (Error e) {
-                        var val = GLib.Value (typeof (string));
-                        val.set_string ("Error " + e.code.to_string () + ": " + e.message.to_string ());
+                        error_message.set_string ("Error " + e.code.to_string () + " on Column '" + response.get_column_title (i) + "': " + e.message.to_string ());
                     }
                 }
             }
 
+            if (error_message.get_string () != null) {
+                window.welcome.database.render_query_error (error_message.get_string ());
+                error_message.unset ();
+            }
+ 
             this.set_model (store);
         }
     }
