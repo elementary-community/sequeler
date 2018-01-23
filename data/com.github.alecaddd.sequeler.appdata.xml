@@ -26,6 +26,18 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.4.3" date="2018-01-23">
+      <description>
+        <p>Better error handling, less crashes!</p>
+        <ul>
+          <li>The app doesn't crash when dealing with big values</li>
+          <li>Handling errors related to columns</li>
+          <li>Quicker response on big select queries</li>
+          <li>Some small clean up</li>
+          <li>Fixes issue with SQL Lite encrypted path</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.4.2" date="2018-01-22">
       <description>
         <p>Better error handling, less crashes!</p>
