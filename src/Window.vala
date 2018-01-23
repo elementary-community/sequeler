@@ -105,24 +105,24 @@ namespace Sequeler {
 
             welcome.init_connection.connect ((data, spinner, button) => {
                 db = new DataBase ();
-                var encode_data = encode_data (data);
-                db.set_constr_data (encode_data);
+                var encoded_data = encode_data (data);
+                db.set_constr_data (encoded_data);
 
                 var loop = new MainLoop ();
-                init_connection.begin (encode_data, spinner, button, (obj, res) => {
+                init_connection.begin (encoded_data, spinner, button, (obj, res) => {
                     try {
                         Gee.HashMap<string, string> result = init_connection.end (res);
                         if (result["status"] == "true") {
                             spinner.stop ();
                             button.sensitive = true;
-                            open_database_view (encode_data);
+                            open_database_view (encoded_data);
                         } else {
-                            connection_warning (result["msg"], encode_data["title"]);
+                            connection_warning (result["msg"], encoded_data["title"]);
                             button.sensitive = true;
                             spinner.stop ();
                         }
                     } catch (ThreadError e) {
-                        connection_warning (e.message, encode_data["title"]);
+                        connection_warning (e.message, encoded_data["title"]);
                         button.sensitive = true;
                         spinner.stop ();
                     }
@@ -224,8 +224,8 @@ namespace Sequeler {
 
             connection_dialog.connect_to.connect ((data, spinner, dialog, response) => {
                 db = new DataBase ();
-                var encode_data = encode_data (data);
-                db.set_constr_data (encode_data);
+                var encoded_data = encode_data (data);
+                db.set_constr_data (encoded_data);
 
                 var loop = new MainLoop ();
                 init_connection_from_dialog.begin (spinner, response, (obj, res) => {
@@ -234,7 +234,7 @@ namespace Sequeler {
                         if (result["status"] == "true") {
                             loop.quit ();
                             dialog.destroy ();
-                            open_database_view (encode_data);
+                            open_database_view (encoded_data);
                         } else {
                             response.label = result["msg"];
                             spinner.stop ();
@@ -252,7 +252,7 @@ namespace Sequeler {
         }
 
         public Gee.HashMap<string, string> encode_data (Gee.HashMap<string, string> data){
-            data.set ("host", Gda.rfc1738_encode (data["host"]));
+            data.set ("encoded_host", Gda.rfc1738_encode (data["host"]));
             data.set ("name", Gda.rfc1738_encode (data["name"]));
             data.set ("username", Gda.rfc1738_encode (data["username"]));
             data.set ("password", Gda.rfc1738_encode (data["password"]));

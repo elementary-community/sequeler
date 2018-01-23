@@ -31,11 +31,11 @@ namespace Sequeler {
             port = data["port"] != "" ? data["port"] : port;
 
             if (provider == "SQLite") {
-                cnc_string = provider + "://DB_DIR=" + data["host"] + ";DB_NAME=" + data["name"] + "";
+                cnc_string = provider + "://DB_DIR=" + data["encoded_host"] + ";DB_NAME=" + data["name"] + "";
                 return;
             }
 
-            cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["host"] + ";PORT=" + port;
+            cnc_string = provider + "://" + data["username"] + ":" + data["password"] + "@DB_NAME=" + data["name"] + ";HOST=" + data["encoded_host"] + ";PORT=" + port;
         }
 
         public void open () throws Error {
