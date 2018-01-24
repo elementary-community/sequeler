@@ -43,7 +43,7 @@ namespace Sequeler {
                 }
                 this.append_column (column);
             }
-            
+
             Gtk.ListStore store = new Gtk.ListStore.newv (theTypes);
             Gda.DataModelIter _iter = response.create_iter ();
             Gtk.TreeIter iter;

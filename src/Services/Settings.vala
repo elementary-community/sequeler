@@ -18,97 +18,86 @@
 *
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
-namespace Sequeler { 
-    public class Settings : Granite.Services.Settings {
-        private static Settings? instance = null;
 
-        public int pos_x { get; set; }
-        public int pos_y { get; set; }
-        public int window_width { get; set; }
-        public int window_height { get; set; }
-        public string[] saved_connections { get; set; }
-        public int tot_connections { get; set; }
-        public bool dark_theme { get; set; }
-        public bool save_quick { get; set; }
+public class Sequeler.Services.Settings : Granite.Services.Settings {
+    public int pos_x { get; set; }
+    public int pos_y { get; set; }
+    public int window_width { get; set; }
+    public int window_height { get; set; }
+    public string[] saved_connections { get; set; }
+    public int tot_connections { get; set; }
+    public bool dark_theme { get; set; }
+    public bool save_quick { get; set; }
 
-        public static Settings get_instance () {
-            if (instance == null) {
-                instance = new Settings ();
+    public Settings () {
+        base ("com.github.alecaddd.sequeler");
+    }
+
+    public void add_connection (Gee.HashMap<string, string> data) {
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (saved_connections);
+
+        existing_connections.insert (0, stringify_data (data));
+        saved_connections = existing_connections.to_array ();
+        tot_connections = tot_connections + 1;
+    }
+
+    public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {  
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (saved_connections);
+
+        existing_connections.remove (old_data);
+        existing_connections.insert (0, stringify_data (new_data));
+
+        saved_connections = existing_connections.to_array ();
+    }
+
+    public void delete_connection (Gee.HashMap<string, string> data) {
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (saved_connections);
+
+        foreach (var conn in saved_connections) {
+            var check = arraify_data (conn);
+            if (check["id"] == data["id"]) {
+                existing_connections.remove (conn);
+            }
+        }
+
+        saved_connections = existing_connections.to_array ();
+    }
+
+    public void clear_connections () {
+        Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
+        saved_connections = empty_connection.to_array ();
+        tot_connections = 0;
+    }
+
+    public static string stringify_data (Gee.HashMap<string, string> data) {
+        string result = "";
+
+        foreach (var entry in data.entries) {
+            string values = "%s=%s\n".printf (entry.key, entry.value);
+            result = result + values;
+        }
+
+        return result;
+
+    }
+
+    public static Gee.HashMap<string, string> arraify_data (string connection) {
+        var array = new Gee.HashMap<string, string> ();
+        var data = connection.split ("\n");
+
+        foreach (var d in data) {
+            var d2 = d.split ("=", 2);
+
+            if (d2[0] == null) {
+                continue;
             }
 
-            return instance;
+            array.set (d2[0], d2[1]);
         }
 
-        private Settings () {
-            base ("com.github.alecaddd.sequeler");
-        }
-
-        public void add_connection (Gee.HashMap<string, string> data) {
-            Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-            existing_connections.add_all_array (saved_connections);
-
-            existing_connections.insert (0, stringify_data (data));
-            saved_connections = existing_connections.to_array ();
-            tot_connections = tot_connections + 1;
-        }
-
-        public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {  
-            Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-            existing_connections.add_all_array (saved_connections);
-
-            existing_connections.remove (old_data);
-            existing_connections.insert (0, stringify_data (new_data));
-
-            saved_connections = existing_connections.to_array ();
-        }
-
-        public void delete_connection (Gee.HashMap<string, string> data) {
-            Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-            existing_connections.add_all_array (saved_connections);
-
-            foreach (var conn in saved_connections) {
-                var check = arraify_data (conn);
-                if (check["id"] == data["id"]) {
-                    existing_connections.remove (conn);
-                }
-            }
-
-            saved_connections = existing_connections.to_array ();
-        }
-
-        public void clear_connections () {
-            Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
-            saved_connections = empty_connection.to_array ();
-            tot_connections = 0;
-        }
-
-        public static string stringify_data (Gee.HashMap<string, string> data) {
-            string result = "";
-
-            foreach (var entry in data.entries) {
-                string values = "%s=%s\n".printf (entry.key, entry.value);
-                result = result + values;
-            }
-
-            return result;
-
-        }
-
-        public static Gee.HashMap<string, string> arraify_data (string connection) {
-            var array = new Gee.HashMap<string, string> ();
-            var data = connection.split ("\n");
-
-            foreach (var d in data) {
-                var d2 = d.split ("=", 2);
-
-                if (d2[0] == null) {
-                    continue;
-                }
-
-                array.set (d2[0], d2[1]);
-            }
-
-            return array;
-        }
+        return array;
     }
 }

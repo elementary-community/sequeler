@@ -68,7 +68,7 @@ namespace Sequeler {
             scroll.add (item_box);
 
             foreach (var conn in settings.saved_connections) {
-                add_item (Settings.arraify_data (conn));
+                add_item (Sequeler.Services.Settings.arraify_data (conn));
             }
 
             if (settings.saved_connections.length > 0) {
@@ -149,12 +149,12 @@ namespace Sequeler {
 
         public void check_add_item (Gee.HashMap<string, string> data) {
             foreach (var conn in settings.saved_connections) {
-                var check = Settings.arraify_data (conn);
+                var check = Sequeler.Services.Settings.arraify_data (conn);
                 if (check["id"] == data["id"]) {
                     settings.edit_connection (data, conn);
                     item_box.forall ((item) => item_box.remove (item));
                     foreach (var new_conn in settings.saved_connections) {
-                        add_item (Settings.arraify_data (new_conn));
+                        add_item (Sequeler.Services.Settings.arraify_data (new_conn));
                     }
                     return;
                 }

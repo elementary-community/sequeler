@@ -51,7 +51,7 @@ namespace Sequeler {
         public signal void save_connection (Gee.HashMap data, bool trigger);
         public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.Dialog dialog, Gtk.Label response);
 
-        public ConnectionDialog (Gtk.ApplicationWindow parent, Settings settings, Gee.HashMap? data) { 
+        public ConnectionDialog (Gtk.ApplicationWindow parent, Sequeler.Services.Settings settings, Gee.HashMap? data) { 
             Object (
                 use_header_bar: 0,
                 border_width: 10,
@@ -231,7 +231,7 @@ namespace Sequeler {
             DBTYPE
         }
 
-        public SettingsView (Settings settings) {
+        public SettingsView (Sequeler.Services.Settings settings) {
             Object (
                 activatable: false,
                 icon_name: "drive-multidisk",

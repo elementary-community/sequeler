@@ -20,41 +20,47 @@
 */
 
 namespace Sequeler {
-    public Window window;
-    public Settings settings;
-    public HeaderBar headerbar; 
+    public Sequeler.Window window;
+    public Sequeler.Services.Settings settings;
     public ToolBar toolbar; 
+}
 
-    public class Application : Granite.Application {
-        // Avoid multiple instances
-        public bool running = false;
+public class Sequeler.Application : Granite.Application {
+    public GLib.List <Window> windows;
 
-        construct {
-            flags |= ApplicationFlags.HANDLES_OPEN;
-            build_data_dir = Constants.DATADIR;
-            build_pkg_data_dir = Constants.PKGDATADIR;
-            build_release_name = Constants.RELEASE_NAME;
-            build_version = Constants.VERSION;
-            build_version_info = Constants.VERSION_INFO;
+    construct {
+        flags |= ApplicationFlags.HANDLES_OPEN;
+        build_data_dir = Constants.DATADIR;
+        build_pkg_data_dir = Constants.PKGDATADIR;
+        build_release_name = Constants.RELEASE_NAME;
+        build_version = Constants.VERSION;
+        build_version_info = Constants.VERSION_INFO;
 
-            program_name = "Sequeler";
-            exec_name = "com.github.alecaddd.sequeler";
-            app_icon = "com.github.alecaddd.sequeler";
-            app_launcher = "com.github.alecaddd.sequeler.desktop";
-            application_id = "com.github.alecaddd.sequeler";
-        }
+        settings = new Sequeler.Services.Settings ();
+        windows = new GLib.List <Window> ();
 
-        protected override void activate () {
-            if (!running) {
-                settings = Settings.get_instance ();
-                window = new Window (this);
-                this.add_window (window);
+        program_name = "Sequeler";
+        exec_name = "com.github.alecaddd.sequeler";
+        app_launcher = "com.github.alecaddd.sequeler.desktop";
+        application_id = "com.github.alecaddd.sequeler";
+    }
 
-                running = true;
+    public void new_window () {
+        new Sequeler.Window (this).present ();
+    }
 
-                return;
-            }
-            window.show_app ();
-        }
+    public override void window_added (Gtk.Window window) {
+        windows.append (window as Window);
+        base.window_added (window);
+    }
+
+    public override void window_removed (Gtk.Window window) {
+        windows.remove (window as Window);
+        base.window_removed (window);
+    }
+
+    protected override void activate () {
+        var window = new Sequeler.Window (this);
+        this.add_window (window);
     }
 }

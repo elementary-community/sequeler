@@ -27,7 +27,7 @@ namespace Sequeler {
 
         public signal void welcome_library ();
 
-        public SettingsDialog (Gtk.ApplicationWindow parent, Settings settings) {
+        public SettingsDialog (Gtk.ApplicationWindow parent, Sequeler.Services.Settings settings) {
             Object (
                 use_header_bar: 0,
                 border_width: 20,
