@@ -19,7 +19,9 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Partials.HeaderBar : Gtk.HeaderBar {
+public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
+    public weak Sequeler.Window window { get; construct; }
+
     private Gtk.Menu menu;
     public Gtk.Button logout_button;
     private HeaderBarButton new_window;
@@ -31,7 +33,11 @@ public class Sequeler.Partials.HeaderBar : Gtk.HeaderBar {
     public signal void create_new_window ();
     public signal void logout ();
 
-    public HeaderBar () {
+    public HeaderBar (Sequeler.Window main_window) {
+        Object (
+            window: main_window
+        );
+
         set_title (APP_NAME);
         set_show_close_button (true);
 
@@ -50,16 +56,11 @@ public class Sequeler.Partials.HeaderBar : Gtk.HeaderBar {
             logout ();
         });
 
-        // Add some buttons in the HeaderBar
         new_window = new HeaderBarButton ("window-new", _("New Window"));
-        new_window.clicked.connect (() => {
-            create_new_window ();
-        });
+        new_window.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 
         new_connection = new HeaderBarButton ("bookmark-new", _("New Connection"));
-        new_connection.clicked.connect (() => {
-            quick_connection ();
-        });
+        new_connection.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
 
         // Create the Menu
         menu = new Gtk.Menu ();
@@ -82,11 +83,25 @@ public class Sequeler.Partials.HeaderBar : Gtk.HeaderBar {
 
         menu.add (new Gtk.SeparatorMenuItem ());
 
+        var new_window_item = new Gtk.MenuItem.with_label (_("New Window"));
+        new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
+        new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
+        menu.add (new_window_item);
+
+        var new_connection_item = new Gtk.MenuItem.with_label (_("New Connection"));
+        new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
+        new_connection_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK + Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE);
+        menu.add (new_connection_item);
+
         var preferences_item = new Gtk.MenuItem.with_label (_("Preferences"));
-        preferences_item.activate.connect (() => {
-            preferences_selected ();
-        });
         menu.add (preferences_item);
+
+        menu.add (new Gtk.SeparatorMenuItem ());
+
+        var quit_item = new Gtk.MenuItem.with_label (_("Quit"));
+        quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
+        quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
+        menu.add (quit_item);
 
         menu.show_all  ();
         

@@ -49,24 +49,25 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Application.vala
     src/Window.vala
 
-    src/Partials/HeaderBar.vala
-    src/Partials/ToolBar.vala
-    src/Partials/ButtonType.vala
-    src/Partials/HeaderTypes.vala
+    src/Layouts/HeaderBar.vala
+    # src/Partials/ToolBar.vala
+    # src/Partials/ButtonType.vala
+    # src/Partials/HeaderTypes.vala
     # src/Partials/MessageDialog.vala
-    src/Partials/QueryBuilder.vala
-    src/Partials/SimpleSettingsPage.vala
+    # src/Partials/QueryBuilder.vala
+    # src/Partials/SimpleSettingsPage.vala
 
     src/Services/Settings.vala
-    src/Services/DataBase.vala
-    src/Services/TreeBuilder.vala
+    src/Services/ActionManager.vala
+    # src/Services/DataBase.vala
+    # src/Services/TreeBuilder.vala
 
-    src/Widgets/Welcome.vala
-    src/Widgets/Library.vala
-    src/Widgets/LibraryItem.vala
-    src/Widgets/SettingsDialog.vala
-    src/Widgets/ConnectionDialog.vala
-    src/Widgets/DataBaseOpen.vala
+    # src/Widgets/Welcome.vala
+    # src/Widgets/Library.vala
+    # src/Widgets/LibraryItem.vala
+    # src/Widgets/SettingsDialog.vala
+    # src/Widgets/ConnectionDialog.vala
+    # src/Widgets/DataBaseOpen.vala
     src/config.vala
 
 # tell what libraries to use when compiling
