@@ -22,20 +22,14 @@
 public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
     public weak Sequeler.Window window { get; construct; }
 
-    private Gtk.Menu menu;
-    public Gtk.Button logout_button;
-    private HeaderBarButton new_window;
-    private HeaderBarButton new_connection;
-    private Gtk.MenuButton open_menu;
+    private Gtk.Button logout_button;
 
-    public signal void preferences_selected ();
-    public signal void quick_connection ();
-    public signal void create_new_window ();
-    public signal void logout ();
+    public bool logged_out { get; set; }
 
     public HeaderBar (Sequeler.Window main_window) {
         Object (
-            window: main_window
+            window: main_window,
+            logged_out: true
         );
 
         set_title (APP_NAME);
@@ -50,20 +44,17 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logout_button.get_style_context ().add_class ("back-button");
         logout_button.always_show_image = true;
         logout_button.set_image (eject_image);
-        logout_button.clicked.connect (() => {
-            this.title = APP_NAME;
-            this.subtitle = null;
-            logout ();
-        });
+        logout_button.can_focus = false;
+        logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
+        toggle_logout ();
 
-        new_window = new HeaderBarButton ("window-new", _("New Window"));
+        var new_window = new HeaderBarButton ("window-new", _("New Window"));
         new_window.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 
-        new_connection = new HeaderBarButton ("bookmark-new", _("New Connection"));
+        var new_connection = new HeaderBarButton ("bookmark-new", _("New Connection"));
         new_connection.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
 
-        // Create the Menu
-        menu = new Gtk.Menu ();
+        var menu = new Gtk.Menu ();
 
         var about_item = new Gtk.MenuItem.with_label (_("About"));
         about_item.activate.connect (() => {
@@ -105,8 +96,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
         menu.show_all  ();
         
-        // Create the AppMenu
-        open_menu = new Gtk.MenuButton ();
+        var open_menu = new Gtk.MenuButton ();
         open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.BUTTON));
         open_menu.set_tooltip_text ("Settings");
 
@@ -119,14 +109,12 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         pack_end (new_connection);
         pack_end (new Gtk.Separator (Gtk.Orientation.VERTICAL));
         pack_end (new_window);
-
-        logout_button.no_show_all = true;
-        logout_button.visible = false;
-        logout_button.can_focus = false;
     }
 
-    public void show_logout_button () {
-        this.logout_button.visible = true;
+    public void toggle_logout () {
+        logged_out = !logged_out;
+        logout_button.visible = logged_out;
+        logout_button.no_show_all = !logged_out;
     }
 
     protected class HeaderBarButton : Gtk.Button {

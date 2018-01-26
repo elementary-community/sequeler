@@ -28,6 +28,7 @@ public class Sequeler.Services.ActionManager : Object {
     public const string ACTION_PREFIX = "win.";
     public const string ACTION_NEW_WINDOW = "action_new_window";
     public const string ACTION_NEW_CONNECTION = "action_new_connection";
+    public const string ACTION_LOGOUT = "action_logout";
     public const string ACTION_QUIT = "action_quit";
 
     public static Gee.MultiMap<string, string> action_accelerators = new Gee.HashMultiMap<string, string> ();
@@ -35,6 +36,7 @@ public class Sequeler.Services.ActionManager : Object {
     private const ActionEntry[] action_entries = {
         { ACTION_NEW_WINDOW, action_new_window },
         { ACTION_NEW_CONNECTION, action_new_connection },
+        { ACTION_LOGOUT, action_logout },
         { ACTION_QUIT, action_quit }
     };
 
@@ -48,6 +50,7 @@ public class Sequeler.Services.ActionManager : Object {
     static construct {
         action_accelerators.set (ACTION_NEW_WINDOW, "<Control>n");
         action_accelerators.set (ACTION_NEW_CONNECTION, "<Control><Shift>n");
+        action_accelerators.set (ACTION_LOGOUT, "<Control>Escape");
         action_accelerators.set (ACTION_QUIT, "<Control>q");
     }
 
@@ -63,6 +66,12 @@ public class Sequeler.Services.ActionManager : Object {
 
     private void action_quit () {
         window.before_destroy ();
+    }
+
+    private void action_logout () {
+        window.headerbar.toggle_logout ();
+        window.headerbar.title = APP_NAME;
+        window.headerbar.subtitle = null;
     }
 
     private void action_new_window () {
