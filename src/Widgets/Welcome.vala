@@ -47,7 +47,7 @@ namespace Sequeler {
 
             separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
             separator.visible = false;
-            separator.no_show_all = true;;
+            separator.no_show_all = true;
 
             library = new Library ();
             library.visible = false;

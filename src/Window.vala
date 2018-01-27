@@ -22,6 +22,7 @@
 public class Sequeler.Window : Gtk.ApplicationWindow {
     public weak Sequeler.Application app { get; construct; }
 
+    public Sequeler.Layouts.Main main;
     public Sequeler.Layouts.HeaderBar headerbar;
     public Sequeler.Services.ActionManager action_manager;
     public Sequeler.Widgets.SettingsDialog? settings_dialog = null;
@@ -40,6 +41,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         accel_group = new Gtk.AccelGroup ();
         add_accel_group (accel_group);
 
+        main = new Sequeler.Layouts.Main ();
         headerbar = new Sequeler.Layouts.HeaderBar (this);
         action_manager = new Sequeler.Services.ActionManager (app, this);
 
@@ -68,6 +70,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         delete_event.connect ((e) => {
             return before_destroy ();
         });
+
+        add (main);
     }
 
     public bool before_destroy () {
