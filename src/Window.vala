@@ -41,7 +41,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         accel_group = new Gtk.AccelGroup ();
         add_accel_group (accel_group);
 
-        main = new Sequeler.Layouts.Main ();
+        main = new Sequeler.Layouts.Main (this);
         headerbar = new Sequeler.Layouts.HeaderBar (this);
         action_manager = new Sequeler.Services.ActionManager (app, this);
 

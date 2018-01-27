@@ -20,18 +20,41 @@
 */
 
 public class Sequeler.Layouts.Main : Gtk.Paned {
-    public Main () {
-        Object (orientation: Gtk.Orientation.HORIZONTAL);
+    public weak Sequeler.Window window { get; construct; }
+
+    public Sequeler.Layouts.Library library;
+    //  public Sequeler.Layouts.DataBaseSchema database_schema;
+    //  public Sequeler.Layouts.Welcome welcome;
+    //  public Sequeler.Layouts.DataBaseView database_view;
+
+    public Gtk.Stack sidebar_stack;
+    public Gtk.Stack main_stack;
+
+    public Main (Sequeler.Window main_window) {
+        Object (
+            orientation: Gtk.Orientation.HORIZONTAL,
+            window: main_window
+        );
     }
 
     construct {
         position = 240;
 
-        build_ui ();
+        sidebar_stack = new Gtk.Stack ();
+        library = new Sequeler.Layouts.Library (window);
+        sidebar_stack.add_named (library, "library");
+
+        main_stack = new Gtk.Stack ();
+
+        build_sidebar ();
+        build_main ();
     }
 
-    public void build_ui () {
-        pack1 (new Gtk.Label ("Left"), true, false);
+    public void build_sidebar () {
+        pack1 (sidebar_stack, true, false);
+    }
+
+    public void build_main () {
 		pack2 (new Gtk.Label ("Right"), true, false);
     }
 }

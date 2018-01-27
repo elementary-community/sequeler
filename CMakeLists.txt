@@ -51,9 +51,11 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Layouts/HeaderBar.vala
     src/Layouts/Main.vala
+    src/Layouts/Library.vala
     # src/Partials/ToolBar.vala
     # src/Partials/ButtonType.vala
-    # src/Partials/HeaderTypes.vala
+    src/Partials/HeaderTypes.vala
+    src/Partials/LibraryItem.vala
     # src/Partials/MessageDialog.vala
     # src/Partials/QueryBuilder.vala
     # src/Partials/SimpleSettingsPage.vala
