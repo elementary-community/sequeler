@@ -65,7 +65,6 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
         box.pack_start (color_box, false, false, 0);
         box.pack_start (title, true, true, 0);
 
-        // Create the Menu
         var menu = new Gtk.Menu ();
         
         connect_button = new Gtk.MenuItem.with_label (_("Connect"));
@@ -80,8 +79,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
         menu.add (delete_button);
 
         menu.show_all  ();
-        
-        // Create the AppMenu
+
         var open_menu = new Gtk.MenuButton ();
         open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
         open_menu.get_style_context ().add_class ("library-btn");

@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Layouts.Library : Gtk.Box {
+public class Sequeler.Layouts.Library : Gtk.Grid {
     public weak Sequeler.Window window { get; construct; }
 
     public Gtk.FlowBox item_box;
@@ -34,7 +34,8 @@ public class Sequeler.Layouts.Library : Gtk.Box {
         Object(
             orientation: Gtk.Orientation.VERTICAL,
             window: main_window,
-            width_request: 240
+            width_request: 240,
+            column_homogeneous: true
         );
     }
 
@@ -87,9 +88,10 @@ public class Sequeler.Layouts.Library : Gtk.Box {
             connect_to (item.data, item.spinner, item.connect_button);
         });
 
-        this.pack_start (titlebar, false, true, 0);
-        this.pack_start (scroll, true, true, 0);
-        this.pack_end (toolbar, false, true, 0);
+        attach (titlebar, 0, 0, 1, 1);
+        scroll.expand = true;
+        attach (scroll, 0, 1, 1, 2);
+        attach (toolbar, 0, 3, 1, 1);
     }
 
     public void add_item (Gee.HashMap<string, string> data) {
