@@ -51,7 +51,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
     }
 
     public void build_sidebar () {
-        pack1 (sidebar_stack, true, false);
+        pack1 (sidebar_stack, false, false);
     }
 
     public void build_main () {

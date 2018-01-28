@@ -34,11 +34,12 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
         get_style_context ().add_class ("library-box");
         expand = true;
 
-        var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        var box = new Gtk.Grid ();
+        //  box.column_homogeneous = true;
         box.get_style_context ().add_class ("library-inner-box");
         box.margin = 4;
 
-        var color_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        var color_box = new Gtk.Grid ();
         color_box.get_style_context ().add_class ("library-colorbox");
         color_box.set_size_request (12, 12);
         color_box.margin = 10;
@@ -61,9 +62,10 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
         title.halign = Gtk.Align.START;
         title.margin_end = 10;
         title.set_line_wrap (true);
+        title.hexpand = true;
 
-        box.pack_start (color_box, false, false, 0);
-        box.pack_start (title, true, true, 0);
+        box.attach (color_box, 0, 0, 1, 1);
+        box.attach (title, 1, 0, 1, 1);
 
         var menu = new Gtk.Menu ();
         
@@ -91,8 +93,8 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 
         spinner = new Gtk.Spinner ();
 
-        box.pack_end (open_menu, false, false, 0);
-        box.pack_end (spinner, false, false, 0);
+        box.attach (spinner, 2, 0, 1, 1);
+        box.attach (open_menu, 3, 0, 1, 1);
 
         var event_box = new Gtk.EventBox ();
         event_box.add (box);

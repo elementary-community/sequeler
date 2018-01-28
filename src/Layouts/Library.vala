@@ -42,7 +42,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
     construct {
         var titlebar = new Sequeler.Partials.TitleBar (_("SAVED CONNECTIONS"));
 
-        var toolbar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        var toolbar = new Gtk.Grid ();
         toolbar.get_style_context ().add_class ("library-toolbar");
 
         var delete_image = new Gtk.Image.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
@@ -57,7 +57,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         delete_all.margin = 6;
         delete_all.sensitive = false;
 
-        toolbar.pack_start (delete_all, false, false, 0);
+        toolbar.add (delete_all);
 
         scroll = new Gtk.ScrolledWindow (null, null);
         scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
