@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2017 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -19,9 +19,9 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-namespace Sequeler { 
-    public class ButtonType : Gtk.Button {
-        public ButtonType (string text, string* class) {
+namespace Sequeler.Partials { 
+    public class ButtonClass : Gtk.Button {
+        public ButtonClass (string text, string* class) {
             label = text;
 
             if (class != null) {

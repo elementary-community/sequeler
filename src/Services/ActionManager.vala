@@ -95,7 +95,16 @@ public class Sequeler.Services.ActionManager : Object {
     }
 
     private void action_new_connection () {
-        warning ("New connection");
+        if (window.connection_dialog == null) {
+            window.connection_dialog = new Sequeler.Widgets.ConnectionDialog (window);
+            window.connection_dialog.show_all ();
+
+            window.connection_dialog.destroy.connect (() => {
+                window.connection_dialog = null;
+            });
+        }
+
+        window.connection_dialog.present ();
     }
 
     public static void action_from_group (string action_name, ActionGroup? action_group) {

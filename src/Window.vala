@@ -26,6 +26,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     public Sequeler.Layouts.HeaderBar headerbar;
     public Sequeler.Services.ActionManager action_manager;
     public Sequeler.Widgets.SettingsDialog? settings_dialog = null;
+    public Sequeler.Widgets.ConnectionDialog? connection_dialog = null;
 
     public Gtk.AccelGroup accel_group { get; construct; }
 
