@@ -95,6 +95,10 @@ public class Sequeler.Services.ActionManager : Object {
     }
 
     private void action_new_connection () {
+        warning ("New connection");
+    }
 
+    public static void action_from_group (string action_name, ActionGroup? action_group) {
+        action_group.activate_action (action_name, null);
     }
 }

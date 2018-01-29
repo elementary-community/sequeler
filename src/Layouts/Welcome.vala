@@ -20,7 +20,27 @@
 */
 
 public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
-    public Welcome () {
-        
+    public unowned Sequeler.Window window { get; construct; }
+
+    public Welcome (Sequeler.Window main_window) {
+        Object (
+            window: main_window,
+            title: _("Welcome to Sequeler"),
+            subtitle: _("Connect to any Local or Remote Database.")
+        );
+    }
+
+    construct {
+        valign = Gtk.Align.FILL;
+        halign = Gtk.Align.FILL;
+        vexpand = true;
+
+        append ("bookmark-new", _("Add a New Database"), _("Connect to a Database and Save it in your Library"));
+
+        activated.connect ((i) => {
+            if (i == 0) {
+                Sequeler.Services.ActionManager.action_from_group (Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION, window.get_action_group ("win"));
+            }
+        });
     }
 }

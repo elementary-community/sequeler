@@ -52,7 +52,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Layouts/HeaderBar.vala
     src/Layouts/Main.vala
     src/Layouts/Library.vala
-    # src/Layouts/Welcome.vala
+    src/Layouts/Welcome.vala
     # src/Partials/ToolBar.vala
     # src/Partials/ButtonType.vala
     src/Partials/HeaderTypes.vala
