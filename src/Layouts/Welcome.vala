@@ -37,9 +37,11 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 
         append ("bookmark-new", _("Add a New Database"), _("Connect to a Database and Save it in your Library"));
 
-        activated.connect ((i) => {
-            if (i == 0) {
-                Sequeler.Services.ActionManager.action_from_group (Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION, window.get_action_group ("win"));
+        activated.connect ( index => {
+            switch (index) {
+                case 0:
+                    Sequeler.Services.ActionManager.action_from_group (Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION, window.get_action_group ("win"));
+                break;
             }
         });
     }

@@ -35,7 +35,6 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
         expand = true;
 
         var box = new Gtk.Grid ();
-        //  box.column_homogeneous = true;
         box.get_style_context ().add_class ("library-inner-box");
         box.margin = 4;
 

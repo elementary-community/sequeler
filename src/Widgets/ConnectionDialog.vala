@@ -20,27 +20,58 @@
 */
 
 public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
-    private Gtk.Stack main_stack;
+    public Gee.HashMap? data { get; set; default = null; }
 
     public Sequeler.Partials.ButtonClass test_button;
     public Sequeler.Partials.ButtonClass connect_button;
+
+    private Gtk.Label header_title;
+    private Gtk.ColorButton color_picker;
 
     public ConnectionDialog (Gtk.Window? parent) {
         Object (
             border_width: 5,
             deletable: false,
             resizable: false,
-            title: _("Preferences"),
+            title: _("Connection"),
             transient_for: parent
         );
     }
 
     construct {
-        main_stack = new Gtk.Stack ();
-        main_stack.margin = 6;
-        main_stack.margin_bottom = 15;
-        main_stack.margin_top = 15;
+        build_content ();
+        build_actions ();
 
+        response.connect (on_response);
+    }
+
+    private void build_content () {
+        var header_grid = new Gtk.Grid ();
+        header_grid.margin_start = 5;
+        header_grid.margin_end = 5;
+        header_grid.margin_bottom = 20;
+
+        var image = new Gtk.Image.from_icon_name ("drive-multidisk", Gtk.IconSize.DIALOG);
+        image.margin_end = 10;
+
+        header_title = new Gtk.Label (_("New Connection"));
+        header_title.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+        header_title.halign = Gtk.Align.START;
+        header_title.margin_end = 10;
+        header_title.set_line_wrap (true);
+        header_title.hexpand = true;
+
+        color_picker = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
+        color_picker.set_use_alpha (true);
+
+        header_grid.attach (image, 0, 0, 1, 2);
+        header_grid.attach (header_title, 1, 0, 1, 2);
+        header_grid.attach (color_picker, 2, 0, 1, 1);
+
+        get_content_area ().add (header_grid);
+    }
+
+    private void build_actions () {
         var cancel_button = new Sequeler.Partials.ButtonClass (_("Close"), null);
         var save_button = new Sequeler.Partials.ButtonClass (_("Save Connection"), null);
 
@@ -54,8 +85,6 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         add_action_widget (save_button, 2);
         add_action_widget (cancel_button, 3);
         add_action_widget (connect_button, 4);
-
-        response.connect (on_response);
     }
 
     private void on_response (Gtk.Dialog source, int response_id) {
