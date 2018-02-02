@@ -28,6 +28,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Gtk.Label header_title;
     private Gtk.ColorButton color_picker;
 
+    private Gtk.Spinner spinner;
+    private Sequeler.Partials.ResponseMessage response_msg;
+
     public ConnectionDialog (Gtk.Window? parent) {
         Object (
             border_width: 5,
@@ -63,12 +66,20 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         color_picker = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
         color_picker.set_use_alpha (true);
+        color_picker.get_style_context ().add_class ("color-picker");
+        color_picker.can_focus = false;
 
         header_grid.attach (image, 0, 0, 1, 2);
         header_grid.attach (header_title, 1, 0, 1, 2);
         header_grid.attach (color_picker, 2, 0, 1, 1);
 
         get_content_area ().add (header_grid);
+
+        spinner = new Gtk.Spinner ();
+        response_msg = new Sequeler.Partials.ResponseMessage ();
+
+        get_content_area ().add (spinner);
+        get_content_area ().add (response_msg);
     }
 
     private void build_actions () {
@@ -98,9 +109,22 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             case 3:
                 destroy ();
                 break;
-            case 4:
+            case 4:              
                 //  init_connection ();
                 break;
         }
+    }
+
+    public void toggle_spinner (bool type) {
+        if (type == true) {
+            spinner.start ();
+            return;
+        }
+
+        spinner.stop ();
+    }
+
+    public void write_response (string? response_text) {
+        response_msg.label = response_text;
     }
 }

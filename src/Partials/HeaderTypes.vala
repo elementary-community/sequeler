@@ -34,6 +34,16 @@ namespace Sequeler.Partials {
         }
     }
 
+    public class ResponseMessage : Gtk.Label {
+        public ResponseMessage () {
+            get_style_context ().add_class ("h4");
+            halign = Gtk.Align.CENTER;
+            valign = Gtk.Align.CENTER;
+            justify = Gtk.Justification.CENTER;
+            set_line_wrap (true);
+        }
+    }
+
     public class TableRow : Gtk.Grid {
         public TableRow (string text, int type) {
             if (type % 2 == 0) {

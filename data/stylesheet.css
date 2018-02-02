@@ -53,3 +53,22 @@
     background: rgba(0, 0, 0, 0.1);
     opacity: 1;
 }
+
+GtkColorButton.color-picker {
+    border-radius: 100%;
+    padding: 2px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.color-picker GtkColorSwatch {
+    border-radius: 100%;
+    box-shadow: none;
+    background-color: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+    outline: none;
+    icon-shadow: transparent;
+    outline-color: transparent;
+    text-shadow: none;
+}
