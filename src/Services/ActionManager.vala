@@ -95,6 +95,8 @@ public class Sequeler.Services.ActionManager : Object {
     }
 
     private void action_new_connection () {
+        window.data_manager.data = null;
+
         if (window.connection_dialog == null) {
             window.connection_dialog = new Sequeler.Widgets.ConnectionDialog (window);
             window.connection_dialog.show_all ();

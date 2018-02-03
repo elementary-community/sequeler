@@ -44,6 +44,31 @@ namespace Sequeler.Partials {
         }
     }
 
+    public class Entry : Gtk.Entry {
+        public Entry (string? placeholder, string? val) {
+            hexpand = true;
+
+            if (placeholder != null) {
+                placeholder_text = placeholder;
+            }
+
+            if (val != null) {
+                text = val;
+            }
+        }
+    }
+
+    public class ButtonClass : Gtk.Button {
+        public ButtonClass (string text, string* class) {
+            label = text;
+
+            if (class != null) {
+                var style_context = this.get_style_context ();
+                style_context.add_class (class);
+            }   
+        }
+    }
+
     public class TableRow : Gtk.Grid {
         public TableRow (string text, int type) {
             if (type % 2 == 0) {

@@ -25,6 +25,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     public Sequeler.Layouts.Main main;
     public Sequeler.Layouts.HeaderBar headerbar;
     public Sequeler.Services.ActionManager action_manager;
+    public Sequeler.Services.DataManager data_manager;
     public Sequeler.Widgets.SettingsDialog? settings_dialog = null;
     public Sequeler.Widgets.ConnectionDialog? connection_dialog = null;
 
@@ -45,6 +46,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         main = new Sequeler.Layouts.Main (this);
         headerbar = new Sequeler.Layouts.HeaderBar (this);
         action_manager = new Sequeler.Services.ActionManager (app, this);
+        data_manager = new Sequeler.Services.DataManager (null);
 
         build_ui ();
 

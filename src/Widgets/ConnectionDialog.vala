@@ -20,7 +20,7 @@
 */
 
 public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
-    public Gee.HashMap? data { get; set; default = null; }
+    public weak Sequeler.Window window { get; construct; }
 
     public Sequeler.Partials.ButtonClass test_button;
     public Sequeler.Partials.ButtonClass connect_button;
@@ -28,27 +28,45 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Gtk.Label header_title;
     private Gtk.ColorButton color_picker;
 
+    private Sequeler.Partials.Entry title_entry;
+    private Gee.HashMap<int, string> db_types;
+    private Gtk.ComboBox db_type_entry;
+
     private Gtk.Spinner spinner;
     private Sequeler.Partials.ResponseMessage response_msg;
 
-    public ConnectionDialog (Gtk.Window? parent) {
+    enum Column {
+        DBTYPE
+    }
+
+    public ConnectionDialog (Sequeler.Window? parent) {
         Object (
             border_width: 5,
             deletable: false,
             resizable: false,
             title: _("Connection"),
-            transient_for: parent
+            transient_for: parent,
+            window: parent
         );
     }
 
     construct {
         build_content ();
         build_actions ();
+        populate_data ();
 
         response.connect (on_response);
     }
 
     private void build_content () {
+        var body = get_content_area ();
+
+        db_types = new Gee.HashMap<int, string> ();
+        db_types.set (0,"MySQL");
+        db_types.set (1,"MariaDB");
+        db_types.set (2,"PostgreSQL");
+        db_types.set (3,"SQLite");
+
         var header_grid = new Gtk.Grid ();
         header_grid.margin_start = 5;
         header_grid.margin_end = 5;
@@ -73,13 +91,50 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         header_grid.attach (header_title, 1, 0, 1, 2);
         header_grid.attach (color_picker, 2, 0, 1, 1);
 
-        get_content_area ().add (header_grid);
+        body.add (header_grid);
+
+        var form_grid = new Gtk.Grid ();
+        form_grid.margin = 5;
+        form_grid.row_spacing = 10;
+        form_grid.column_spacing = 20;
+
+        var title_label = new Gtk.Label (_("Connection Name:"));
+        title_entry = new Sequeler.Partials.Entry (_("Connection's name"), title);
+        title_entry.changed.connect (() => {
+            header_title.label = title_entry.text;
+        });
+        form_grid.attach (title_label, 0, 0, 1, 1);
+        form_grid.attach (title_entry, 1, 0, 1, 1);
+
+        var db_type_label = new Gtk.Label (_("Database Type:"));
+        var list_store = new Gtk.ListStore (1, typeof (string));
+        
+        for (int i = 0; i < db_types.size; i++){
+            Gtk.TreeIter iter;
+            list_store.append (out iter);
+            list_store.set (iter, Column.DBTYPE, db_types[i]);
+        }
+
+        db_type_entry = new Gtk.ComboBox.with_model (list_store);
+        var cell = new Gtk.CellRendererText ();
+        db_type_entry.pack_start (cell, false);
+
+        db_type_entry.set_attributes (cell, "text", Column.DBTYPE);
+        db_type_entry.set_active (0);
+        db_type_entry.changed.connect (() => { 
+            db_type_changed ();
+        });
+
+        form_grid.attach (db_type_label, 0, 1, 1, 1);
+        form_grid.attach (db_type_entry, 1, 1, 1, 1);
+
+        body.add (form_grid);
 
         spinner = new Gtk.Spinner ();
         response_msg = new Sequeler.Partials.ResponseMessage ();
 
-        get_content_area ().add (spinner);
-        get_content_area ().add (response_msg);
+        body.add (spinner);
+        body.add (response_msg);
     }
 
     private void build_actions () {
@@ -96,6 +151,16 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         add_action_widget (save_button, 2);
         add_action_widget (cancel_button, 3);
         add_action_widget (connect_button, 4);
+    }
+
+    private void populate_data () {
+        if (window.data_manager.data == null || window.data_manager.data.size == 0) {
+            return;
+        }
+    }
+
+    private void db_type_changed () {
+
     }
 
     private void on_response (Gtk.Dialog source, int response_id) {
