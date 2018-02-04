@@ -87,4 +87,11 @@ namespace Sequeler.Partials {
             this.add (title);
         }
     }
+
+    public class LabelForm : Gtk.Label {
+        public LabelForm (string text) {
+            label = text;
+            halign = Gtk.Align.END;
+        }
+    }
 }

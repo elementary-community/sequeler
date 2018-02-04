@@ -31,6 +31,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Sequeler.Partials.Entry title_entry;
     private Gee.HashMap<int, string> db_types;
     private Gtk.ComboBox db_type_entry;
+    private Sequeler.Partials.Entry db_host_entry;
+    private Sequeler.Partials.Entry db_name_entry;
+    private Sequeler.Partials.Entry db_username_entry;
+    private Sequeler.Partials.Entry db_password_entry;
+    private Sequeler.Partials.Entry db_port_entry;
+    private Gtk.FileChooserButton db_file_entry;
 
     private Gtk.Spinner spinner;
     private Sequeler.Partials.ResponseMessage response_msg;
@@ -94,11 +100,14 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         body.add (header_grid);
 
         var form_grid = new Gtk.Grid ();
-        form_grid.margin = 5;
+        form_grid.margin_top = 5;
+        form_grid.margin_bottom = 5;
+        form_grid.margin_start = 30;
+        form_grid.margin_end = 30;
         form_grid.row_spacing = 10;
         form_grid.column_spacing = 20;
 
-        var title_label = new Gtk.Label (_("Connection Name:"));
+        var title_label = new Sequeler.Partials.LabelForm (_("Connection Name:"));
         title_entry = new Sequeler.Partials.Entry (_("Connection's name"), title);
         title_entry.changed.connect (() => {
             header_title.label = title_entry.text;
@@ -106,7 +115,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         form_grid.attach (title_label, 0, 0, 1, 1);
         form_grid.attach (title_entry, 1, 0, 1, 1);
 
-        var db_type_label = new Gtk.Label (_("Database Type:"));
+        var db_type_label = new Sequeler.Partials.LabelForm (_("Database Type:"));
         var list_store = new Gtk.ListStore (1, typeof (string));
         
         for (int i = 0; i < db_types.size; i++){
@@ -127,6 +136,52 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         form_grid.attach (db_type_label, 0, 1, 1, 1);
         form_grid.attach (db_type_entry, 1, 1, 1, 1);
+
+        var db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
+        db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File..."), Gtk.FileChooserAction.OPEN);
+        var filter = new Gtk.FileFilter ();
+        filter.add_pattern ("*.db");
+        db_file_entry.add_filter (filter);
+
+        form_grid.attach (db_file_label, 0, 7, 1, 1);
+        form_grid.attach (db_file_entry, 1, 7, 1, 1);
+
+        var db_host_label = new Sequeler.Partials.LabelForm (_("Host:"));
+        db_host_entry = new Sequeler.Partials.Entry (_("127.0.0.1"), null);
+
+        form_grid.attach (db_host_label, 0, 2, 1, 1);
+        form_grid.attach (db_host_entry, 1, 2, 1, 1);
+
+        var db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
+        db_name_entry = new Sequeler.Partials.Entry ("", null);
+
+        form_grid.attach (db_name_label, 0, 3, 1, 1);
+        form_grid.attach (db_name_entry, 1, 3, 1, 1);
+
+        var db_username_label = new Sequeler.Partials.LabelForm (_("Username:"));
+        db_username_entry = new Sequeler.Partials.Entry ("", null);
+
+        form_grid.attach (db_username_label, 0, 4, 1, 1);
+        form_grid.attach (db_username_entry, 1, 4, 1, 1);
+
+        var db_password_label = new Sequeler.Partials.LabelForm (_("Password:"));
+        db_password_entry = new Sequeler.Partials.Entry ("", null);
+        db_password_entry.visibility = false;
+        db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "dialog-information-symbolic");
+		db_password_entry.icon_press.connect ((pos, event) => {
+			if (pos == Gtk.EntryIconPosition.SECONDARY) {
+				db_password_entry.visibility = !db_password_entry.visibility;
+			}
+		});
+
+        form_grid.attach (db_password_label, 0, 5, 1, 1);
+        form_grid.attach (db_password_entry, 1, 5, 1, 1);
+
+        var db_port_label = new Sequeler.Partials.LabelForm (_("Port:"));
+        db_port_entry = new Sequeler.Partials.Entry ("3306", null);
+
+        form_grid.attach (db_port_label, 0, 6, 1, 1);
+        form_grid.attach (db_port_entry, 1, 6, 1, 1);
 
         body.add (form_grid);
 
