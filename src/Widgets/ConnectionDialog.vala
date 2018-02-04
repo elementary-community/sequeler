@@ -28,6 +28,13 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Gtk.Label header_title;
     private Gtk.ColorButton color_picker;
 
+    private Sequeler.Partials.LabelForm db_file_label;
+    private Sequeler.Partials.LabelForm db_host_label;
+    private Sequeler.Partials.LabelForm db_name_label;
+    private Sequeler.Partials.LabelForm db_username_label;
+    private Sequeler.Partials.LabelForm db_password_label;
+    private Sequeler.Partials.LabelForm db_port_label;
+
     private Sequeler.Partials.Entry title_entry;
     private Gee.HashMap<int, string> db_types;
     private Gtk.ComboBox db_type_entry;
@@ -137,34 +144,25 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         form_grid.attach (db_type_label, 0, 1, 1, 1);
         form_grid.attach (db_type_entry, 1, 1, 1, 1);
 
-        var db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
-        db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File..."), Gtk.FileChooserAction.OPEN);
-        var filter = new Gtk.FileFilter ();
-        filter.add_pattern ("*.db");
-        db_file_entry.add_filter (filter);
-
-        form_grid.attach (db_file_label, 0, 7, 1, 1);
-        form_grid.attach (db_file_entry, 1, 7, 1, 1);
-
-        var db_host_label = new Sequeler.Partials.LabelForm (_("Host:"));
+        db_host_label = new Sequeler.Partials.LabelForm (_("Host:"));
         db_host_entry = new Sequeler.Partials.Entry (_("127.0.0.1"), null);
 
         form_grid.attach (db_host_label, 0, 2, 1, 1);
         form_grid.attach (db_host_entry, 1, 2, 1, 1);
 
-        var db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
+        db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
         db_name_entry = new Sequeler.Partials.Entry ("", null);
 
         form_grid.attach (db_name_label, 0, 3, 1, 1);
         form_grid.attach (db_name_entry, 1, 3, 1, 1);
 
-        var db_username_label = new Sequeler.Partials.LabelForm (_("Username:"));
+        db_username_label = new Sequeler.Partials.LabelForm (_("Username:"));
         db_username_entry = new Sequeler.Partials.Entry ("", null);
 
         form_grid.attach (db_username_label, 0, 4, 1, 1);
         form_grid.attach (db_username_entry, 1, 4, 1, 1);
 
-        var db_password_label = new Sequeler.Partials.LabelForm (_("Password:"));
+        db_password_label = new Sequeler.Partials.LabelForm (_("Password:"));
         db_password_entry = new Sequeler.Partials.Entry ("", null);
         db_password_entry.visibility = false;
         db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "dialog-information-symbolic");
@@ -177,11 +175,24 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         form_grid.attach (db_password_label, 0, 5, 1, 1);
         form_grid.attach (db_password_entry, 1, 5, 1, 1);
 
-        var db_port_label = new Sequeler.Partials.LabelForm (_("Port:"));
+        db_port_label = new Sequeler.Partials.LabelForm (_("Port:"));
         db_port_entry = new Sequeler.Partials.Entry ("3306", null);
 
         form_grid.attach (db_port_label, 0, 6, 1, 1);
         form_grid.attach (db_port_entry, 1, 6, 1, 1);
+
+        db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
+        db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File..."), Gtk.FileChooserAction.OPEN);
+        var filter = new Gtk.FileFilter ();
+        filter.add_pattern ("*.db");
+        db_file_entry.add_filter (filter);
+
+        form_grid.attach (db_file_label, 0, 7, 1, 1);
+        form_grid.attach (db_file_entry, 1, 7, 1, 1);
+        db_file_label.visible = false;
+        db_file_label.no_show_all = true;
+        db_file_entry.visible = false;
+        db_file_entry.no_show_all = true;
 
         body.add (form_grid);
 
@@ -215,7 +226,40 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     private void db_type_changed () {
+        if ( db_type_entry.get_active () == 3) {
+            toggle_database_info (true);
+            return;
+        }
 
+        toggle_database_info (false);
+    }
+
+    private void toggle_database_info (bool toggle) {
+        db_file_label.visible = toggle;
+        db_file_label.no_show_all = !toggle;
+        db_file_entry.visible = toggle;
+        db_file_entry.no_show_all = !toggle;
+
+        db_host_label.visible = !toggle;
+        db_host_label.no_show_all = toggle;
+        db_host_entry.visible = !toggle;
+        db_host_entry.no_show_all = toggle;
+        db_name_label.visible = !toggle;
+        db_name_label.no_show_all = toggle;
+        db_name_entry.visible = !toggle;
+        db_name_entry.no_show_all = toggle;
+        db_username_label.visible = !toggle;
+        db_username_label.no_show_all = toggle;
+        db_username_entry.visible = !toggle;
+        db_username_entry.no_show_all = toggle;
+        db_password_label.visible = !toggle;
+        db_password_label.no_show_all = toggle;
+        db_password_entry.visible = !toggle;
+        db_password_entry.no_show_all = toggle;
+        db_port_label.visible = !toggle;
+        db_port_label.no_show_all = toggle;
+        db_port_entry.visible = !toggle;
+        db_port_entry.no_show_all = toggle;
     }
 
     private void on_response (Gtk.Dialog source, int response_id) {
