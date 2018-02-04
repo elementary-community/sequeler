@@ -108,7 +108,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         var form_grid = new Gtk.Grid ();
         form_grid.margin_top = 5;
-        form_grid.margin_bottom = 5;
+        form_grid.margin_bottom = 20;
         form_grid.margin_start = 30;
         form_grid.margin_end = 30;
         form_grid.row_spacing = 10;
@@ -146,12 +146,14 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         db_host_label = new Sequeler.Partials.LabelForm (_("Host:"));
         db_host_entry = new Sequeler.Partials.Entry (_("127.0.0.1"), null);
+        db_host_entry.changed.connect (change_sensitivity);
 
         form_grid.attach (db_host_label, 0, 2, 1, 1);
         form_grid.attach (db_host_entry, 1, 2, 1, 1);
 
         db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
         db_name_entry = new Sequeler.Partials.Entry ("", null);
+        db_name_entry.changed.connect (change_sensitivity);
 
         form_grid.attach (db_name_label, 0, 3, 1, 1);
         form_grid.attach (db_name_entry, 1, 3, 1, 1);
@@ -186,6 +188,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var filter = new Gtk.FileFilter ();
         filter.add_pattern ("*.db");
         db_file_entry.add_filter (filter);
+
+        db_file_entry.selection_changed.connect (change_sensitivity);
 
         form_grid.attach (db_file_label, 0, 7, 1, 1);
         form_grid.attach (db_file_entry, 1, 7, 1, 1);
@@ -226,12 +230,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     private void db_type_changed () {
-        if ( db_type_entry.get_active () == 3) {
-            toggle_database_info (true);
-            return;
-        }
-
-        toggle_database_info (false);
+        var toggle = db_type_entry.get_active () == 3 ? true : false;
+        toggle_database_info (toggle);
+        change_sensitivity ();
     }
 
     private void toggle_database_info (bool toggle) {
@@ -262,10 +263,22 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         db_port_entry.no_show_all = toggle;
     }
 
+    private void change_sensitivity () {
+        if ((db_type_entry.get_active () != 3 && db_name_entry.text != "" && db_host_entry.text != "") 
+            || (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
+            test_button.sensitive = true;
+            connect_button.sensitive = true;
+            return;
+        }
+
+        test_button.sensitive = false;
+        connect_button.sensitive = false;
+    }
+
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case 1:
-                //  test_connection ();
+                test_connection ();
                 break;
             case 2:
                 //  save_data (true);
@@ -277,6 +290,28 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 //  init_connection ();
                 break;
         }
+    }
+
+    private void test_connection () {
+        toggle_spinner (true);
+        write_response (_("Testing Connection..."));
+
+        var connection = new Sequeler.Services.Connection (package_data ());
+
+    }
+
+    private Gee.HashMap<string, string> package_data () {
+        var packaged_data = new Gee.HashMap<string, string> ();
+
+        packaged_data.set ("type", db_types [db_type_entry.get_active ()]);
+        packaged_data.set ("host", db_host_entry.text);
+        packaged_data.set ("name", db_name_entry.text);
+        packaged_data.set ("file_path", db_file_entry.get_uri ());
+        packaged_data.set ("username", db_username_entry.text);
+        packaged_data.set ("password", db_password_entry.text);
+        packaged_data.set ("port", db_port_entry.text);
+
+        return packaged_data;
     }
 
     public void toggle_spinner (bool type) {

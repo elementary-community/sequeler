@@ -41,6 +41,7 @@ namespace Sequeler.Partials {
             valign = Gtk.Align.CENTER;
             justify = Gtk.Justification.CENTER;
             set_line_wrap (true);
+            margin_bottom = 10;
         }
     }
 
