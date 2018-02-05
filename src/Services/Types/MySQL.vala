@@ -20,11 +20,15 @@
 */
 
 public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
-    public MySQL () {
-        //
-    }
+    public string port { set; get; default = "3306"; }
 
     public string connection_string (Gee.HashMap<string, string> data) {
-        return "";
+        var username = Gda.rfc1738_encode (data["username"]);
+        var password = Gda.rfc1738_encode (data["password"]);
+        var name = Gda.rfc1738_encode (data["name"]);
+        var host = Gda.rfc1738_encode (data["host"]);
+        port =  data["port"] != "" ? data["port"] : port;
+
+        return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
     }
 }

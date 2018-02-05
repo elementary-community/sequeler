@@ -233,6 +233,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var toggle = db_type_entry.get_active () == 3 ? true : false;
         toggle_database_info (toggle);
         change_sensitivity ();
+
+        if (db_type_entry.get_active () == 2) {
+            db_port_entry.placeholder_text = "5432";
+        } else {
+            db_port_entry.placeholder_text = "3306";
+        }
     }
 
     private void toggle_database_info (bool toggle) {
@@ -286,27 +292,33 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             case 3:
                 destroy ();
                 break;
-            case 4:              
+            case 4:
                 //  init_connection ();
                 break;
         }
     }
 
-    private void test_connection () {
+    private async void test_connection () throws ThreadError {
         toggle_spinner (true);
         write_response (_("Testing Connection..."));
 
         var connection = new Sequeler.Services.ConnectionManager (package_data ());
+        SourceFunc callback = test_connection.callback;
 
-        try {
-            connection.test ();
-            write_response (_("Successfully Connected!"));
-        }
-        catch (Error e) {
-            write_response (e.message);
-        }
+        new Thread <void*> (null, () => {
+            try {
+                connection.test ();
+                write_response (_("Successfully Connected!"));
+            }
+            catch (Error e) {
+                write_response (e.message);
+            }
+            Idle.add ((owned) callback);
+            toggle_spinner (false);
+            return null;
+        });
 
-        toggle_spinner (false);
+        yield;
     }
 
     private Gee.HashMap<string, string> package_data () {

@@ -64,4 +64,30 @@ public class Sequeler.Services.ConnectionManager : Object {
             connection.close ();
         }
     }
+
+    public void open () throws Error {
+        var connection_string = (db_type as DataBaseType).connection_string (data);
+
+        try {
+            connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
+        } catch ( Error e ) {
+            throw e;
+        }
+
+        if (connection.is_opened ()) {
+            connection.execution_timer = true;
+        }
+    }
+
+    public int run_query (string query) throws Error requires (connection.is_opened ()) {
+        return connection.execute_non_select_command (query);
+    }
+
+    public Gda.DataModel? run_select (string query) throws Error requires (connection.is_opened ()) {
+        return connection.execute_select_command (query);
+    }
+
+    public void close () {
+        connection.close ();
+    }
 }
