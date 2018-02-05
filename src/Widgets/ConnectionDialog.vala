@@ -35,6 +35,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private Sequeler.Partials.LabelForm db_password_label;
     private Sequeler.Partials.LabelForm db_port_label;
 
+    private Gtk.Entry connection_id;
     private Sequeler.Partials.Entry title_entry;
     private Gee.HashMap<int, string> db_types;
     private Gtk.ComboBox db_type_entry;
@@ -64,11 +65,19 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     construct {
+        set_id ();
         build_content ();
         build_actions ();
         populate_data ();
 
         response.connect (on_response);
+    }
+
+    private void set_id () {
+        var id = settings.tot_connections;
+
+        connection_id = new Gtk.Entry ();
+        connection_id.text = id.to_string ();
     }
 
     private void build_content () {
@@ -287,7 +296,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 test_connection ();
                 break;
             case 2:
-                //  save_data (true);
+                save_connection ();
                 break;
             case 3:
                 destroy ();
@@ -321,9 +330,36 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         yield;
     }
 
+    private async void save_connection () throws ThreadError {
+        toggle_spinner (true);
+        write_response (_("Saving Connection..."));
+
+        SourceFunc callback = save_connection.callback;
+
+        new Thread <void*> (null, () => {
+            try {
+                settings.add_connection (package_data ());
+                window.main.library.reload_library ();
+
+                write_response (_("Connection Saved!"));
+            }
+            catch (Error e) {
+                write_response (e.message);
+            }
+            Idle.add ((owned) callback);
+            toggle_spinner (false);
+            return null;
+        });
+
+        yield;
+    }
+
     private Gee.HashMap<string, string> package_data () {
         var packaged_data = new Gee.HashMap<string, string> ();
 
+        packaged_data.set ("id", connection_id.text);
+        packaged_data.set ("title", title_entry.text);
+        packaged_data.set ("color", color_picker.rgba.to_string ());
         packaged_data.set ("type", db_types [db_type_entry.get_active ()]);
         packaged_data.set ("host", db_host_entry.text);
         packaged_data.set ("name", db_name_entry.text);
