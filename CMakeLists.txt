@@ -64,9 +64,14 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Settings.vala
     src/Services/ActionManager.vala
     src/Services/DataManager.vala
-    src/Services/Connection.vala
+    src/Services/ConnectionManager.vala
     # src/Services/DataBase.vala
     # src/Services/TreeBuilder.vala
+
+    src/Services/Types/DataBaseType.vala
+    src/Services/Types/MySQL.vala
+    src/Services/Types/PostgreSQL.vala
+    src/Services/Types/SQLite.vala
 
     # src/Widgets/Welcome.vala
     # src/Widgets/Library.vala

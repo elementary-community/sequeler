@@ -19,10 +19,12 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Services.Connection : Object {
-    private Object db_type;
-
-    public Connection (Gee.HashMap<string, string> data) {
+public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
+    public PostgreSQL () {
         //
+    }
+
+    public string connection_string (Gee.HashMap<string, string> data) {
+        return "";
     }
 }

@@ -296,8 +296,17 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         toggle_spinner (true);
         write_response (_("Testing Connection..."));
 
-        var connection = new Sequeler.Services.Connection (package_data ());
+        var connection = new Sequeler.Services.ConnectionManager (package_data ());
 
+        try {
+            connection.test ();
+            write_response (_("Successfully Connected!"));
+        }
+        catch (Error e) {
+            write_response (e.message);
+        }
+
+        toggle_spinner (false);
     }
 
     private Gee.HashMap<string, string> package_data () {
