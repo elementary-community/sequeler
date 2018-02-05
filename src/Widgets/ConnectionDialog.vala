@@ -236,6 +236,46 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         if (window.data_manager.data == null || window.data_manager.data.size == 0) {
             return;
         }
+
+        var update_data = window.data_manager.data;
+
+        connection_id.text = update_data["id"];
+        title_entry.text = update_data["title"];
+
+        var color = Gdk.RGBA ();
+        color.parse (update_data["color"]);
+        color_picker.rgba = color;
+
+        foreach (var entry in db_types.entries) {
+            if (entry.value == update_data["type"]) {
+                db_type_entry.set_active (entry.key);
+            }
+        }
+
+        db_host_entry.text = update_data["host"];
+        db_name_entry.text = update_data["name"];
+        db_username_entry.text = update_data["username"];
+        db_password_entry.text = update_data["password"];
+
+        if (update_data["file_path"] != null) {
+            db_file_entry.set_uri (update_data["file_path"]);
+        }
+
+        if (update_data["type"] == "SQLite" && update_data["file_path"] == null) {
+            var update_file_path = "file:/" + update_data["host"] + "/" + update_data["name"] + ".db";
+            warning (update_file_path);
+            try {
+                db_file_entry.set_uri (update_file_path);
+                db_file_entry.set_file (GLib.File.new_for_uri (update_file_path));
+                db_file_entry.set_filename (update_data["name"] + ".db");
+            } catch (Error e) {
+                write_response (e.message);
+            }
+        }
+
+        if (update_data["port"] != null) {
+            db_port_entry.text = update_data["port"];
+        }
     }
 
     private void db_type_changed () {
@@ -302,7 +342,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 destroy ();
                 break;
             case 4:
-                //  init_connection ();
+                init_connection ();
                 break;
         }
     }
@@ -342,6 +382,35 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 window.main.library.reload_library ();
 
                 write_response (_("Connection Saved!"));
+            }
+            catch (Error e) {
+                write_response (e.message);
+            }
+            Idle.add ((owned) callback);
+            toggle_spinner (false);
+            return null;
+        });
+
+        yield;
+    }
+
+    private async void init_connection () throws ThreadError {
+        toggle_spinner (true);
+        write_response (_("Connection..."));
+
+        var connection = new Sequeler.Services.ConnectionManager (package_data ());
+        SourceFunc callback = init_connection.callback;
+
+        new Thread <void*> (null, () => {
+            try {
+                connection.test ();
+
+                if (settings.save_quick) {
+                    settings.add_connection (package_data ());
+                    window.main.library.reload_library ();
+                }
+
+                write_response (_("Successfully Connected!"));
             }
             catch (Error e) {
                 write_response (e.message);

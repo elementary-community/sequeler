@@ -102,7 +102,18 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         });
 
         item.edit_dialog.connect ((data) => {
-            edit_dialog (data);
+            window.data_manager.data = data;
+
+            if (window.connection_dialog == null) {
+                window.connection_dialog = new Sequeler.Widgets.ConnectionDialog (window);
+                window.connection_dialog.show_all ();
+
+                window.connection_dialog.destroy.connect (() => {
+                    window.connection_dialog = null;
+                });
+            }
+
+            window.connection_dialog.present ();
         });
 
         item.connect_to.connect ((data, spinner, connect_button) => {

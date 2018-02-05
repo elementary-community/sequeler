@@ -23,9 +23,9 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
     public weak Sequeler.Window window { get; construct; }
 
     public Sequeler.Layouts.Library library;
-    //  public Sequeler.Layouts.DataBaseSchema database_schema;
+    public Sequeler.Layouts.DataBaseSchema database_schema;
     public Sequeler.Layouts.Welcome welcome;
-    //  public Sequeler.Layouts.DataBaseView database_view;
+    public Sequeler.Layouts.DataBaseView database_view;
 
     public Gtk.Stack sidebar_stack;
     public Gtk.Stack main_stack;
