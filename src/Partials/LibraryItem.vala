@@ -20,7 +20,9 @@
 */
 
 public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
-    public Gee.HashMap<string, string> data;
+    public Gee.HashMap<string, string> data { get; set; }
+    public Gtk.Label title;
+    public Gdk.RGBA color;
 
     public Gtk.MenuItem connect_button;
     public Gtk.Spinner spinner;
@@ -30,7 +32,10 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
     public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
 
     public LibraryItem (Gee.HashMap<string, string> data) {
-        this.data = data;
+        Object (
+            data: data
+        );
+
         get_style_context ().add_class ("library-box");
         expand = true;
 
@@ -43,7 +48,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
         color_box.set_size_request (12, 12);
         color_box.margin = 10;
 
-        var color = Gdk.RGBA ();
+        color = Gdk.RGBA ();
         color.parse (data["color"]);
         try
         {
@@ -56,7 +61,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
             debug ("Internal error loading session chooser style: %s", e.message);
         }
 
-        var title = new Gtk.Label (data["title"]);
+        title = new Gtk.Label (data["title"]);
         title.get_style_context ().add_class ("text-bold");
         title.halign = Gtk.Align.START;
         title.margin_end = 10;

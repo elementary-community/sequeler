@@ -34,8 +34,10 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
     }
 
     public void add_connection (Gee.HashMap<string, string> data) {
+        var current_connections = saved_connections;
+
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (saved_connections);
+        existing_connections.add_all_array (current_connections);
 
         existing_connections.insert (0, stringify_data (data));
         saved_connections = existing_connections.to_array ();
@@ -43,18 +45,25 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
     }
 
     public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {  
-        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (saved_connections);
+        var current_connections = saved_connections;
 
-        existing_connections.remove (old_data);
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (current_connections);
+
+        if (old_data in current_connections) {
+            existing_connections.remove (old_data);
+        }
+
         existing_connections.insert (0, stringify_data (new_data));
 
         saved_connections = existing_connections.to_array ();
     }
 
     public void delete_connection (Gee.HashMap<string, string> data) {
+        var current_connections = saved_connections;
+
         Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (saved_connections);
+        existing_connections.add_all_array (current_connections);
 
         foreach (var conn in saved_connections) {
             var check = arraify_data (conn);
@@ -72,7 +81,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
         tot_connections = 0;
     }
 
-    public static string stringify_data (Gee.HashMap<string, string> data) {
+    public string stringify_data (Gee.HashMap<string, string> data) {
         string result = "";
 
         foreach (var entry in data.entries) {
@@ -81,10 +90,9 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
         }
 
         return result;
-
     }
 
-    public static Gee.HashMap<string, string> arraify_data (string connection) {
+    public Gee.HashMap<string, string> arraify_data (string connection) {
         var array = new Gee.HashMap<string, string> ();
         var data = connection.split ("\n");
 
@@ -100,4 +108,33 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 
         return array;
     }
+
+    //  public Gee.HashMap<string, string> arraify_data_again (string connection) {
+    //      var array = new Gee.HashMap<string, string> ();
+    //      var data = connection.split ("\n");
+
+    //      foreach (var d in data) {
+    //          var d2 = d.split ("=", 2);
+
+    //          if (d2[0] == null) {
+    //              continue;
+    //          }
+
+    //          array.set (d2[0], d2[1]);
+    //      }
+
+    //      return array;
+    //  }
+
+    //  public string stringify_data_again (Gee.HashMap<string, string> data) {
+    //      string result = "";
+
+    //      foreach (var entry in data.entries) {
+    //          string values = "%s=%s\n".printf (entry.key, entry.value);
+    //          result = result + values;
+    //      }
+
+    //      return result;
+
+    //  }
 }

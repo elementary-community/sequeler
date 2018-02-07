@@ -73,7 +73,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         scroll.add (item_box);
 
         foreach (var conn in settings.saved_connections) {
-            add_item (Sequeler.Services.Settings.arraify_data (conn));
+            add_item (settings.arraify_data (conn));
         }
 
         if (settings.saved_connections.length > 0) {
@@ -162,9 +162,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
     public void reload_library () {
         item_box.forall ((item) => item_box.remove (item));
         foreach (var new_conn in settings.saved_connections) {
-            add_item (Sequeler.Services.Settings.arraify_data (new_conn));
+            var array = settings.arraify_data (new_conn);
+            add_item (array);
         }
-        
         item_box.show_all ();
 
         if (settings.saved_connections.length > 0) {
@@ -174,24 +174,19 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         }
     }
 
-    //  public void check_add_item (Gee.HashMap<string, string> data) {
-    //      foreach (var conn in settings.saved_connections) {
-    //          var check = Sequeler.Services.Settings.arraify_data (conn);
-    //          if (check["id"] == data["id"]) {
-    //              settings.edit_connection (data, conn);
-    //              item_box.forall ((item) => item_box.remove (item));
-    //              foreach (var new_conn in settings.saved_connections) {
-    //                  add_item (Sequeler.Services.Settings.arraify_data (new_conn));
-    //              }
-    //              return;
-    //          }
-    //      }
-    //      settings.add_connection (data);
+    public void check_add_item (Gee.HashMap<string, string> data) {
+        foreach (var conn in settings.saved_connections) {
+            var check = settings.arraify_data (conn);
+            if (check["id"] == data["id"]) {
+                settings.edit_connection (data, conn);
+                reload_library ();
+                return;
+            }
+        }
 
-    //      add_item (data);
+        settings.add_connection (data);
+        add_item (data);
 
-    //      if (settings.saved_connections.length > 0) {
-    //          delete_all.sensitive = true;
-    //      }
-    //  }
+        reload_library ();
+    }
 }

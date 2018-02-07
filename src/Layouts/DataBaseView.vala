@@ -19,6 +19,6 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Layouts.DataBaseView : Object {
+public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
     
 }

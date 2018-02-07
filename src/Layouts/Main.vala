@@ -42,11 +42,15 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 
         sidebar_stack = new Gtk.Stack ();
         library = new Sequeler.Layouts.Library (window);
+        database_schema = new Sequeler.Layouts.DataBaseSchema ();
         sidebar_stack.add_named (library, "library");
+        sidebar_stack.add_named (database_schema, "database_schema");
 
         main_stack = new Gtk.Stack ();
         welcome = new Sequeler.Layouts.Welcome (window);
+        database_view = new Sequeler.Layouts.DataBaseView ();
         main_stack.add_named (welcome, "welcome");
+        main_stack.add_named (database_view, "database_view");
 
         build_sidebar ();
         build_main ();
@@ -58,5 +62,10 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 
     public void build_main () {
 		pack2 (main_stack, true, false);
+    }
+
+    public void connection_opened (Sequeler.Services.ConnectionManager connection) {
+        sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
+        main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.OVER_LEFT_RIGHT);
     }
 }

@@ -262,15 +262,18 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         }
 
         if (update_data["type"] == "SQLite" && update_data["file_path"] == null) {
-            var update_file_path = "file:/" + update_data["host"] + "/" + update_data["name"] + ".db";
+            var update_file_path = update_data["host"] + "/" + update_data["name"] + ".db";
             warning (update_file_path);
+
             try {
-                db_file_entry.set_uri (update_file_path);
-                db_file_entry.set_file (GLib.File.new_for_uri (update_file_path));
-                db_file_entry.set_filename (update_data["name"] + ".db");
+                db_file_entry.set_file (File.new_for_uri (update_file_path));
             } catch (Error e) {
                 write_response (e.message);
             }
+
+            db_file_entry.set_uri (update_file_path);
+            db_file_entry.set_filename (update_data["name"] + ".db");
+            db_file_entry.select_filename (update_data["name"] + ".db");
         }
 
         if (update_data["port"] != null) {
@@ -333,7 +336,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case 1:
-                test_connection ();
+                test_connection.begin ();
                 break;
             case 2:
                 save_connection ();
@@ -342,7 +345,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 destroy ();
                 break;
             case 4:
-                init_connection ();
+                init_connection.begin ();
                 break;
         }
     }
@@ -370,29 +373,62 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         yield;
     }
 
-    private async void save_connection () throws ThreadError {
+    private void save_connection () {
+        var data = package_data ();
+
         toggle_spinner (true);
         write_response (_("Saving Connection..."));
 
-        SourceFunc callback = save_connection.callback;
+        window.main.library.check_add_item (data);
 
-        new Thread <void*> (null, () => {
-            try {
-                settings.add_connection (package_data ());
-                window.main.library.reload_library ();
+        toggle_spinner (false);
+        write_response (_("Connection Saved!"));
 
-                write_response (_("Connection Saved!"));
-            }
-            catch (Error e) {
-                write_response (e.message);
-            }
-            Idle.add ((owned) callback);
-            toggle_spinner (false);
-            return null;
-        });
+        //  var loop = new MainLoop ();
+        //  save_connection.begin ((obj, res) => {
+        //      try {
+        //          Gee.HashMap<string, string> result = save_connection.end (res);
 
-        yield;
+        //          if (result["status"] == "true") {
+        //              write_response (result["msg"]);
+        //          } else {
+        //              write_response (result["msg"]);
+        //          }
+
+        //          toggle_spinner (false);
+        //      } catch (ThreadError e) {
+        //          write_response (e.message);
+                
+        //          toggle_spinner (false);
+        //      }
+        //      loop.quit ();
+        //  });
+        //  loop.run();
     }
+
+    //  private async Gee.HashMap<string, string> save_connection () throws ThreadError {
+    //      var output = new Gee.HashMap<string, string> ();
+    //      output["status"] = "false";
+
+    //      SourceFunc callback = save_connection.callback;
+    //      ThreadFunc<void*> run = () => {
+    //          var result = false;
+    //          var msg = "";
+    //          window.main.library.check_add_item (package_data ());
+    //          msg = _("Connection Saved!");
+    //          result = true;
+
+    //          output["status"] = result.to_string ();
+    //          output["msg"] = msg;
+    //          Idle.add((owned) callback);
+    //          return null;
+    //      };
+    //      Thread.create<void*>(run, false);
+
+    //      yield;
+
+    //      return output;
+    //  }
 
     private async void init_connection () throws ThreadError {
         toggle_spinner (true);
@@ -403,12 +439,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         new Thread <void*> (null, () => {
             try {
-                connection.test ();
+                connection.open ();
 
                 if (settings.save_quick) {
-                    settings.add_connection (package_data ());
-                    window.main.library.reload_library ();
+                    //  settings.add_connection (package_data ());
+                    window.main.library.check_add_item (package_data ());
+                    //  window.main.library.reload_library ();
                 }
+
+                //  window.main.connection_opened (connection);
 
                 write_response (_("Successfully Connected!"));
             }
@@ -429,10 +468,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         packaged_data.set ("id", connection_id.text);
         packaged_data.set ("title", title_entry.text);
         packaged_data.set ("color", color_picker.rgba.to_string ());
-        packaged_data.set ("type", db_types [db_type_entry.get_active ()]);
+        packaged_data.set ("type", db_types[db_type_entry.get_active ()]);
         packaged_data.set ("host", db_host_entry.text);
         packaged_data.set ("name", db_name_entry.text);
-        packaged_data.set ("file_path", db_file_entry.get_uri ());
+        packaged_data.set ("file_path", db_file_entry.get_uri () != null ? db_file_entry.get_uri () : "");
         packaged_data.set ("username", db_username_entry.text);
         packaged_data.set ("password", db_password_entry.text);
         packaged_data.set ("port", db_port_entry.text);
