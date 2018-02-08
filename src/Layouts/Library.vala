@@ -84,7 +84,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
             var item = child as Sequeler.Partials.LibraryItem;
             item.spinner.start ();
             item.connect_button.sensitive = false;
-            connect_to (item.data, item.spinner, item.connect_button);
+            //  connect_to (item.data, item.spinner, item.connect_button);
         });
 
         attach (titlebar, 0, 0, 1, 1);
@@ -117,9 +117,8 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         });
 
         item.connect_to.connect ((data, spinner, connect_button) => {
-            spinner.start ();
-            connect_button.sensitive = false;
-            connect_to (data, spinner, connect_button);
+            //  window.data_manager.data = data;
+            //  connect_to (data, spinner, connect_button);
         });
     }
 

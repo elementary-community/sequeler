@@ -75,6 +75,7 @@ public class Sequeler.Services.ActionManager : Object {
         window.headerbar.toggle_logout ();
         window.headerbar.title = APP_NAME;
         window.headerbar.subtitle = null;
+        window.main.connection_closed ();
     }
 
     private void action_preferences () {
@@ -95,6 +96,10 @@ public class Sequeler.Services.ActionManager : Object {
     }
 
     private void action_new_connection () {
+        if (window.main.connection != null) {
+            return;
+        }
+
         window.data_manager.data = null;
 
         if (window.connection_dialog == null) {

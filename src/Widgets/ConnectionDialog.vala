@@ -263,17 +263,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         if (update_data["type"] == "SQLite" && update_data["file_path"] == null) {
             var update_file_path = update_data["host"] + "/" + update_data["name"] + ".db";
-            warning (update_file_path);
 
             try {
-                db_file_entry.set_file (File.new_for_uri (update_file_path));
+                db_file_entry.set_file (File.new_for_path (update_file_path));
             } catch (Error e) {
                 write_response (e.message);
             }
-
-            db_file_entry.set_uri (update_file_path);
-            db_file_entry.set_filename (update_data["name"] + ".db");
-            db_file_entry.select_filename (update_data["name"] + ".db");
         }
 
         if (update_data["port"] != null) {
@@ -345,7 +340,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 destroy ();
                 break;
             case 4:
-                init_connection.begin ();
+                init_connection_begin ();
                 break;
         }
     }
@@ -385,36 +380,71 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         write_response (_("Connection Saved!"));
     }
 
-    private async void init_connection () throws ThreadError {
-        toggle_spinner (true);
-        write_response (_("Connection..."));
+    private void init_connection_begin () {
+        var data = package_data ();
 
-        var connection = new Sequeler.Services.ConnectionManager (package_data ());
+        toggle_spinner (true);
+        write_response (_("Connecting..."));
+
+        var connection = new Sequeler.Services.ConnectionManager (data);
+
+        var loop = new MainLoop ();
+        init_connection.begin (connection, (obj, res) => {
+            try {
+                Gee.HashMap<string, string> result = init_connection.end (res);
+                if (result["status"] == "true") {
+                    loop.quit ();
+                    destroy ();
+
+                    if (settings.save_quick) {
+                        window.main.library.check_add_item (data);
+                    }
+
+                    window.main.connection_opened (connection);
+                } else {
+                    write_response (result["msg"]);
+                    toggle_spinner (false);
+                }
+            } catch (ThreadError e) {
+                write_response (e.message);
+                toggle_spinner (false);
+            }
+            loop.quit ();
+        });
+
+        loop.run();
+    }
+
+    private async Gee.HashMap<string, string> init_connection (Sequeler.Services.ConnectionManager connection) throws ThreadError {
+        var output = new Gee.HashMap<string, string> ();
+        output["status"] = "false";
         SourceFunc callback = init_connection.callback;
 
         new Thread <void*> (null, () => {
+            bool result = false;
+            string msg = "";
+
             try {
                 connection.open ();
-
-                if (settings.save_quick) {
-                    //  settings.add_connection (package_data ());
-                    window.main.library.check_add_item (package_data ());
-                    //  window.main.library.reload_library ();
+                if (connection.connection.is_opened ()) {
+                    result = true;
                 }
-
-                //  window.main.connection_opened (connection);
-
-                write_response (_("Successfully Connected!"));
             }
             catch (Error e) {
-                write_response (e.message);
+                result = false;
+                msg = e.message;
             }
-            Idle.add ((owned) callback);
-            toggle_spinner (false);
+
+            Idle.add((owned) callback);
+            output["status"] = result.to_string ();
+            output["msg"] = msg;
+
             return null;
         });
 
         yield;
+
+        return output;
     }
 
     private Gee.HashMap<string, string> package_data () {

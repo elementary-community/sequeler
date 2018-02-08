@@ -21,6 +21,12 @@
 
 public class Sequeler.Layouts.Main : Gtk.Paned {
     public weak Sequeler.Window window { get; construct; }
+    private Sequeler.Services.ConnectionManager? _connection { get; set; default = null; }
+
+    public Sequeler.Services.ConnectionManager? connection {
+        get { return _connection; }
+        set { _connection = value; }
+    }
 
     public Sequeler.Layouts.Library library;
     public Sequeler.Layouts.DataBaseSchema database_schema;
@@ -65,7 +71,16 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
     }
 
     public void connection_opened (Sequeler.Services.ConnectionManager connection) {
+        window.headerbar.toggle_logout ();
+        this.connection = connection;
         sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
         main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.OVER_LEFT_RIGHT);
+    }
+
+    public void connection_closed () {
+        _connection.close ();
+        this.connection = null;
+        sidebar_stack.set_visible_child_full ("library", Gtk.StackTransitionType.CROSSFADE);
+        main_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.OVER_LEFT_RIGHT);
     }
 }

@@ -28,7 +28,7 @@ public class Sequeler.Services.ConnectionManager : Object {
         set { _db_type = value; }
     }
 
-    private Gda.Connection connection;
+    public Gda.Connection connection;
 
     public ConnectionManager (Gee.HashMap<string, string> data) {
         Object (
