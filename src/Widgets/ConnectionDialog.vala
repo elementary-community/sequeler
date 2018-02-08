@@ -383,52 +383,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         toggle_spinner (false);
         write_response (_("Connection Saved!"));
-
-        //  var loop = new MainLoop ();
-        //  save_connection.begin ((obj, res) => {
-        //      try {
-        //          Gee.HashMap<string, string> result = save_connection.end (res);
-
-        //          if (result["status"] == "true") {
-        //              write_response (result["msg"]);
-        //          } else {
-        //              write_response (result["msg"]);
-        //          }
-
-        //          toggle_spinner (false);
-        //      } catch (ThreadError e) {
-        //          write_response (e.message);
-                
-        //          toggle_spinner (false);
-        //      }
-        //      loop.quit ();
-        //  });
-        //  loop.run();
     }
-
-    //  private async Gee.HashMap<string, string> save_connection () throws ThreadError {
-    //      var output = new Gee.HashMap<string, string> ();
-    //      output["status"] = "false";
-
-    //      SourceFunc callback = save_connection.callback;
-    //      ThreadFunc<void*> run = () => {
-    //          var result = false;
-    //          var msg = "";
-    //          window.main.library.check_add_item (package_data ());
-    //          msg = _("Connection Saved!");
-    //          result = true;
-
-    //          output["status"] = result.to_string ();
-    //          output["msg"] = msg;
-    //          Idle.add((owned) callback);
-    //          return null;
-    //      };
-    //      Thread.create<void*>(run, false);
-
-    //      yield;
-
-    //      return output;
-    //  }
 
     private async void init_connection () throws ThreadError {
         toggle_spinner (true);

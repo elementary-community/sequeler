@@ -48,10 +48,10 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
         toggle_logout ();
 
-        var new_window = new HeaderBarButton ("window-new", _("New Window"));
+        var new_window = new Sequeler.Partials.HeaderBarButton ("window-new", _("New Window"));
         new_window.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 
-        var new_connection = new HeaderBarButton ("bookmark-new", _("New Connection"));
+        var new_connection = new Sequeler.Partials.HeaderBarButton ("bookmark-new", _("New Connection"));
         new_connection.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
 
         var menu = new Gtk.Menu ();
@@ -117,25 +117,5 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logged_out = !logged_out;
         logout_button.visible = logged_out;
         logout_button.no_show_all = !logged_out;
-    }
-
-    protected class HeaderBarButton : Gtk.Button {
-        public HeaderBarButton (string icon_name, string tooltip) {
-            can_focus = false;
-
-            Gtk.Image image;
-
-            if (icon_name.contains ("/")) {
-                image = new Gtk.Image.from_resource (icon_name);
-            } else {
-                image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
-            }
-
-            image.margin = 3;
-
-            get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-            set_tooltip_text (tooltip);
-            this.add (image);
-        }
     }
 }

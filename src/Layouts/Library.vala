@@ -24,7 +24,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
     public Gtk.FlowBox item_box;
     public Gtk.ScrolledWindow scroll;
-    public Gtk.Button delete_all;
+    public Sequeler.Partials.HeaderBarButton delete_all;
 
     public signal void edit_dialog (Gee.HashMap data);
     public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
@@ -44,19 +44,19 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         var toolbar = new Gtk.Grid ();
         toolbar.get_style_context ().add_class ("library-toolbar");
 
-        var delete_image = new Gtk.Image.from_icon_name ("user-trash-symbolic", Gtk.IconSize.BUTTON);
-        delete_all = new Gtk.Button.with_label (_("Delete All"));
-        delete_all.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-        delete_all.always_show_image = true;
-        delete_all.image = delete_image;
+        delete_all = new Sequeler.Partials.HeaderBarButton ("user-trash-symbolic", _("Delete All"));
+        delete_all.halign = Gtk.Align.END;
+        delete_all.hexpand = true;
         delete_all.clicked.connect (() => {
             confirm_delete_all ();
         });
-        delete_all.can_focus = false;
-        delete_all.margin = 6;
-        delete_all.sensitive = false;
 
-        toolbar.add (delete_all);
+        var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
+        reload_btn.clicked.connect (reload_library);
+
+        toolbar.attach (reload_btn, 0, 0, 1, 1);
+        toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
+        toolbar.attach (delete_all, 2, 0, 1, 1);
 
         scroll = new Gtk.ScrolledWindow (null, null);
         scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
