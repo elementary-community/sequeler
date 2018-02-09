@@ -218,7 +218,7 @@ namespace Sequeler {
 
             spinner = new Gtk.Spinner ();
 
-            loading_msg = new Gtk.Label (_("Running Query..."));
+            loading_msg = new Gtk.Label (_("Running Query\u2026"));
             loading_msg.visible = false;
             loading_msg.no_show_all = true;
 

@@ -118,7 +118,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         db = new DataBase ();
 
         spinner.start ();
-        response_msg.label = "Testing Connection...";
+        response_msg.label = "Testing Connection\u2026";
 
         var data = create_data ();
         data.set ("host", Gda.rfc1738_encode (data["host"]));
@@ -151,7 +151,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         }
         
         spinner.start ();
-        response_msg.label = "Connecting...";
+        response_msg.label = "Connecting\u2026";
 
         connect_to (create_data (), spinner, this, response_msg);
     }

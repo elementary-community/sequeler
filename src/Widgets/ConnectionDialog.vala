@@ -193,7 +193,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         form_grid.attach (db_port_entry, 1, 6, 1, 1);
 
         db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
-        db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File..."), Gtk.FileChooserAction.OPEN);
+        db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
         var filter = new Gtk.FileFilter ();
         filter.add_pattern ("*.db");
         db_file_entry.add_filter (filter);
@@ -347,7 +347,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
     private async void test_connection () throws ThreadError {
         toggle_spinner (true);
-        write_response (_("Testing Connection..."));
+        write_response (_("Testing Connection\u2026"));
 
         var connection = new Sequeler.Services.ConnectionManager (package_data ());
         SourceFunc callback = test_connection.callback;
@@ -372,7 +372,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var data = package_data ();
 
         toggle_spinner (true);
-        write_response (_("Saving Connection..."));
+        write_response (_("Saving Connection\u2026"));
 
         window.main.library.check_add_item (data);
 
@@ -384,7 +384,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var data = package_data ();
 
         toggle_spinner (true);
-        write_response (_("Connecting..."));
+        write_response (_("Connecting\u2026"));
 
         var connection = new Sequeler.Services.ConnectionManager (data);
 
