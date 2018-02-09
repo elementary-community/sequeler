@@ -23,6 +23,10 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
     public weak Sequeler.Window window { get; construct; }
 
     private Gtk.Button logout_button;
+    private Sequeler.Partials.HeaderBarButton new_connection;
+    private Sequeler.Partials.HeaderBarButton open_terminal;
+
+    private const string TERMINAL = "open-pantheon-terminal-here.desktop";
 
     public bool logged_out { get; set; }
 
@@ -36,6 +40,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         set_show_close_button (true);
 
         build_ui ();
+        toggle_logout ();
     }
 
     private void build_ui () {
@@ -46,13 +51,22 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logout_button.set_image (eject_image);
         logout_button.can_focus = false;
         logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
-        toggle_logout ();
 
         var new_window = new Sequeler.Partials.HeaderBarButton ("window-new", _("New Window"));
         new_window.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 
-        var new_connection = new Sequeler.Partials.HeaderBarButton ("bookmark-new", _("New Connection"));
+        new_connection = new Sequeler.Partials.HeaderBarButton ("bookmark-new", _("New Connection"));
         new_connection.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
+
+        open_terminal = new Sequeler.Partials.HeaderBarButton ("utilities-terminal", _("Connect via Terminal"));
+        open_terminal.clicked.connect (() => {
+            try {
+                AppInfo ai = GLib.AppInfo.create_from_commandline ("ssh %s".printf ("Title Test"), "ssh",GLib.AppInfoCreateFlags.NEEDS_TERMINAL);
+                ai.launch (null, null);
+            } catch (Error e) {
+                stdout.printf ("Error: %s\n", e.message);
+            }
+        });
 
         var menu = new Gtk.Menu ();
 
@@ -109,6 +123,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         pack_start (logout_button);
         pack_end (open_menu);
         pack_end (new_connection);
+        pack_end (open_terminal);
         pack_end (new Gtk.Separator (Gtk.Orientation.VERTICAL));
         pack_end (new_window);
     }
@@ -117,5 +132,12 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logged_out = !logged_out;
         logout_button.visible = logged_out;
         logout_button.no_show_all = !logged_out;
+
+        new_connection.visible = !logged_out;
+        new_connection.no_show_all = logged_out;
+
+        open_terminal.visible = logged_out;
+        open_terminal.no_show_all = !logged_out;
+        open_terminal.show_all ();
     }
 }
