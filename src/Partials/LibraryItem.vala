@@ -20,114 +20,114 @@
 */
 
 public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
-    public Gee.HashMap<string, string> data { get; set; }
-    public Gtk.Label title;
-    public Gdk.RGBA color;
+	public Gee.HashMap<string, string> data { get; set; }
+	public Gtk.Label title;
+	public Gdk.RGBA color;
 
-    public Gtk.MenuItem connect_button;
-    public Gtk.Spinner spinner;
+	public Gtk.MenuItem connect_button;
+	public Gtk.Spinner spinner;
 
-    public signal void edit_dialog (Gee.HashMap data);
-    public signal void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap data);
-    public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
+	public signal void edit_dialog (Gee.HashMap data);
+	public signal void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap data);
+	public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
 
-    public LibraryItem (Gee.HashMap<string, string> data) {
-        Object (
-            data: data
-        );
+	public LibraryItem (Gee.HashMap<string, string> data) {
+		Object (
+			data: data
+		);
 
-        get_style_context ().add_class ("library-box");
-        expand = true;
+		get_style_context ().add_class ("library-box");
+		expand = true;
 
-        var box = new Gtk.Grid ();
-        box.get_style_context ().add_class ("library-inner-box");
-        box.margin = 4;
+		var box = new Gtk.Grid ();
+		box.get_style_context ().add_class ("library-inner-box");
+		box.margin = 4;
 
-        var color_box = new Gtk.Grid ();
-        color_box.get_style_context ().add_class ("library-colorbox");
-        color_box.set_size_request (12, 12);
-        color_box.margin = 10;
+		var color_box = new Gtk.Grid ();
+		color_box.get_style_context ().add_class ("library-colorbox");
+		color_box.set_size_request (12, 12);
+		color_box.margin = 10;
 
-        color = Gdk.RGBA ();
-        color.parse (data["color"]);
-        try
-        {
-            var style = new Gtk.CssProvider ();
-            style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
-            color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        }
-        catch (Error e)
-        {
-            debug ("Internal error loading session chooser style: %s", e.message);
-        }
+		color = Gdk.RGBA ();
+		color.parse (data["color"]);
+		try
+		{
+			var style = new Gtk.CssProvider ();
+			style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
+			color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+		}
+		catch (Error e)
+		{
+			debug ("Internal error loading session chooser style: %s", e.message);
+		}
 
-        title = new Gtk.Label (data["title"]);
-        title.get_style_context ().add_class ("text-bold");
-        title.halign = Gtk.Align.START;
-        title.margin_end = 10;
-        title.set_line_wrap (true);
-        title.hexpand = true;
+		title = new Gtk.Label (data["title"]);
+		title.get_style_context ().add_class ("text-bold");
+		title.halign = Gtk.Align.START;
+		title.margin_end = 10;
+		title.set_line_wrap (true);
+		title.hexpand = true;
 
-        box.attach (color_box, 0, 0, 1, 1);
-        box.attach (title, 1, 0, 1, 1);
+		box.attach (color_box, 0, 0, 1, 1);
+		box.attach (title, 1, 0, 1, 1);
 
-        var menu = new Gtk.Menu ();
-        
-        connect_button = new Gtk.MenuItem.with_label (_("Connect"));
-        menu.add (connect_button);
+		var menu = new Gtk.Menu ();
+		
+		connect_button = new Gtk.MenuItem.with_label (_("Connect"));
+		menu.add (connect_button);
 
-        var edit_button = new Gtk.MenuItem.with_label (_("Edit Connection"));
-        menu.add (edit_button);
+		var edit_button = new Gtk.MenuItem.with_label (_("Edit Connection"));
+		menu.add (edit_button);
 
-        menu.add (new Gtk.SeparatorMenuItem ());
+		menu.add (new Gtk.SeparatorMenuItem ());
 
-        var delete_button = new Gtk.MenuItem.with_label (_("Delete Connection"));
-        menu.add (delete_button);
+		var delete_button = new Gtk.MenuItem.with_label (_("Delete Connection"));
+		menu.add (delete_button);
 
-        menu.show_all  ();
+		menu.show_all  ();
 
-        var open_menu = new Gtk.MenuButton ();
-        open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
-        open_menu.get_style_context ().add_class ("library-btn");
-        open_menu.set_tooltip_text ("Options");
+		var open_menu = new Gtk.MenuButton ();
+		open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+		open_menu.get_style_context ().add_class ("library-btn");
+		open_menu.set_tooltip_text ("Options");
 
-        open_menu.popup = menu;
-        open_menu.relief = Gtk.ReliefStyle.NONE;
-        open_menu.valign = Gtk.Align.CENTER;
+		open_menu.popup = menu;
+		open_menu.relief = Gtk.ReliefStyle.NONE;
+		open_menu.valign = Gtk.Align.CENTER;
 
-        spinner = new Gtk.Spinner ();
+		spinner = new Gtk.Spinner ();
 
-        box.attach (spinner, 2, 0, 1, 1);
-        box.attach (open_menu, 3, 0, 1, 1);
+		box.attach (spinner, 2, 0, 1, 1);
+		box.attach (open_menu, 3, 0, 1, 1);
 
-        var event_box = new Gtk.EventBox ();
-        event_box.add (box);
-        this.add (event_box);
+		var event_box = new Gtk.EventBox ();
+		event_box.add (box);
+		this.add (event_box);
 
-        delete_button.activate.connect (() => {
-            confirm_delete (this, data);
-        });
+		delete_button.activate.connect (() => {
+			confirm_delete (this, data);
+		});
 
-        edit_button.activate.connect (() => {
-            edit_dialog (data);
-        });
+		edit_button.activate.connect (() => {
+			edit_dialog (data);
+		});
 
-        connect_button.activate.connect (() => {
-            spinner.start ();
-            connect_button.sensitive = false;
-            connect_to (data, spinner, connect_button);
-        });
+		connect_button.activate.connect (() => {
+			spinner.start ();
+			connect_button.sensitive = false;
+			connect_to (data, spinner, connect_button);
+		});
 
-        event_box.enter_notify_event.connect ((event) => {
-            box.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
-            return false;
-        });
+		event_box.enter_notify_event.connect ((event) => {
+			box.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
+			return false;
+		});
 
-        event_box.leave_notify_event.connect ((event) => {
-            if (event.detail != Gdk.NotifyType.INFERIOR) {
-                box.set_state_flags (Gtk.StateFlags.NORMAL, true);
-            }
-            return false;
-        });
-    }
+		event_box.leave_notify_event.connect ((event) => {
+			if (event.detail != Gdk.NotifyType.INFERIOR) {
+				box.set_state_flags (Gtk.StateFlags.NORMAL, true);
+			}
+			return false;
+		});
+	}
 }

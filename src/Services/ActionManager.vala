@@ -76,6 +76,7 @@ public class Sequeler.Services.ActionManager : Object {
         window.headerbar.title = APP_NAME;
         window.headerbar.subtitle = null;
         window.main.connection_closed ();
+        window.data_manager.data = null;
     }
 
     private void action_preferences () {

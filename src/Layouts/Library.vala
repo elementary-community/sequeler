@@ -20,172 +20,218 @@
 */
 
 public class Sequeler.Layouts.Library : Gtk.Grid {
-    public weak Sequeler.Window window { get; construct; }
+	public weak Sequeler.Window window { get; construct; }
 
-    public Gtk.FlowBox item_box;
-    public Gtk.ScrolledWindow scroll;
-    public Sequeler.Partials.HeaderBarButton delete_all;
+	public Gtk.FlowBox item_box;
+	public Gtk.ScrolledWindow scroll;
+	public Sequeler.Partials.HeaderBarButton delete_all;
 
-    public signal void edit_dialog (Gee.HashMap data);
-    public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
+	public signal void edit_dialog (Gee.HashMap data);
 
-    public Library (Sequeler.Window main_window) {
-        Object(
-            orientation: Gtk.Orientation.VERTICAL,
-            window: main_window,
-            width_request: 240,
-            column_homogeneous: true
-        );
-    }
+	public Library (Sequeler.Window main_window) {
+		Object(
+			orientation: Gtk.Orientation.VERTICAL,
+			window: main_window,
+			width_request: 240,
+			column_homogeneous: true
+		);
+	}
 
-    construct {
-        var titlebar = new Sequeler.Partials.TitleBar (_("SAVED CONNECTIONS"));
+	construct {
+		var titlebar = new Sequeler.Partials.TitleBar (_("SAVED CONNECTIONS"));
 
-        var toolbar = new Gtk.Grid ();
-        toolbar.get_style_context ().add_class ("library-toolbar");
+		var toolbar = new Gtk.Grid ();
+		toolbar.get_style_context ().add_class ("library-toolbar");
 
-        delete_all = new Sequeler.Partials.HeaderBarButton ("user-trash-symbolic", _("Delete All"));
-        delete_all.halign = Gtk.Align.END;
-        delete_all.hexpand = true;
-        delete_all.clicked.connect (() => {
-            confirm_delete_all ();
-        });
+		delete_all = new Sequeler.Partials.HeaderBarButton ("user-trash-symbolic", _("Delete All"));
+		delete_all.halign = Gtk.Align.END;
+		delete_all.hexpand = true;
+		delete_all.clicked.connect (() => {
+			confirm_delete_all ();
+		});
 
-        var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
-        reload_btn.clicked.connect (reload_library);
+		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
+		reload_btn.clicked.connect (reload_library);
 
-        toolbar.attach (reload_btn, 0, 0, 1, 1);
-        toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
-        toolbar.attach (delete_all, 2, 0, 1, 1);
+		toolbar.attach (reload_btn, 0, 0, 1, 1);
+		toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
+		toolbar.attach (delete_all, 2, 0, 1, 1);
 
-        scroll = new Gtk.ScrolledWindow (null, null);
-        scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-        scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll = new Gtk.ScrolledWindow (null, null);
+		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 
-        item_box = new Gtk.FlowBox ();
-        item_box.activate_on_single_click = false;
-        item_box.valign = Gtk.Align.START;
-        item_box.min_children_per_line = 1;
-        item_box.max_children_per_line = 1;
-        item_box.margin = 6;
-        item_box.expand = false;
+		item_box = new Gtk.FlowBox ();
+		item_box.activate_on_single_click = false;
+		item_box.valign = Gtk.Align.START;
+		item_box.min_children_per_line = 1;
+		item_box.max_children_per_line = 1;
+		item_box.margin = 6;
+		item_box.expand = false;
 
-        scroll.add (item_box);
+		scroll.add (item_box);
 
-        foreach (var conn in settings.saved_connections) {
-            add_item (settings.arraify_data (conn));
-        }
+		foreach (var conn in settings.saved_connections) {
+			add_item (settings.arraify_data (conn));
+		}
 
-        if (settings.saved_connections.length > 0) {
-            delete_all.sensitive = true;
-        }
+		if (settings.saved_connections.length > 0) {
+			delete_all.sensitive = true;
+		}
 
-        item_box.child_activated.connect ((child) => {
-            var item = child as Sequeler.Partials.LibraryItem;
-            item.spinner.start ();
-            item.connect_button.sensitive = false;
-            //  connect_to (item.data, item.spinner, item.connect_button);
-        });
+		item_box.child_activated.connect ((child) => {
+			var item = child as Sequeler.Partials.LibraryItem;
+			item.spinner.start ();
+			item.connect_button.sensitive = false;
+			window.data_manager.data = item.data;
+			init_connection_begin (item.data, item.spinner, item.connect_button);
+		});
 
-        attach (titlebar, 0, 0, 1, 1);
-        scroll.expand = true;
-        attach (scroll, 0, 1, 1, 2);
-        attach (toolbar, 0, 3, 1, 1);
-    }
+		attach (titlebar, 0, 0, 1, 1);
+		scroll.expand = true;
+		attach (scroll, 0, 1, 1, 2);
+		attach (toolbar, 0, 3, 1, 1);
+	}
 
-    public void add_item (Gee.HashMap<string, string> data) {
-        var item = new Sequeler.Partials.LibraryItem (data);
-        item_box.add (item);
+	public void add_item (Gee.HashMap<string, string> data) {
+		var item = new Sequeler.Partials.LibraryItem (data);
+		item_box.add (item);
 
-        item.confirm_delete.connect ((item, data) => {
-            confirm_delete (item, data);
-        });
+		item.confirm_delete.connect ((item, data) => {
+			confirm_delete (item, data);
+		});
 
-        item.edit_dialog.connect ((data) => {
-            window.data_manager.data = data;
+		item.edit_dialog.connect ((data) => {
+			window.data_manager.data = data;
 
-            if (window.connection_dialog == null) {
-                window.connection_dialog = new Sequeler.Widgets.ConnectionDialog (window);
-                window.connection_dialog.show_all ();
+			if (window.connection_dialog == null) {
+				window.connection_dialog = new Sequeler.Widgets.ConnectionDialog (window);
+				window.connection_dialog.show_all ();
 
-                window.connection_dialog.destroy.connect (() => {
-                    window.connection_dialog = null;
-                });
-            }
+				window.connection_dialog.destroy.connect (() => {
+					window.connection_dialog = null;
+				});
+			}
 
-            window.connection_dialog.present ();
-        });
+			window.connection_dialog.present ();
+		});
 
-        item.connect_to.connect ((data, spinner, connect_button) => {
-            //  window.data_manager.data = data;
-            //  connect_to (data, spinner, connect_button);
-        });
-    }
+		item.connect_to.connect ((data, spinner, connect_button) => {
+			window.data_manager.data = data;
+			init_connection_begin (data, spinner, connect_button);
+		});
+	}
 
-    public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
-        var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("By deleting this connection you won't be able to recover this data."), "dialog-warning", Gtk.ButtonsType.CANCEL);
-        message_dialog.transient_for = window;
-        
-        var suggested_button = new Gtk.Button.with_label (_("Yes, Delete!"));
-        suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
-        message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+	public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
+		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("By deleting this connection you won't be able to recover this data."), "dialog-warning", Gtk.ButtonsType.CANCEL);
+		message_dialog.transient_for = window;
+		
+		var suggested_button = new Gtk.Button.with_label (_("Yes, Delete!"));
+		suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
-        message_dialog.show_all ();
-        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
-            settings.delete_connection (data);
-            item_box.remove (item);
-            reload_library ();
-        }
-        
-        message_dialog.destroy ();
-    }
+		message_dialog.show_all ();
+		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
+			settings.delete_connection (data);
+			item_box.remove (item);
+			reload_library ();
+		}
+		
+		message_dialog.destroy ();
+	}
 
-    public void confirm_delete_all () {
-        var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("All the data will be deleted and you won't be able to recover it."), "dialog-warning", Gtk.ButtonsType.CANCEL);
-        message_dialog.transient_for = window;
-        
-        var suggested_button = new Gtk.Button.with_label (_("Yes, Delete All!"));
-        suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
-        message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+	public void confirm_delete_all () {
+		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("All the data will be deleted and you won't be able to recover it."), "dialog-warning", Gtk.ButtonsType.CANCEL);
+		message_dialog.transient_for = window;
+		
+		var suggested_button = new Gtk.Button.with_label (_("Yes, Delete All!"));
+		suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
-        message_dialog.show_all ();
-        if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
-            settings.clear_connections ();
-            item_box.forall ((item) => item_box.remove (item));
-            reload_library ();
-        }
-        
-        message_dialog.destroy ();
-    }
+		message_dialog.show_all ();
+		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
+			settings.clear_connections ();
+			item_box.forall ((item) => item_box.remove (item));
+			reload_library ();
+		}
+		
+		message_dialog.destroy ();
+	}
 
-    public void reload_library () {
-        item_box.forall ((item) => item_box.remove (item));
-        foreach (var new_conn in settings.saved_connections) {
-            var array = settings.arraify_data (new_conn);
-            add_item (array);
-        }
-        item_box.show_all ();
+	public void reload_library () {
+		item_box.forall ((item) => item_box.remove (item));
+		foreach (var new_conn in settings.saved_connections) {
+			var array = settings.arraify_data (new_conn);
+			add_item (array);
+		}
+		item_box.show_all ();
 
-        if (settings.saved_connections.length > 0) {
-            delete_all.sensitive = true;
-        } else {
-            delete_all.sensitive = false;
-        }
-    }
+		if (settings.saved_connections.length > 0) {
+			delete_all.sensitive = true;
+		} else {
+			delete_all.sensitive = false;
+		}
+	}
 
-    public void check_add_item (Gee.HashMap<string, string> data) {
-        foreach (var conn in settings.saved_connections) {
-            var check = settings.arraify_data (conn);
-            if (check["id"] == data["id"]) {
-                settings.edit_connection (data, conn);
-                reload_library ();
-                return;
-            }
-        }
+	public void check_add_item (Gee.HashMap<string, string> data) {
+		foreach (var conn in settings.saved_connections) {
+			var check = settings.arraify_data (conn);
+			if (check["id"] == data["id"]) {
+				settings.edit_connection (data, conn);
+				reload_library ();
+				return;
+			}
+		}
 
-        settings.add_connection (data);
-        add_item (data);
+		settings.add_connection (data);
+		add_item (data);
 
-        reload_library ();
-    }
+		reload_library ();
+	}
+
+	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.MenuItem button) {
+		var connection = new Sequeler.Services.ConnectionManager (data);
+
+		var loop = new MainLoop ();
+		connection.init_connection.begin (connection, (obj, res) => {
+			try {
+				Gee.HashMap<string, string> result = connection.init_connection.end (res);
+				if (result["status"] == "true") {
+					loop.quit ();
+					spinner.stop ();
+					button.sensitive = true;
+
+					if (settings.save_quick) {
+						window.main.library.check_add_item (data);
+					}
+
+					window.main.connection_opened (connection);
+				} else {
+					connection_warning (result["msg"], data["name"]);
+					spinner.stop ();
+					button.sensitive = true;
+				}
+			} catch (ThreadError e) {
+				connection_warning (e.message, data["name"]);
+				spinner.stop ();
+				button.sensitive = true;
+			}
+			loop.quit ();
+		});
+
+		loop.run();
+	}
+
+	private void connection_warning (string message, string title) {
+		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
+		message_dialog.transient_for = window;
+		
+		var suggested_button = new Gtk.Button.with_label ("Close");
+		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+		message_dialog.show_all ();
+		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
+		
+		message_dialog.destroy ();
+	}
 }

@@ -90,4 +90,36 @@ public class Sequeler.Services.ConnectionManager : Object {
     public void close () {
         connection.close ();
     }
+
+    public async Gee.HashMap<string, string> init_connection (Sequeler.Services.ConnectionManager connection) throws ThreadError {
+        var output = new Gee.HashMap<string, string> ();
+        output["status"] = "false";
+        SourceFunc callback = init_connection.callback;
+
+        new Thread <void*> (null, () => {
+            bool result = false;
+            string msg = "";
+
+            try {
+                connection.open ();
+                if (connection.connection.is_opened ()) {
+                    result = true;
+                }
+            }
+            catch (Error e) {
+                result = false;
+                msg = e.message;
+            }
+
+            Idle.add((owned) callback);
+            output["status"] = result.to_string ();
+            output["msg"] = msg;
+
+            return null;
+        });
+
+        yield;
+
+        return output;
+    }
 }
