@@ -20,14 +20,10 @@
 */
 
 public class Sequeler.Services.DataManager : Object {
-    private Gee.HashMap<string, string>? _data = null;
+	private Gee.HashMap<string, string>? _data = null;
 
-    public Gee.HashMap<string, string>? data {
-        get { return _data; }
-        set { _data = value; }
-    }
-
-    public DataManager (Gee.HashMap? current_data) {
-        this.data = current_data;
-    }
+	public Gee.HashMap<string, string>? data {
+		get { return _data; }
+		set { _data = value; }
+	}
 }

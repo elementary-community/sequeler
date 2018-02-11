@@ -21,14 +21,23 @@
 
 public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     public string port { set; get; default = "5432"; }
+    public string host { set; get; default = "127.0.0.1"; }
 
     public string connection_string (Gee.HashMap<string, string> data) {
         var username = Gda.rfc1738_encode (data["username"]);
         var password = Gda.rfc1738_encode (data["password"]);
         var name = Gda.rfc1738_encode (data["name"]);
-        var host = Gda.rfc1738_encode (data["host"]);
+        host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
         port =  data["port"] != "" ? data["port"] : port;
 
         return "PostgreSQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
+    }
+
+    public string show_schema () {
+        return "SELECT schema_name FROM information_schema.schemata";
+    }
+
+    public string show_table_list (string name) {
+        return "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'information_schema' AND schemaname != 'pg_catalog' ORDER BY tablename DESC";
     }
 }

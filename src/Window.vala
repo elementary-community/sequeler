@@ -46,7 +46,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         main = new Sequeler.Layouts.Main (this);
         headerbar = new Sequeler.Layouts.HeaderBar (this);
         action_manager = new Sequeler.Services.ActionManager (app, this);
-        data_manager = new Sequeler.Services.DataManager (null);
+        data_manager = new Sequeler.Services.DataManager ();
 
         build_ui ();
 

@@ -21,13 +21,17 @@
 
 public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 
-    public string connection_string (Gee.HashMap<string, string> data) {
-        var file_path = data ["file_path"].replace ("file://", "");
-        var last_slash = file_path.last_index_of ("/", 0) + 1;
+	public string connection_string (Gee.HashMap<string, string> data) {
+		var file_path = data ["file_path"].replace ("file://", "");
+		var last_slash = file_path.last_index_of ("/", 0) + 1;
 
-        var dir = Gda.rfc1738_encode (file_path.substring (0, last_slash));
-        var name = Gda.rfc1738_encode (file_path.substring (last_slash, -1));
+		var dir = Gda.rfc1738_encode (file_path.substring (0, last_slash));
+		var name = Gda.rfc1738_encode (file_path.substring (last_slash, -1));
 
-        return "SQLite://DB_DIR=" + dir + ";DB_NAME=" + name;
-    }
+		return "SQLite://DB_DIR=" + dir + ";DB_NAME=" + name;
+	}
+
+	public string show_schema () {
+		return "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
+	}
 }

@@ -20,15 +20,24 @@
 */
 
 public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
-    public string port { set; get; default = "3306"; }
+	public string port { set; get; default = "3306"; }
+	public string host { set; get; default = "127.0.0.1"; }
 
-    public string connection_string (Gee.HashMap<string, string> data) {
-        var username = Gda.rfc1738_encode (data["username"]);
-        var password = Gda.rfc1738_encode (data["password"]);
-        var name = Gda.rfc1738_encode (data["name"]);
-        var host = Gda.rfc1738_encode (data["host"]);
-        port =  data["port"] != "" ? data["port"] : port;
+	public string connection_string (Gee.HashMap<string, string> data) {
+		var username = Gda.rfc1738_encode (data["username"]);
+		var password = Gda.rfc1738_encode (data["password"]);
+		var name = Gda.rfc1738_encode (data["name"]);
+		host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
+		port =  data["port"] != "" ? data["port"] : port;
 
-        return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
-    }
+		return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
+	}
+
+	public string show_schema () {
+		return "SHOW SCHEMAS";
+	}
+
+	public string show_table_list (string name) {
+		return "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + name + "' ORDER BY table_name DESC";
+	}
 }

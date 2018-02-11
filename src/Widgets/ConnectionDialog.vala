@@ -155,7 +155,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		db_host_label = new Sequeler.Partials.LabelForm (_("Host:"));
 		db_host_entry = new Sequeler.Partials.Entry (_("127.0.0.1"), null);
-		db_host_entry.changed.connect (change_sensitivity);
+		// db_host_entry.changed.connect (change_sensitivity);
 
 		form_grid.attach (db_host_label, 0, 2, 1, 1);
 		form_grid.attach (db_host_entry, 1, 2, 1, 1);
@@ -317,8 +317,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	}
 
 	private void change_sensitivity () {
-		if ((db_type_entry.get_active () != 3 && db_name_entry.text != "" && db_host_entry.text != "") 
-			|| (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
+		if ((db_type_entry.get_active () != 3 && db_name_entry.text != "") || (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
 			test_button.sensitive = true;
 			connect_button.sensitive = true;
 			return;
@@ -389,9 +388,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		var connection = new Sequeler.Services.ConnectionManager (data);
 
 		var loop = new MainLoop ();
-		init_connection.begin (connection, (obj, res) => {
+		connection.init_connection.begin (connection, (obj, res) => {
 			try {
-				Gee.HashMap<string, string> result = init_connection.end (res);
+				Gee.HashMap<string, string> result = connection.init_connection.end (res);
 				if (result["status"] == "true") {
 					loop.quit ();
 					destroy ();
@@ -413,38 +412,6 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		});
 
 		loop.run();
-	}
-
-	private async Gee.HashMap<string, string> init_connection (Sequeler.Services.ConnectionManager connection) throws ThreadError {
-		var output = new Gee.HashMap<string, string> ();
-		output["status"] = "false";
-		SourceFunc callback = init_connection.callback;
-
-		new Thread <void*> (null, () => {
-			bool result = false;
-			string msg = "";
-
-			try {
-				connection.open ();
-				if (connection.connection.is_opened ()) {
-					result = true;
-				}
-			}
-			catch (Error e) {
-				result = false;
-				msg = e.message;
-			}
-
-			Idle.add((owned) callback);
-			output["status"] = result.to_string ();
-			output["msg"] = msg;
-
-			return null;
-		});
-
-		yield;
-
-		return output;
 	}
 
 	private Gee.HashMap<string, string> package_data () {
