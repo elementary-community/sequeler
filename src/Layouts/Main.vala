@@ -79,6 +79,8 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 		var host = connection.data["host"] != "" ? connection.data["host"] : "127.0.0.1";
 		window.headerbar.title = _("Connected to ") + connection.data["title"];
 		window.headerbar.subtitle = connection.data["username"] + "@" + host;
+
+		database_schema.reload_schema ();
 	}
 
 	public void connection_closed () {

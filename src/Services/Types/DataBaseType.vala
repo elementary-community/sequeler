@@ -21,4 +21,6 @@
 
 public interface DataBaseType : Object {
     public abstract string connection_string (Gee.HashMap<string, string> data);
+    public abstract string show_schema ();
+    public abstract string show_table_list (string name);
 }

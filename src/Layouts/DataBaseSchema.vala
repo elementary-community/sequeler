@@ -27,6 +27,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	public Gtk.TreeIter iter;
 
 	public Gee.HashMap<int, string> schemas;
+	private ulong handler_id;
 
 	enum Column {
 		SCHEMAS
@@ -59,6 +60,13 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		schema_list_combo.margin = 10;
 		schema_list_combo.sensitive = false;
 
+		handler_id = schema_list_combo.changed.connect (() => {
+			if (schema_list_combo.get_active () == 0) {
+				return;
+			}
+			populate_schema (schemas[schema_list_combo.get_active ()]);
+		});
+
 		dropdown_area.attach (schema_list_combo, 0, 0, 1, 1);
 
 		var scroll = new Gtk.ScrolledWindow (null, null);
@@ -84,8 +92,82 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		attach (toolbar, 0, 3, 1, 1);
 	}
 
-	public void reload_schema () {
+	private void reset_schema_combo () {
+		schema_list_combo.disconnect (handler_id);
 
+		schema_list.clear ();
+		schema_list.append (out iter);
+		schema_list.set (iter, Column.SCHEMAS, _("- Select Database -"));
+		schema_list_combo.set_active (0);
+		schema_list_combo.sensitive = false;
+
+		handler_id = schema_list_combo.changed.connect (() => {
+			if (schema_list_combo.get_active () == 0) {
+				return;
+			}
+			populate_schema (schemas[schema_list_combo.get_active ()]);
+		});
+	}
+
+	public void reload_schema () {
+		var schema = get_schema ();
+		reset_schema_combo ();
+		
+		if (schema == null) {
+			return;
+		}
+
+		if (window.data_manager.data["type"] == "SQLite") {
+			populate_schema (null);
+			return;
+		}
+
+		Gda.DataModelIter _iter = schema.create_iter ();
+		schemas = new Gee.HashMap<int, string> ();
+		int i = 1;
+		while (_iter.move_next ()) {
+			schema_list.append (out iter);
+			schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
+			schemas.set (i,_iter.get_value_at (0).get_string ());
+			i++;
+		}
+
+		schema_list_combo.sensitive = true;
+
+		foreach (var entry in schemas.entries) {
+			if (window.data_manager.data["name"] == entry.value) {
+				schema_list_combo.set_active (entry.key);
+			}
+		}
+	}
+
+	public Gda.DataModel? get_schema () {
+		var query = (window.main.connection.db_type as DataBaseType).show_schema ();
+
+		Gda.DataModel? result = null;
+
+		var loop = new MainLoop ();
+		window.main.connection.init_select_query.begin (query, (obj, res) => {
+			try {
+				result = window.main.connection.init_select_query.end (res);
+			} catch (ThreadError e) {
+				window.main.connection.query_warning (e.message);
+				result = null;
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
+		return result;
+	}
+
+	public void populate_schema (string? table) {
+		if (table != null) {
+			window.data_manager.data["name"] = table;
+		}
+
+		warning (table);
 	}
 
 	public void add_table () {

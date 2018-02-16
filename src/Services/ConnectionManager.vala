@@ -29,6 +29,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public Gda.Connection connection;
+	public Gda.DataModel? output_select;
 
 	public ConnectionManager (Gee.HashMap<string, string> data) {
 		Object (
@@ -121,5 +122,41 @@ public class Sequeler.Services.ConnectionManager : Object {
 		yield;
 
 		return output;
+	}
+
+	public async Gda.DataModel? init_select_query (string query) throws ThreadError {
+		output_select = null;
+		SourceFunc callback = init_select_query.callback;
+
+		new Thread <void*> (null, () => {
+			Gda.DataModel? result = null;
+			try {
+				result = run_select (query);
+			}
+			catch (Error e) {
+				query_warning (e.message);
+				result = null;
+			}
+			Idle.add((owned) callback);
+			output_select = result;
+			return null;
+		});
+
+		yield;
+
+		return output_select;
+	}
+
+	public void query_warning (string message) {
+		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Error!"), message, "dialog-error", Gtk.ButtonsType.NONE);
+		// message_dialog.transient_for = Sequeler.Window;
+		
+		var suggested_button = new Gtk.Button.with_label ("Close");
+		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+		message_dialog.show_all ();
+		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
+		
+		message_dialog.destroy ();
 	}
 }

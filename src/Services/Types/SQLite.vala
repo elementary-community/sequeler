@@ -34,4 +34,8 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	public string show_schema () {
 		return "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
 	}
+
+	public string show_table_list (string name) {
+		return "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
+	}
 }
