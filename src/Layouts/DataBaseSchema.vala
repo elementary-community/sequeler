@@ -163,11 +163,16 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public void populate_schema (string? table) {
-		if (table != null) {
+		if (table != null && window.data_manager.data["name"] != table) {
 			window.data_manager.data["name"] = table;
+			update_connection ();
 		}
 
 		warning (table);
+	}
+
+	private void update_connection () {
+		
 	}
 
 	public void add_table () {
