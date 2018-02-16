@@ -91,6 +91,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		var add_table_btn = new Sequeler.Partials.HeaderBarButton ("list-add-symbolic", _("Add Table"));
 		add_table_btn.clicked.connect (add_table);
+		add_table_btn.sensitive = false;
 
 		toolbar_spinner = new Gtk.Spinner ();
 		toolbar_spinner.margin = 3;

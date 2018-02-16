@@ -66,7 +66,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/ActionManager.vala
     src/Services/DataManager.vala
     src/Services/ConnectionManager.vala
-    # src/Services/DataBase.vala
     # src/Services/TreeBuilder.vala
 
     src/Services/Types/DataBaseType.vala
