@@ -127,6 +127,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	public async Gda.DataModel? init_select_query (string query) throws ThreadError {
 		output_select = null;
 		SourceFunc callback = init_select_query.callback;
+		var error = "";
 
 		new Thread <void*> (null, () => {
 			Gda.DataModel? result = null;
@@ -134,7 +135,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 				result = run_select (query);
 			}
 			catch (Error e) {
-				query_warning (e.message);
+				error = e.message;
 				result = null;
 			}
 			Idle.add((owned) callback);
@@ -143,6 +144,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 		});
 
 		yield;
+
+		if (error != "") {
+			query_warning (error);
+			return null;
+		}
 
 		return output_select;
 	}

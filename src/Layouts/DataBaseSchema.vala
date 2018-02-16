@@ -29,6 +29,10 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	public Gee.HashMap<int, string> schemas;
 	private ulong handler_id;
 
+	private Gtk.ScrolledWindow scroll;
+	private Gda.DataModel? schema_table;
+	public Granite.Widgets.SourceList source_list;
+
 	enum Column {
 		SCHEMAS
 	}
@@ -64,12 +68,12 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (schema_list_combo.get_active () == 0) {
 				return;
 			}
-			populate_schema (schemas[schema_list_combo.get_active ()]);
+			populate_schema (schemas[schema_list_combo.get_active ()], null);
 		});
 
 		dropdown_area.attach (schema_list_combo, 0, 0, 1, 1);
 
-		var scroll = new Gtk.ScrolledWindow (null, null);
+		scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vexpand = true;
@@ -105,7 +109,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (schema_list_combo.get_active () == 0) {
 				return;
 			}
-			populate_schema (schemas[schema_list_combo.get_active ()]);
+			populate_schema (schemas[schema_list_combo.get_active ()], null);
 		});
 	}
 
@@ -118,7 +122,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		if (window.data_manager.data["type"] == "SQLite") {
-			populate_schema (null);
+			populate_schema (null, schema);
 			return;
 		}
 
@@ -145,13 +149,14 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		var query = (window.main.connection.db_type as DataBaseType).show_schema ();
 
 		Gda.DataModel? result = null;
+		var error = "";
 
 		var loop = new MainLoop ();
 		window.main.connection.init_select_query.begin (query, (obj, res) => {
 			try {
 				result = window.main.connection.init_select_query.end (res);
 			} catch (ThreadError e) {
-				window.main.connection.query_warning (e.message);
+				error = e.message;
 				result = null;
 			}
 			loop.quit ();
@@ -159,16 +164,81 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		loop.run ();
 
+		if (error != "") {
+			window.main.connection.query_warning (error);
+			return null;
+		}
+
 		return result;
 	}
 
-	public void populate_schema (string? table) {
+	public void populate_schema (string? table, Gda.DataModel? schema) {
 		if (table != null && window.data_manager.data["name"] != table) {
 			window.data_manager.data["name"] = table;
 			update_connection ();
 		}
 
-		warning (table);
+		if (table == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
+			schema_table = schema;
+		} else {
+			schema_table = get_schema_table (table);
+		}
+
+		if (schema_table == null) {
+			return;
+		}
+
+		if (scroll.get_child () != null) {
+			scroll.remove (scroll.get_child ());
+		}
+
+		source_list = new Granite.Widgets.SourceList ();
+		var tables_category = new Granite.Widgets.SourceList.ExpandableItem (_("TABLES"));
+		tables_category.expand_all ();
+
+		Gda.DataModelIter _iter = schema_table.create_iter ();
+		int top = 0;
+		while (_iter.move_next ()) {
+			tables_category.add (new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ()));      
+			top++;
+		}
+
+		source_list.root.add (tables_category);
+		scroll.add (source_list);
+
+		source_list.item_selected.connect ((item) => {
+			if (item == null) {
+				return;
+			}
+			warning (item.name);
+		});
+	}
+
+	public Gda.DataModel? get_schema_table (string table) {
+		var query = (window.main.connection.db_type as DataBaseType).show_table_list (table);
+
+		Gda.DataModel? result = null;
+		var error = "";
+
+		var loop = new MainLoop ();
+		window.main.connection.init_select_query.begin (query, (obj, res) => {
+			try {
+				result = window.main.connection.init_select_query.end (res);
+			} catch (ThreadError e) {
+				error = e.message;
+				result = null;
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
+		if (error != "") {
+			window.main.connection.query_warning (error);
+			return null;
+		}
+
+		return result;
 	}
 
 	private void update_connection () {
