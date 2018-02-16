@@ -33,6 +33,9 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	private Gda.DataModel? schema_table;
 	public Granite.Widgets.SourceList source_list;
 
+	private Gtk.Grid toolbar;
+	private Gtk.Spinner toolbar_spinner;
+
 	enum Column {
 		SCHEMAS
 	}
@@ -78,18 +81,24 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vexpand = true;
 
-		var toolbar = new Gtk.Grid ();
+		toolbar = new Gtk.Grid ();
 		toolbar.get_style_context ().add_class ("library-toolbar");
 
 		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Tables"));
 		reload_btn.clicked.connect (reload_schema);
+		reload_btn.hexpand = true;
+		reload_btn.halign = Gtk.Align.START;
 
 		var add_table_btn = new Sequeler.Partials.HeaderBarButton ("list-add-symbolic", _("Add Table"));
 		add_table_btn.clicked.connect (add_table);
 
+		toolbar_spinner = new Gtk.Spinner ();
+		toolbar_spinner.margin = 3;
+
 		toolbar.attach (add_table_btn, 0, 0, 1, 1);
 		toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
 		toolbar.attach (reload_btn, 2, 0, 1, 1);
+		toolbar.attach (toolbar_spinner, 3, 0, 1, 1);
 
 		attach (dropdown_area, 0, 0, 1, 1);
 		attach (scroll, 0, 1, 1, 2);
@@ -172,16 +181,17 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		return result;
 	}
 
-	public void populate_schema (string? table, Gda.DataModel? schema) {
-		if (table != null && window.data_manager.data["name"] != table) {
-			window.data_manager.data["name"] = table;
+	public void populate_schema (string? database, Gda.DataModel? schema) {
+		if (database != null && window.data_manager.data["name"] != database) {
+			window.data_manager.data["name"] = database;
 			update_connection ();
+			return;
 		}
 
-		if (table == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
+		if (database == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
 			schema_table = schema;
 		} else {
-			schema_table = get_schema_table (table);
+			schema_table = get_schema_table (database);
 		}
 
 		if (schema_table == null) {
@@ -247,7 +257,35 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	private void update_connection () {
-		
+		schema_list_combo.sensitive = false;
+
+		if (scroll.get_child () != null) {
+			scroll.remove (scroll.get_child ());
+		}
+
+		toolbar_spinner.start ();
+
+		window.main.connection.close ();
+		var new_connection = new Sequeler.Services.ConnectionManager (window.data_manager.data);
+
+		var loop = new MainLoop ();
+		new_connection.init_connection.begin (new_connection, (obj, res) => {
+			try {
+				Gee.HashMap<string, string> result = new_connection.init_connection.end (res);
+				if (result["status"] == "true") {
+					window.main.connection = new_connection;
+					reload_schema ();
+				} else {
+					window.main.connection.query_warning (result["msg"]);
+				}
+			} catch (ThreadError e) {
+				window.main.connection.query_warning (e.message);
+			}
+			loop.quit ();
+		});
+
+		loop.run();
+		toolbar_spinner.stop ();
 	}
 
 	private void edit_table_name (string old_name, string new_name) {
