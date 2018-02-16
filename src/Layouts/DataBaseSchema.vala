@@ -199,7 +199,12 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		Gda.DataModelIter _iter = schema_table.create_iter ();
 		int top = 0;
 		while (_iter.move_next ()) {
-			tables_category.add (new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ()));      
+			var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
+			item.editable = true;
+			item.edited.connect ((new_name) => { 
+				edit_table_name (item.name, new_name);
+			});
+			tables_category.add (item);      
 			top++;
 		}
 
@@ -210,7 +215,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (item == null) {
 				return;
 			}
-			warning (item.name);
+			
 		});
 	}
 
@@ -243,6 +248,33 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 	private void update_connection () {
 		
+	}
+
+	private void edit_table_name (string old_name, string new_name) {
+		var query = (window.main.connection.db_type as DataBaseType).edit_table_name (old_name, new_name);
+
+		int result = 0;
+		var error = "";
+
+		var loop = new MainLoop ();
+		window.main.connection.init_query.begin (query, (obj, res) => {
+			try {
+				result = window.main.connection.init_query.end (res);
+			} catch (ThreadError e) {
+				error = e.message;
+				result = 0;
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
+		if (error != "") {
+			window.main.connection.query_warning (error);
+			return;
+		}
+
+		reload_schema ();
 	}
 
 	public void add_table () {

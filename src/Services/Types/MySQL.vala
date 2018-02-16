@@ -40,4 +40,8 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 	public string show_table_list (string name) {
 		return "SELECT table_name FROM information_schema.TABLES WHERE table_schema = '" + name + "' ORDER BY table_name DESC";
 	}
+
+	public string edit_table_name (string old_table, string new_table) {
+		return "RENAME TABLE " + old_table + " TO " + new_table + ";";
+	}
 }

@@ -38,4 +38,8 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	public string show_table_list (string name) {
 		return "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
 	}
+
+	public string edit_table_name (string old_table, string new_table) {
+		return "ALTER TABLE " + old_table + " RENAME TO " + new_table + ";";
+	}
 }

@@ -153,6 +153,35 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return output_select;
 	}
 
+	public async int init_query (string query) throws ThreadError {
+		int output_query = 0;
+		SourceFunc callback = init_query.callback;
+		var error = "";
+
+		new Thread <void*> (null, () => {
+			int result = 0;
+			try {
+				result = run_query (query);
+			}
+			catch (Error e) {
+				error = e.message;
+				result = 0;
+			}
+			Idle.add((owned) callback);
+			output_query = result;
+			return null;
+		});
+
+		yield;
+
+		if (error != "") {
+			query_warning (error);
+			return 0;
+		}
+
+		return output_query;
+	}
+
 	public void query_warning (string message) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Error!"), message, "dialog-error", Gtk.ButtonsType.NONE);
 		// message_dialog.transient_for = Sequeler.Window;

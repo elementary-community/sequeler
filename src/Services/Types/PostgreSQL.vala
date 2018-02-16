@@ -40,4 +40,8 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     public string show_table_list (string name) {
         return "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'information_schema' AND schemaname != 'pg_catalog' ORDER BY tablename DESC";
     }
+
+    public string edit_table_name (string old_table, string new_table) {
+        return "ALTER TABLE " + old_table + " RENAME TO " + new_table + ";";
+    }
 }
