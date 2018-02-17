@@ -24,10 +24,10 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
 	public Granite.Widgets.ModeButton tabs;
 	public Gtk.Stack stack;
-	public Gtk.Grid structure;
-	public Gtk.Grid content;
-	public Gtk.Grid relations;
-	public Gtk.Grid query;
+	public Sequeler.Layouts.Views.Structure structure;
+	public Sequeler.Layouts.Views.Content content;
+	public Sequeler.Layouts.Views.Relations relations;
+	public Sequeler.Layouts.Views.Query query;
 
 	public DataBaseView (Sequeler.Window main_window) {
 		Object (
@@ -57,10 +57,10 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 		toolbar.attach (tabs, 0, 0, 1, 1);
 
 		stack = new Gtk.Stack ();
-		structure = new Gtk.Grid ();
-		content = new Gtk.Grid ();
-		relations = new Gtk.Grid ();
-		query = new Gtk.Grid ();
+		structure = new Sequeler.Layouts.Views.Structure (window);
+		content = new Sequeler.Layouts.Views.Content (window);
+		relations = new Sequeler.Layouts.Views.Relations (window);
+		query = new Sequeler.Layouts.Views.Query (window);
 
 		stack.add_named (structure, "Structure");
 		stack.add_named (content, "Content");

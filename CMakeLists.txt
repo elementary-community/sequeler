@@ -56,6 +56,11 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Layouts/DataBaseSchema.vala
     src/Layouts/DataBaseView.vala
 
+    src/Layouts/Views/Structure.vala
+    src/Layouts/Views/Content.vala
+    src/Layouts/Views/Relations.vala
+    src/Layouts/Views/Query.vala
+
     # src/Partials/ToolBar.vala
     src/Partials/ButtonType.vala
     src/Partials/Helpers.vala
