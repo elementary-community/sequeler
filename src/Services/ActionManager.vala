@@ -29,6 +29,7 @@ public class Sequeler.Services.ActionManager : Object {
     public const string ACTION_NEW_WINDOW = "action_new_window";
     public const string ACTION_NEW_CONNECTION = "action_new_connection";
     public const string ACTION_PREFERENCES = "action_preferences";
+    public const string ACTION_RUN_QUERY = "action_run_query";
     public const string ACTION_LOGOUT = "action_logout";
     public const string ACTION_QUIT = "action_quit";
 
@@ -38,6 +39,7 @@ public class Sequeler.Services.ActionManager : Object {
         { ACTION_NEW_WINDOW, action_new_window },
         { ACTION_NEW_CONNECTION, action_new_connection },
         { ACTION_PREFERENCES, action_preferences },
+        { ACTION_RUN_QUERY, action_run_query },
         { ACTION_LOGOUT, action_logout },
         { ACTION_QUIT, action_quit }
     };
@@ -53,6 +55,7 @@ public class Sequeler.Services.ActionManager : Object {
         action_accelerators.set (ACTION_NEW_WINDOW, "<Control>n");
         action_accelerators.set (ACTION_NEW_CONNECTION, "<Control><Shift>n");
         action_accelerators.set (ACTION_PREFERENCES, "<Control>comma");
+        action_accelerators.set (ACTION_RUN_QUERY, "<Control>Return");
         action_accelerators.set (ACTION_LOGOUT, "<Control>Escape");
         action_accelerators.set (ACTION_QUIT, "<Control>q");
     }
@@ -116,6 +119,10 @@ public class Sequeler.Services.ActionManager : Object {
         }
 
         window.connection_dialog.present ();
+    }
+
+    private void action_run_query () {
+        warning ("RUN");
     }
 
     public static void action_from_group (string action_name, ActionGroup? action_group) {

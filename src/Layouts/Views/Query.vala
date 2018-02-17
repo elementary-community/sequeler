@@ -22,6 +22,13 @@
 public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.SourceBuffer buffer;
+	public Gtk.Grid results;
+	public Gtk.Spinner spinner;
+	public Gtk.Label loading_msg;
+	public Gtk.Label result_message;
+	public Gtk.Button run_button;
+
 	public Query (Sequeler.Window main_window) {
 		Object (
 			orientation: Gtk.Orientation.VERTICAL,
@@ -30,7 +37,134 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	construct {
-		var intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
-		attach (intro, 0, 0, 1, 1);
+		var panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
+		panels.position = 150;
+		panels.expand = true;
+
+		attach (panels, 0, 0, 1, 1);
+
+		var scroll = new Gtk.ScrolledWindow (null, null);
+		scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+		scroll.add (query_builder ());
+
+		panels.pack1 (scroll, false, false);
+		panels.pack2 (results_view (), true, false);
+	}
+
+	public Gtk.SourceView query_builder () {
+		var manager = Gtk.SourceLanguageManager.get_default ();
+		var style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
+
+		buffer = new Gtk.SourceBuffer (null);
+		buffer.highlight_syntax = true;
+		buffer.highlight_matching_brackets = true;
+		buffer.style_scheme = style_scheme_manager.get_scheme ("oblivion");
+		buffer.language = manager.get_language ("sql");
+
+		var query_builder = new Gtk.SourceView.with_buffer (buffer);
+		query_builder.show_line_numbers = true;
+		query_builder.highlight_current_line = true;
+		query_builder.show_right_margin = true;
+		query_builder.wrap_mode = Gtk.WrapMode.WORD;
+		query_builder.smart_home_end = Gtk.SourceSmartHomeEndType.AFTER;
+
+		Gtk.drag_dest_add_uri_targets (query_builder);
+
+		try
+		{
+			var style = new Gtk.CssProvider ();
+			style.load_from_data ("* {font: %s;}".printf ("Droid Sans Mono 11"), -1);
+			query_builder.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+		}
+		catch (Error e)
+		{
+			debug ("Internal error loading session chooser style: %s", e.message);
+		}
+
+		return query_builder;
+	}
+
+	public string get_text () {
+		return buffer.text;
+	}
+
+	public Gtk.Grid results_view () {
+		var results_view = new Gtk.Grid ();
+
+		spinner = new Gtk.Spinner ();
+		spinner.hexpand = true;
+		spinner.halign = Gtk.Align.END;
+		spinner.margin = 10;
+
+		var action_bar = new Gtk.Grid ();
+		action_bar.get_style_context ().add_class ("library-titlebar");
+		action_bar.attach (build_loading_msg (), 0, 0, 1, 1);
+		action_bar.attach (spinner, 1, 0, 1, 1);
+		action_bar.attach (build_run_button (), 2, 0, 1, 1);
+
+		var scroll = new Gtk.ScrolledWindow (null, null);
+		scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+		scroll.add (build_results ());
+		scroll.expand = true;
+
+		var info_bar = new Gtk.Grid ();
+		info_bar.get_style_context ().add_class ("library-toolbar");
+		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
+
+		results_view.attach (action_bar, 0, 0, 1, 1);
+		results_view.attach (scroll, 0, 1, 1, 1);
+		results_view.attach (info_bar, 0, 2, 1, 1);
+
+		return results_view;
+	}
+
+	public Gtk.Label build_loading_msg () {
+		loading_msg = new Gtk.Label (_("Running Query\u2026"));
+		loading_msg.halign = Gtk.Align.START;
+		loading_msg.margin = 10;
+		loading_msg.hexpand = true;
+		loading_msg.wrap = true;
+		toggle_loading_msg (false);
+
+		return loading_msg;
+	}
+
+	public void toggle_loading_msg (bool toggle) {
+		loading_msg.visible = toggle;
+		loading_msg.no_show_all = !toggle;
+	}
+
+	public Gtk.Button build_run_button () {
+		var run_image = new Gtk.Image.from_icon_name ("system-run-symbolic", Gtk.IconSize.BUTTON);
+		run_button = new Gtk.Button.with_label (_("Run Query"));
+		run_button.get_style_context ().add_class ("suggested-action");
+		run_button.always_show_image = true;
+		run_button.set_image (run_image);
+		run_button.can_focus = false;
+		run_button.margin = 10;
+		run_button.sensitive = false;
+		run_button.tooltip_text = "Ctrl+↵";
+
+		run_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_RUN_QUERY;
+
+		return run_button;
+	}
+
+	public Gtk.Label build_results_msg () {
+		result_message = new Gtk.Label (_("No Results Available"));
+		result_message.halign = Gtk.Align.START;
+		result_message.margin = 7;
+		result_message.margin_top = 6;
+		result_message.hexpand = true;
+		result_message.wrap = true;
+
+		return result_message;
+	}
+
+	public Gtk.Grid build_results () {
+		results = new Gtk.Grid ();
+		results.expand = true;
+
+		return results;
 	}
 }
