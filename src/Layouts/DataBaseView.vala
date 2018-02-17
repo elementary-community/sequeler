@@ -23,6 +23,11 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
 	public Granite.Widgets.ModeButton tabs;
+	public Gtk.Stack stack;
+	public Gtk.Grid structure;
+	public Gtk.Grid content;
+	public Gtk.Grid relations;
+	public Gtk.Grid query;
 
 	public DataBaseView (Sequeler.Window main_window) {
 		Object (
@@ -42,12 +47,28 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 		tabs.append (new Sequeler.Partials.ToolBarButton ("preferences-system-windows", "Relations"));
 		tabs.append (new Sequeler.Partials.ToolBarButton ("accessories-text-editor", "Query"));
 		tabs.set_active (0);
-		tabs.sensitive = false;
 		tabs.margin = 10;
 		tabs.margin_bottom = 9;
 
+		tabs.mode_changed.connect ((tab) => {
+			stack.set_visible_child_name (tab.name);
+		});
+
 		toolbar.attach (tabs, 0, 0, 1, 1);
 
+		stack = new Gtk.Stack ();
+		structure = new Gtk.Grid ();
+		content = new Gtk.Grid ();
+		relations = new Gtk.Grid ();
+		query = new Gtk.Grid ();
+
+		stack.add_named (structure, "Structure");
+		stack.add_named (content, "Content");
+		stack.add_named (relations, "Relations");
+		stack.add_named (query, "Query");
+		stack.expand = true;
+
 		attach (toolbar, 0, 0, 1, 1);
+		attach (stack, 0, 1, 1, 1);
 	}
 }
