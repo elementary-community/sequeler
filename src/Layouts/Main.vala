@@ -54,7 +54,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 
 		main_stack = new Gtk.Stack ();
 		welcome = new Sequeler.Layouts.Welcome (window);
-		database_view = new Sequeler.Layouts.DataBaseView ();
+		database_view = new Sequeler.Layouts.DataBaseView (window);
 		main_stack.add_named (welcome, "welcome");
 		main_stack.add_named (database_view, "database_view");
 

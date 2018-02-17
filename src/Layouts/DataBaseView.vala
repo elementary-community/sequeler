@@ -20,5 +20,34 @@
 */
 
 public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
-    
+	public weak Sequeler.Window window { get; construct; }
+
+	public Granite.Widgets.ModeButton tabs;
+
+	public DataBaseView (Sequeler.Window main_window) {
+		Object (
+			orientation: Gtk.Orientation.VERTICAL,
+			window: main_window,
+			column_homogeneous: true
+		);
+	}
+
+	construct {
+		var toolbar = new Gtk.Grid ();
+		toolbar.get_style_context ().add_class ("library-titlebar");
+
+		tabs = new Granite.Widgets.ModeButton ();
+		tabs.append (new Sequeler.Partials.ToolBarButton ("x-office-spreadsheet-template", "Structure"));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("x-office-document", "Content"));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("preferences-system-windows", "Relations"));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("accessories-text-editor", "Query"));
+		tabs.set_active (0);
+		tabs.sensitive = false;
+		tabs.margin = 10;
+		tabs.margin_bottom = 9;
+
+		toolbar.attach (tabs, 0, 0, 1, 1);
+
+		attach (toolbar, 0, 0, 1, 1);
+	}
 }

@@ -29,7 +29,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	public Gee.HashMap<int, string> schemas;
 	private ulong handler_id;
 
-	private Gtk.ScrolledWindow scroll;
+	public Gtk.ScrolledWindow scroll;
 	private Gda.DataModel? schema_table;
 	public Granite.Widgets.SourceList source_list;
 

@@ -77,6 +77,9 @@ public class Sequeler.Services.ActionManager : Object {
         window.headerbar.subtitle = null;
         window.main.connection_closed ();
         window.data_manager.data = null;
+        if (window.main.database_schema.scroll.get_child () != null) {
+            window.main.database_schema.scroll.remove (window.main.database_schema.scroll.get_child ());
+        }
     }
 
     private void action_preferences () {
