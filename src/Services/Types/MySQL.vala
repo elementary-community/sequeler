@@ -46,6 +46,6 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 	}
 
 	public string show_table_structure (string table) {
-		return "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "'";
+		return "SELECT * FROM information_schema.COLUMNS WHERE table_name = '" + table + "'";
 	}
 }

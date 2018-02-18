@@ -53,7 +53,55 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		}
 	}
 
+	public void reset () {
+		if (scroll.get_child () != null) {
+			scroll.remove (scroll.get_child ());
+		}
+
+		placeholder ();
+
+		scroll.show_all ();
+	}
+
 	public void fill (string table) {
-		
+		var query = (window.main.connection.db_type as DataBaseType).show_table_structure (table);
+
+		var table_schema = get_table_schema (query);
+
+		if (table_schema == null) {
+			return;
+		}
+
+		var result_data = new Sequeler.Partials.TreeBuilder (table_schema, window);
+
+		clear ();
+
+		scroll.add (result_data);
+		scroll.show_all ();
+	}
+
+	private Gda.DataModel? get_table_schema (string query) {
+		Gda.DataModel? result = null;
+		var error = "";
+
+		var loop = new MainLoop ();
+		window.main.connection.init_select_query.begin (query, (obj, res) => {
+			try {
+				result = window.main.connection.init_select_query.end (res);
+			} catch (ThreadError e) {
+				error = e.message;
+				result = null;
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
+		if (error != "") {
+			window.main.connection.query_warning (error);
+			return null;
+		}
+
+		return result;
 	}
 }
