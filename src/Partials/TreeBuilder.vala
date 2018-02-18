@@ -26,15 +26,15 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window) {
 		Object (
 			window: main_window,
-			data: response,
-			rubber_banding: true,
-			rules_hint: true
+			data: response
 		);
 	}
 
 	construct {
 		Gtk.TreeViewColumn column;
 		var renderer = new Gtk.CellRendererText ();
+		renderer.single_paragraph_mode = true;
+
 		var tot_columns = data.get_n_columns ();
 
 		var theTypes = new GLib.Type[tot_columns];
@@ -46,7 +46,6 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			column.clickable = true;
 			column.resizable = true;
 			column.expand = true;
-			column.min_width = 10;
 			if (col > 0) {
 				column.sizing = Gtk.TreeViewColumnSizing.FIXED;
 				column.fixed_width = 150;

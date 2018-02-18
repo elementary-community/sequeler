@@ -44,4 +44,8 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 	public string edit_table_name (string old_table, string new_table) {
 		return "RENAME TABLE " + old_table + " TO " + new_table + ";";
 	}
+
+	public string show_table_structure (string table) {
+		return "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "'";
+	}
 }

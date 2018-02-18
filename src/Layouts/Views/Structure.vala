@@ -22,6 +22,8 @@
 public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.ScrolledWindow scroll;
+
 	public Structure (Sequeler.Window main_window) {
 		Object (
 			orientation: Gtk.Orientation.VERTICAL,
@@ -30,7 +32,28 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 	}
 
 	construct {
+		scroll = new Gtk.ScrolledWindow (null, null);
+		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll.expand = true;
+
+		attach (scroll, 0, 0, 1, 1);
+
+		placeholder ();
+	}
+
+	public void placeholder () {
 		var intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
-		attach (intro, 0, 0, 1, 1);
+		scroll.add (intro);
+	}
+
+	public void clear () {
+		if (scroll.get_child () != null) {
+			scroll.remove (scroll.get_child ());
+		}
+	}
+
+	public void fill (string table) {
+		
 	}
 }

@@ -42,4 +42,8 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	public string edit_table_name (string old_table, string new_table) {
 		return "ALTER TABLE " + old_table + " RENAME TO " + new_table + ";";
 	}
+
+	public string show_table_structure (string table) {
+		return "PRAGMA table_info('" + table + "')";
+	}
 }

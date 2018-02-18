@@ -20,23 +20,28 @@
 */
 
 public interface DataBaseType : Object {
-	/**
+	/*
 	 * Connect to the database
 	 */
 	public abstract string connection_string (Gee.HashMap<string, string> data);
 
-	/**
+	/*
 	 * Populate dropdown database selection
 	 */
 	public abstract string show_schema ();
 
-	/**
+	/*
 	 * Populate sidebar with table list
 	 */
 	public abstract string show_table_list (string name);
 
-	/**
+	/*
 	 * Update table name
 	 */
 	public abstract string edit_table_name (string old_table, string new_table);
+
+	/*
+	 * Show table structure
+	 */
+	public abstract string show_table_structure (string table);
 }

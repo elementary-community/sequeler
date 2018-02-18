@@ -226,7 +226,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (item == null) {
 				return;
 			}
-			
+			window.main.database_view.structure.fill (item.name);
 		});
 	}
 
