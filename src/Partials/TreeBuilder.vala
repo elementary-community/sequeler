@@ -26,7 +26,9 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window) {
 		Object (
 			window: main_window,
-			data: response
+			data: response,
+			rubber_banding: true,
+			rules_hint: true
 		);
 	}
 

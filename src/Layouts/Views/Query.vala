@@ -106,7 +106,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		scroll_results = new Gtk.ScrolledWindow (null, null);
 		scroll_results.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-		// scroll_results.add (build_results ());
 		scroll_results.expand = true;
 
 		var info_bar = new Gtk.Grid ();
@@ -170,10 +169,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		if ("select" in query.down ()) {
 			handle_select_response (select_statement (query));
-		} 
-		// else {
-		// 	handle_query_response (non_select_statement (query));
-		// }
+		} else {
+			handle_query_response (non_select_statement (query));
+		}
 	}
 
 	public Gda.DataModel? select_statement (string query) {
@@ -204,6 +202,34 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return result;
 	}
 
+	public int non_select_statement (string query) {
+		int result = 0;
+		var error = "";
+
+		var loop = new MainLoop ();
+		window.main.connection.init_query.begin (query, (obj, res) => {
+			try {
+				result = window.main.connection.init_query.end (res);
+			} catch (ThreadError e) {
+				error = e.message;
+				result = 0;
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
+		if (error != "") {
+			window.main.connection.query_warning (error);
+			toggle_loading_msg (false);
+			spinner.stop ();
+			result_message.label = error;
+			return 0;
+		}
+
+		return result;
+	}
+
 	public void handle_select_response (Gda.DataModel? response) {
 		if (response == null) {
 			toggle_loading_msg (false);
@@ -222,7 +248,28 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		spinner.stop ();
 		result_message.label = response.get_n_rows ().to_string () + _(" Total Results");
 
-		scroll_results.add (result_data); 
+		scroll_results.add (result_data);
 		scroll_results.show_all ();
+	}
+
+	public void handle_query_response (int response) {
+		toggle_loading_msg (false);
+		spinner.stop ();
+
+		if (result_data != null) {
+			scroll_results.remove (result_data);
+		}
+
+		if (response == 0) {
+			result_message.label = _("Unable to process Query!");
+		} else if (response < 0) {
+			result_message.label = _("Query Executed!");
+		} else {
+			result_message.label = _("Query Successfully Executed! Rows affected: ") + response.to_string ();
+		}
+
+		if (response != 0) {
+			window.main.database_schema.reload_schema ();
+		}
 	}
 }
