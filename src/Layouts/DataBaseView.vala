@@ -52,6 +52,23 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
 		tabs.mode_changed.connect ((tab) => {
 			stack.set_visible_child_name (tab.name);
+			var item_selected = window.main.database_schema.source_list.selected;
+
+			if (item_selected == null) {
+				return;
+			}
+
+			if (tab.name == "Structure") {
+				window.main.database_view.structure.fill (item_selected.name);
+			}
+
+			if (tab.name == "Content") {
+				window.main.database_view.content.fill (item_selected.name);
+			}
+
+			if (tab.name == "Relations") {
+				window.main.database_view.relations.fill (item_selected.name);
+			}
 		});
 
 		toolbar.attach (tabs, 0, 0, 1, 1);

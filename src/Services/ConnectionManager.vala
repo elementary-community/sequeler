@@ -74,10 +74,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 		} catch ( Error e ) {
 			throw e;
 		}
-
-		if (connection.is_opened ()) {
-			connection.execution_timer = true;
-		}
 	}
 
 	public int run_query (string query) throws Error requires (connection.is_opened ()) {

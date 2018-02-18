@@ -44,4 +44,14 @@ public interface DataBaseType : Object {
 	 * Show table structure
 	 */
 	public abstract string show_table_structure (string table);
+
+	/*
+	 * Show table content
+	 */
+	public abstract string show_table_content (string table);
+
+	/*
+	 * Show table relations
+	 */
+	public abstract string show_table_relations (string table);
 }

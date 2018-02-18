@@ -226,7 +226,18 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (item == null) {
 				return;
 			}
-			window.main.database_view.structure.fill (item.name);
+
+			if (window.main.database_view.tabs.selected == 0) {
+				window.main.database_view.structure.fill (item.name);
+			}
+
+			if (window.main.database_view.tabs.selected == 1) {
+				window.main.database_view.content.fill (item.name);
+			}
+
+			if (window.main.database_view.tabs.selected == 2) {
+				window.main.database_view.relations.fill (item.name);
+			}
 		});
 	}
 

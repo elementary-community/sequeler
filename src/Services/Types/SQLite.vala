@@ -46,4 +46,12 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	public string show_table_structure (string table) {
 		return "PRAGMA table_info('" + table + "')";
 	}
+
+	public string show_table_content (string table) {
+		return "SELECT * FROM " + table;
+	}
+
+	public string show_table_relations (string table) {
+		return "PRAGMA foreign_key_list('" + table + "')";
+	}
 }

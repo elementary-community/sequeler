@@ -87,6 +87,8 @@ public class Sequeler.Services.ActionManager : Object {
 
 		window.main.database_view.query.buffer.text = "";
 		window.main.database_view.structure.reset ();
+		window.main.database_view.content.reset ();
+		window.main.database_view.relations.reset ();
 	}
 
 	private void action_preferences () {
