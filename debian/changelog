@@ -1,3 +1,13 @@
+com.github.alecaddd.sequeler (0.5.0) xenial; urgency=medium
+
+  * Complete rewrite of the entire code base!
+  * Handle multiple Windows/Instances and multiple open connections.
+  * Show Table schema, content, and constraint relationships.
+  * Better error handling.
+  * Bug fixes and improvements.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 18 Feb 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.4.3) xenial; urgency=medium
 
   * Better error handling, less crashes!

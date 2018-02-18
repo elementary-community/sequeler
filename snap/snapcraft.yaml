@@ -1,5 +1,5 @@
 name: sequeler
-version: '0.4.3'
+version: '0.5.0'
 summary: Friendly SQL Client
 description: |
   Store your Database Connections in the built-in library,

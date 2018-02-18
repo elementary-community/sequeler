@@ -26,6 +26,18 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.0" date="2018-02-18">
+      <description>
+        <p>Complete rewrite of the entire code base!</p>
+        <ul>
+          <li>Handle multiple Windows/Instances and multiple open connections.</li>
+          <li>Show Table schema, content, and constraint relationships.</li>
+          <li>Quicker response on big select queries</li>
+          <li>Better error handling.</li>
+          <li>Bug fixes and improvements.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.4.3" date="2018-01-23">
       <description>
         <p>Better error handling, less crashes!</p>
