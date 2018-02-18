@@ -65,13 +65,12 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Partials/ButtonType.vala
     src/Partials/Helpers.vala
     src/Partials/LibraryItem.vala
-    # src/Partials/QueryBuilder.vala
+    src/Partials/TreeBuilder.vala
 
     src/Services/Settings.vala
     src/Services/ActionManager.vala
     src/Services/DataManager.vala
     src/Services/ConnectionManager.vala
-    # src/Services/TreeBuilder.vala
 
     src/Services/Types/DataBaseType.vala
     src/Services/Types/MySQL.vala
@@ -84,6 +83,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/SettingsDialog.vala
     src/Widgets/ConnectionDialog.vala
     # src/Widgets/DataBaseOpen.vala
+
     src/config.vala
 
 # tell what libraries to use when compiling

@@ -23,11 +23,13 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
 	public Gtk.SourceBuffer buffer;
-	public Gtk.Grid results;
+	public Gtk.ScrolledWindow scroll_results;
 	public Gtk.Spinner spinner;
 	public Gtk.Label loading_msg;
 	public Gtk.Label result_message;
 	public Gtk.Button run_button;
+
+	public Sequeler.Partials.TreeBuilder result_data;
 
 	public Query (Sequeler.Window main_window) {
 		Object (
@@ -102,17 +104,17 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		action_bar.attach (spinner, 1, 0, 1, 1);
 		action_bar.attach (build_run_button (), 2, 0, 1, 1);
 
-		var scroll = new Gtk.ScrolledWindow (null, null);
-		scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-		scroll.add (build_results ());
-		scroll.expand = true;
+		scroll_results = new Gtk.ScrolledWindow (null, null);
+		scroll_results.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+		// scroll_results.add (build_results ());
+		scroll_results.expand = true;
 
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
 		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
 
 		results_view.attach (action_bar, 0, 0, 1, 1);
-		results_view.attach (scroll, 0, 1, 1, 1);
+		results_view.attach (scroll_results, 0, 1, 1, 1);
 		results_view.attach (info_bar, 0, 2, 1, 1);
 
 		return results_view;
@@ -161,10 +163,66 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return result_message;
 	}
 
-	public Gtk.Grid build_results () {
-		results = new Gtk.Grid ();
-		results.expand = true;
+	public void run_query (string query) {
+		toggle_loading_msg (true);
+		spinner.start ();
+		result_message.label = "\u2026";
 
-		return results;
+		if ("select" in query.down ()) {
+			handle_select_response (select_statement (query));
+		} 
+		// else {
+		// 	handle_query_response (non_select_statement (query));
+		// }
+	}
+
+	public Gda.DataModel? select_statement (string query) {
+		Gda.DataModel? result = null;
+		var error = "";
+
+		var loop = new MainLoop ();
+		window.main.connection.init_select_query.begin (query, (obj, res) => {
+			try {
+				result = window.main.connection.init_select_query.end (res);
+			} catch (ThreadError e) {
+				error = e.message;
+				result = null;
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
+		if (error != "") {
+			window.main.connection.query_warning (error);
+			toggle_loading_msg (false);
+			spinner.stop ();
+			result_message.label = error;
+			return null;
+		}
+
+		return result;
+	}
+
+	public void handle_select_response (Gda.DataModel? response) {
+		if (response == null) {
+			toggle_loading_msg (false);
+			spinner.stop ();
+			result_message.label = _("Unable to process Query!");
+			return;
+		}
+
+		if (result_data != null) {
+			scroll_results.remove (result_data);
+		}
+
+		result_data = new Sequeler.Partials.TreeBuilder (response, window);
+
+		toggle_loading_msg (false);
+		spinner.stop ();
+		result_message.label = response.get_n_rows ().to_string () + _(" Total Results");
+
+		scroll_results.add (result_data); 
+		scroll_results.show_all ();
 	}
 }
