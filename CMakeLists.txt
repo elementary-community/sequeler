@@ -61,7 +61,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Layouts/Views/Relations.vala
     src/Layouts/Views/Query.vala
 
-    # src/Partials/ToolBar.vala
     src/Partials/ButtonType.vala
     src/Partials/Helpers.vala
     src/Partials/LibraryItem.vala
@@ -77,12 +76,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Types/PostgreSQL.vala
     src/Services/Types/SQLite.vala
 
-    # src/Widgets/Welcome.vala
-    # src/Widgets/Library.vala
-    # src/Widgets/LibraryItem.vala
     src/Widgets/SettingsDialog.vala
     src/Widgets/ConnectionDialog.vala
-    # src/Widgets/DataBaseOpen.vala
 
     src/config.vala
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2017 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -23,10 +23,10 @@ public const string APP_NAME = "Sequeler";
 public const string TERMINAL_NAME = "sequeler";
 
 public static int main (string[] args) {
-    Environment.set_application_name (APP_NAME);
-    Environment.set_prgname (APP_NAME);
+	Environment.set_application_name (APP_NAME);
+	Environment.set_prgname (APP_NAME);
 
-    var application = new Sequeler.Application ();
+	var application = new Sequeler.Application ();
 
-    return application.run (args);
+	return application.run (args);
 }
