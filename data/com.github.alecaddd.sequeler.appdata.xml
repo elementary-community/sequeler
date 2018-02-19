@@ -26,6 +26,17 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.1" date="2018-02-19">
+      <description>
+        <p>Alternate coloured rows!</p>
+        <ul>
+          <li>Manually reload Content, Structure, and Relations.</li>
+          <li>Show Table schema, content, and constraint relationships.</li>
+          <li>Properly handle compound queries.</li>
+          <li>Fix PostgreSQL table switch.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.0" date="2018-02-18">
       <description>
         <p>Complete rewrite of the entire code base!</p>

@@ -1,3 +1,12 @@
+com.github.alecaddd.sequeler (0.5.1) xenial; urgency=medium
+
+  * Alternate coloured rows!
+  * Manually reload Content, Structure, and Relations.
+  * Properly handle compound queries.
+  * Fix PostgreSQL table switch.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Mon, 19 Feb 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.5.0) xenial; urgency=medium
 
   * Complete rewrite of the entire code base!
