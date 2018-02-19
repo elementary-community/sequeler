@@ -112,7 +112,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
 		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
-		info_bar.attach (build_export_btn (), 1, 0, 1, 1);
+		// info_bar.attach (build_export_btn (), 1, 0, 1, 1);
 
 		results_view.attach (action_bar, 0, 0, 1, 1);
 		results_view.attach (scroll_results, 0, 1, 1, 1);
