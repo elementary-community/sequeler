@@ -28,6 +28,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.Label loading_msg;
 	public Gtk.Label result_message;
 	public Gtk.Button run_button;
+	public Gtk.MenuButton export_button;
 
 	public Sequeler.Partials.TreeBuilder result_data;
 
@@ -111,6 +112,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
 		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
+		info_bar.attach (build_export_btn (), 1, 0, 1, 1);
 
 		results_view.attach (action_bar, 0, 0, 1, 1);
 		results_view.attach (scroll_results, 0, 1, 1, 1);
@@ -160,6 +162,31 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		result_message.wrap = true;
 
 		return result_message;
+	}
+
+	public Gtk.Button build_export_btn () {
+		var export_image = new Gtk.Image.from_icon_name ("document-save-symbolic", Gtk.IconSize.BUTTON);
+		export_button = new Gtk.MenuButton ();
+		export_button.label = _("Export Results");
+		export_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+		export_button.always_show_image = true;
+		export_button.set_image (export_image);
+		export_button.can_focus = false;
+
+		var export_menu = new Gtk.Menu ();
+		var export_sql = new Gtk.MenuItem.with_label (_("Export as Sql"));
+		var export_csv = new Gtk.MenuItem.with_label (_("Export as Csv"));
+		var export_text = new Gtk.MenuItem.with_label (_("Export as Text"));
+		export_menu.add (export_sql);
+		export_menu.add (export_csv);
+		export_menu.add (export_text);
+		export_menu.show_all ();
+
+		export_button.popup = export_menu;
+		export_button.direction = Gtk.ArrowType.UP;
+		export_button.sensitive = false;
+
+		return export_button;
 	}
 
 	public void run_query (string query) {
@@ -235,6 +262,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			toggle_loading_msg (false);
 			spinner.stop ();
 			result_message.label = _("Unable to process Query!");
+			export_button.sensitive = false;
 			return;
 		}
 
@@ -250,6 +278,12 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		scroll_results.add (result_data);
 		scroll_results.show_all ();
+
+		if (response.get_n_rows () == 0) {
+			export_button.sensitive = false;
+		} else {
+			export_button.sensitive = true;
+		}
 	}
 
 	public void handle_query_response (int response) {
