@@ -48,6 +48,7 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
 		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
+		info_bar.attach (build_reload_btn (), 1, 0, 1, 1);
 
 		attach (scroll, 0, 0, 1, 1);
 		attach (info_bar, 0, 1, 1, 1);
@@ -64,6 +65,14 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		result_message.wrap = true;
 
 		return result_message;
+	}
+
+	private Gtk.Button build_reload_btn () {
+		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Results"));
+		reload_btn.clicked.connect (reload_results);
+		reload_btn.halign = Gtk.Align.END;
+
+		return reload_btn;
 	}
 
 	public void placeholder () {
@@ -100,6 +109,28 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		table_name = table;
 
 		var query = (window.main.connection.db_type as DataBaseType).show_table_structure (table);
+
+		var table_schema = get_table_schema (query);
+
+		if (table_schema == null) {
+			return;
+		}
+
+		var result_data = new Sequeler.Partials.TreeBuilder (table_schema, window);
+		result_message.label = table_schema.get_n_rows ().to_string () + _(" Fields");
+
+		clear ();
+
+		scroll.add (result_data);
+		scroll.show_all ();
+	}
+
+	public void reload_results () {
+		if (table_name == "") {
+			return;
+		}
+
+		var query = (window.main.connection.db_type as DataBaseType).show_table_structure (table_name);
 
 		var table_schema = get_table_schema (query);
 
