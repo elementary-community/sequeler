@@ -194,7 +194,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		spinner.start ();
 		result_message.label = "\u2026";
 
-		if ("select" in query.down ()) {
+		var select_pos = query.down ().index_of ("select", 0);
+		var show_pos = query.down ().index_of ("show", 0);
+
+		if (select_pos == 0 || show_pos == 0) {
 			handle_select_response (select_statement (query));
 		} else {
 			handle_query_response (non_select_statement (query));
