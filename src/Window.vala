@@ -20,79 +20,80 @@
 */
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
-    public weak Sequeler.Application app { get; construct; }
+	public weak Sequeler.Application app { get; construct; }
 
-    public Sequeler.Layouts.Main main;
-    public Sequeler.Layouts.HeaderBar headerbar;
-    public Sequeler.Services.ActionManager action_manager;
-    public Sequeler.Services.DataManager data_manager;
-    public Sequeler.Widgets.SettingsDialog? settings_dialog = null;
-    public Sequeler.Widgets.ConnectionDialog? connection_dialog = null;
+	public Sequeler.Layouts.Main main;
+	public Sequeler.Layouts.HeaderBar headerbar;
+	public Sequeler.Services.ActionManager action_manager;
+	public Sequeler.Services.DataManager data_manager;
+	public Sequeler.Widgets.SettingsDialog? settings_dialog = null;
+	public Sequeler.Widgets.ConnectionDialog? connection_dialog = null;
 
-    public Gtk.AccelGroup accel_group { get; construct; }
+	public Gtk.AccelGroup accel_group { get; construct; }
 
-    public Window (Sequeler.Application sequeler_app) {
-        Object (
-            application: sequeler_app,
-            app: sequeler_app,
-            icon_name: "com.github.alecaddd.sequeler"
-        );
-    }
+	public Window (Sequeler.Application sequeler_app) {
+		Object (
+			application: sequeler_app,
+			app: sequeler_app,
+			icon_name: "com.github.alecaddd.sequeler"
+		);
+	}
 
-    construct {
-        accel_group = new Gtk.AccelGroup ();
-        add_accel_group (accel_group);
+	construct {
+		accel_group = new Gtk.AccelGroup ();
+		add_accel_group (accel_group);
 
-        main = new Sequeler.Layouts.Main (this);
-        headerbar = new Sequeler.Layouts.HeaderBar (this);
-        action_manager = new Sequeler.Services.ActionManager (app, this);
-        data_manager = new Sequeler.Services.DataManager ();
+		main = new Sequeler.Layouts.Main (this);
+		headerbar = new Sequeler.Layouts.HeaderBar (this);
+		action_manager = new Sequeler.Services.ActionManager (app, this);
+		data_manager = new Sequeler.Services.DataManager ();
 
-        build_ui ();
+		build_ui ();
 
-        move (settings.pos_x, settings.pos_y);
-        resize (settings.window_width, settings.window_height);
+		move (settings.pos_x, settings.pos_y);
+		resize (settings.window_width, settings.window_height);
 
-        show_app ();
-    }
+		show_app ();
+	}
 
-    private void build_ui () {
-        Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
+	private void build_ui () {
+		Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
 
-        var css_provider = new Gtk.CssProvider ();
-        css_provider.load_from_resource ("/com/github/alecaddd/sequeler/stylesheet.css");
-        
-        Gtk.StyleContext.add_provider_for_screen (
-            Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        );
+		var css_provider = new Gtk.CssProvider ();
+		css_provider.load_from_resource ("/com/github/alecaddd/sequeler/stylesheet.css");
+		
+		Gtk.StyleContext.add_provider_for_screen (
+			Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+		);
 
-        set_titlebar (headerbar);
+		set_titlebar (headerbar);
 
-        set_border_width (0);
+		set_border_width (0);
 
-        delete_event.connect ((e) => {
-            return before_destroy ();
-        });
+		delete_event.connect ((e) => {
+			return before_destroy ();
+		});
 
-        add (main);
-    }
+		add (main);
+	}
 
-    public bool before_destroy () {
-        app.get_active_window ().destroy ();
-        on_destroy ();
-        return true;
-    }
+	public bool before_destroy () {
+		update_status ();
+		app.get_active_window ().destroy ();
+		on_destroy ();
+		return true;
+	}
 
-    public void on_destroy () {
-        uint length = app.windows.length ();
+	public void on_destroy () {
+		uint length = app.windows.length ();
 
-        if (length == 0) {
-            Gtk.main_quit ();
-        }
-    }
+		if (length == 0) {
+			Gtk.main_quit ();
+		}
+	}
 
-    protected override bool delete_event (Gdk.EventAny event) {
-        int width, height, x, y;
+	private void update_status () {
+		int width, height, x, y;
 
         get_size (out width, out height);
         get_position (out x, out y);
@@ -101,13 +102,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         settings.pos_y = y;
         settings.window_width = width;
         settings.window_height = height;
+	}
 
-        return false;
-    }
-
-    public void show_app () {
-        show_all ();
-        show ();
-        present ();
-    }
+	public void show_app () {
+		show_all ();
+		show ();
+		present ();
+	}
 }
