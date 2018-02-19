@@ -271,6 +271,10 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	private void update_connection () {
+		if (window.data_manager.data["type"] == "PostgreSQL") {
+			return;
+		}
+
 		schema_list_combo.sensitive = false;
 
 		if (scroll.get_child () != null) {
