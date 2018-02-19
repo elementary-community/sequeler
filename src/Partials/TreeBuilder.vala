@@ -37,12 +37,12 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 
 		var tot_columns = data.get_n_columns ();
 
-		var theTypes = new GLib.Type[tot_columns];
+		var theTypes = new GLib.Type[tot_columns+1];
 		for (int col = 0; col < tot_columns; col++) {
 			theTypes[col] = data.describe_column (col).get_g_type ();
 
 			var title = data.get_column_title (col).replace ("_", "__");
-			column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", col, null);
+			column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", col, "background", tot_columns, null);
 			column.clickable = true;
 			column.resizable = true;
 			column.expand = true;
@@ -53,13 +53,21 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			this.append_column (column);
 		}
 
+		theTypes[tot_columns] = typeof (string);
+
 		var store = new Gtk.ListStore.newv (theTypes);
 		Gda.DataModelIter _iter = data.create_iter ();
 		Gtk.TreeIter iter;
 		var error_message = GLib.Value (typeof (string));
+		var background = "rgba(255,255,255,0.05)";
 
 		while (_iter.move_next ()) {
 			store.append (out iter);
+			if (background == "rgba(255,255,255,0.05)") {
+				background = "rgba(0,0,0,0.05)";
+			} else {
+				background = "rgba(255,255,255,0.05)";
+			}
 			for (int i = 0; i < tot_columns; i++) {
 				try {
 					store.set_value (iter, i, _iter.get_value_at_e (i));
@@ -67,6 +75,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 					error_message.set_string ("Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ());
 				}
 			}
+			store.set_value (iter, tot_columns, background);
 		}
 
 		if (error_message.get_string () != null) {
