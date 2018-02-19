@@ -229,7 +229,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return result;
 	}
 
-	public int non_select_statement (string query) {
+	public int? non_select_statement (string query) {
 		int result = 0;
 		var error = "";
 
@@ -251,7 +251,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			toggle_loading_msg (false);
 			spinner.stop ();
 			result_message.label = error;
-			return 0;
+			return null;
 		}
 
 		return result;
@@ -286,7 +286,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		}
 	}
 
-	public void handle_query_response (int response) {
+	public void handle_query_response (int? response) {
 		toggle_loading_msg (false);
 		spinner.stop ();
 
@@ -294,16 +294,17 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			scroll_results.remove (result_data);
 		}
 
-		if (response == 0) {
+		if (response == null) {
 			result_message.label = _("Unable to process Query!");
-		} else if (response < 0) {
-			result_message.label = _("Query Executed!");
-		} else {
-			result_message.label = _("Query Successfully Executed! Rows affected: ") + response.to_string ();
+			return;
 		}
 
-		if (response != 0) {
-			window.main.database_schema.reload_schema ();
+		if (response > 0) {
+			result_message.label = _("Query Successfully Executed! Rows affected: ") + response.to_string ();
+		} else {
+			result_message.label = _("Query Executed!");
 		}
+
+		window.main.database_schema.reload_schema ();
 	}
 }
