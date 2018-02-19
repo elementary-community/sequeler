@@ -23,6 +23,9 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public weak Sequeler.Window window { get; construct; }
 	public Gda.DataModel data { get; construct; }
 
+	private string bg_light = "rgba(255,255,255,0.05)";
+	private string bg_dark = "rgba(0,0,0,0.05)";
+
 	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window) {
 		Object (
 			window: main_window,
@@ -59,15 +62,18 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		Gda.DataModelIter _iter = data.create_iter ();
 		Gtk.TreeIter iter;
 		var error_message = GLib.Value (typeof (string));
-		var background = "rgba(255,255,255,0.05)";
+		var background = bg_light;
 
 		while (_iter.move_next ()) {
-			store.append (out iter);
-			if (background == "rgba(255,255,255,0.05)") {
-				background = "rgba(0,0,0,0.05)";
+
+			if (_iter.get_row () % 2 == 0) {
+				background = bg_light;
 			} else {
-				background = "rgba(255,255,255,0.05)";
+				background = bg_dark;
 			}
+
+			store.append (out iter);
+
 			for (int i = 0; i < tot_columns; i++) {
 				try {
 					store.set_value (iter, i, _iter.get_value_at_e (i));
