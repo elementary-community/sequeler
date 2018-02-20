@@ -26,6 +26,15 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.2" date="2018-02-20">
+      <description>
+        <p>Little side dish update.</p>
+        <ul>
+          <li>Fixed save window state on close.</li>
+          <li>Bug fixes and improvements.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.1" date="2018-02-19">
       <description>
         <p>Alternate coloured rows!</p>
