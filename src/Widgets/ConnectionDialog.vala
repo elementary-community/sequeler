@@ -124,7 +124,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.column_spacing = 20;
 
 		var title_label = new Sequeler.Partials.LabelForm (_("Connection Name:"));
-		title_entry = new Sequeler.Partials.Entry (_("Connection's name"), title);
+		title_entry = new Sequeler.Partials.Entry (_("Connection's name"), _("New Connection"));
 		title_entry.changed.connect (() => {
 			header_title.label = title_entry.text;
 		});
@@ -380,6 +380,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 	private void init_connection_begin () {
 		var data = package_data ();
+		var result = new Gee.HashMap<string, string> ();
 
 		toggle_spinner (true);
 		write_response (_("Connecting\u2026"));
@@ -389,20 +390,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		var loop = new MainLoop ();
 		connection.init_connection.begin (connection, (obj, res) => {
 			try {
-				Gee.HashMap<string, string> result = connection.init_connection.end (res);
-				if (result["status"] == "true") {
-					loop.quit ();
-					destroy ();
-
-					if (settings.save_quick) {
-						window.main.library.check_add_item (data);
-					}
-
-					window.main.connection_opened (connection);
-				} else {
-					write_response (result["msg"]);
-					toggle_spinner (false);
-				}
+				result = connection.init_connection.end (res);
 			} catch (ThreadError e) {
 				write_response (e.message);
 				toggle_spinner (false);
@@ -411,6 +399,20 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		});
 
 		loop.run();
+
+		if (result["status"] == "true") {
+			destroy ();
+
+			if (settings.save_quick) {
+				window.main.library.check_add_item (data);
+			}
+
+			window.data_manager.data = data;
+			window.main.connection_opened (connection);
+		} else {
+			write_response (result["msg"]);
+			toggle_spinner (false);
+		}
 	}
 
 	private Gee.HashMap<string, string> package_data () {
