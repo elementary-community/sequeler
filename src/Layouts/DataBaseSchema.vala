@@ -223,6 +223,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		while (_iter.move_next ()) {
 			var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
 			item.editable = true;
+			item.icon = new GLib.ThemedIcon ("drive-harddisk");
 			item.edited.connect ((new_name) => {
 				if (new_name != item.name) {
 					edit_table_name (item.name, new_name);
