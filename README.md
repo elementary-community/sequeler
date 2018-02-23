@@ -21,6 +21,21 @@ You can install Sequeler by compiling from the source, here's the list of depend
  - `libgda-5.0`
  - `gtksourceview-3.0`
 
+**Arch Based**
+ - `vala`
+ - `granite-git`
+ - `libgee`
+ - `libxml2`
+ - `libgda`
+ - `gtksourceview3`
+ - `libgda-mysql`
+ - `libgda-postgres`
+
+Installation using AUR and Yaourt:
+```
+yaourt -S vala granite-git libgee libxml2 libgda gtksourceview3 libgda-mysql libgda-postgres
+```
+
 ## Building
 ```
 mkdir build/ && cd build
