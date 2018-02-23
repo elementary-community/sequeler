@@ -146,7 +146,18 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			i++;
 		}
 
-		schema_list_combo.sensitive = true;
+		if (window.data_manager.data["type"] != "PostgreSQL") {
+			schema_list_combo.sensitive = true;
+		}
+
+		if (window.data_manager.data["type"] == "PostgreSQL") {
+			foreach (var entry in schemas.entries) {
+				if ("public" == entry.value) {
+					schema_list_combo.set_active (entry.key);
+				}
+			}
+			return;
+		}
 
 		foreach (var entry in schemas.entries) {
 			if (window.data_manager.data["name"] == entry.value) {
@@ -183,7 +194,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public void populate_schema (string? database, Gda.DataModel? schema) {
-		if (database != null && window.data_manager.data["name"] != database) {
+		if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
 			window.data_manager.data["name"] = database;
 			update_connection ();
 			return;
