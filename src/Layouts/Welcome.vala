@@ -36,6 +36,7 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
         vexpand = true;
 
         append ("bookmark-new", _("Add a New Database"), _("Connect to a Database and Save it in your Library"));
+        append ("folder-download", _("Import Connections"), _("Import Previously Exported Sequeler Connections"));
 
         activated.connect ( index => {
             switch (index) {
