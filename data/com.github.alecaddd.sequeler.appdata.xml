@@ -26,6 +26,17 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.4" date="2018-02-24">
+      <description>
+        <p>New Icon and Import/Export Library.</p>
+        <ul>
+          <li>Fancy new icon.</li>
+          <li>Import and Export connections library.</li>
+          <li>Fixed random crash when opening and closing multiple connections.</li>
+          <li>Bug fixes and improvements.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.3" date="2018-02-23">
       <description>
         <p>Bug fixes and improvements.</p>

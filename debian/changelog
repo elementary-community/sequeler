@@ -1,3 +1,13 @@
+com.github.alecaddd.sequeler (0.5.4) xenial; urgency=medium
+
+  * New Icon and Import/Export Library.
+  * Fancy new icon.
+  * Import and Export connections library.
+  * Fixed random crash when opening and closing multiple connections.
+  * Bug fixes and improvements.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 24 Feb 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.5.3) xenial; urgency=medium
 
   * Bug fixes and improvements.
