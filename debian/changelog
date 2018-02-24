@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.5.3) xenial; urgency=medium
+
+  * Bug fixes and improvements.
+  * Fixed PostgreSQL Schema show options.
+  * Fixed crash on new connection dialog when opening the connection before saving.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 23 Feb 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.5.2) xenial; urgency=medium
 
   * Fixed save window state on close.
