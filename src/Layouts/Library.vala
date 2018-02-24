@@ -265,7 +265,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		foreach (var lib in library) {
 			var array = settings.arraify_data (lib);
-			buffer_content += settings.stringify_data (array);
+			buffer_content += settings.stringify_data (array) + "---\n";
 		}
 
 		buffer.set_text (buffer_content);
