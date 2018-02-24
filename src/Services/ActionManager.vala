@@ -78,15 +78,13 @@ public class Sequeler.Services.ActionManager : Object {
 		window.headerbar.toggle_logout ();
 		window.headerbar.title = APP_NAME;
 		window.headerbar.subtitle = null;
-		window.main.connection_closed ();
-		window.data_manager.data = null;
 
 		if (window.main.database_schema.scroll.get_child () != null) {
 			window.main.database_schema.scroll.remove (window.main.database_schema.scroll.get_child ());
 		}
 
 		window.main.database_view.query.buffer.text = "";
-		window.main.database_view.query.export_button.sensitive = false;
+		// window.main.database_view.query.export_button.sensitive = false;
 
 		window.main.database_view.structure.reset ();
 		window.main.database_view.structure.table_name = "";
@@ -96,6 +94,9 @@ public class Sequeler.Services.ActionManager : Object {
 	
 		window.main.database_view.relations.reset ();
 		window.main.database_view.relations.table_name = "";
+
+		window.main.connection_closed ();
+		window.data_manager.data = null;
 	}
 
 	private void action_preferences () {

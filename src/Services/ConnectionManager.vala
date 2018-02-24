@@ -28,7 +28,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		set { _db_type = value; }
 	}
 
-	public Gda.Connection connection;
+	public Gda.Connection? connection { get; set; default = null; }
 	public Gda.DataModel? output_select;
 
 	public ConnectionManager (Gee.HashMap<string, string> data) {
@@ -80,12 +80,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return connection.execute_non_select_command (query);
 	}
 
-	public Gda.DataModel? run_select (string query) throws Error requires (connection.is_opened ()) {
+	public Gda.DataModel? run_select (string query) throws Error {
 		return connection.execute_select_command (query);
-	}
-
-	public void close () {
-		connection.close ();
 	}
 
 	public async Gee.HashMap<string, string> init_connection (Sequeler.Services.ConnectionManager connection) throws ThreadError {
@@ -94,14 +90,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 		SourceFunc callback = init_connection.callback;
 
 		new Thread <void*> (null, () => {
-			bool result = false;
+			bool result = true;
 			string msg = "";
 
 			try {
 				connection.open ();
-				if (connection.connection.is_opened ()) {
-					result = true;
-				}
 			}
 			catch (Error e) {
 				result = false;
@@ -109,8 +102,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 			}
 
 			Idle.add((owned) callback);
-			output["status"] = result.to_string ();
 			output["msg"] = msg;
+			output["status"] = result.to_string ();
 
 			return null;
 		});
@@ -121,12 +114,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public async Gda.DataModel? init_select_query (string query) throws ThreadError {
-		output_select = null;
+		Gda.DataModel? result = null;
 		SourceFunc callback = init_select_query.callback;
 		var error = "";
 
 		new Thread <void*> (null, () => {
-			Gda.DataModel? result = null;
 			try {
 				result = run_select (query);
 			}
@@ -135,7 +127,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 				result = null;
 			}
 			Idle.add((owned) callback);
-			output_select = result;
 			return null;
 		});
 
@@ -146,7 +137,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			return null;
 		}
 
-		return output_select;
+		return result;
 	}
 
 	public async int init_query (string query) throws ThreadError {
