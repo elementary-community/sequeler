@@ -22,6 +22,9 @@
 public class Sequeler.Layouts.Library : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	GLib.File? file;
+	Gtk.TextBuffer buffer;
+
 	public Gtk.FlowBox item_box;
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
@@ -53,9 +56,14 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
 		reload_btn.clicked.connect (reload_library);
 
+		var export_btn = new Sequeler.Partials.HeaderBarButton ("document-save-symbolic", _("Export Library"));
+		export_btn.clicked.connect (export_library);
+
 		toolbar.attach (reload_btn, 0, 0, 1, 1);
 		toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
-		toolbar.attach (delete_all, 2, 0, 1, 1);
+		toolbar.attach (export_btn, 2, 0, 1, 1);
+		toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 3, 0, 1, 1);
+		toolbar.attach (delete_all, 4, 0, 1, 1);
 
 		scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
@@ -222,8 +230,74 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		loop.run();
 	}
 
+	private void export_library () {
+		file = null;
+		buffer = new Gtk.TextBuffer (null);
+
+		var save_dialog = new Gtk.FileChooserDialog ("Pick a file",
+													 window,
+													 Gtk.FileChooserAction.SAVE,
+													 Gtk.Stock.CANCEL,
+													 Gtk.ResponseType.CANCEL,
+													 Gtk.Stock.SAVE,
+													 Gtk.ResponseType.ACCEPT);
+
+		save_dialog.set_do_overwrite_confirmation (true);
+		save_dialog.set_modal (true);
+		save_dialog.response.connect ((dialog,response_id) => {
+			switch (response_id) {
+				case Gtk.ResponseType.ACCEPT:
+					file = save_dialog.get_file ();
+					save_to_file ();
+					break;
+				default:
+					break;
+			}
+			dialog.destroy ();
+		});
+
+		save_dialog.show ();
+	}
+
+	private void save_to_file () {
+		var buffer_content = "";
+		var library = settings.saved_connections;
+
+		foreach (var lib in library) {
+			var array = settings.arraify_data (lib);
+			buffer_content += settings.stringify_data (array);
+		}
+
+		buffer.set_text (buffer_content);
+
+		Gtk.TextIter start;
+		Gtk.TextIter end;
+
+		buffer.get_bounds (out start, out end);
+		string current_contents = buffer.get_text (start, end, false);
+		try {
+			file.replace_contents (current_contents.data, null, false, GLib.FileCreateFlags.NONE, null, null);
+		}
+		catch (GLib.Error err) {
+			export_warning (err.message);
+		}
+	}
+
 	private void connection_warning (string message, string title) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
+		message_dialog.transient_for = window;
+		
+		var suggested_button = new Gtk.Button.with_label ("Close");
+		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+		message_dialog.show_all ();
+		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
+		
+		message_dialog.destroy ();
+	}
+
+	private void export_warning (string message) {
+		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Export Library "), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
 		
 		var suggested_button = new Gtk.Button.with_label ("Close");
