@@ -26,6 +26,15 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.3" date="2018-02-23">
+      <description>
+        <p>Bug fixes and improvements.</p>
+        <ul>
+          <li>Fixed PostgreSQL Schema show options.</li>
+          <li>Fixed crash on new connection dialog when opening the connection before saving.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.2" date="2018-02-20">
       <description>
         <p>Little side dish update.</p>
