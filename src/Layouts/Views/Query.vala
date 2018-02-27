@@ -76,7 +76,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		try
 		{
 			var style = new Gtk.CssProvider ();
-			style.load_from_data ("* {font: %s;}".printf ("Droid Sans Mono 11"), -1);
+			var font_name = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
+			style.load_from_data ("* {font: %s;}".printf (font_name), -1);
 			query_builder.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 		}
 		catch (Error e)
