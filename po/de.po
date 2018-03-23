@@ -2,4 +2,196 @@ msgid ""
 msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: Peter Nerlich <peter.nerlich+dev@googlemail.com>\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: de\n"
+
+#: ../src/Window.vala:123
+msgid "Welcome"
+msgstr "Willkommen"
+
+#: ../src/Window.vala:129
+msgid "Connection Saved!"
+msgstr "Verbindung gespeichert!"
+
+#: ../src/Widgets/Welcome.vala:42
+msgid "Welcome to Sequeler"
+msgstr "Willkommen bei Sequeler"
+
+#: ../src/Widgets/Welcome.vala:42
+msgid "Connect to any Local or Remote Database"
+msgstr "Zu einer lokalen oder entfernten Datenbank verbinden"
+
+#: ../src/Widgets/Welcome.vala:45
+msgid "Add New Database"
+msgstr "Neue Datenbank hinzufügen"
+
+#: ../src/Widgets/Welcome.vala:45
+msgid "Connect to a Database and save it in your Library."
+msgstr "Zu einer Datenbank verbinden und in Bibliothek speichern."
+
+#: ../src/Widgets/Welcome.vala:48
+msgid "Browse Library"
+msgstr "Bibliothek einsehen"
+
+#: ../src/Widgets/Welcome.vala:48
+msgid "Browse through all your saved Databases."
+msgstr "Alle gespeicherten Datenbanken einsehen."
+
+#: ../src/Widgets/ConnectionDialog.vala:51 ../src/Partials/HeaderBar.vala:71
+msgid "New Connection"
+msgstr "Neue Verbindung"
+
+#: ../src/Widgets/ConnectionDialog.vala:61
+#: ../src/Widgets/SettingsDialog.vala:64
+msgid "Close"
+msgstr "Schließen"
+
+#: ../src/Widgets/ConnectionDialog.vala:63
+msgid "Test Connection"
+msgstr "Verbindung testen"
+
+#: ../src/Widgets/ConnectionDialog.vala:66
+msgid "Save Connection"
+msgstr "Verbindung speichern"
+
+#: ../src/Widgets/ConnectionDialog.vala:68 ../src/Widgets/Library.vala:115
+msgid "Connect"
+msgstr "Verbinden"
+
+#: ../src/Widgets/ConnectionDialog.vala:234
+msgid "Name:"
+msgstr "Name:"
+
+#: ../src/Widgets/ConnectionDialog.vala:235
+msgid "Connection's name"
+msgstr "Name der Verbindung"
+
+#: ../src/Widgets/ConnectionDialog.vala:237
+msgid "Color:"
+msgstr "Farbe:"
+
+#: ../src/Widgets/ConnectionDialog.vala:241
+msgid "Host:"
+msgstr "Host:"
+
+#: ../src/Widgets/ConnectionDialog.vala:242
+msgid "127.0.0.1"
+msgstr "127.0.0.1"
+
+#: ../src/Widgets/ConnectionDialog.vala:244
+msgid "Database Type:"
+msgstr "Datenbanktyp:"
+
+#: ../src/Widgets/ConnectionDialog.vala:262
+msgid "Database Name:"
+msgstr "Datenbankname:"
+
+#: ../src/Widgets/ConnectionDialog.vala:268
+msgid "Username:"
+msgstr "Benutzername:"
+
+#: ../src/Widgets/ConnectionDialog.vala:274
+msgid "Password:"
+msgstr "Passwort:"
+
+#: ../src/Widgets/DataBaseOpen.vala:79
+msgid "Run Query"
+msgstr "Abfrage ausführen"
+
+#: ../src/Widgets/DataBaseOpen.vala:89
+msgid "Running Query..."
+msgstr "Abfrage wird ausgeführt..."
+
+#: ../src/Widgets/DataBaseOpen.vala:93
+msgid "No Results Available"
+msgstr "Keine Ergebnisse verfügbar"
+
+#: ../src/Widgets/DataBaseOpen.vala:144 ../src/Widgets/DataBaseOpen.vala:154
+msgid "Unable to process Query!"
+msgstr "Abfrage konnte nicht verarbeitet werden!"
+
+#: ../src/Widgets/DataBaseOpen.vala:146 ../src/Widgets/DataBaseOpen.vala:168
+msgid "Query Successfully Executed!"
+msgstr "Abfrage erfolgreich ausgeführt!"
+
+#: ../src/Widgets/SettingsDialog.vala:38 ../src/Partials/HeaderBar.vala:100
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: ../src/Widgets/SettingsDialog.vala:50 ../src/Widgets/SettingsDialog.vala:78
+msgid "General"
+msgstr "Allgemein"
+
+#: ../src/Widgets/SettingsDialog.vala:51
+msgid "Interface"
+msgstr "Schnittstelle"
+
+#: ../src/Widgets/SettingsDialog.vala:80
+msgid "Automatically Save New Connections:"
+msgstr "Automatisch neue Verbindungen speichern:"
+
+#: ../src/Widgets/SettingsDialog.vala:83
+msgid "Welcome Screen"
+msgstr "Willkommensbildschirm"
+
+#: ../src/Widgets/SettingsDialog.vala:85
+msgid "Show Library (needs reload):"
+msgstr "Bibliothek anzeigen (muss neu geladen werden):"
+
+#: ../src/Widgets/SettingsDialog.vala:100
+msgid "Theme"
+msgstr "Thema"
+
+#: ../src/Widgets/SettingsDialog.vala:102
+msgid "Use Dark Theme:"
+msgstr "Dunkles Thema benutzen:"
+
+#: ../src/Widgets/SettingsDialog.vala:103
+#, fuzzy
+msgid "dark-theme"
+msgstr "dark-theme"
+
+#: ../src/Widgets/Library.vala:41
+msgid "Delete All"
+msgstr "Alles löschen"
+
+#: ../src/Widgets/Library.vala:113
+msgid "Edit Connection"
+msgstr "Verbindung bearbeiten"
+
+#: ../src/Widgets/Library.vala:114
+msgid "Delete Connection"
+msgstr "Verbindung löschen"
+
+#: ../src/Partials/HeaderBar.vala:56
+msgid "Back"
+msgstr "Zurück"
+
+#: ../src/Partials/HeaderBar.vala:62
+msgid "Logout"
+msgstr "Abmelden"
+
+#: ../src/Partials/HeaderBar.vala:76
+msgid "Search Connection"
+msgstr "Verbindung suchen"
+
+#: ../src/Partials/HeaderBar.vala:77
+msgid "Connection in Terminal"
+msgstr "Verbinde im Terminal"
+
+#: ../src/Partials/HeaderBar.vala:82
+msgid "About"
+msgstr "Über"
+
+#: ../src/Partials/HeaderBar.vala:90
+msgid "Report a Problem…"
+msgstr "Problem melden..."
+
+#: ../src/Partials/MessageDialog.vala:78
+msgid "_Close"
+msgstr "_Schließen"
+
+#: ../src/Partials/MessageDialog.vala:81
+msgid "_Cancel"
+msgstr "_Abbrechen"
