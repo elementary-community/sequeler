@@ -141,11 +141,11 @@ msgstr "Bibliothek anzeigen (muss neu geladen werden):"
 
 #: ../src/Widgets/SettingsDialog.vala:100
 msgid "Theme"
-msgstr "Thema"
+msgstr "Design"
 
 #: ../src/Widgets/SettingsDialog.vala:102
 msgid "Use Dark Theme:"
-msgstr "Dunkles Thema benutzen:"
+msgstr "Dunkles Design benutzen:"
 
 #: ../src/Widgets/SettingsDialog.vala:103
 #, fuzzy
