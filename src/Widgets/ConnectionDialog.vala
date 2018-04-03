@@ -195,6 +195,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
 		var filter = new Gtk.FileFilter ();
 		filter.add_pattern ("*.db");
+		filter.add_pattern ("*.sqlite");
+		filter.add_pattern ("*.sqlite3");
 		db_file_entry.add_filter (filter);
 
 		db_file_entry.selection_changed.connect (change_sensitivity);
