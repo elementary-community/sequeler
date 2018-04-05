@@ -6,12 +6,12 @@ Sequeler is a native Linux SQL client built in Vala and Gtk. It allows you to co
 ![](sequeler-screenshot.png)
 
 ## Get it from the elementary OS AppCenter!
-Sequeler, is primarly availabe from the AppCenter of elementary OS. Download it from there!
+Sequeler, is primarily available from the AppCenter of elementary OS. Download it from there!
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.alecaddd.sequeler)
 
 ## Install it from source
-You can install Sequeler by compiling from the source, here's the list of dependecies required:
+You can install Sequeler by compiling from source, here's the list of dependencies required:
  - `gtk+-3.0>=3.9.10`
  - `granite>=0.5.0`
  - `glib-2.0`
@@ -29,4 +29,4 @@ make && sudo make install
 ```
 
 ### Donations
-If you like Sequeler and you want to support its development, consider donating via [PayPal](https://www.paypal.me/alecaddd) or pledge on [Patreon](https://www.patreon.com/alecaddd)
+If you like Sequeler and you want to support its development, consider donating via [PayPal](https://www.paypal.me/alecaddd) or pledge on [Patreon](https://www.patreon.com/alecaddd).
