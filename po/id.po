@@ -1,4 +1,208 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-03 20:19-0700\n"
+"PO-Revision-Date: 2018-04-12 18:35+0700\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.3\n"
+"Last-Translator: Mahyuddin <yudi.al@gmail.com>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: id\n"
+
+#: ../src/Window.vala:123
+msgid "Welcome"
+msgstr "Selamat datang"
+
+#: ../src/Window.vala:129
+msgid "Connection Saved!"
+msgstr "Koneksi Tersimpan!"
+
+#: ../src/Widgets/Welcome.vala:42
+msgid "Welcome to Sequeler"
+msgstr "Selamat datang di Sequeler"
+
+#: ../src/Widgets/Welcome.vala:42
+msgid "Connect to any Local or Remote Database"
+msgstr "Hubungkan ke Basis Data Lokal atau Jauh"
+
+#: ../src/Widgets/Welcome.vala:45
+msgid "Add New Database"
+msgstr "Tambahkan Basis Data Baru"
+
+#: ../src/Widgets/Welcome.vala:45
+msgid "Connect to a Database and save it in your Library."
+msgstr "Hubungkan ke Basis Data dan simpan di Pustaka Anda."
+
+#: ../src/Widgets/Welcome.vala:48
+msgid "Browse Library"
+msgstr "Telusuri Pustaka"
+
+#: ../src/Widgets/Welcome.vala:48
+msgid "Browse through all your saved Databases."
+msgstr "Telusuri semua Basis Data Anda yang tersimpan."
+
+#: ../src/Widgets/ConnectionDialog.vala:51 ../src/Partials/HeaderBar.vala:71
+msgid "New Connection"
+msgstr "Koneksi Baru"
+
+#: ../src/Widgets/ConnectionDialog.vala:61
+#: ../src/Widgets/SettingsDialog.vala:64
+msgid "Close"
+msgstr "Tutup"
+
+#: ../src/Widgets/ConnectionDialog.vala:63
+msgid "Test Connection"
+msgstr "Uji Koneksi"
+
+#: ../src/Widgets/ConnectionDialog.vala:66
+msgid "Save Connection"
+msgstr "Simpan Koneksi"
+
+#: ../src/Widgets/ConnectionDialog.vala:68 ../src/Widgets/Library.vala:115
+msgid "Connect"
+msgstr "Menghubungkan"
+
+#: ../src/Widgets/ConnectionDialog.vala:234
+msgid "Name:"
+msgstr "Nama:"
+
+#: ../src/Widgets/ConnectionDialog.vala:235
+msgid "Connection's name"
+msgstr "Nama koneksi"
+
+#: ../src/Widgets/ConnectionDialog.vala:237
+msgid "Color:"
+msgstr "Warna:"
+
+#: ../src/Widgets/ConnectionDialog.vala:241
+msgid "Host:"
+msgstr "Utama:"
+
+#: ../src/Widgets/ConnectionDialog.vala:242
+msgid "127.0.0.1"
+msgstr "127.0.0.1"
+
+#: ../src/Widgets/ConnectionDialog.vala:244
+msgid "Database Type:"
+msgstr "Tipe Basis Data:"
+
+#: ../src/Widgets/ConnectionDialog.vala:262
+msgid "Database Name:"
+msgstr "Nama Basis Data:"
+
+#: ../src/Widgets/ConnectionDialog.vala:268
+msgid "Username:"
+msgstr "Nama pengguna:"
+
+#: ../src/Widgets/ConnectionDialog.vala:274
+msgid "Password:"
+msgstr "Kata sandi:"
+
+#: ../src/Widgets/DataBaseOpen.vala:79
+msgid "Run Query"
+msgstr "Jalankan Query"
+
+#: ../src/Widgets/DataBaseOpen.vala:89
+msgid "Running Query..."
+msgstr "Query sedang jalan..."
+
+#: ../src/Widgets/DataBaseOpen.vala:93
+msgid "No Results Available"
+msgstr "Tidak Ada hasil Yang Tersedia"
+
+#: ../src/Widgets/DataBaseOpen.vala:144 ../src/Widgets/DataBaseOpen.vala:154
+msgid "Unable to process Query!"
+msgstr "Tidak dapat memproses Query!"
+
+#: ../src/Widgets/DataBaseOpen.vala:146 ../src/Widgets/DataBaseOpen.vala:168
+msgid "Query Successfully Executed!"
+msgstr "Query Berhasil Dijalankan!"
+
+#: ../src/Widgets/SettingsDialog.vala:38 ../src/Partials/HeaderBar.vala:100
+msgid "Preferences"
+msgstr "Preferensi"
+
+#: ../src/Widgets/SettingsDialog.vala:50 ../src/Widgets/SettingsDialog.vala:78
+msgid "General"
+msgstr "Umum"
+
+#: ../src/Widgets/SettingsDialog.vala:51
+msgid "Interface"
+msgstr "Antarmuka"
+
+#: ../src/Widgets/SettingsDialog.vala:80
+msgid "Automatically Save New Connections:"
+msgstr "Simpan Koneksi Baru Secara otomatis:"
+
+#: ../src/Widgets/SettingsDialog.vala:83
+msgid "Welcome Screen"
+msgstr "Layar Selamat datang"
+
+#: ../src/Widgets/SettingsDialog.vala:85
+msgid "Show Library (needs reload):"
+msgstr "Tampilkan Pustaka (perlu memuat ulang):"
+
+#: ../src/Widgets/SettingsDialog.vala:100
+msgid "Theme"
+msgstr "Tema"
+
+#: ../src/Widgets/SettingsDialog.vala:102
+msgid "Use Dark Theme:"
+msgstr "Gunakan Tema Gelap:"
+
+#: ../src/Widgets/SettingsDialog.vala:103
+msgid "dark-theme"
+msgstr "tema-gelap"
+
+#: ../src/Widgets/Library.vala:41
+msgid "Delete All"
+msgstr "Hapus Semua"
+
+#: ../src/Widgets/Library.vala:113
+msgid "Edit Connection"
+msgstr "Sunting Koneksi"
+
+#: ../src/Widgets/Library.vala:114
+msgid "Delete Connection"
+msgstr "Hapus Koneksi"
+
+#: ../src/Partials/HeaderBar.vala:56
+msgid "Back"
+msgstr "Kembali"
+
+#: ../src/Partials/HeaderBar.vala:62
+msgid "Logout"
+msgstr "Keluar"
+
+#: ../src/Partials/HeaderBar.vala:76
+msgid "Search Connection"
+msgstr "Cari Koneksi"
+
+#: ../src/Partials/HeaderBar.vala:77
+msgid "Connection in Terminal"
+msgstr "Koneksi di Terminal"
+
+#: ../src/Partials/HeaderBar.vala:82
+msgid "About"
+msgstr "Tentang"
+
+#: ../src/Partials/HeaderBar.vala:90
+msgid "Report a Problem…"
+msgstr "Laporkan Masalah…"
+
+#: ../src/Partials/MessageDialog.vala:78
+msgid "_Close"
+msgstr "_Tutup"
+
+#: ../src/Partials/MessageDialog.vala:81
+msgid "_Cancel"
+msgstr "_Batal"
