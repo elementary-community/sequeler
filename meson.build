@@ -1,6 +1,11 @@
 # project name and programming language
 project('com.github.alecaddd.sequeler', 'vala', 'c')
 
+add_project_arguments(
+    ['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
+    language: 'vala'
+)
+
 # Include the translations module
 i18n = import('i18n')
 
