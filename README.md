@@ -20,12 +20,13 @@ You can install Sequeler by compiling from source, here's the list of dependenci
  - `libxml-2.0`
  - `libgda-5.0`
  - `gtksourceview-3.0`
+ - `meson`
 
 ## Building
 ```
-mkdir build/ && cd build
-cmake -DCMAKE_INSTALL_PREFIX=/usr ../
-make && sudo make install
+meson build --prefix=/usr
+cd build
+ninja && sudo ninja install
 ```
 
 ### Donations
