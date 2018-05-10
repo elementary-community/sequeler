@@ -15,38 +15,38 @@ config_header = configure_file(
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     meson.project_name(),
-    'Main.vala'
-    'Application.vala'
-    'Window.vala'
+    'Main.vala',
+    'Application.vala',
+    'Window.vala',
 
-    'Layouts/HeaderBar.vala'
-    'Layouts/Main.vala'
-    'Layouts/Library.vala'
-    'Layouts/Welcome.vala'
-    'Layouts/DataBaseSchema.vala'
-    'Layouts/DataBaseView.vala'
+    'Layouts/HeaderBar.vala',
+    'Layouts/Main.vala',
+    'Layouts/Library.vala',
+    'Layouts/Welcome.vala',
+    'Layouts/DataBaseSchema.vala',
+    'Layouts/DataBaseView.vala',
 
-    'Layouts/Views/Structure.vala'
-    'Layouts/Views/Content.vala'
-    'Layouts/Views/Relations.vala'
-    'Layouts/Views/Query.vala'
+    'Layouts/Views/Structure.vala',
+    'Layouts/Views/Content.vala',
+    'Layouts/Views/Relations.vala',
+    'Layouts/Views/Query.vala',
 
-    'Partials/ButtonType.vala'
-    'Partials/Helpers.vala'
-    'Partials/LibraryItem.vala'
-    'Partials/TreeBuilder.vala'
+    'Partials/ButtonType.vala',
+    'Partials/Helpers.vala',
+    'Partials/LibraryItem.vala',
+    'Partials/TreeBuilder.vala',
 
-    'Services/Settings.vala'
-    'Services/ActionManager.vala'
-    'Services/DataManager.vala'
-    'Services/ConnectionManager.vala'
+    'Services/Settings.vala',
+    'Services/ActionManager.vala',
+    'Services/DataManager.vala',
+    'Services/ConnectionManager.vala',
 
-    'Services/Types/DataBaseType.vala'
-    'Services/Types/MySQL.vala'
-    'Services/Types/PostgreSQL.vala'
-    'Services/Types/SQLite.vala'
+    'Services/Types/DataBaseType.vala',
+    'Services/Types/MySQL.vala',
+    'Services/Types/PostgreSQL.vala',
+    'Services/Types/SQLite.vala',
 
-    'Widgets/SettingsDialog.vala'
+    'Widgets/SettingsDialog.vala',
     'Widgets/ConnectionDialog.vala',
     asresources,
     config_header,
@@ -58,8 +58,6 @@ executable(
         dependency('gobject-2.0'),
         dependency('libxml-2.0'),
         dependency('libgda-5.0'),
-        dependency('libgda-5.0-mysql'),
-        dependency('libgda-5.0-postgres'),
         dependency('gtksourceview-3.0'),
     ],
     install: true
