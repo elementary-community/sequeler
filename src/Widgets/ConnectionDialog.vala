@@ -105,7 +105,6 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		header_title.hexpand = true;
 
 		color_picker = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
-		color_picker.set_use_alpha (true);
 		color_picker.get_style_context ().add_class ("color-picker");
 		color_picker.can_focus = false;
 
@@ -133,7 +132,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		var db_type_label = new Sequeler.Partials.LabelForm (_("Database Type:"));
 		var list_store = new Gtk.ListStore (1, typeof (string));
-		
+
 		for (int i = 0; i < db_types.size; i++){
 			Gtk.TreeIter iter;
 			list_store.append (out iter);
@@ -146,7 +145,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		db_type_entry.set_attributes (cell, "text", Column.DBTYPE);
 		db_type_entry.set_active (0);
-		db_type_entry.changed.connect (() => { 
+		db_type_entry.changed.connect (() => {
 			db_type_changed ();
 		});
 

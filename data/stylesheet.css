@@ -68,7 +68,7 @@ GtkColorButton.color-picker {
     background-color: transparent;
     border: 1px solid rgba(0,0,0,0.1);
     outline: none;
-    icon-shadow: transparent;
+    -gtk-icon-shadow: transparent;
     outline-color: transparent;
     text-shadow: none;
 }

@@ -54,9 +54,9 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 		var open_dialog = new Gtk.FileChooserDialog ("Select a file",
 													 window,
 													 Gtk.FileChooserAction.OPEN,
-													 Gtk.Stock.CANCEL,
+													 _("_Cancel"),
 													 Gtk.ResponseType.CANCEL,
-													 Gtk.Stock.OPEN,
+													 _("_Open"),
 													 Gtk.ResponseType.ACCEPT);
 
 		open_dialog.local_only = true;
@@ -103,13 +103,13 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 	private void import_warning (string message) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Import Library "), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
-		
+
 		var suggested_button = new Gtk.Button.with_label ("Close");
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
 		message_dialog.show_all ();
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
-		
+
 		message_dialog.destroy ();
 	}
 }

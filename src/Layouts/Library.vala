@@ -133,7 +133,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("By deleting this connection you won't be able to recover this data."), "dialog-warning", Gtk.ButtonsType.CANCEL);
 		message_dialog.transient_for = window;
-		
+
 		var suggested_button = new Gtk.Button.with_label (_("Yes, Delete!"));
 		suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
@@ -144,14 +144,14 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			item_box.remove (item);
 			reload_library ();
 		}
-		
+
 		message_dialog.destroy ();
 	}
 
 	public void confirm_delete_all () {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("All the data will be deleted and you won't be able to recover it."), "dialog-warning", Gtk.ButtonsType.CANCEL);
 		message_dialog.transient_for = window;
-		
+
 		var suggested_button = new Gtk.Button.with_label (_("Yes, Delete All!"));
 		suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
@@ -162,7 +162,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			item_box.forall ((item) => item_box.remove (item));
 			reload_library ();
 		}
-		
+
 		message_dialog.destroy ();
 	}
 
@@ -237,9 +237,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		var save_dialog = new Gtk.FileChooserDialog ("Pick a file",
 													 window,
 													 Gtk.FileChooserAction.SAVE,
-													 Gtk.Stock.CANCEL,
+													 _("_Cancel"),
 													 Gtk.ResponseType.CANCEL,
-													 Gtk.Stock.SAVE,
+													 _("_Save"),
 													 Gtk.ResponseType.ACCEPT);
 
 		save_dialog.set_do_overwrite_confirmation (true);
@@ -286,26 +286,26 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	private void connection_warning (string message, string title) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
-		
+
 		var suggested_button = new Gtk.Button.with_label ("Close");
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
 		message_dialog.show_all ();
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
-		
+
 		message_dialog.destroy ();
 	}
 
 	private void export_warning (string message) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Export Library "), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
-		
+
 		var suggested_button = new Gtk.Button.with_label ("Close");
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
 		message_dialog.show_all ();
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
-		
+
 		message_dialog.destroy ();
 	}
 }

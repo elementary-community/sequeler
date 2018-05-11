@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-09 22:44-0700\n"
+"POT-Creation-Date: 2018-05-10 20:08-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgid "New Window"
 msgstr ""
 
 #: src/Layouts/HeaderBar.vala:58 src/Layouts/HeaderBar.vala:89
-#: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:127
+#: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:126
 msgid "New Connection"
 msgstr ""
 
@@ -90,6 +90,14 @@ msgstr ""
 msgid "Yes, Delete All!"
 msgstr ""
 
+#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:57
+msgid "_Cancel"
+msgstr ""
+
+#: src/Layouts/Library.vala:242
+msgid "_Save"
+msgstr ""
+
 #: src/Layouts/Library.vala:287
 msgid "Unable to Connect to "
 msgstr ""
@@ -120,6 +128,10 @@ msgstr ""
 
 #: src/Layouts/Welcome.vala:39
 msgid "Import Previously Exported Sequeler Connections"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:59
+msgid "_Open"
 msgstr ""
 
 #: src/Layouts/Welcome.vala:104
@@ -216,7 +228,7 @@ msgstr ""
 msgid "Query Executed!"
 msgstr ""
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
 msgid "Connect"
 msgstr ""
 
@@ -240,7 +252,7 @@ msgstr ""
 msgid "Interface"
 msgstr ""
 
-#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:221
+#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
 msgid "Close"
 msgstr ""
 
@@ -260,74 +272,74 @@ msgstr ""
 msgid "Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:125
 msgid "Connection Name:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Widgets/ConnectionDialog.vala:126
 msgid "Connection's name"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:134
+#: src/Widgets/ConnectionDialog.vala:133
 msgid "Database Type:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:156
+#: src/Widgets/ConnectionDialog.vala:155
 msgid "Host:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:157
+#: src/Widgets/ConnectionDialog.vala:156
 msgid "127.0.0.1"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:162
+#: src/Widgets/ConnectionDialog.vala:161
 msgid "Database Name:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:169
+#: src/Widgets/ConnectionDialog.vala:168
 msgid "Username:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:175
+#: src/Widgets/ConnectionDialog.vala:174
 msgid "Password:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:188
+#: src/Widgets/ConnectionDialog.vala:187
 msgid "Port:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:194
+#: src/Widgets/ConnectionDialog.vala:193
 msgid "File Path:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:195
+#: src/Widgets/ConnectionDialog.vala:194
 msgid "Select your SQLite File…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:222
+#: src/Widgets/ConnectionDialog.vala:221
 msgid "Save Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:224
+#: src/Widgets/ConnectionDialog.vala:223
 msgid "Test Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:350
+#: src/Widgets/ConnectionDialog.vala:349
 msgid "Testing Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:358
+#: src/Widgets/ConnectionDialog.vala:357
 msgid "Successfully Connected!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:375
+#: src/Widgets/ConnectionDialog.vala:374
 msgid "Saving Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:380
+#: src/Widgets/ConnectionDialog.vala:379
 msgid "Connection Saved!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:388
+#: src/Widgets/ConnectionDialog.vala:387
 msgid "Connecting…"
 msgstr ""
