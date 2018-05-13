@@ -23,24 +23,15 @@ namespace Sequeler {
     public Sequeler.Services.Settings settings;
 }
 
-public class Sequeler.Application : Granite.Application {
+public class Sequeler.Application : Gtk.Application {
     public GLib.List <Window> windows;
 
     construct {
+        application_id = Constants.PROJECT_NAME;
         flags |= ApplicationFlags.HANDLES_OPEN;
-        build_data_dir = Constants.DATADIR;
-        build_pkg_data_dir = Constants.PKGDATADIR;
-        build_release_name = Constants.RELEASE_NAME;
-        build_version = Constants.VERSION;
-        build_version_info = Constants.VERSION_INFO;
 
         settings = new Sequeler.Services.Settings ();
         windows = new GLib.List <Window> ();
-
-        program_name = "Sequeler";
-        exec_name = "com.github.alecaddd.sequeler";
-        app_launcher = "com.github.alecaddd.sequeler.desktop";
-        application_id = "com.github.alecaddd.sequeler";
     }
 
     public void new_window () {

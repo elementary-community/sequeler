@@ -1,4 +1,6 @@
 conf_data = configuration_data()
+conf_data.set('PROJECT_NAME', meson.project_name())
+conf_data.set('EXEC_NAME', meson.project_name())
 conf_data.set('DATADIR', get_option('datadir'))
 conf_data.set('PKGDATADIR', get_option('datadir') + '/' + meson.project_name())
 conf_data.set('GETTEXT_PACKAGE', meson.project_name())

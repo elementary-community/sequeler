@@ -1,4 +1,5 @@
 namespace Constants {
+   public const string PROJECT_NAME = "@PROJECT_NAME@";
    public const string DATADIR = "@DATADIR@";
    public const string PKGDATADIR = "@PKGDATADIR@";
    public const string GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";
