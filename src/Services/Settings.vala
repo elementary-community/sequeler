@@ -108,4 +108,23 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 
 		return array;
 	}
+
+	// Store Password Async
+	// public virtual async void store_password_async (Geary.Service service,
+	// 													Geary.AccountInformation account_information,
+	// 													Cancellable? cancellable = null) throws Error {
+	// 	string key_name = get_key_name(service, account_information.email);
+	// 	Geary.Credentials credentials = get_credentials(service, account_information);
+
+	// 	bool result = yield Secret.password_store(Secret.SCHEMA_COMPAT_NETWORK,
+	// 		null, key_name, credentials.pass, cancellable, "user", key_name);
+	// 	if (!result)
+	// 		debug("Unable to store password for \"%s\" in libsecret keyring", key_name);
+	// }
+
+	// Get Password Async
+
+	// Delete Password Async
+
+	// Migrate Old Passwords Async
 }
