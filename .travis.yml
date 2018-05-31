@@ -36,3 +36,7 @@ script:
     --name-domain com.github.alecaddd.sequeler
     --name-human Sequeler
     --distribution $DIST
+
+branches:
+  only:
+  - master

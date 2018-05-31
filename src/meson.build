@@ -42,6 +42,7 @@ executable(
     'Services/ActionManager.vala',
     'Services/DataManager.vala',
     'Services/ConnectionManager.vala',
+    'Services/PasswordManager.vala',
 
     'Services/Types/DataBaseType.vala',
     'Services/Types/MySQL.vala',
@@ -60,6 +61,7 @@ executable(
         dependency('gobject-2.0'),
         dependency('libxml-2.0'),
         dependency('libgda-5.0'),
+        dependency('libsecret-1'),
         dependency('gtksourceview-3.0'),
     ],
     install: true
