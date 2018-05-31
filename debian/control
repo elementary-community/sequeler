@@ -23,6 +23,5 @@ Standards-Version: 3.9.3
 Package: com.github.alecaddd.sequeler
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libgda-5.0-mysql, libgda-5.0-postgres
-Pre-Depends: dpkg (>= 1.15.6)
 Description: Sequeler
  Friendly SQL Client
