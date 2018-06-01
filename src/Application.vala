@@ -21,6 +21,7 @@
 
 namespace Sequeler {
     public Sequeler.Services.Settings settings;
+    public Secret.Schema schema;
 }
 
 public class Sequeler.Application : Gtk.Application {
@@ -31,6 +32,11 @@ public class Sequeler.Application : Gtk.Application {
         flags |= ApplicationFlags.HANDLES_OPEN;
 
         settings = new Sequeler.Services.Settings ();
+        schema = new Secret.Schema ("com.github.alecaddd.sequler", Secret.SchemaFlags.NONE,
+                                 "id", Secret.SchemaAttributeType.INTEGER,
+                                 "host", Secret.SchemaAttributeType.STRING,
+                                 "username", Secret.SchemaAttributeType.STRING);
+
         windows = new GLib.List <Window> ();
     }
 
