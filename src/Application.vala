@@ -21,6 +21,7 @@
 
 namespace Sequeler {
     public Sequeler.Services.Settings settings;
+    public Sequeler.Services.PasswordManager password_mngr;
     public Secret.Schema schema;
 }
 
@@ -32,7 +33,8 @@ public class Sequeler.Application : Gtk.Application {
         flags |= ApplicationFlags.HANDLES_OPEN;
 
         settings = new Sequeler.Services.Settings ();
-        schema = new Secret.Schema ("com.github.alecaddd.sequler", Secret.SchemaFlags.NONE,
+        password_mngr = new Sequeler.Services.PasswordManager ();
+        schema = new Secret.Schema (Constants.PROJECT_NAME, Secret.SchemaFlags.NONE,
                                  "id", Secret.SchemaAttributeType.INTEGER,
                                  "host", Secret.SchemaAttributeType.STRING,
                                  "username", Secret.SchemaAttributeType.STRING);

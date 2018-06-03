@@ -22,14 +22,14 @@
 public class Sequeler.Services.PasswordManager : Object {
 
 	// Store Password Async
-	public virtual async void store_password_async (int id, string host, string username, string password) throws Error {
+	public virtual async void store_password_async (string id, string host, string username, string password) throws Error {
 
 		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["id"] = id.to_string ();
+		attributes["id"] = id;
 		attributes["host"] = host;
 		attributes["username"] = username;
 
-		var key_name = host + "." + id.to_string ();
+		var key_name = host + "." + id;
 
 		bool result = yield Secret.password_storev (schema, attributes,
                                          Secret.COLLECTION_DEFAULT,
@@ -41,13 +41,13 @@ public class Sequeler.Services.PasswordManager : Object {
 	}
 
 	// Get Password Async
-	public virtual async string? get_password_async (int id, string host, string username) throws Error {
+	public virtual async string? get_password_async (string id, string host, string username) throws Error {
 		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["id"] = id.to_string ();
+		attributes["id"] = id;
 		attributes["host"] = host;
 		attributes["username"] = username;
 
-		var key_name = host + "." + id.to_string ();
+		var key_name = host + "-" + id;
 
 		string? password = yield Secret.password_lookupv (schema, attributes, null);
 
@@ -58,19 +58,17 @@ public class Sequeler.Services.PasswordManager : Object {
 	}
 
 	// Delete Password Async
-	public virtual async void clearn_password_async (int id, string host, string username) throws Error {
+	public virtual async void clear_password_async (string id, string host, string username) throws Error {
 		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["id"] = id.to_string ();
+		attributes["id"] = id;
 		attributes["host"] = host;
 		attributes["username"] = username;
 
-		var key_name = host + "." + id.to_string ();
+		var key_name = host + "-" + id;
 
 		bool removed = yield Secret.password_clearv (schema, attributes, null);
 
 		if (removed)
 			debug("Unable to clear password in libsecret keyring for %s", key_name);
 	}
-
-	// Migrate Old Passwords Async
 }
