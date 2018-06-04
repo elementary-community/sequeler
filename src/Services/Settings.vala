@@ -28,6 +28,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	public int tot_connections { get; set; }
 	public bool dark_theme { get; set; }
 	public bool save_quick { get; set; }
+	public string version { get; set; }
 
 	public Settings () {
 		base ("com.github.alecaddd.sequeler");

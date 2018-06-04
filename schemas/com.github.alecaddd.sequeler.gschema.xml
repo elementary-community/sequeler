@@ -47,5 +47,11 @@
             <summary>Use dark theme</summary>
             <description>Switch between Light and Dark theme.</description>
         </key>
+
+        <key name="version" type="s">
+            <default>0</default>
+            <summary>Current Version</summary>
+            <description>Check current App version for upgrades on startup.</description>
+        </key>
     </schema>
 </schemalist>
