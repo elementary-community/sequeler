@@ -22,6 +22,7 @@
 namespace Sequeler {
     public Sequeler.Services.Settings settings;
     public Sequeler.Services.PasswordManager password_mngr;
+    public Sequeler.Services.UpgradeManager upgrade_mngr;
     public Secret.Schema schema;
 }
 
@@ -34,6 +35,8 @@ public class Sequeler.Application : Gtk.Application {
 
         settings = new Sequeler.Services.Settings ();
         password_mngr = new Sequeler.Services.PasswordManager ();
+        upgrade_mngr = new Sequeler.Services.UpgradeManager ();
+
         schema = new Secret.Schema (Constants.PROJECT_NAME, Secret.SchemaFlags.NONE,
                                  "id", Secret.SchemaAttributeType.INTEGER,
                                  "schema", Secret.SchemaAttributeType.STRING);

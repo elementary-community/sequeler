@@ -43,6 +43,7 @@ executable(
     'Services/DataManager.vala',
     'Services/ConnectionManager.vala',
     'Services/PasswordManager.vala',
+    'Services/UpgradeManager.vala',
 
     'Services/Types/DataBaseType.vala',
     'Services/Types/MySQL.vala',
