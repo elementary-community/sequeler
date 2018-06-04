@@ -39,7 +39,9 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
 		existing_connections.add_all_array (current_connections);
 
-		update_password.begin (data);
+		if (data["type"] != "SQLite") {
+			update_password.begin (data);
+		}
 
 		existing_connections.insert (0, stringify_data (data));
 		saved_connections = existing_connections.to_array ();
@@ -56,7 +58,9 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 			existing_connections.remove (old_data);
 		}
 
-		update_password.begin (new_data);
+		if (new_data["type"] != "SQLite") {
+			update_password.begin (new_data);
+		}
 
 		existing_connections.insert (0, stringify_data (new_data));
 
@@ -69,7 +73,9 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
 		existing_connections.add_all_array (current_connections);
 
-		delete_password.begin (data);
+		if (data["type"] != "SQLite") {
+			delete_password.begin (data);
+		}
 
 		foreach (var conn in saved_connections) {
 			var check = arraify_data (conn);
@@ -83,7 +89,10 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 
 	public void clear_connections () {
 		foreach (var conn in saved_connections) {
-			delete_password.begin (arraify_data (conn));
+			var data = arraify_data (conn);
+			if (data["type"] != "SQLite") {
+				delete_password.begin (arraify_data (conn));
+			}
 		}
 
 		Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
@@ -120,10 +129,14 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	}
 
 	public async void update_password (Gee.HashMap<string, string> data) throws Error {
-		yield password_mngr.store_password_async (data["id"], data["host"], data["username"], data["password"]);
+		var host = data["username"] != "" ? data["username"] : "127.0.0.1";
+
+		yield password_mngr.store_password_async (data["id"], host, data["username"], data["password"]);
 	}
 
 	public async void delete_password (Gee.HashMap<string, string> data) throws Error {
+		var host = data["username"] != "" ? data["username"] : "127.0.0.1";
+
 		yield password_mngr.clear_password_async (data["id"], data["host"], data["username"]);
 	}
 }

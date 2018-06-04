@@ -38,16 +38,16 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		switch (data ["type"]) {
 			case "MySQL":
-				db_type = new Sequeler.Services.Types.MySQL (); 
+				db_type = new Sequeler.Services.Types.MySQL ();
 			break;
 			case "MariaDB":
-				db_type = new Sequeler.Services.Types.MySQL (); 
+				db_type = new Sequeler.Services.Types.MySQL ();
 			break;
 			case "PostgreSQL":
-				db_type = new Sequeler.Services.Types.PostgreSQL (); 
+				db_type = new Sequeler.Services.Types.PostgreSQL ();
 			break;
 			case "SQLite":
-				db_type = new Sequeler.Services.Types.SQLite (); 
+				db_type = new Sequeler.Services.Types.SQLite ();
 			break;
 		}
 	}
