@@ -41,6 +41,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 
 		if (data["type"] != "SQLite") {
 			update_password.begin (data);
+			data.unset ("password");
 		}
 
 		existing_connections.insert (0, stringify_data (data));
@@ -60,6 +61,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 
 		if (new_data["type"] != "SQLite") {
 			update_password.begin (new_data);
+			new_data.unset ("password");
 		}
 
 		existing_connections.insert (0, stringify_data (new_data));
@@ -88,16 +90,11 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	}
 
 	public void clear_connections () {
-		foreach (var conn in saved_connections) {
-			var data = arraify_data (conn);
-			if (data["type"] != "SQLite") {
-				delete_password.begin (arraify_data (conn));
-			}
-		}
-
 		Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
 		saved_connections = empty_connection.to_array ();
 		tot_connections = 0;
+
+		delete_all_passwords.begin ();
 	}
 
 	public string stringify_data (Gee.HashMap<string, string> data) {
@@ -129,14 +126,14 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	}
 
 	public async void update_password (Gee.HashMap<string, string> data) throws Error {
-		var host = data["username"] != "" ? data["username"] : "127.0.0.1";
-
-		yield password_mngr.store_password_async (data["id"], host, data["username"], data["password"]);
+		yield password_mngr.store_password_async (data["id"], data["password"]);
 	}
 
 	public async void delete_password (Gee.HashMap<string, string> data) throws Error {
-		var host = data["username"] != "" ? data["username"] : "127.0.0.1";
+		yield password_mngr.clear_password_async (data["id"]);
+	}
 
-		yield password_mngr.clear_password_async (data["id"], data["host"], data["username"]);
+	public async void delete_all_passwords () throws Error {
+		yield password_mngr.clear_all_passwords_async ();
 	}
 }

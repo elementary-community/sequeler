@@ -239,6 +239,20 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		var update_data = window.data_manager.data;
 
+		string? old_password = "";
+
+		var loop = new MainLoop ();
+		get_password.begin (update_data["id"], (obj, res) => {
+			try {
+				old_password = get_password.end (res);
+			} catch (Error e) {
+				debug ("Unable to get the password from libsecret");
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
 		connection_id.text = update_data["id"];
 		title_entry.text = update_data["title"];
 
@@ -255,7 +269,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_host_entry.text = update_data["host"];
 		db_name_entry.text = update_data["name"];
 		db_username_entry.text = update_data["username"];
-		db_password_entry.text = update_data["password"];
+		db_password_entry.text = old_password;
 
 		if (update_data["file_path"] != null) {
 			db_file_entry.set_uri (update_data["file_path"]);
@@ -444,5 +458,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 	public void write_response (string? response_text) {
 		response_msg.label = response_text;
+	}
+
+	public async string? get_password (string id) throws Error {
+		string? password = yield password_mngr.get_password_async (id);
+
+		return password;
 	}
 }

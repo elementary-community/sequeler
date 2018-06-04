@@ -36,8 +36,7 @@ public class Sequeler.Application : Gtk.Application {
         password_mngr = new Sequeler.Services.PasswordManager ();
         schema = new Secret.Schema (Constants.PROJECT_NAME, Secret.SchemaFlags.NONE,
                                  "id", Secret.SchemaAttributeType.INTEGER,
-                                 "host", Secret.SchemaAttributeType.STRING,
-                                 "username", Secret.SchemaAttributeType.STRING);
+                                 "schema", Secret.SchemaAttributeType.STRING);
 
         windows = new GLib.List <Window> ();
     }
