@@ -33,13 +33,13 @@ public class Sequeler.Application : Gtk.Application {
         application_id = Constants.PROJECT_NAME;
         flags |= ApplicationFlags.HANDLES_OPEN;
 
-        settings = new Sequeler.Services.Settings ();
-        password_mngr = new Sequeler.Services.PasswordManager ();
-        upgrade_mngr = new Sequeler.Services.UpgradeManager ();
-
         schema = new Secret.Schema (Constants.PROJECT_NAME, Secret.SchemaFlags.NONE,
                                  "id", Secret.SchemaAttributeType.INTEGER,
                                  "schema", Secret.SchemaAttributeType.STRING);
+
+        settings = new Sequeler.Services.Settings ();
+        password_mngr = new Sequeler.Services.PasswordManager ();
+        upgrade_mngr = new Sequeler.Services.UpgradeManager ();
 
         windows = new GLib.List <Window> ();
     }

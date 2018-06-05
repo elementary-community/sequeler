@@ -49,7 +49,7 @@
         </key>
 
         <key name="version" type="s">
-            <default>0</default>
+            <default>""</default>
             <summary>Current Version</summary>
             <description>Check current App version for upgrades on startup.</description>
         </key>

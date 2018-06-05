@@ -21,16 +21,41 @@
 
 public class Sequeler.Services.UpgradeManager : Object {
 	construct {
-		// check current version
-		// trigger upgrades based on version
+		string version = settings.version;
+
+		switch (version) {
+			case "":
+				debug ("Never Upgraded");
+				upgrade_054 ();
+			case Constants.VERSION:
+				debug ("Current Version");
+		}
 	}
 
-	public void upgrade_5_4 () {
-		// do upgrades
+	public void upgrade_054 () {
+		upgrade_passwords_to_libsecret.begin ();
+
+		settings.version = Constants.VERSION;
 	}
 
 	public virtual async void upgrade_passwords_to_libsecret () throws Error {
-		// loop through connections
-		// store passwords
+		var current_connections = settings.saved_connections;
+
+		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+		existing_connections.add_all_array (current_connections);
+
+		foreach (var conn in settings.saved_connections) {
+			var check = settings.arraify_data (conn);
+
+			if (check["type"] != "SQLite" && check.has_key ("password")) {
+				settings.update_password.begin (check);
+				check.unset ("password");
+
+				existing_connections.remove (conn);
+				existing_connections.insert (0, settings.stringify_data (check));
+			}
+		}
+
+		settings.saved_connections = existing_connections.to_array ();
 	}
 }
