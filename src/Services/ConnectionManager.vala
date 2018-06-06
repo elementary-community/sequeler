@@ -36,6 +36,20 @@ public class Sequeler.Services.ConnectionManager : Object {
 			data: data
 		);
 
+		data ["password"] = "";
+
+		var loop = new MainLoop ();
+		get_password.begin (data["id"], (obj, res) => {
+			try {
+				data ["password"] = get_password.end (res);
+			} catch (Error e) {
+				debug ("Unable to get the password from libsecret");
+			}
+			loop.quit ();
+		});
+
+		loop.run ();
+
 		switch (data ["type"]) {
 			case "MySQL":
 				db_type = new Sequeler.Services.Types.MySQL ();
@@ -180,5 +194,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
 		
 		message_dialog.destroy ();
+	}
+
+	public async string? get_password (string id) throws Error {
+		string? password = yield password_mngr.get_password_async (id);
+
+		return password;
 	}
 }
