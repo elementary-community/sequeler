@@ -25,15 +25,10 @@ public class Sequeler.Services.UpgradeManager : Object {
 
 		switch (version) {
 			case "":
-				debug ("Never Upgraded");
-				upgrade_054 ();
+				upgrade_passwords_to_libsecret.begin ();
 			case Constants.VERSION:
 				debug ("Current Version");
 		}
-	}
-
-	public void upgrade_054 () {
-		upgrade_passwords_to_libsecret.begin ();
 
 		settings.version = Constants.VERSION;
 	}
