@@ -31,10 +31,6 @@ install:
 
 script:
   - houston ci
-    --type system-app
-    --name-appstream com.github.alecaddd.sequeler.desktop
-    --name-domain com.github.alecaddd.sequeler
-    --name-human Sequeler
     --distribution $DIST
 
 branches:
