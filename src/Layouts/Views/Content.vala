@@ -32,6 +32,13 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		set { _table_name = value; }
 	}
 
+	private string _database = "";
+
+	public string database {
+		get { return _database; }
+		set { _database = value; }
+	}
+
 	public Content (Sequeler.Window main_window) {
 		Object (
 			orientation: Gtk.Orientation.VERTICAL,
@@ -97,16 +104,17 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		scroll.show_all ();
 	}
 
-	public void fill (string? table) {
+	public void fill (string? table, string? db_name = null) {
 		if (table == null) {
 			return;
 		}
 
-		if (table == _table_name) {
+		if (table == _table_name && db_name == _database) {
 			return;
 		}
 
 		table_name = table;
+		database = db_name;
 
 		var query = (window.main.connection.db_type as DataBaseType).show_table_content (table);
 

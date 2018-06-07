@@ -51,7 +51,7 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 		return "SELECT * FROM " + table;
 	}
 
-	public string show_table_relations (string table) {
+	public string show_table_relations (string table, string database) {
 		return "PRAGMA foreign_key_list('" + table + "')";
 	}
 }

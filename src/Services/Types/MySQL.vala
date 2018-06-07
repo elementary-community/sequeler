@@ -46,14 +46,14 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 	}
 
 	public string show_table_structure (string table) {
-		return "SELECT * FROM information_schema.COLUMNS WHERE table_name = '" + table + "'";
+		return "DESCRIBE " + table + ";";
 	}
 
 	public string show_table_content (string table) {
 		return "SELECT * FROM " + table;
 	}
 
-	public string show_table_relations (string table) {
-		return "SELECT * FROM information_schema.TABLE_CONSTRAINTS WHERE table_name = '" + table + "'";
+	public string show_table_relations (string table, string database) {
+		return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + table + "' AND TABLE_SCHEMA = '" + database + "';";
 	}
 }
