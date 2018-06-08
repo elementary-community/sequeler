@@ -66,9 +66,5 @@ executable(
         dependency('libsecret-1'),
         dependency('gtksourceview-3.0'),
     ],
-    vala_args: [
-        meson.source_root() + '/vapi/libgda-5.0.vapi',
-        meson.source_root() + '/vapi/libsecret-1.vapi'
-    ],
     install: true
 )
