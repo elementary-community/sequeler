@@ -8,6 +8,7 @@ conf_data.set('RELEASE_NAME', 'Sequeler')
 conf_data.set('VERSION', '0.5.4')
 conf_data.set('VERSION_INFO', 'Friendly SQL Client')
 conf_data.set('PREFIX', get_option('prefix'))
+
 config_header = configure_file(
     input: 'config.vala.in',
     output: 'config.vala',
@@ -64,6 +65,10 @@ executable(
         dependency('libgda-5.0'),
         dependency('libsecret-1'),
         dependency('gtksourceview-3.0'),
+    ],
+    vala_args: [
+        meson.source_root() + '/vapi/libgda-5.0.vapi',
+        meson.source_root() + '/vapi/libsecret-1.vapi'
     ],
     install: true
 )
