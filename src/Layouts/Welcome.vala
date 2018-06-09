@@ -82,10 +82,10 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 				var imported_connections = (string) file_contents;
 				var data = imported_connections.split ("---\n");
 				foreach (var import in data) {
-					var array = settings.arraify_data (import);
 					if (import == "") {
 						continue;
 					}
+					var array = settings.arraify_data (import);
 					array["id"] = settings.tot_connections.to_string ();
 					settings.add_connection (array);
 				}

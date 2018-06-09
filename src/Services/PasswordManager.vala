@@ -29,12 +29,9 @@ public class Sequeler.Services.PasswordManager : Object {
 
 		var key_name = Constants.PROJECT_NAME + "." + id;
 
-		bool result = yield Secret.password_storev (schema, attributes,
-                                         Secret.COLLECTION_DEFAULT,
-                                         key_name, password,
-                                         null);
+		bool result = yield Secret.password_storev (schema, attributes, Secret.COLLECTION_DEFAULT, key_name, password, null);
 
-		if (!result)
+		if (! result)
 			debug("Unable to store password for \"%s\" in libsecret keyring", key_name);
 	}
 
@@ -64,7 +61,7 @@ public class Sequeler.Services.PasswordManager : Object {
 
 		bool removed = yield Secret.password_clearv (schema, attributes, null);
 
-		if (removed)
+		if (! removed)
 			debug("Unable to clear password in libsecret keyring for %s", key_name);
 	}
 
@@ -75,7 +72,7 @@ public class Sequeler.Services.PasswordManager : Object {
 
 		bool removed = yield Secret.password_clearv (schema, attributes, null);
 
-		if (removed)
+		if (! removed)
 			debug("Unable to clear all passwords in libsecret");
 	}
 }
