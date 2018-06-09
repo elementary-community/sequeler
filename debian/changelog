@@ -7,7 +7,7 @@ com.github.alecaddd.sequeler (0.5.5) xenial; urgency=medium
   * Improvements in showing MySql/MariaDB Table Structure.
   * Many more bugs for you to discover.
 
- -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 24 Feb 2018 12:28:00 -0500
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sat, 09 Jun 2018 12:28:00 -0500
 
 com.github.alecaddd.sequeler (0.5.4) xenial; urgency=medium
 
