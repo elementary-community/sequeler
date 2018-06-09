@@ -26,6 +26,19 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.5" date="2018-06-09">
+      <description>
+        <p>Improved Password Security.</p>
+        <ul>
+          <li>Safely store passwords in LibSecret.</li>
+          <li>Auto upgrade on startup to remove passwords from GSettings.</li>
+          <li>Fixes issues with identical table names from other database in the same connection.</li>
+          <li>Alphabetically ordered tables.</li>
+          <li>Improvements in showing MySql/MariaDB Table Structure.</li>
+          <li>Many more bugs for you to discover.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.4" date="2018-02-24">
       <description>
         <p>New Icon and Import/Export Library.</p>
