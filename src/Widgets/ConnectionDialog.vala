@@ -242,9 +242,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		string? old_password = "";
 
 		var loop = new MainLoop ();
-		get_password.begin (update_data["id"], (obj, res) => {
+		password_mngr.get_password_async.begin (update_data["id"], (obj, res) => {
 			try {
-				old_password = get_password.end (res);
+				old_password = password_mngr.get_password_async.end (res);
 			} catch (Error e) {
 				debug ("Unable to get the password from libsecret");
 			}
@@ -458,11 +458,5 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 	public void write_response (string? response_text) {
 		response_msg.label = response_text;
-	}
-
-	public async string? get_password (string id) throws Error {
-		string? password = yield password_mngr.get_password_async (id);
-
-		return password;
 	}
 }

@@ -269,9 +269,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			array["password"] = "";
 
 			var loop = new MainLoop ();
-			get_password.begin (array["id"], (obj, res) => {
+			password_mngr.get_password_async.begin (array["id"], (obj, res) => {
 				try {
-					array["password"] = get_password.end (res);
+					array["password"] = password_mngr.get_password_async.end (res);
 				} catch (Error e) {
 					debug ("Unable to get the password from libsecret");
 				}
@@ -322,11 +322,5 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
 
 		message_dialog.destroy ();
-	}
-
-	public async string? get_password (string id) throws Error {
-		string? password = yield password_mngr.get_password_async (id);
-
-		return password;
 	}
 }
