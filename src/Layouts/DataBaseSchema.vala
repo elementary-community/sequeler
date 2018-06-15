@@ -50,7 +50,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 	construct {
 		var dropdown_area = new Gtk.Grid ();
-		dropdown_area.column_homogeneous = true;
+		dropdown_area.column_homogeneous = false;
 		dropdown_area.get_style_context ().add_class ("library-titlebar");
 
 		var cell = new Gtk.CellRendererText ();
@@ -60,11 +60,14 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		schema_list.set (iter, Column.SCHEMAS, _("- Select Database -"));
 
 		schema_list_combo = new Gtk.ComboBox.with_model (schema_list);
+		schema_list_combo.hexpand = true;
 		schema_list_combo.pack_start (cell, false);
 		schema_list_combo.set_attributes (cell, "text", Column.SCHEMAS);
 
 		schema_list_combo.set_active (0);
-		schema_list_combo.margin = 10;
+		schema_list_combo.margin_top = 10;
+		schema_list_combo.margin_bottom = 10;
+		schema_list_combo.margin_start = 10;
 		schema_list_combo.sensitive = false;
 
 		handler_id = schema_list_combo.changed.connect (() => {
@@ -74,7 +77,11 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			populate_schema (schemas[schema_list_combo.get_active ()], null);
 		});
 
+		var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
+		search_btn.clicked.connect (toggle_search_tables);
+
 		dropdown_area.attach (schema_list_combo, 0, 0, 1, 1);
+		dropdown_area.attach (search_btn, 1, 0, 1, 1);
 
 		scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
@@ -343,6 +350,10 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		reload_schema ();
+	}
+
+	public void toggle_search_tables () {
+		
 	}
 
 	public void add_table () {
