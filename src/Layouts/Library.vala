@@ -310,7 +310,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		message_dialog.destroy ();
 	}
-
+	
 	private void export_warning (string message) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Export Library "), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
