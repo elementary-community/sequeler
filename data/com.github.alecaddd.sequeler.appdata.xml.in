@@ -26,6 +26,16 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.6" date="2018-06-25">
+      <description>
+        <p>We got Search!</p>
+        <ul>
+          <li>Search table names in sidebar.</li>
+          <li>Fixes issue in connecting directly on a non saved connection.</LI>
+          <LI>Updated Lithuanian translation.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.5" date="2018-06-09">
       <description>
         <p>Improved Password Security.</p>
