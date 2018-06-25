@@ -36,19 +36,21 @@ public class Sequeler.Services.ConnectionManager : Object {
 			data: data
 		);
 
-		data ["password"] = "";
+		if (data ["password"] == null) {
+			data ["password"] = "";
 
-		var loop = new MainLoop ();
-		password_mngr.get_password_async.begin (data["id"], (obj, res) => {
-			try {
-				data ["password"] = password_mngr.get_password_async.end (res);
-			} catch (Error e) {
-				debug ("Unable to get the password from libsecret");
-			}
-			loop.quit ();
-		});
+			var loop = new MainLoop ();
+			password_mngr.get_password_async.begin (data["id"], (obj, res) => {
+				try {
+					data ["password"] = password_mngr.get_password_async.end (res);
+				} catch (Error e) {
+					debug ("Unable to get the password from libsecret");
+				}
+				loop.quit ();
+			});
 
-		loop.run ();
+			loop.run ();
+		}
 
 		switch (data ["type"]) {
 			case "MySQL":
