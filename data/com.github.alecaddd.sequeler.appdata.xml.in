@@ -31,8 +31,8 @@
         <p>We got Search!</p>
         <ul>
           <li>Search table names in sidebar.</li>
-          <li>Fixes issue in connecting directly on a non saved connection.</LI>
-          <LI>Updated Lithuanian translation.</li>
+          <li>Fixes issue in connecting directly on a non saved connection.</li>
+          <li>Updated Lithuanian translation.</li>
         </ul>
       </description>
     </release>

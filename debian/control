@@ -19,8 +19,8 @@ Build-Depends: meson,
                libgda-5.0-mysql,
                libgda-5.0-postgres,
                libsecret-1-dev
-
 Standards-Version: 3.9.3
+
 Package: com.github.alecaddd.sequeler
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, libgda-5.0-mysql, libgda-5.0-postgres
