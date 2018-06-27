@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-12 10:54+0300\n"
+"POT-Creation-Date: 2018-06-26 16:56-0700\n"
 "PO-Revision-Date: 2018-06-12 11:12+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: \n"
@@ -100,11 +100,11 @@ msgstr "_Atsisakyti"
 msgid "_Save"
 msgstr "Į_rašyti"
 
-#: src/Layouts/Library.vala:287
+#: src/Layouts/Library.vala:302
 msgid "Unable to Connect to "
 msgstr "Nepavyko prisijungti prie "
 
-#: src/Layouts/Library.vala:300
+#: src/Layouts/Library.vala:315
 msgid "Unable to Export Library "
 msgstr "Nepavyko eksportuoti bibliotekos "
 
@@ -140,55 +140,65 @@ msgstr "_Atverti"
 msgid "Unable to Import Library "
 msgstr "Nepavyko importuoti bibliotekos "
 
-#: src/Layouts/DataBaseSchema.vala:60 src/Layouts/DataBaseSchema.vala:114
+#: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 msgid "- Select Database -"
 msgstr "- Pasirinkite duomenų bazę -"
 
-#: src/Layouts/DataBaseSchema.vala:87
+#: src/Layouts/DataBaseSchema.vala:84
+#, fuzzy
+msgid "Search Tables"
+msgstr "Pasirinkti lentelę"
+
+#: src/Layouts/DataBaseSchema.vala:95
+#, fuzzy
+msgid "Search Tables…"
+msgstr "Pasirinkti lentelę"
+
+#: src/Layouts/DataBaseSchema.vala:117
 msgid "Reload Tables"
 msgstr "Iš naujo įkelti lenteles"
 
-#: src/Layouts/DataBaseSchema.vala:92
+#: src/Layouts/DataBaseSchema.vala:122
 msgid "Add Table"
 msgstr "Pridėti lentelę"
 
-#: src/Layouts/DataBaseSchema.vala:218
+#: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr "LENTELĖS"
 
-#: src/Layouts/Views/Structure.vala:60 src/Layouts/Views/Structure.vala:94
-#: src/Layouts/Views/Content.vala:60 src/Layouts/Views/Content.vala:94
-#: src/Layouts/Views/Relations.vala:60 src/Layouts/Views/Relations.vala:94
+#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
+#: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
+#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
 #: src/Layouts/Views/Query.vala:158
 msgid "No Results Available"
 msgstr "Nėra prieinamų rezultatų"
 
-#: src/Layouts/Views/Structure.vala:71 src/Layouts/Views/Content.vala:71
-#: src/Layouts/Views/Relations.vala:71
+#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
+#: src/Layouts/Views/Relations.vala:78
 msgid "Reload Results"
 msgstr "Iš naujo įkelti rezultatus"
 
-#: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:79
-#: src/Layouts/Views/Relations.vala:79
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
 msgid "Select Table"
 msgstr "Pasirinkti lentelę"
 
-#: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:79
-#: src/Layouts/Views/Relations.vala:79
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
 "Norėdami aktyvuoti šį rodinį, pasirinkite lentelę kairiojoje šoninėje "
 "juostoje."
 
-#: src/Layouts/Views/Structure.vala:120 src/Layouts/Views/Structure.vala:142
+#: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
 msgid " Fields"
 msgstr " laukai"
 
-#: src/Layouts/Views/Content.vala:120 src/Layouts/Views/Content.vala:142
+#: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
 msgid " Entries"
 msgstr " įrašai"
 
-#: src/Layouts/Views/Relations.vala:120 src/Layouts/Views/Relations.vala:142
+#: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
 msgid " Constraints"
 msgstr " ribojimų"
 
@@ -244,7 +254,7 @@ msgstr "Taisyti ryšį"
 msgid "Delete Connection"
 msgstr "Ištrinti ryšį"
 
-#: src/Services/ConnectionManager.vala:173
+#: src/Services/ConnectionManager.vala:189
 msgid "Error!"
 msgstr "Klaida!"
 
@@ -328,23 +338,23 @@ msgstr "Įrašyti ryšį"
 msgid "Test Connection"
 msgstr "Išbandyti ryšį"
 
-#: src/Widgets/ConnectionDialog.vala:349
+#: src/Widgets/ConnectionDialog.vala:363
 msgid "Testing Connection…"
 msgstr "Išbandomas ryšys…"
 
-#: src/Widgets/ConnectionDialog.vala:357
+#: src/Widgets/ConnectionDialog.vala:371
 msgid "Successfully Connected!"
 msgstr "Sėkmingai prisijungta!"
 
-#: src/Widgets/ConnectionDialog.vala:374
+#: src/Widgets/ConnectionDialog.vala:388
 msgid "Saving Connection…"
 msgstr "Įrašomas ryšys…"
 
-#: src/Widgets/ConnectionDialog.vala:379
+#: src/Widgets/ConnectionDialog.vala:393
 msgid "Connection Saved!"
 msgstr "Ryšys įrašytas!"
 
-#: src/Widgets/ConnectionDialog.vala:387
+#: src/Widgets/ConnectionDialog.vala:401
 msgid "Connecting…"
 msgstr "Jungiamasi…"
 

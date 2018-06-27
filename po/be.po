@@ -1,5 +1,343 @@
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-26 16:56-0700\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: src/Layouts/HeaderBar.vala:48
+msgid "Logout"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:55 src/Layouts/HeaderBar.vala:84
+msgid "New Window"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:58 src/Layouts/HeaderBar.vala:89
+#: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:126
+msgid "New Connection"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:61
+msgid "Connect via Terminal"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:66
+msgid "About"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:74
+msgid "Report a Problem…"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:94 src/Widgets/SettingsDialog.vala:31
+msgid "Preferences"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:101
+msgid "Quit"
+msgstr ""
+
+#: src/Layouts/Main.vala:75
+msgid "Connected to "
+msgstr ""
+
+#: src/Layouts/Library.vala:44
+msgid "SAVED CONNECTIONS"
+msgstr ""
+
+#: src/Layouts/Library.vala:49
+msgid "Delete All"
+msgstr ""
+
+#: src/Layouts/Library.vala:56
+msgid "Reload Library"
+msgstr ""
+
+#: src/Layouts/Library.vala:59
+msgid "Export Library"
+msgstr ""
+
+#: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
+msgid "Are you sure you want to proceed?"
+msgstr ""
+
+#: src/Layouts/Library.vala:134
+msgid "By deleting this connection you won't be able to recover this data."
+msgstr ""
+
+#: src/Layouts/Library.vala:137
+msgid "Yes, Delete!"
+msgstr ""
+
+#: src/Layouts/Library.vala:152
+msgid "All the data will be deleted and you won't be able to recover it."
+msgstr ""
+
+#: src/Layouts/Library.vala:155
+msgid "Yes, Delete All!"
+msgstr ""
+
+#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:57
+msgid "_Cancel"
+msgstr ""
+
+#: src/Layouts/Library.vala:242
+msgid "_Save"
+msgstr ""
+
+#: src/Layouts/Library.vala:302
+msgid "Unable to Connect to "
+msgstr ""
+
+#: src/Layouts/Library.vala:315
+msgid "Unable to Export Library "
+msgstr ""
+
+#: src/Layouts/Welcome.vala:28
+msgid "Welcome to Sequeler"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:29
+msgid "Connect to any Local or Remote Database."
+msgstr ""
+
+#: src/Layouts/Welcome.vala:38
+msgid "Add a New Database"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:38
+msgid "Connect to a Database and Save it in your Library"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:39
+msgid "Import Connections"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:39
+msgid "Import Previously Exported Sequeler Connections"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:59
+msgid "_Open"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:104
+msgid "Unable to Import Library "
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
+msgid "- Select Database -"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:84
+msgid "Search Tables"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:95
+msgid "Search Tables…"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:117
+msgid "Reload Tables"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:122
+msgid "Add Table"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:250
+msgid "TABLES"
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
+#: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
+#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
+#: src/Layouts/Views/Query.vala:158
+msgid "No Results Available"
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
+#: src/Layouts/Views/Relations.vala:78
+msgid "Reload Results"
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
+msgid "Select Table"
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
+msgid "Select a table from the left sidebar to activate this view."
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
+msgid " Fields"
+msgstr ""
+
+#: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
+msgid " Entries"
+msgstr ""
+
+#: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
+msgid " Constraints"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:126
+msgid "Running Query…"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:143
+msgid "Run Query"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:171
+msgid "Export Results"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:178
+msgid "Export as Sql"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:179
+msgid "Export as Csv"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:180
+msgid "Export as Text"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:268 src/Layouts/Views/Query.vala:302
+msgid "Unable to process Query!"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:281
+msgid " Total Results"
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:307
+msgid "Query Successfully Executed! Rows affected: "
+msgstr ""
+
+#: src/Layouts/Views/Query.vala:309
+msgid "Query Executed!"
+msgstr ""
+
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+msgid "Connect"
+msgstr ""
+
+#: src/Partials/LibraryItem.vala:79
+msgid "Edit Connection"
+msgstr ""
+
+#: src/Partials/LibraryItem.vala:84
+msgid "Delete Connection"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:189
+msgid "Error!"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:41 src/Widgets/SettingsDialog.vala:70
+msgid "General"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:42
+msgid "Interface"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
+msgid "Close"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:71
+msgid "Auto-Save New Connections:"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:83
+msgid "Theme"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:85
+msgid "Use Dark Theme:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:61
+msgid "Connection"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:125
+msgid "Connection Name:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:126
+msgid "Connection's name"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:133
+msgid "Database Type:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:155
+msgid "Host:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:156
+msgid "127.0.0.1"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:161
+msgid "Database Name:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:168
+msgid "Username:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:174
+msgid "Password:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:187
+msgid "Port:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:193
+msgid "File Path:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:194
+msgid "Select your SQLite File…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:221
+msgid "Save Connection"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:223
+msgid "Test Connection"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:363
+msgid "Testing Connection…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:371
+msgid "Successfully Connected!"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:388
+msgid "Saving Connection…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:393
+msgid "Connection Saved!"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:401
+msgid "Connecting…"
+msgstr ""

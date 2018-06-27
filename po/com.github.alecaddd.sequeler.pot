@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-10 20:08-0700\n"
+"POT-Creation-Date: 2018-06-26 16:56-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,11 +98,11 @@ msgstr ""
 msgid "_Save"
 msgstr ""
 
-#: src/Layouts/Library.vala:287
+#: src/Layouts/Library.vala:302
 msgid "Unable to Connect to "
 msgstr ""
 
-#: src/Layouts/Library.vala:300
+#: src/Layouts/Library.vala:315
 msgid "Unable to Export Library "
 msgstr ""
 
@@ -138,53 +138,61 @@ msgstr ""
 msgid "Unable to Import Library "
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:60 src/Layouts/DataBaseSchema.vala:114
+#: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 msgid "- Select Database -"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:87
+#: src/Layouts/DataBaseSchema.vala:84
+msgid "Search Tables"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:95
+msgid "Search Tables…"
+msgstr ""
+
+#: src/Layouts/DataBaseSchema.vala:117
 msgid "Reload Tables"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:92
+#: src/Layouts/DataBaseSchema.vala:122
 msgid "Add Table"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:218
+#: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:60 src/Layouts/Views/Structure.vala:94
-#: src/Layouts/Views/Content.vala:60 src/Layouts/Views/Content.vala:94
-#: src/Layouts/Views/Relations.vala:60 src/Layouts/Views/Relations.vala:94
+#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
+#: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
+#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
 #: src/Layouts/Views/Query.vala:158
 msgid "No Results Available"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:71 src/Layouts/Views/Content.vala:71
-#: src/Layouts/Views/Relations.vala:71
+#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
+#: src/Layouts/Views/Relations.vala:78
 msgid "Reload Results"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:79
-#: src/Layouts/Views/Relations.vala:79
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
 msgid "Select Table"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:79
-#: src/Layouts/Views/Relations.vala:79
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:120 src/Layouts/Views/Structure.vala:142
+#: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
 msgid " Fields"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:120 src/Layouts/Views/Content.vala:142
+#: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
 msgid " Entries"
 msgstr ""
 
-#: src/Layouts/Views/Relations.vala:120 src/Layouts/Views/Relations.vala:142
+#: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
 msgid " Constraints"
 msgstr ""
 
@@ -240,7 +248,7 @@ msgstr ""
 msgid "Delete Connection"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:173
+#: src/Services/ConnectionManager.vala:189
 msgid "Error!"
 msgstr ""
 
@@ -324,22 +332,22 @@ msgstr ""
 msgid "Test Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:349
+#: src/Widgets/ConnectionDialog.vala:363
 msgid "Testing Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:357
+#: src/Widgets/ConnectionDialog.vala:371
 msgid "Successfully Connected!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:374
+#: src/Widgets/ConnectionDialog.vala:388
 msgid "Saving Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:379
+#: src/Widgets/ConnectionDialog.vala:393
 msgid "Connection Saved!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:387
+#: src/Widgets/ConnectionDialog.vala:401
 msgid "Connecting…"
 msgstr ""

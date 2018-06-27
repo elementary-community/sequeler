@@ -1,5 +1,346 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: com.github.alecaddd.sequeler\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-26 16:56-0700\n"
+"PO-Revision-Date: 2018-06-D26 16:56-0700\n"
+"Last-Translator: Alessandro Castellani <castellani.ale@gmail.com>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Layouts/HeaderBar.vala:48
+msgid "Logout"
+msgstr "Disconnetti"
+
+#: src/Layouts/HeaderBar.vala:55 src/Layouts/HeaderBar.vala:84
+msgid "New Window"
+msgstr "Nuova Finestra"
+
+#: src/Layouts/HeaderBar.vala:58 src/Layouts/HeaderBar.vala:89
+#: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:126
+msgid "New Connection"
+msgstr "Nuova Connessione"
+
+#: src/Layouts/HeaderBar.vala:61
+msgid "Connect via Terminal"
+msgstr "Connessione via Terminale"
+
+#: src/Layouts/HeaderBar.vala:66
+msgid "About"
+msgstr "Informazioni"
+
+#: src/Layouts/HeaderBar.vala:74
+msgid "Report a Problem…"
+msgstr "Riporta un Problema…"
+
+#: src/Layouts/HeaderBar.vala:94 src/Widgets/SettingsDialog.vala:31
+msgid "Preferences"
+msgstr "Impostazioni"
+
+#: src/Layouts/HeaderBar.vala:101
+msgid "Quit"
+msgstr "Chiudi"
+
+#: src/Layouts/Main.vala:75
+msgid "Connected to "
+msgstr "Connesso a "
+
+#: src/Layouts/Library.vala:44
+msgid "SAVED CONNECTIONS"
+msgstr "CONNESSIONI SALVATE"
+
+#: src/Layouts/Library.vala:49
+msgid "Delete All"
+msgstr "Cancella Tutto"
+
+#: src/Layouts/Library.vala:56
+msgid "Reload Library"
+msgstr "Ricarica Libreria"
+
+#: src/Layouts/Library.vala:59
+msgid "Export Library"
+msgstr "Esporta Libreria"
+
+#: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
+msgid "Are you sure you want to proceed?"
+msgstr "Sei sicuro di voler procedere?"
+
+#: src/Layouts/Library.vala:134
+msgid "By deleting this connection you won't be able to recover this data."
+msgstr "Questa connessione verrà cancellata non potrà essere recuperata."
+
+#: src/Layouts/Library.vala:137
+msgid "Yes, Delete!"
+msgstr "Si, Cancella!"
+
+#: src/Layouts/Library.vala:152
+msgid "All the data will be deleted and you won't be able to recover it."
+msgstr "Tutti i dati verranno cancellati a non potranno essere recuperati."
+
+#: src/Layouts/Library.vala:155
+msgid "Yes, Delete All!"
+msgstr "Si, Cancella Tutto!"
+
+#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:57
+msgid "_Cancel"
+msgstr ""
+
+#: src/Layouts/Library.vala:242
+msgid "_Save"
+msgstr ""
+
+#: src/Layouts/Library.vala:302
+msgid "Unable to Connect to "
+msgstr "Impossibile Connettersi a "
+
+#: src/Layouts/Library.vala:315
+msgid "Unable to Export Library "
+msgstr "Impossibile Esportare la Libreria"
+
+#: src/Layouts/Welcome.vala:28
+msgid "Welcome to Sequeler"
+msgstr "Benvenuto in Sequeler"
+
+#: src/Layouts/Welcome.vala:29
+msgid "Connect to any Local or Remote Database."
+msgstr "Collegati a qualunque Database Locale o Remoto"
+
+#: src/Layouts/Welcome.vala:38
+msgid "Add a New Database"
+msgstr "Aggiungi Database"
+
+#: src/Layouts/Welcome.vala:38
+msgid "Connect to a Database and Save it in your Library"
+msgstr "Connettiti ad un Database e Salvalo nella Libreria"
+
+#: src/Layouts/Welcome.vala:39
+msgid "Import Connections"
+msgstr "Importa Connessioni"
+
+#: src/Layouts/Welcome.vala:39
+msgid "Import Previously Exported Sequeler Connections"
+msgstr "Importa il File di Connessioni Esportato da Sequeler"
+
+#: src/Layouts/Welcome.vala:59
+msgid "_Open"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:104
+msgid "Unable to Import Library "
+msgstr "Impossibile Importare la Libreria"
+
+#: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
+msgid "- Select Database -"
+msgstr "- Seleziona Database -"
+
+#: src/Layouts/DataBaseSchema.vala:84
+msgid "Search Tables"
+msgstr "Cerca Tabelle"
+
+#: src/Layouts/DataBaseSchema.vala:95
+msgid "Search Tables…"
+msgstr "Cerca Tabelle…"
+
+#: src/Layouts/DataBaseSchema.vala:117
+msgid "Reload Tables"
+msgstr "Ricarica Tabelle"
+
+#: src/Layouts/DataBaseSchema.vala:122
+msgid "Add Table"
+msgstr "Aggiungi Tabella"
+
+#: src/Layouts/DataBaseSchema.vala:250
+msgid "TABLES"
+msgstr "TABELLE"
+
+#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
+#: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
+#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
+#: src/Layouts/Views/Query.vala:158
+msgid "No Results Available"
+msgstr "Nessun Risultato Disponibile"
+
+#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
+#: src/Layouts/Views/Relations.vala:78
+msgid "Reload Results"
+msgstr "Ricarica Risultati"
+
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
+msgid "Select Table"
+msgstr "Seleziona Tabella"
+
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Relations.vala:86
+msgid "Select a table from the left sidebar to activate this view."
+msgstr "Selezione una Tabella per attivare questa schermata"
+
+#: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
+msgid " Fields"
+msgstr " Struttura"
+
+#: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
+msgid " Entries"
+msgstr " Dati"
+
+#: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
+msgid " Constraints"
+msgstr " Relazioni"
+
+#: src/Layouts/Views/Query.vala:126
+msgid "Running Query…"
+msgstr "In esecuzione…"
+
+#: src/Layouts/Views/Query.vala:143
+msgid "Run Query"
+msgstr "Esegui Query"
+
+#: src/Layouts/Views/Query.vala:171
+msgid "Export Results"
+msgstr "Esporta Risultati"
+
+#: src/Layouts/Views/Query.vala:178
+msgid "Export as Sql"
+msgstr "Esporta come SQL"
+
+#: src/Layouts/Views/Query.vala:179
+msgid "Export as Csv"
+msgstr "Esporta come CSV"
+
+#: src/Layouts/Views/Query.vala:180
+msgid "Export as Text"
+msgstr "Esporta come File di Testo"
+
+#: src/Layouts/Views/Query.vala:268 src/Layouts/Views/Query.vala:302
+msgid "Unable to process Query!"
+msgstr "Impossibile esequire la Query"
+
+#: src/Layouts/Views/Query.vala:281
+msgid " Total Results"
+msgstr " Risultati Totali"
+
+#: src/Layouts/Views/Query.vala:307
+msgid "Query Successfully Executed! Rows affected: "
+msgstr "Query Eseguita Correttamente! Entrate Modificate: "
+
+#: src/Layouts/Views/Query.vala:309
+msgid "Query Executed!"
+msgstr "Query Eseguita"
+
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+msgid "Connect"
+msgstr "Connetti"
+
+#: src/Partials/LibraryItem.vala:79
+msgid "Edit Connection"
+msgstr "Modifica Connessione"
+
+#: src/Partials/LibraryItem.vala:84
+msgid "Delete Connection"
+msgstr "Cancella Connessione"
+
+#: src/Services/ConnectionManager.vala:189
+msgid "Error!"
+msgstr "Errore!"
+
+#: src/Widgets/SettingsDialog.vala:41 src/Widgets/SettingsDialog.vala:70
+msgid "General"
+msgstr "Generale"
+
+#: src/Widgets/SettingsDialog.vala:42
+msgid "Interface"
+msgstr "Interfaccia"
+
+#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/Widgets/SettingsDialog.vala:71
+msgid "Auto-Save New Connections:"
+msgstr "Salva automaticamente nuove connessioni"
+
+#: src/Widgets/SettingsDialog.vala:83
+msgid "Theme"
+msgstr "Tema"
+
+#: src/Widgets/SettingsDialog.vala:85
+msgid "Use Dark Theme:"
+msgstr "Usa variante scura"
+
+#: src/Widgets/ConnectionDialog.vala:61
+msgid "Connection"
+msgstr "Connessione"
+
+#: src/Widgets/ConnectionDialog.vala:125
+msgid "Connection Name:"
+msgstr "Nome Connessione:"
+
+#: src/Widgets/ConnectionDialog.vala:126
+msgid "Connection's name"
+msgstr "Nome Connessione"
+
+#: src/Widgets/ConnectionDialog.vala:133
+msgid "Database Type:"
+msgstr "Database:"
+
+#: src/Widgets/ConnectionDialog.vala:155
+msgid "Host:"
+msgstr "Host:"
+
+#: src/Widgets/ConnectionDialog.vala:156
+msgid "127.0.0.1"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:161
+msgid "Database Name:"
+msgstr "Nome Database:"
+
+#: src/Widgets/ConnectionDialog.vala:168
+msgid "Username:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:174
+msgid "Password:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:187
+msgid "Port:"
+msgstr "Porta:"
+
+#: src/Widgets/ConnectionDialog.vala:193
+msgid "File Path:"
+msgstr "Directory del File:"
+
+#: src/Widgets/ConnectionDialog.vala:194
+msgid "Select your SQLite File…"
+msgstr "Seleziona il tuo File SQL…"
+
+#: src/Widgets/ConnectionDialog.vala:221
+msgid "Save Connection"
+msgstr "Salva Connessione"
+
+#: src/Widgets/ConnectionDialog.vala:223
+msgid "Test Connection"
+msgstr "Prova Connessione"
+
+#: src/Widgets/ConnectionDialog.vala:363
+msgid "Testing Connection…"
+msgstr "Verifica Connessione in corso…"
+
+#: src/Widgets/ConnectionDialog.vala:371
+msgid "Successfully Connected!"
+msgstr "Connessione Eseguita Correttamente!"
+
+#: src/Widgets/ConnectionDialog.vala:388
+msgid "Saving Connection…"
+msgstr "Salvataggio in Corso…"
+
+#: src/Widgets/ConnectionDialog.vala:393
+msgid "Connection Saved!"
+msgstr "Connessione Salvata!"
+
+#: src/Widgets/ConnectionDialog.vala:401
+msgid "Connecting…"
+msgstr "Connessione in Corso…"
