@@ -1,3 +1,10 @@
+com.github.alecaddd.sequeler (0.5.7) xenial; urgency=medium
+
+  * Official Juno release.
+  * Missing filter name on SQLite File Dialog.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 6 Jul 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.5.6) xenial; urgency=medium
 
   * Search table names in sidebar.

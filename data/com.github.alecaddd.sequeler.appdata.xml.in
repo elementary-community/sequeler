@@ -26,6 +26,14 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.7" date="2018-07-06">
+      <description>
+        <p>Official Juno release!</p>
+        <ul>
+          <liMissing filter name on SQLite File Dialog.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.6" date="2018-06-25">
       <description>
         <p>We got Search!</p>
