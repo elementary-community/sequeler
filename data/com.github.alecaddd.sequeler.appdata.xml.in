@@ -30,7 +30,7 @@
       <description>
         <p>Official Juno release!</p>
         <ul>
-          <liMissing filter name on SQLite File Dialog.</li>
+          <li>Missing filter name on SQLite File Dialog.</li>
         </ul>
       </description>
     </release>
