@@ -53,6 +53,7 @@ executable(
 
     'Widgets/SettingsDialog.vala',
     'Widgets/ConnectionDialog.vala',
+    'Widgets/ModeSwitch.vala',
     asresources,
     config_header,
     dependencies: [
