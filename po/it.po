@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 16:56-0700\n"
+"POT-Creation-Date: 2018-07-14 19:58+0500\n"
 "PO-Revision-Date: 2018-06-D26 16:56-0700\n"
 "Last-Translator: Alessandro Castellani <castellani.ale@gmail.com>\n"
 "Language: it\n"
@@ -42,6 +42,10 @@ msgstr "Impostazioni"
 #: src/Layouts/HeaderBar.vala:101
 msgid "Quit"
 msgstr "Chiudi"
+
+#: src/Layouts/HeaderBar.vala:110
+msgid "Settings"
+msgstr ""
 
 #: src/Layouts/Main.vala:75
 msgid "Connected to "
@@ -131,6 +135,11 @@ msgstr ""
 msgid "Unable to Import Library "
 msgstr "Impossibile Importare la Libreria"
 
+#: src/Layouts/Welcome.vala:107 src/Widgets/SettingsDialog.vala:55
+#: src/Widgets/ConnectionDialog.vala:221
+msgid "Close"
+msgstr "Chiudi"
+
 #: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 msgid "- Select Database -"
 msgstr "- Seleziona Database -"
@@ -154,6 +163,23 @@ msgstr "Aggiungi Tabella"
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr "TABELLE"
+
+#: src/Layouts/DataBaseView.vala:45
+msgid "Structure"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:46
+msgid "Content"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:47
+msgid "Relations"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:48
+#, fuzzy
+msgid "Query"
+msgstr "Esegui Query"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
@@ -229,7 +255,7 @@ msgstr "Query Eseguita Correttamente! Entrate Modificate: "
 msgid "Query Executed!"
 msgstr "Query Eseguita"
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
 msgid "Connect"
 msgstr "Connetti"
 
@@ -252,10 +278,6 @@ msgstr "Generale"
 #: src/Widgets/SettingsDialog.vala:42
 msgid "Interface"
 msgstr "Interfaccia"
-
-#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
-msgid "Close"
-msgstr "Chiudi"
 
 #: src/Widgets/SettingsDialog.vala:71
 msgid "Auto-Save New Connections:"
@@ -317,30 +339,30 @@ msgstr "Directory del File:"
 msgid "Select your SQLite File…"
 msgstr "Seleziona il tuo File SQL…"
 
-#: src/Widgets/ConnectionDialog.vala:221
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Save Connection"
 msgstr "Salva Connessione"
 
-#: src/Widgets/ConnectionDialog.vala:223
+#: src/Widgets/ConnectionDialog.vala:224
 msgid "Test Connection"
 msgstr "Prova Connessione"
 
-#: src/Widgets/ConnectionDialog.vala:363
+#: src/Widgets/ConnectionDialog.vala:364
 msgid "Testing Connection…"
 msgstr "Verifica Connessione in corso…"
 
-#: src/Widgets/ConnectionDialog.vala:371
+#: src/Widgets/ConnectionDialog.vala:372
 msgid "Successfully Connected!"
 msgstr "Connessione Eseguita Correttamente!"
 
-#: src/Widgets/ConnectionDialog.vala:388
+#: src/Widgets/ConnectionDialog.vala:389
 msgid "Saving Connection…"
 msgstr "Salvataggio in Corso…"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:394
 msgid "Connection Saved!"
 msgstr "Connessione Salvata!"
 
-#: src/Widgets/ConnectionDialog.vala:401
+#: src/Widgets/ConnectionDialog.vala:402
 msgid "Connecting…"
 msgstr "Connessione in Corso…"
