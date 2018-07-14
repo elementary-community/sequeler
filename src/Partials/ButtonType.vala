@@ -41,8 +41,8 @@ namespace Sequeler.Partials {
 	}
 
 	public class ToolBarButton : Gtk.Grid {
-		public ToolBarButton (string icon_name, string tooltip) {
-			name = tooltip;
+		public ToolBarButton (string icon_name, string name, string tooltip) {
+		    this.name = name;
 			halign = Gtk.Align.CENTER;
 
 			Gtk.Image icon;

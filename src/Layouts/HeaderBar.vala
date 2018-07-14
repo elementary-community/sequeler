@@ -107,7 +107,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		
 		var open_menu = new Gtk.MenuButton ();
 		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.BUTTON));
-		open_menu.set_tooltip_text ("Settings");
+		open_menu.set_tooltip_text (_("Settings"));
 
 		open_menu.popup = menu;
 		open_menu.relief = Gtk.ReliefStyle.NONE;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 16:56-0700\n"
+"POT-Creation-Date: 2018-07-14 19:58+0500\n"
 "PO-Revision-Date: 2018-04-22 10:12-0300\n"
 "Last-Translator: Laurence Bahiirwa <laurence@mediauganda.com>\n"
 "Language-Team: \n"
@@ -50,6 +50,10 @@ msgstr "Entegekka yo"
 
 #: src/Layouts/HeaderBar.vala:101
 msgid "Quit"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:110
+msgid "Settings"
 msgstr ""
 
 #: src/Layouts/Main.vala:75
@@ -151,6 +155,11 @@ msgstr ""
 msgid "Unable to Import Library "
 msgstr "Okunyerezebwa tekusobolwa!"
 
+#: src/Layouts/Welcome.vala:107 src/Widgets/SettingsDialog.vala:55
+#: src/Widgets/ConnectionDialog.vala:221
+msgid "Close"
+msgstr "Galawo"
+
 #: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 #, fuzzy
 msgid "- Select Database -"
@@ -175,6 +184,23 @@ msgstr ""
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr ""
+
+#: src/Layouts/DataBaseView.vala:45
+msgid "Structure"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:46
+msgid "Content"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:47
+msgid "Relations"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:48
+#, fuzzy
+msgid "Query"
+msgstr "Buza Databesi"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
@@ -253,7 +279,7 @@ msgstr "Okunyerezebwa kukoze bulungi!"
 msgid "Query Executed!"
 msgstr "Okunyerezebwa kukoze bulungi!"
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
 msgid "Connect"
 msgstr "Gatta Enkolagana"
 
@@ -276,10 +302,6 @@ msgstr "Byabulyomu"
 #: src/Widgets/SettingsDialog.vala:42
 msgid "Interface"
 msgstr "Enfanaana"
-
-#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
-msgid "Close"
-msgstr "Galawo"
 
 #: src/Widgets/SettingsDialog.vala:71
 #, fuzzy
@@ -344,34 +366,34 @@ msgstr ""
 msgid "Select your SQLite File…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:221
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Save Connection"
 msgstr "Tereka Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:223
+#: src/Widgets/ConnectionDialog.vala:224
 msgid "Test Connection"
 msgstr "Gezesa Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:363
+#: src/Widgets/ConnectionDialog.vala:364
 #, fuzzy
 msgid "Testing Connection…"
 msgstr "Gezesa Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:371
+#: src/Widgets/ConnectionDialog.vala:372
 #, fuzzy
 msgid "Successfully Connected!"
 msgstr "Okunyerezebwa kukoze bulungi!"
 
-#: src/Widgets/ConnectionDialog.vala:388
+#: src/Widgets/ConnectionDialog.vala:389
 #, fuzzy
 msgid "Saving Connection…"
 msgstr "Tereka Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:394
 msgid "Connection Saved!"
 msgstr "Enkolagana eterekeddwa!"
 
-#: src/Widgets/ConnectionDialog.vala:401
+#: src/Widgets/ConnectionDialog.vala:402
 #, fuzzy
 msgid "Connecting…"
 msgstr "Gatta Enkolagana"

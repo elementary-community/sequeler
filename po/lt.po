@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 16:56-0700\n"
+"POT-Creation-Date: 2018-07-14 19:58+0500\n"
 "PO-Revision-Date: 2018-06-12 11:12+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: \n"
@@ -51,6 +51,10 @@ msgstr "Nuostatos"
 #: src/Layouts/HeaderBar.vala:101
 msgid "Quit"
 msgstr "Išeiti"
+
+#: src/Layouts/HeaderBar.vala:110
+msgid "Settings"
+msgstr ""
 
 #: src/Layouts/Main.vala:75
 msgid "Connected to "
@@ -140,6 +144,11 @@ msgstr "_Atverti"
 msgid "Unable to Import Library "
 msgstr "Nepavyko importuoti bibliotekos "
 
+#: src/Layouts/Welcome.vala:107 src/Widgets/SettingsDialog.vala:55
+#: src/Widgets/ConnectionDialog.vala:221
+msgid "Close"
+msgstr "Užverti"
+
 #: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 msgid "- Select Database -"
 msgstr "- Pasirinkite duomenų bazę -"
@@ -165,6 +174,23 @@ msgstr "Pridėti lentelę"
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr "LENTELĖS"
+
+#: src/Layouts/DataBaseView.vala:45
+msgid "Structure"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:46
+msgid "Content"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:47
+msgid "Relations"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:48
+#, fuzzy
+msgid "Query"
+msgstr "Vykdyti užklausą"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
@@ -242,7 +268,7 @@ msgstr "Užklausa sėkmingai įvykdyta! Paveiktos eilutės: "
 msgid "Query Executed!"
 msgstr "Užklausa įvykdyta!"
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
 msgid "Connect"
 msgstr "Prisijungti"
 
@@ -265,10 +291,6 @@ msgstr "Bendros"
 #: src/Widgets/SettingsDialog.vala:42
 msgid "Interface"
 msgstr "Sąsaja"
-
-#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
-msgid "Close"
-msgstr "Užverti"
 
 #: src/Widgets/SettingsDialog.vala:71
 msgid "Auto-Save New Connections:"
@@ -330,31 +352,31 @@ msgstr "Failo kelias:"
 msgid "Select your SQLite File…"
 msgstr "Pasirinkite savo SQLite failą…"
 
-#: src/Widgets/ConnectionDialog.vala:221
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Save Connection"
 msgstr "Įrašyti ryšį"
 
-#: src/Widgets/ConnectionDialog.vala:223
+#: src/Widgets/ConnectionDialog.vala:224
 msgid "Test Connection"
 msgstr "Išbandyti ryšį"
 
-#: src/Widgets/ConnectionDialog.vala:363
+#: src/Widgets/ConnectionDialog.vala:364
 msgid "Testing Connection…"
 msgstr "Išbandomas ryšys…"
 
-#: src/Widgets/ConnectionDialog.vala:371
+#: src/Widgets/ConnectionDialog.vala:372
 msgid "Successfully Connected!"
 msgstr "Sėkmingai prisijungta!"
 
-#: src/Widgets/ConnectionDialog.vala:388
+#: src/Widgets/ConnectionDialog.vala:389
 msgid "Saving Connection…"
 msgstr "Įrašomas ryšys…"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:394
 msgid "Connection Saved!"
 msgstr "Ryšys įrašytas!"
 
-#: src/Widgets/ConnectionDialog.vala:401
+#: src/Widgets/ConnectionDialog.vala:402
 msgid "Connecting…"
 msgstr "Jungiamasi…"
 
