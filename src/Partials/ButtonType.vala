@@ -41,12 +41,12 @@ namespace Sequeler.Partials {
 	}
 
 	public class ToolBarButton : Gtk.Grid {
-		public ToolBarButton (string icon_name, string tooltip) {
+		public ToolBarButton (string icon_name, string tooltip, string label) {
 			name = tooltip;
 			halign = Gtk.Align.CENTER;
 
 			Gtk.Image icon;
-			var title = new Gtk.Label (tooltip);
+			var title = new Gtk.Label (label);
 
 			if (icon_name.contains ("/")) {
 				icon = new Gtk.Image.from_resource (icon_name);
