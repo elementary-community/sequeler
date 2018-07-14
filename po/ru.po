@@ -1,371 +1,343 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-14 19:58+0500\n"
-"PO-Revision-Date: \n"
-"Last-Translator: berkuteagle <berkuteagle@gmail.com>\n"
-"Language-Team: \n"
-"Language: ru\n"
+"POT-Creation-Date: 2018-06-26 16:56-0700\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 2.0.6\n"
 
 #: src/Layouts/HeaderBar.vala:48
 msgid "Logout"
-msgstr "Отключиться"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:55 src/Layouts/HeaderBar.vala:84
 msgid "New Window"
-msgstr "Новое окно"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:58 src/Layouts/HeaderBar.vala:89
 #: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:126
 msgid "New Connection"
-msgstr "Новое подключение"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:61
 msgid "Connect via Terminal"
-msgstr "Подключиться через терминал"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:66
 msgid "About"
-msgstr "О программе"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:74
 msgid "Report a Problem…"
-msgstr "Сообщить о проблеме…"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:94 src/Widgets/SettingsDialog.vala:31
 msgid "Preferences"
-msgstr "Настройки"
+msgstr ""
 
 #: src/Layouts/HeaderBar.vala:101
 msgid "Quit"
-msgstr "Выход"
-
-#: src/Layouts/HeaderBar.vala:110
-msgid "Settings"
-msgstr "Настройки"
+msgstr ""
 
 #: src/Layouts/Main.vala:75
 msgid "Connected to "
-msgstr "Подключиться к "
+msgstr ""
 
 #: src/Layouts/Library.vala:44
 msgid "SAVED CONNECTIONS"
-msgstr "ПОДКЛЮЧЕНИЯ"
+msgstr ""
 
 #: src/Layouts/Library.vala:49
 msgid "Delete All"
-msgstr "Удалить всё"
+msgstr ""
 
 #: src/Layouts/Library.vala:56
 msgid "Reload Library"
-msgstr "Перезагрузить библиотеку"
+msgstr ""
 
 #: src/Layouts/Library.vala:59
 msgid "Export Library"
-msgstr "Экспортировать библиотеку"
+msgstr ""
 
 #: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
 msgid "Are you sure you want to proceed?"
-msgstr "Вы действительно хотите сделать это?"
+msgstr ""
 
 #: src/Layouts/Library.vala:134
 msgid "By deleting this connection you won't be able to recover this data."
-msgstr "Подключение будет удалено безвозвратно."
+msgstr ""
 
 #: src/Layouts/Library.vala:137
 msgid "Yes, Delete!"
-msgstr "Да, удалить!"
+msgstr ""
 
 #: src/Layouts/Library.vala:152
 msgid "All the data will be deleted and you won't be able to recover it."
-msgstr "Все подключения будут удалены безвозвратно."
+msgstr ""
 
 #: src/Layouts/Library.vala:155
 msgid "Yes, Delete All!"
-msgstr "Да, удалить всё!"
+msgstr ""
 
 #: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:57
 msgid "_Cancel"
-msgstr "_Отмена"
+msgstr ""
 
 #: src/Layouts/Library.vala:242
 msgid "_Save"
-msgstr "_Сохранить"
+msgstr ""
 
 #: src/Layouts/Library.vala:302
 msgid "Unable to Connect to "
-msgstr "Не удалось подключиться к "
+msgstr ""
 
 #: src/Layouts/Library.vala:315
 msgid "Unable to Export Library "
-msgstr "Не удалось экспортировать библиотеку "
+msgstr ""
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
-msgstr "Добро пожаловать в Sequeler"
+msgstr ""
 
 #: src/Layouts/Welcome.vala:29
 msgid "Connect to any Local or Remote Database."
-msgstr "Подключитесь к локальным или удалённым базам данных."
+msgstr ""
 
 #: src/Layouts/Welcome.vala:38
 msgid "Add a New Database"
-msgstr "Добавить новую базу данных"
+msgstr ""
 
 #: src/Layouts/Welcome.vala:38
 msgid "Connect to a Database and Save it in your Library"
-msgstr "Подключиться к базе данных и сохранить её в вашей библиотеке"
+msgstr ""
 
 #: src/Layouts/Welcome.vala:39
 msgid "Import Connections"
-msgstr "Импортировать подключения"
+msgstr ""
 
 #: src/Layouts/Welcome.vala:39
 msgid "Import Previously Exported Sequeler Connections"
-msgstr "Импорт ранее экспортированных Sequeler-подключений"
+msgstr ""
 
 #: src/Layouts/Welcome.vala:59
 msgid "_Open"
-msgstr "_Открыть"
+msgstr ""
 
 #: src/Layouts/Welcome.vala:104
 msgid "Unable to Import Library "
-msgstr "Не удалось импортировать библиотеку "
-
-#: src/Layouts/Welcome.vala:107 src/Widgets/SettingsDialog.vala:55
-#: src/Widgets/ConnectionDialog.vala:221
-msgid "Close"
-msgstr "Закрыть"
+msgstr ""
 
 #: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 msgid "- Select Database -"
-msgstr "- Выберите базу данных -"
+msgstr ""
 
 #: src/Layouts/DataBaseSchema.vala:84
 msgid "Search Tables"
-msgstr "Найти таблицы"
+msgstr ""
 
 #: src/Layouts/DataBaseSchema.vala:95
 msgid "Search Tables…"
-msgstr "Поиск таблиц…"
+msgstr ""
 
 #: src/Layouts/DataBaseSchema.vala:117
 msgid "Reload Tables"
-msgstr "Обновить таблицы"
+msgstr ""
 
 #: src/Layouts/DataBaseSchema.vala:122
 msgid "Add Table"
-msgstr "Добавить таблицу"
+msgstr ""
 
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
-msgstr "ТАБЛИЦЫ"
-
-#: src/Layouts/DataBaseView.vala:45
-msgid "Structure"
-msgstr "Структура"
-
-#: src/Layouts/DataBaseView.vala:46
-msgid "Content"
-msgstr "Данные"
-
-#: src/Layouts/DataBaseView.vala:47
-msgid "Relations"
-msgstr "Связи"
-
-#: src/Layouts/DataBaseView.vala:48
-msgid "Query"
-msgstr "Запрос"
+msgstr ""
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
 #: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
 #: src/Layouts/Views/Query.vala:158
 msgid "No Results Available"
-msgstr "Нет результатов"
+msgstr ""
 
 #: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
 #: src/Layouts/Views/Relations.vala:78
 msgid "Reload Results"
-msgstr "Обновить результаты"
+msgstr ""
 
 #: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select Table"
-msgstr "Выберите таблицу"
+msgstr ""
 
 #: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select a table from the left sidebar to activate this view."
-msgstr "Выберите таблицу на панели слева для отображения информации."
+msgstr ""
 
 #: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
 msgid " Fields"
-msgstr " Поля"
+msgstr ""
 
 #: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
 msgid " Entries"
-msgstr " Записи"
+msgstr ""
 
 #: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
 msgid " Constraints"
-msgstr " Отношения"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:126
 msgid "Running Query…"
-msgstr "Выполнение запроса…"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:143
 msgid "Run Query"
-msgstr "Выполнить запрос"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:171
 msgid "Export Results"
-msgstr "Экспорт результатов"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:178
 msgid "Export as Sql"
-msgstr "Экспортировать в Sql"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:179
 msgid "Export as Csv"
-msgstr "Экспортировать в Csv"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:180
 msgid "Export as Text"
-msgstr "Экспортировать в текст"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:268 src/Layouts/Views/Query.vala:302
 msgid "Unable to process Query!"
-msgstr "Невозможно выполнить запрос!"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:281
 msgid " Total Results"
-msgstr " Общий результат"
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:307
 msgid "Query Successfully Executed! Rows affected: "
-msgstr "Запрос выполнен успешно! Строк обработано: "
+msgstr ""
 
 #: src/Layouts/Views/Query.vala:309
 msgid "Query Executed!"
-msgstr "Запрос выполнен!"
+msgstr ""
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
 msgid "Connect"
-msgstr "Подключиться"
+msgstr ""
 
 #: src/Partials/LibraryItem.vala:79
 msgid "Edit Connection"
-msgstr "Изменить"
+msgstr ""
 
 #: src/Partials/LibraryItem.vala:84
 msgid "Delete Connection"
-msgstr "Удалить"
+msgstr ""
 
 #: src/Services/ConnectionManager.vala:189
 msgid "Error!"
-msgstr "Ошибка!"
+msgstr ""
 
 #: src/Widgets/SettingsDialog.vala:41 src/Widgets/SettingsDialog.vala:70
 msgid "General"
-msgstr "Общие"
+msgstr ""
 
 #: src/Widgets/SettingsDialog.vala:42
 msgid "Interface"
-msgstr "Внешний вид"
+msgstr ""
+
+#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
+msgid "Close"
+msgstr ""
 
 #: src/Widgets/SettingsDialog.vala:71
 msgid "Auto-Save New Connections:"
-msgstr "Автоматически сохранять новые подключения:"
+msgstr ""
 
 #: src/Widgets/SettingsDialog.vala:83
 msgid "Theme"
-msgstr "Тема"
+msgstr ""
 
 #: src/Widgets/SettingsDialog.vala:85
 msgid "Use Dark Theme:"
-msgstr "Использовать тёмную тему:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:61
 msgid "Connection"
-msgstr "Подключение"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:125
 msgid "Connection Name:"
-msgstr "Имя подключения:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:126
 msgid "Connection's name"
-msgstr "Имена подключений"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:133
 msgid "Database Type:"
-msgstr "Тип БД:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:155
 msgid "Host:"
-msgstr "Сервер:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:156
 msgid "127.0.0.1"
-msgstr "127.0.0.1"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:161
 msgid "Database Name:"
-msgstr "Имя БД:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:168
 msgid "Username:"
-msgstr "Пользователь:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:174
 msgid "Password:"
-msgstr "Пароль:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:187
 msgid "Port:"
-msgstr "Порт:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:193
 msgid "File Path:"
-msgstr "Файл:"
+msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:194
 msgid "Select your SQLite File…"
-msgstr "Выберите SQLite-файл…"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:222
+#: src/Widgets/ConnectionDialog.vala:221
 msgid "Save Connection"
-msgstr "Сохранить"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:224
+#: src/Widgets/ConnectionDialog.vala:223
 msgid "Test Connection"
-msgstr "Проверить"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:364
+#: src/Widgets/ConnectionDialog.vala:363
 msgid "Testing Connection…"
-msgstr "Проверка подключения…"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:372
+#: src/Widgets/ConnectionDialog.vala:371
 msgid "Successfully Connected!"
-msgstr "Подключение успешно!"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:389
+#: src/Widgets/ConnectionDialog.vala:388
 msgid "Saving Connection…"
-msgstr "Сохранение подключения…"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:394
+#: src/Widgets/ConnectionDialog.vala:393
 msgid "Connection Saved!"
-msgstr "Подключение сохранено!"
+msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:402
+#: src/Widgets/ConnectionDialog.vala:401
 msgid "Connecting…"
-msgstr "Подключение…"
+msgstr ""

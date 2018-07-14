@@ -104,7 +104,7 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Import Library "), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
 
-		var suggested_button = new Gtk.Button.with_label (_("Close"));
+		var suggested_button = new Gtk.Button.with_label ("Close");
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
 
 		message_dialog.show_all ();
