@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 16:56-0700\n"
+"POT-Creation-Date: 2018-07-16 22:11-0700\n"
 "PO-Revision-Date: 2018-04-22 10:12-0300\n"
 "Last-Translator: Laurence Bahiirwa <laurence@mediauganda.com>\n"
 "Language-Team: \n"
@@ -18,37 +18,36 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/Layouts/HeaderBar.vala:48
+#: src/Layouts/HeaderBar.vala:45
 msgid "Logout"
 msgstr "Fuluma"
 
-#: src/Layouts/HeaderBar.vala:55 src/Layouts/HeaderBar.vala:84
-msgid "New Window"
+#: src/Layouts/HeaderBar.vala:53
+msgid "Light background"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:58 src/Layouts/HeaderBar.vala:89
-#: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:126
-msgid "New Connection"
-msgstr "Enkolagana empya"
+#: src/Layouts/HeaderBar.vala:54
+msgid "Dark background"
+msgstr ""
 
-#: src/Layouts/HeaderBar.vala:61
-#, fuzzy
-msgid "Connect via Terminal"
-msgstr "Enkolagana mu termino"
-
-#: src/Layouts/HeaderBar.vala:66
+#: src/Layouts/HeaderBar.vala:63
 msgid "About"
 msgstr "Ebikwatta"
 
-#: src/Layouts/HeaderBar.vala:74
+#: src/Layouts/HeaderBar.vala:71
 msgid "Report a Problem…"
 msgstr "Lopa ekizibu…"
 
-#: src/Layouts/HeaderBar.vala:94 src/Widgets/SettingsDialog.vala:31
-msgid "Preferences"
-msgstr "Entegekka yo"
+#: src/Layouts/HeaderBar.vala:81 src/Layouts/Welcome.vala:39
+msgid "New Window"
+msgstr ""
 
-#: src/Layouts/HeaderBar.vala:101
+#: src/Layouts/HeaderBar.vala:86 src/Widgets/ConnectionDialog.vala:100
+#: src/Widgets/ConnectionDialog.vala:126
+msgid "New Connection"
+msgstr "Enkolagana empya"
+
+#: src/Layouts/HeaderBar.vala:93
 msgid "Quit"
 msgstr ""
 
@@ -96,7 +95,7 @@ msgstr ""
 msgid "Yes, Delete All!"
 msgstr "Byonna bigyemu"
 
-#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:57
+#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:61
 msgid "_Cancel"
 msgstr "_sazamu"
 
@@ -134,19 +133,23 @@ msgid "Connect to a Database and Save it in your Library"
 msgstr "Wegatte ku Database ogiterekke mu terekero lyo."
 
 #: src/Layouts/Welcome.vala:39
+msgid "Open a new Sequeler Window"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:40
 #, fuzzy
 msgid "Import Connections"
 msgstr "Gezesa Enkolagana"
 
-#: src/Layouts/Welcome.vala:39
+#: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:59
+#: src/Layouts/Welcome.vala:63
 msgid "_Open"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:104
+#: src/Layouts/Welcome.vala:108
 #, fuzzy
 msgid "Unable to Import Library "
 msgstr "Okunyerezebwa tekusobolwa!"
@@ -175,6 +178,23 @@ msgstr ""
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr ""
+
+#: src/Layouts/DataBaseView.vala:45
+msgid "Structure"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:46
+msgid "Content"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:47
+msgid "Relations"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:48
+#, fuzzy
+msgid "Query"
+msgstr "Buza Databesi"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
@@ -253,7 +273,7 @@ msgstr "Okunyerezebwa kukoze bulungi!"
 msgid "Query Executed!"
 msgstr "Okunyerezebwa kukoze bulungi!"
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
 msgid "Connect"
 msgstr "Gatta Enkolagana"
 
@@ -268,31 +288,6 @@ msgstr "Gyamu Enkolagana"
 #: src/Services/ConnectionManager.vala:189
 msgid "Error!"
 msgstr ""
-
-#: src/Widgets/SettingsDialog.vala:41 src/Widgets/SettingsDialog.vala:70
-msgid "General"
-msgstr "Byabulyomu"
-
-#: src/Widgets/SettingsDialog.vala:42
-msgid "Interface"
-msgstr "Enfanaana"
-
-#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
-msgid "Close"
-msgstr "Galawo"
-
-#: src/Widgets/SettingsDialog.vala:71
-#, fuzzy
-msgid "Auto-Save New Connections:"
-msgstr "Tereka Enkolagana empya mubwangu:"
-
-#: src/Widgets/SettingsDialog.vala:83
-msgid "Theme"
-msgstr "Enfanaana"
-
-#: src/Widgets/SettingsDialog.vala:85
-msgid "Use Dark Theme:"
-msgstr "Kozessa Enfanaana enzirugavvu:"
 
 #: src/Widgets/ConnectionDialog.vala:61
 #, fuzzy
@@ -345,36 +340,63 @@ msgid "Select your SQLite File…"
 msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:221
+msgid "Close"
+msgstr "Galawo"
+
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Save Connection"
 msgstr "Tereka Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:223
+#: src/Widgets/ConnectionDialog.vala:224
 msgid "Test Connection"
 msgstr "Gezesa Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:363
+#: src/Widgets/ConnectionDialog.vala:364
 #, fuzzy
 msgid "Testing Connection…"
 msgstr "Gezesa Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:371
+#: src/Widgets/ConnectionDialog.vala:372
 #, fuzzy
 msgid "Successfully Connected!"
 msgstr "Okunyerezebwa kukoze bulungi!"
 
-#: src/Widgets/ConnectionDialog.vala:388
+#: src/Widgets/ConnectionDialog.vala:389
 #, fuzzy
 msgid "Saving Connection…"
 msgstr "Tereka Enkolagana"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:394
 msgid "Connection Saved!"
 msgstr "Enkolagana eterekeddwa!"
 
-#: src/Widgets/ConnectionDialog.vala:401
+#: src/Widgets/ConnectionDialog.vala:402
 #, fuzzy
 msgid "Connecting…"
 msgstr "Gatta Enkolagana"
+
+#, fuzzy
+#~ msgid "Connect via Terminal"
+#~ msgstr "Enkolagana mu termino"
+
+#~ msgid "Preferences"
+#~ msgstr "Entegekka yo"
+
+#~ msgid "General"
+#~ msgstr "Byabulyomu"
+
+#~ msgid "Interface"
+#~ msgstr "Enfanaana"
+
+#, fuzzy
+#~ msgid "Auto-Save New Connections:"
+#~ msgstr "Tereka Enkolagana empya mubwangu:"
+
+#~ msgid "Theme"
+#~ msgstr "Enfanaana"
+
+#~ msgid "Use Dark Theme:"
+#~ msgstr "Kozessa Enfanaana enzirugavvu:"
 
 #~ msgid "Welcome"
 #~ msgstr "Tukwaniriza"
