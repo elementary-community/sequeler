@@ -88,11 +88,6 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		new_connection_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK + Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE);
 		menu.add (new_connection_item);
 
-		var preferences_item = new Gtk.MenuItem.with_label (_("Preferences"));
-		preferences_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_PREFERENCES;
-		preferences_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("comma"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-		menu.add (preferences_item);
-
 		menu.add (new Gtk.SeparatorMenuItem ());
 
 		var quit_item = new Gtk.MenuItem.with_label (_("Quit"));
