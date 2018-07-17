@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 09:09-0700\n"
+"POT-Creation-Date: 2018-07-17 09:17-0700\n"
 "Last-Translator: Wilsen Hernandez <wilsenhc@gmail.com>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
