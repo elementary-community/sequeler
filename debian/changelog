@@ -1,6 +1,6 @@
-com.github.alecaddd.sequeler (0.5.9) xenial; urgency=medium
+com.github.alecaddd.sequeler (0.5.9) xenial; urgency=high
 
-  * Fixed broken Tabs for translated version.
+  * Urgent! Fixed broken Tabs for translated version.
 
  -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 17 Jul 2018 12:28:00 -0500
 
