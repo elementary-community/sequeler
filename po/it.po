@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 16:56-0700\n"
+"POT-Creation-Date: 2018-07-16 22:22-0700\n"
 "PO-Revision-Date: 2018-06-D26 16:56-0700\n"
 "Last-Translator: Alessandro Castellani <castellani.ale@gmail.com>\n"
 "Language: it\n"
@@ -10,36 +10,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Layouts/HeaderBar.vala:48
+#: src/Layouts/HeaderBar.vala:45
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: src/Layouts/HeaderBar.vala:55 src/Layouts/HeaderBar.vala:84
-msgid "New Window"
-msgstr "Nuova Finestra"
+#: src/Layouts/HeaderBar.vala:53
+msgid "Light background"
+msgstr ""
 
-#: src/Layouts/HeaderBar.vala:58 src/Layouts/HeaderBar.vala:89
-#: src/Widgets/ConnectionDialog.vala:100 src/Widgets/ConnectionDialog.vala:126
-msgid "New Connection"
-msgstr "Nuova Connessione"
+#: src/Layouts/HeaderBar.vala:54
+msgid "Dark background"
+msgstr ""
 
-#: src/Layouts/HeaderBar.vala:61
-msgid "Connect via Terminal"
-msgstr "Connessione via Terminale"
-
-#: src/Layouts/HeaderBar.vala:66
+#: src/Layouts/HeaderBar.vala:63
 msgid "About"
 msgstr "Informazioni"
 
-#: src/Layouts/HeaderBar.vala:74
+#: src/Layouts/HeaderBar.vala:71
 msgid "Report a Problem…"
 msgstr "Riporta un Problema…"
 
-#: src/Layouts/HeaderBar.vala:94 src/Widgets/SettingsDialog.vala:31
-msgid "Preferences"
-msgstr "Impostazioni"
+#: src/Layouts/HeaderBar.vala:81 src/Layouts/Welcome.vala:39
+msgid "New Window"
+msgstr "Nuova Finestra"
 
-#: src/Layouts/HeaderBar.vala:101
+#: src/Layouts/HeaderBar.vala:86 src/Widgets/ConnectionDialog.vala:100
+#: src/Widgets/ConnectionDialog.vala:126
+msgid "New Connection"
+msgstr "Nuova Connessione"
+
+#: src/Layouts/HeaderBar.vala:93
 msgid "Quit"
 msgstr "Chiudi"
 
@@ -83,7 +83,7 @@ msgstr "Tutti i dati verranno cancellati a non potranno essere recuperati."
 msgid "Yes, Delete All!"
 msgstr "Si, Cancella Tutto!"
 
-#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:57
+#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:61
 msgid "_Cancel"
 msgstr ""
 
@@ -116,18 +116,22 @@ msgid "Connect to a Database and Save it in your Library"
 msgstr "Connettiti ad un Database e Salvalo nella Libreria"
 
 #: src/Layouts/Welcome.vala:39
+msgid "Open a new Sequeler Window"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
 msgstr "Importa Connessioni"
 
-#: src/Layouts/Welcome.vala:39
+#: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importa il File di Connessioni Esportato da Sequeler"
 
-#: src/Layouts/Welcome.vala:59
+#: src/Layouts/Welcome.vala:63
 msgid "_Open"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:104
+#: src/Layouts/Welcome.vala:108
 msgid "Unable to Import Library "
 msgstr "Impossibile Importare la Libreria"
 
@@ -154,6 +158,23 @@ msgstr "Aggiungi Tabella"
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
 msgstr "TABELLE"
+
+#: src/Layouts/DataBaseView.vala:45
+msgid "Structure"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:46
+msgid "Content"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:47
+msgid "Relations"
+msgstr ""
+
+#: src/Layouts/DataBaseView.vala:48
+#, fuzzy
+msgid "Query"
+msgstr "Esegui Query"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
@@ -229,7 +250,7 @@ msgstr "Query Eseguita Correttamente! Entrate Modificate: "
 msgid "Query Executed!"
 msgstr "Query Eseguita"
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:226
+#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
 msgid "Connect"
 msgstr "Connetti"
 
@@ -244,30 +265,6 @@ msgstr "Cancella Connessione"
 #: src/Services/ConnectionManager.vala:189
 msgid "Error!"
 msgstr "Errore!"
-
-#: src/Widgets/SettingsDialog.vala:41 src/Widgets/SettingsDialog.vala:70
-msgid "General"
-msgstr "Generale"
-
-#: src/Widgets/SettingsDialog.vala:42
-msgid "Interface"
-msgstr "Interfaccia"
-
-#: src/Widgets/SettingsDialog.vala:55 src/Widgets/ConnectionDialog.vala:220
-msgid "Close"
-msgstr "Chiudi"
-
-#: src/Widgets/SettingsDialog.vala:71
-msgid "Auto-Save New Connections:"
-msgstr "Salva automaticamente nuove connessioni"
-
-#: src/Widgets/SettingsDialog.vala:83
-msgid "Theme"
-msgstr "Tema"
-
-#: src/Widgets/SettingsDialog.vala:85
-msgid "Use Dark Theme:"
-msgstr "Usa variante scura"
 
 #: src/Widgets/ConnectionDialog.vala:61
 msgid "Connection"
@@ -318,29 +315,54 @@ msgid "Select your SQLite File…"
 msgstr "Seleziona il tuo File SQL…"
 
 #: src/Widgets/ConnectionDialog.vala:221
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Save Connection"
 msgstr "Salva Connessione"
 
-#: src/Widgets/ConnectionDialog.vala:223
+#: src/Widgets/ConnectionDialog.vala:224
 msgid "Test Connection"
 msgstr "Prova Connessione"
 
-#: src/Widgets/ConnectionDialog.vala:363
+#: src/Widgets/ConnectionDialog.vala:364
 msgid "Testing Connection…"
 msgstr "Verifica Connessione in corso…"
 
-#: src/Widgets/ConnectionDialog.vala:371
+#: src/Widgets/ConnectionDialog.vala:372
 msgid "Successfully Connected!"
 msgstr "Connessione Eseguita Correttamente!"
 
-#: src/Widgets/ConnectionDialog.vala:388
+#: src/Widgets/ConnectionDialog.vala:389
 msgid "Saving Connection…"
 msgstr "Salvataggio in Corso…"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:394
 msgid "Connection Saved!"
 msgstr "Connessione Salvata!"
 
-#: src/Widgets/ConnectionDialog.vala:401
+#: src/Widgets/ConnectionDialog.vala:402
 msgid "Connecting…"
 msgstr "Connessione in Corso…"
+
+#~ msgid "Connect via Terminal"
+#~ msgstr "Connessione via Terminale"
+
+#~ msgid "Preferences"
+#~ msgstr "Impostazioni"
+
+#~ msgid "General"
+#~ msgstr "Generale"
+
+#~ msgid "Interface"
+#~ msgstr "Interfaccia"
+
+#~ msgid "Auto-Save New Connections:"
+#~ msgstr "Salva automaticamente nuove connessioni"
+
+#~ msgid "Theme"
+#~ msgstr "Tema"
+
+#~ msgid "Use Dark Theme:"
+#~ msgstr "Usa variante scura"

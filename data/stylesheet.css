@@ -54,3 +54,7 @@
     background: rgba(0, 0, 0, 0.1);
     opacity: 1;
 }
+
+.headerbar-separator {
+    margin-left: 0;
+}
