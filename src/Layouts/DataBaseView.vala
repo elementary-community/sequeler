@@ -42,10 +42,10 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 		toolbar.get_style_context ().add_class ("library-titlebar");
 
 		tabs = new Granite.Widgets.ModeButton ();
-		tabs.append (new Sequeler.Partials.ToolBarButton ("x-office-spreadsheet-template", "Structure"));
-		tabs.append (new Sequeler.Partials.ToolBarButton ("x-office-document", "Content"));
-		tabs.append (new Sequeler.Partials.ToolBarButton ("preferences-system-windows", "Relations"));
-		tabs.append (new Sequeler.Partials.ToolBarButton ("accessories-text-editor", "Query"));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("x-office-spreadsheet-template", _("Structure")));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("x-office-document", _("Content")));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("preferences-system-windows", _("Relations")));
+		tabs.append (new Sequeler.Partials.ToolBarButton ("accessories-text-editor", _("Query")));
 		tabs.set_active (0);
 		tabs.margin = 10;
 		tabs.margin_bottom = 9;

@@ -51,7 +51,6 @@ executable(
     'Services/Types/PostgreSQL.vala',
     'Services/Types/SQLite.vala',
 
-    'Widgets/SettingsDialog.vala',
     'Widgets/ConnectionDialog.vala',
     'Widgets/ModeSwitch.vala',
     asresources,
