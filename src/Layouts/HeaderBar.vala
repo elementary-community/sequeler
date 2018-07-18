@@ -56,7 +56,11 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		mode_switch.bind_property ("active", settings, "dark-theme");
 		mode_switch.notify.connect (() => {
             Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
-        });
+		});
+		
+		if (settings.dark_theme) {
+			mode_switch.active = true;
+		}
 
 		var menu = new Gtk.Menu ();
 
