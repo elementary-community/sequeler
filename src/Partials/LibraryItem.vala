@@ -89,7 +89,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 		var open_menu = new Gtk.MenuButton ();
 		open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
 		open_menu.get_style_context ().add_class ("library-btn");
-		open_menu.set_tooltip_text ("Options");
+		open_menu.tooltip_text = _("Options");
 
 		open_menu.popup = menu;
 		open_menu.relief = Gtk.ReliefStyle.NONE;

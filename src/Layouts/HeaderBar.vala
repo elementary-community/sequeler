@@ -62,50 +62,45 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 			mode_switch.active = true;
 		}
 
-		var menu = new Gtk.Menu ();
-
-		var about_item = new Gtk.MenuItem.with_label (_("About"));
-		about_item.activate.connect (() => {
-			try {
-				Gtk.show_uri (null, "https://github.com/alecaddd/sequeler", 0);
-			} catch (Error error) {}
-		});
-		menu.add (about_item);
-
-		var report_problem_item = new Gtk.MenuItem.with_label (_("Report a Problem…"));
-		report_problem_item.activate.connect (() => {
-			try {
-				Gtk.show_uri (null, "https://github.com/alecaddd/sequeler/issues", 0);
-			} catch (Error error) {}
-		});
-		menu.add (report_problem_item);
-
-		menu.add (new Gtk.SeparatorMenuItem ());
-
-		var new_window_item = new Gtk.MenuItem.with_label (_("New Window"));
+		var new_window_item = new Gtk.ModelButton ();
+		new_window_item.text = _("New Window");
 		new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 		new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-		menu.add (new_window_item);
 
-		var new_connection_item = new Gtk.MenuItem.with_label (_("New Connection"));
+		var new_connection_item = new Gtk.ModelButton ();
+		new_connection_item.text = _("New Connection");
 		new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
 		new_connection_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK + Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE);
-		menu.add (new_connection_item);
 
-		menu.add (new Gtk.SeparatorMenuItem ());
-
-		var quit_item = new Gtk.MenuItem.with_label (_("Quit"));
+		var quit_item = new Gtk.ModelButton ();
+		quit_item.text = _("Quit");
 		quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
-		quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-		menu.add (quit_item);
+		quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);		
 
-		menu.show_all  ();
+		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+		menu_separator.margin_top = 6;
+		menu_separator.margin_bottom = 6;
+
+		var menu_grid = new Gtk.Grid ();
+		menu_grid.expand = true;
+		menu_grid.margin_top = 3;
+		menu_grid.margin_bottom = 3;
+		menu_grid.orientation = Gtk.Orientation.VERTICAL;
+
+		menu_grid.attach (new_window_item, 0, 1, 1, 1);
+		menu_grid.attach (new_connection_item, 0, 2, 1, 1);
+		menu_grid.attach (menu_separator, 0, 3, 1, 1);
+		menu_grid.attach (quit_item, 0, 4, 1, 1);
+		menu_grid.show_all ();
 		
 		var open_menu = new Gtk.MenuButton ();
 		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
-		open_menu.set_tooltip_text ("Settings");
+		open_menu.tooltip_text = _("Menu");
 
-		open_menu.popup = menu;
+		var menu_popover = new Gtk.Popover (null);
+		menu_popover.add (menu_grid);
+
+		open_menu.popover = menu_popover;
 		open_menu.relief = Gtk.ReliefStyle.NONE;
 		open_menu.valign = Gtk.Align.CENTER;
 
