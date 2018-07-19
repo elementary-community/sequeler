@@ -23,10 +23,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 	public weak Sequeler.Window window { get; construct; }
 
 	private Gtk.Button logout_button;
-	private Sequeler.Partials.HeaderBarButton new_connection;
-	private Sequeler.Partials.HeaderBarButton open_terminal;
-
-	private const string TERMINAL = "open-pantheon-terminal-here.desktop";
+	private ModeSwitch mode_switch;
 
 	public bool logged_out { get; set; }
 
@@ -52,14 +49,14 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		logout_button.can_focus = false;
 		logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
 
-		var new_window = new Sequeler.Partials.HeaderBarButton ("window-new", _("New Window"));
-		new_window.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
-
-		new_connection = new Sequeler.Partials.HeaderBarButton ("bookmark-new", _("New Connection"));
-		new_connection.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
-
-		open_terminal = new Sequeler.Partials.HeaderBarButton ("utilities-terminal", _("Connect via Terminal"));
-		open_terminal.sensitive = false;
+		mode_switch = new ModeSwitch ("display-brightness-symbolic", "weather-clear-night-symbolic");
+        mode_switch.primary_icon_tooltip_text = _("Light background");
+        mode_switch.secondary_icon_tooltip_text = _("Dark background");
+        mode_switch.valign = Gtk.Align.CENTER;
+		mode_switch.bind_property ("active", settings, "dark-theme");
+		mode_switch.notify.connect (() => {
+            Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
+        });
 
 		var menu = new Gtk.Menu ();
 
@@ -91,11 +88,6 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		new_connection_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK + Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE);
 		menu.add (new_connection_item);
 
-		var preferences_item = new Gtk.MenuItem.with_label (_("Preferences"));
-		preferences_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_PREFERENCES;
-		preferences_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("comma"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-		menu.add (preferences_item);
-
 		menu.add (new Gtk.SeparatorMenuItem ());
 
 		var quit_item = new Gtk.MenuItem.with_label (_("Quit"));
@@ -106,7 +98,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		menu.show_all  ();
 		
 		var open_menu = new Gtk.MenuButton ();
-		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.BUTTON));
+		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
 		open_menu.set_tooltip_text ("Settings");
 
 		open_menu.popup = menu;
@@ -115,22 +107,17 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 		pack_start (logout_button);
 		pack_end (open_menu);
-		pack_end (new_connection);
-		pack_end (open_terminal);
-		pack_end (new Gtk.Separator (Gtk.Orientation.VERTICAL));
-		pack_end (new_window);
+
+		var separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
+		separator.get_style_context ().add_class ("headerbar-separator");
+
+		pack_end (separator);
+		pack_end (mode_switch);
 	}
 
 	public void toggle_logout () {
 		logged_out = !logged_out;
 		logout_button.visible = logged_out;
 		logout_button.no_show_all = !logged_out;
-
-		new_connection.visible = !logged_out;
-		new_connection.no_show_all = logged_out;
-
-		open_terminal.visible = logged_out;
-		open_terminal.no_show_all = !logged_out;
-		open_terminal.show_all ();
 	}
 }

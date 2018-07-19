@@ -26,6 +26,22 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.5.9" date="2018-07-17">
+      <description>
+        <p>Urgent! Fixed broken Tabs for translated version.</p>
+      </description>
+    </release>
+    <release version="0.5.8" date="2018-07-16">
+      <description>
+        <p>Light and Dark Mode Switch!</p>
+        <ul>
+          <li>Better Dark/Light mode switch in header bar.</li>
+          <li>Add Russian translation.</li>
+          <li>Updated Welcome screen with New Window command.</li>
+          <li>Code cleanup.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.7" date="2018-07-06">
       <description>
         <p>Official Juno release!</p>

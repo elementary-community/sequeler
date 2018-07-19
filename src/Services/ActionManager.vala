@@ -28,7 +28,6 @@ public class Sequeler.Services.ActionManager : Object {
 	public const string ACTION_PREFIX = "win.";
 	public const string ACTION_NEW_WINDOW = "action_new_window";
 	public const string ACTION_NEW_CONNECTION = "action_new_connection";
-	public const string ACTION_PREFERENCES = "action_preferences";
 	public const string ACTION_RUN_QUERY = "action_run_query";
 	public const string ACTION_LOGOUT = "action_logout";
 	public const string ACTION_QUIT = "action_quit";
@@ -38,7 +37,6 @@ public class Sequeler.Services.ActionManager : Object {
 	private const ActionEntry[] action_entries = {
 		{ ACTION_NEW_WINDOW, action_new_window },
 		{ ACTION_NEW_CONNECTION, action_new_connection },
-		{ ACTION_PREFERENCES, action_preferences },
 		{ ACTION_RUN_QUERY, action_run_query },
 		{ ACTION_LOGOUT, action_logout },
 		{ ACTION_QUIT, action_quit }
@@ -54,7 +52,6 @@ public class Sequeler.Services.ActionManager : Object {
 	static construct {
 		action_accelerators.set (ACTION_NEW_WINDOW, "<Control>n");
 		action_accelerators.set (ACTION_NEW_CONNECTION, "<Control><Shift>n");
-		action_accelerators.set (ACTION_PREFERENCES, "<Control>comma");
 		action_accelerators.set (ACTION_RUN_QUERY, "<Control>Return");
 		action_accelerators.set (ACTION_LOGOUT, "<Control>Escape");
 		action_accelerators.set (ACTION_QUIT, "<Control>q");
@@ -97,19 +94,6 @@ public class Sequeler.Services.ActionManager : Object {
 
 		window.main.connection_closed ();
 		window.data_manager.data = null;
-	}
-
-	private void action_preferences () {
-		if (window.settings_dialog == null) {
-			window.settings_dialog = new Sequeler.Widgets.SettingsDialog (window);
-			window.settings_dialog.show_all ();
-
-			window.settings_dialog.destroy.connect (() => {
-				window.settings_dialog = null;
-			});
-		}
-
-		window.settings_dialog.present ();
 	}
 
 	private void action_new_window () {

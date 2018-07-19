@@ -23,5 +23,4 @@ src/Services/Types/DataBaseType.vala
 src/Services/Types/MySQL.vala
 src/Services/Types/PostgreSQL.vala
 src/Services/Types/SQLite.vala
-src/Widgets/SettingsDialog.vala
 src/Widgets/ConnectionDialog.vala

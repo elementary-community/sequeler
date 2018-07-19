@@ -36,6 +36,7 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 		vexpand = true;
 
 		append ("bookmark-new", _("Add a New Database"), _("Connect to a Database and Save it in your Library"));
+		append ("window-new", _("New Window"), _("Open a new Sequeler Window"));
 		append ("folder-download", _("Import Connections"), _("Import Previously Exported Sequeler Connections"));
 
 		activated.connect ( index => {
@@ -44,6 +45,9 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 					Sequeler.Services.ActionManager.action_from_group (Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION, window.get_action_group ("win"));
 				break;
 				case 1:
+					Sequeler.Services.ActionManager.action_from_group (Sequeler.Services.ActionManager.ACTION_NEW_WINDOW, window.get_action_group ("win"));
+				break;
+				case 2:
 					import_file ();
 				break;
 			}

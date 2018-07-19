@@ -5,7 +5,7 @@ conf_data.set('DATADIR', get_option('datadir'))
 conf_data.set('PKGDATADIR', get_option('datadir') + '/' + meson.project_name())
 conf_data.set('GETTEXT_PACKAGE', meson.project_name())
 conf_data.set('RELEASE_NAME', 'Sequeler')
-conf_data.set('VERSION', '0.5.7')
+conf_data.set('VERSION', '0.5.9')
 conf_data.set('VERSION_INFO', 'Friendly SQL Client')
 conf_data.set('PREFIX', get_option('prefix'))
 
@@ -51,8 +51,8 @@ executable(
     'Services/Types/PostgreSQL.vala',
     'Services/Types/SQLite.vala',
 
-    'Widgets/SettingsDialog.vala',
     'Widgets/ConnectionDialog.vala',
+    'Widgets/ModeSwitch.vala',
     asresources,
     config_header,
     dependencies: [

@@ -1,3 +1,18 @@
+com.github.alecaddd.sequeler (0.5.9) xenial; urgency=high
+
+  * Urgent! Fixed broken Tabs for translated version.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 17 Jul 2018 12:28:00 -0500
+
+com.github.alecaddd.sequeler (0.5.8) xenial; urgency=medium
+
+  * Better Dark/Light mode switch in header bar.
+  * Add Russian translation.
+  * Updated Welcome screen with New Window command.
+  * Code cleanup.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Mon, 16 Jul 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.5.7) xenial; urgency=medium
 
   * Official Juno release.

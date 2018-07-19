@@ -67,7 +67,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var query_builder = new Gtk.SourceView.with_buffer (buffer);
 		query_builder.show_line_numbers = true;
 		query_builder.highlight_current_line = true;
-		query_builder.show_right_margin = true;
+		query_builder.show_right_margin = false;
 		query_builder.wrap_mode = Gtk.WrapMode.WORD;
 		query_builder.smart_home_end = Gtk.SourceSmartHomeEndType.AFTER;
 
@@ -77,7 +77,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		{
 			var style = new Gtk.CssProvider ();
 			var font_name = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
-			style.load_from_data ("* {font-family: %s;}".printf (font_name), -1);
+			style.load_from_data ("* {font-family: '%s';}".printf (font_name), -1);
 			query_builder.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 		}
 		catch (Error e)
