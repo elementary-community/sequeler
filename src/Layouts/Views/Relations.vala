@@ -125,7 +125,7 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 		}
 
 		var result_data = new Sequeler.Partials.TreeBuilder (table_relations, window);
-		result_message.label = table_relations.get_n_rows ().to_string () + _(" Constraints");
+		result_message.label = _("%d Constraints").printf (table_relations.get_n_rows ());
 
 		clear ();
 

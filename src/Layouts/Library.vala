@@ -299,7 +299,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	private void connection_warning (string message, string title) {
-		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Connect to ") + title + "", message, "dialog-error", Gtk.ButtonsType.NONE);
+		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Connect to %s").printf (title), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;
 
 		var suggested_button = new Gtk.Button.with_label ("Close");
