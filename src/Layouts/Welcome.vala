@@ -26,7 +26,7 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 		Object (
 			window: main_window,
 			title: _("Welcome to Sequeler"),
-			subtitle: _("Connect to any Local or Remote Database.")
+			subtitle: _("Connect to Any Local or Remote Database.")
 		);
 	}
 
@@ -35,8 +35,8 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 		halign = Gtk.Align.FILL;
 		vexpand = true;
 
-		append ("bookmark-new", _("Add a New Database"), _("Connect to a Database and Save it in your Library"));
-		append ("window-new", _("New Window"), _("Open a new Sequeler Window"));
+		append ("bookmark-new", _("Add a New Database"), _("Connect to a Database and Save It in Your Library"));
+		append ("window-new", _("New Window"), _("Open a New Sequeler Window"));
 		append ("folder-download", _("Import Connections"), _("Import Previously Exported Sequeler Connections"));
 
 		activated.connect ( index => {
