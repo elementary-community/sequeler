@@ -153,7 +153,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (db_type_entry, 1, 1, 1, 1);
 
 		db_host_label = new Sequeler.Partials.LabelForm (_("Host:"));
-		db_host_entry = new Sequeler.Partials.Entry (_("127.0.0.1"), null);
+		db_host_entry = new Sequeler.Partials.Entry ("127.0.0.1", null);
 
 		form_grid.attach (db_host_label, 0, 2, 1, 1);
 		form_grid.attach (db_host_entry, 1, 2, 1, 1);
@@ -191,7 +191,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (db_port_entry, 1, 6, 1, 1);
 
 		db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
-		db_file_entry = new Gtk.FileChooserButton (_("Select your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
+		db_file_entry = new Gtk.FileChooserButton (_("Select Your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
 		var filter = new Gtk.FileFilter ();
 		filter.set_filter_name ("Database File");
 		filter.add_pattern ("*.db");

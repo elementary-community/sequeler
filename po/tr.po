@@ -1,342 +1,351 @@
+#
+# Çağatay Yiğit Şahin <cyigitsahin@outlook.com>, 2018.
+#
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-17 09:17-0700\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Last-Translator: Çağatay Yiğit Şahin <cyigitsahin@outlook.com>\n"
+"Language-Team: Türkçe <>\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-07-24 19:32+0300\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: src/Layouts/HeaderBar.vala:45
 msgid "Logout"
-msgstr ""
+msgstr "Çıkış"
 
 #: src/Layouts/HeaderBar.vala:53
 msgid "Light background"
-msgstr ""
+msgstr "Açık arka plan"
 
 #: src/Layouts/HeaderBar.vala:54
 msgid "Dark background"
-msgstr ""
+msgstr "Koyu arka plan"
 
 #: src/Layouts/HeaderBar.vala:63
 msgid "About"
-msgstr ""
+msgstr "Hakkında"
 
 #: src/Layouts/HeaderBar.vala:71
 msgid "Report a Problem…"
-msgstr ""
+msgstr "Bir Problem Bildir…"
 
 #: src/Layouts/HeaderBar.vala:81 src/Layouts/Welcome.vala:39
 msgid "New Window"
-msgstr ""
+msgstr "Yeni Pencere"
 
 #: src/Layouts/HeaderBar.vala:86 src/Widgets/ConnectionDialog.vala:100
 #: src/Widgets/ConnectionDialog.vala:126
 msgid "New Connection"
-msgstr ""
+msgstr "Yeni Bağlantı"
 
 #: src/Layouts/HeaderBar.vala:93
 msgid "Quit"
-msgstr ""
+msgstr "Çık"
 
 #: src/Layouts/Main.vala:75
 msgid "Connected to "
-msgstr ""
+msgstr "Bağlı "
 
 #: src/Layouts/Library.vala:44
 msgid "SAVED CONNECTIONS"
-msgstr ""
+msgstr "KAYITLI BAĞLANTILAR"
 
 #: src/Layouts/Library.vala:49
 msgid "Delete All"
-msgstr ""
+msgstr "Hepsini Sil"
 
 #: src/Layouts/Library.vala:56
 msgid "Reload Library"
-msgstr ""
+msgstr "Kütüphaneyi Yeniden Yükle"
 
 #: src/Layouts/Library.vala:59
 msgid "Export Library"
-msgstr ""
+msgstr "Kütüphaneyi Dışa Aktar"
 
 #: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "Devam etmek istediğinize emin misiniz?"
 
 #: src/Layouts/Library.vala:134
 msgid "By deleting this connection you won't be able to recover this data."
-msgstr ""
+msgstr "Bu bağlantıyı silerek, bu veriyi kurtaramayacaksınız."
 
 #: src/Layouts/Library.vala:137
 msgid "Yes, Delete!"
-msgstr ""
+msgstr "Evet, Sil!"
 
 #: src/Layouts/Library.vala:152
 msgid "All the data will be deleted and you won't be able to recover it."
-msgstr ""
+msgstr "Tüm veri silinecek ve kurtarılamayacak."
 
 #: src/Layouts/Library.vala:155
 msgid "Yes, Delete All!"
-msgstr ""
+msgstr "Evet, Hepsini Sil!"
 
 #: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:61
 msgid "_Cancel"
-msgstr ""
+msgstr "_İptal Et"
 
 #: src/Layouts/Library.vala:242
 msgid "_Save"
-msgstr ""
+msgstr "_Kaydet"
 
 #: src/Layouts/Library.vala:302
 msgid "Unable to Connect to "
-msgstr ""
+msgstr "Bağlanılamadı "
 
 #: src/Layouts/Library.vala:315
 msgid "Unable to Export Library "
-msgstr ""
+msgstr "Kütüphane Dışa Aktarılamadı"
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
-msgstr ""
+msgstr "Sequeler‘a Hoş Geldiniz"
 
 #: src/Layouts/Welcome.vala:29
 msgid "Connect to any Local or Remote Database."
-msgstr ""
+msgstr "Herhangi Bir Yerel veya Uzak Veri Tabanına Bağlan."
 
 #: src/Layouts/Welcome.vala:38
 msgid "Add a New Database"
-msgstr ""
+msgstr "Yeni Bir Veri Tabanı Ekle"
 
 #: src/Layouts/Welcome.vala:38
 msgid "Connect to a Database and Save it in your Library"
-msgstr ""
+msgstr "Bir Veri Tabanına Bağlan ve Kütüphanene Kaydet"
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a new Sequeler Window"
-msgstr ""
+msgstr "Yeni bir Sequeler Penceresi Aç"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
-msgstr ""
+msgstr "Bağlantıları İçe Aktar"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
-msgstr ""
+msgstr "Önceden Dışa Aktarılmış Sequeler Bağlantılarını İçe Aktar"
 
 #: src/Layouts/Welcome.vala:63
 msgid "_Open"
-msgstr ""
+msgstr "_Aç"
 
 #: src/Layouts/Welcome.vala:108
 msgid "Unable to Import Library "
-msgstr ""
+msgstr "Kütüphane İçe Aktarılamadı"
 
 #: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
 msgid "- Select Database -"
-msgstr ""
+msgstr "- Veri Tabanı Seç -"
 
 #: src/Layouts/DataBaseSchema.vala:84
 msgid "Search Tables"
-msgstr ""
+msgstr "Tabloları Ara"
 
 #: src/Layouts/DataBaseSchema.vala:95
 msgid "Search Tables…"
-msgstr ""
+msgstr "Tabloları Ara…"
 
 #: src/Layouts/DataBaseSchema.vala:117
 msgid "Reload Tables"
-msgstr ""
+msgstr "Tabloları Yeniden Yükle"
 
 #: src/Layouts/DataBaseSchema.vala:122
 msgid "Add Table"
-msgstr ""
+msgstr "Tablo Ekle"
 
 #: src/Layouts/DataBaseSchema.vala:250
 msgid "TABLES"
-msgstr ""
+msgstr "TABLOLAR"
 
 #: src/Layouts/DataBaseView.vala:45
 msgid "Structure"
-msgstr ""
+msgstr "Yapı"
 
 #: src/Layouts/DataBaseView.vala:46
 msgid "Content"
-msgstr ""
+msgstr "İçerik"
 
 #: src/Layouts/DataBaseView.vala:47
 msgid "Relations"
-msgstr ""
+msgstr "İlişkiler"
 
 #: src/Layouts/DataBaseView.vala:48
 msgid "Query"
-msgstr ""
+msgstr "Sorgu"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
 #: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
 #: src/Layouts/Views/Query.vala:158
 msgid "No Results Available"
-msgstr ""
+msgstr "Sonuç Yok"
 
 #: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
 #: src/Layouts/Views/Relations.vala:78
 msgid "Reload Results"
-msgstr ""
+msgstr "Sonuçları Yeniden Yükle"
 
 #: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select Table"
-msgstr ""
+msgstr "Tablo Seç"
 
 #: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
+"Bu görünümü etkinleştirmek için soldaki kenar çubuğundan bir tablo seç."
 
 #: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
 msgid " Fields"
-msgstr ""
+msgstr " Alanlar"
 
 #: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
 msgid " Entries"
-msgstr ""
+msgstr " Girdiler"
 
 #: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
 msgid " Constraints"
-msgstr ""
+msgstr " Kısıtlar"
 
 #: src/Layouts/Views/Query.vala:126
 msgid "Running Query…"
-msgstr ""
+msgstr "Sorgu Çalıştırılıyor…"
 
 #: src/Layouts/Views/Query.vala:143
 msgid "Run Query"
-msgstr ""
+msgstr "Sorguyu Çalıştır"
 
 #: src/Layouts/Views/Query.vala:171
 msgid "Export Results"
-msgstr ""
+msgstr "Sonuçları Dışa Aktar"
 
 #: src/Layouts/Views/Query.vala:178
 msgid "Export as Sql"
-msgstr ""
+msgstr "Sql Olarak Dışa Aktar"
 
 #: src/Layouts/Views/Query.vala:179
 msgid "Export as Csv"
-msgstr ""
+msgstr "Csv Olarak Dışa Aktar"
 
 #: src/Layouts/Views/Query.vala:180
 msgid "Export as Text"
-msgstr ""
+msgstr "Metin Olarak Dışa Aktar"
 
 #: src/Layouts/Views/Query.vala:268 src/Layouts/Views/Query.vala:302
 msgid "Unable to process Query!"
-msgstr ""
+msgstr "Sorgu işlenemedi!"
 
 #: src/Layouts/Views/Query.vala:281
 msgid " Total Results"
-msgstr ""
+msgstr " Toplam Sonuç"
 
 #: src/Layouts/Views/Query.vala:307
 msgid "Query Successfully Executed! Rows affected: "
-msgstr ""
+msgstr "Sorgu Başarıyla Çalıştırıldı! Etkilenen satırlar: "
 
 #: src/Layouts/Views/Query.vala:309
 msgid "Query Executed!"
-msgstr ""
+msgstr "Sorgu Çalıştırıldı!"
 
 #: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
 msgid "Connect"
-msgstr ""
+msgstr "Bağlan"
 
 #: src/Partials/LibraryItem.vala:79
 msgid "Edit Connection"
-msgstr ""
+msgstr "Bağlantıyı Düzenle"
 
 #: src/Partials/LibraryItem.vala:84
 msgid "Delete Connection"
-msgstr ""
+msgstr "Bağlantıyı Sil"
 
 #: src/Services/ConnectionManager.vala:189
 msgid "Error!"
-msgstr ""
+msgstr "Hata!"
 
 #: src/Widgets/ConnectionDialog.vala:61
 msgid "Connection"
-msgstr ""
+msgstr "Bağlantı"
 
 #: src/Widgets/ConnectionDialog.vala:125
 msgid "Connection Name:"
-msgstr ""
+msgstr "Bağlantı Adı:"
 
 #: src/Widgets/ConnectionDialog.vala:126
 msgid "Connection's name"
-msgstr ""
+msgstr "Bağlantının adı"
 
 #: src/Widgets/ConnectionDialog.vala:133
 msgid "Database Type:"
-msgstr ""
+msgstr "Veri Tabanı Türü:"
 
 #: src/Widgets/ConnectionDialog.vala:155
 msgid "Host:"
-msgstr ""
+msgstr "Ana Makine:"
 
 #: src/Widgets/ConnectionDialog.vala:156
 msgid "127.0.0.1"
-msgstr ""
+msgstr "127.0.0.1"
 
 #: src/Widgets/ConnectionDialog.vala:161
 msgid "Database Name:"
-msgstr ""
+msgstr "Veri Tabanı Adı:"
 
 #: src/Widgets/ConnectionDialog.vala:168
 msgid "Username:"
-msgstr ""
+msgstr "Kullanıcı Adı:"
 
 #: src/Widgets/ConnectionDialog.vala:174
 msgid "Password:"
-msgstr ""
+msgstr "Parola:"
 
 #: src/Widgets/ConnectionDialog.vala:187
 msgid "Port:"
-msgstr ""
+msgstr "Bağlantı Kapısı:"
 
 #: src/Widgets/ConnectionDialog.vala:193
 msgid "File Path:"
-msgstr ""
+msgstr "Dosya Yolu:"
 
 #: src/Widgets/ConnectionDialog.vala:194
 msgid "Select your SQLite File…"
-msgstr ""
+msgstr "SQLite Dosyanı Seç…"
 
 #: src/Widgets/ConnectionDialog.vala:221
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: src/Widgets/ConnectionDialog.vala:222
 msgid "Save Connection"
-msgstr ""
+msgstr "Bağlantıyı Kaydet"
 
 #: src/Widgets/ConnectionDialog.vala:224
 msgid "Test Connection"
-msgstr ""
+msgstr "Bağlantıyı Sına"
 
 #: src/Widgets/ConnectionDialog.vala:364
 msgid "Testing Connection…"
-msgstr ""
+msgstr "Bağlantı Sınanıyor…"
 
 #: src/Widgets/ConnectionDialog.vala:372
 msgid "Successfully Connected!"
-msgstr ""
+msgstr "Bağlantı Başarılı!"
 
 #: src/Widgets/ConnectionDialog.vala:389
 msgid "Saving Connection…"
-msgstr ""
+msgstr "Bağlantı Kaydediliyor…"
 
 #: src/Widgets/ConnectionDialog.vala:394
 msgid "Connection Saved!"
-msgstr ""
+msgstr "Bağlantı Kaydedildi!"
 
 #: src/Widgets/ConnectionDialog.vala:402
 msgid "Connecting…"
-msgstr ""
+msgstr "Bağlanıyor…"
