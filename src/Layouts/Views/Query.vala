@@ -175,8 +175,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		export_button.can_focus = false;
 
 		var export_menu = new Gtk.Menu ();
-		var export_sql = new Gtk.MenuItem.with_label (_("Export as Sql"));
-		var export_csv = new Gtk.MenuItem.with_label (_("Export as Csv"));
+		var export_sql = new Gtk.MenuItem.with_label (_("Export as SQL"));
+		var export_csv = new Gtk.MenuItem.with_label (_("Export as CSV"));
 		var export_text = new Gtk.MenuItem.with_label (_("Export as Text"));
 		export_menu.add (export_sql);
 		export_menu.add (export_csv);
