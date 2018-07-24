@@ -278,7 +278,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		toggle_loading_msg (false);
 		spinner.stop ();
-		result_message.label = response.get_n_rows ().to_string () + _(" Total Results");
+		result_message.label = _("%d Total Results").printf (response.get_n_rows ());
 
 		scroll_results.add (result_data);
 		scroll_results.show_all ();
