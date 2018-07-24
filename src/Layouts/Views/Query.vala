@@ -304,7 +304,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		}
 
 		if (response > 0) {
-			result_message.label = _("Query Successfully Executed! Rows affected: ") + response.to_string ();
+			result_message.label = _("Query Successfully Executed! Rows Affected: ") + response.to_string ();
 		} else {
 			result_message.label = _("Query Executed!");
 		}
