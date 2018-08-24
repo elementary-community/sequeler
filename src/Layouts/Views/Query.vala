@@ -88,7 +88,33 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return query_builder;
 	}
 
+	/**
+	 * Get the text buffer based on user cursor, selection, and semicolon
+	 */
 	public string get_text () {
+		Gtk.TextIter start, end;
+
+		// If a portion of text is selected
+		if (buffer.get_selection_bounds (out start, out end)) {
+			debug (buffer.get_text (start, end, true));
+			return buffer.get_text (start, end, true);
+		}
+
+		// If there's a semicolon, return the currently highlighted line
+		if (buffer.text.contains (";")) {
+			buffer.get_selection_bounds (out start, out end);
+			start.set_line_offset (0);
+			if (end.starts_line ()) {
+				end.backward_char ();
+			} else if (!end.ends_line ()) {
+				end.forward_to_line_end ();
+			}
+			debug (buffer.get_text (start, end, true));
+			return buffer.get_text (start, end, true);
+		}
+
+		// Return full text
+		debug (buffer.text);
 		return buffer.text;
 	}
 
