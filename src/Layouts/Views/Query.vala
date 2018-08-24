@@ -96,26 +96,32 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		// If a portion of text is selected
 		if (buffer.get_selection_bounds (out start, out end)) {
-			debug (buffer.get_text (start, end, true));
-			return buffer.get_text (start, end, true);
+			debug (buffer.get_text (start, end, true).strip ());
+			return buffer.get_text (start, end, true).strip ();
 		}
 
 		// If there's a semicolon, return the currently highlighted line
 		if (buffer.text.contains (";")) {
 			buffer.get_selection_bounds (out start, out end);
 			start.set_line_offset (0);
+			start.backward_find_char (is_semicolon, null);
+			if (! start.starts_line ()) {
+				start.forward_char ();
+			}
+
 			if (end.starts_line ()) {
 				end.backward_char ();
 			} else if (!end.ends_line ()) {
 				end.forward_to_line_end ();
 			}
-			debug (buffer.get_text (start, end, true));
-			return buffer.get_text (start, end, true);
+
+			debug (buffer.get_text (start, end, true).strip ());
+			return buffer.get_text (start, end, true).strip ();
 		}
 
 		// Return full text
-		debug (buffer.text);
-		return buffer.text;
+		debug (buffer.text.strip ());
+		return buffer.text.strip ();
 	}
 
 	public Gtk.Grid results_view () {
@@ -341,5 +347,14 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		window.main.database_view.content.reset ();
 		window.main.database_view.relations.reset ();
 		window.main.database_view.structure.reset ();
+	}
+
+	private bool is_semicolon (unichar semicolon) {
+		return semicolon.to_string () == ";";
+	}
+
+
+	private bool is_space (unichar space) {
+		return space.isspace () || space.to_string () == "";
 	}
 }
