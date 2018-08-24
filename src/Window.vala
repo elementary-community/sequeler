@@ -69,7 +69,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
 		set_border_width (0);
 
-		delete_event.connect ((e) => {
+		delete_event.connect (e => {
 			return before_destroy ();
 		});
 
