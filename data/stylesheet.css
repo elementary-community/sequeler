@@ -17,7 +17,7 @@
 }
 
 .library-inner-box:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: shade (@bg_color, 0.9);
 }
 
 .library-inner-box:hover .library-btn {
@@ -30,13 +30,13 @@
 }
 
 .library-titlebar {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid shade (@bg_color, 0.9);
+    background: shade (@bg_color, 0.95);
 }
 
 .library-toolbar {
-    background: rgba(0, 0, 0, 0.05);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background: shade (@bg_color, 0.95);
+    border-top: 1px solid shade (@bg_color, 0.9);
 }
 
 .library-colorbox {
@@ -51,7 +51,7 @@
 }
 
 .toolbar-btn.active {
-    background: rgba(0, 0, 0, 0.1);
+    background: shade (@bg_color, 0.9);
     opacity: 1;
 }
 

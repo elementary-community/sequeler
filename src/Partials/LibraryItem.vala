@@ -115,7 +115,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 
 		var event_box = new Gtk.EventBox ();
 		event_box.add (box);
-		this.add (event_box);
+		add (event_box);
 
 		delete_button.clicked.connect (() => {
 			confirm_delete (this, data);
@@ -131,16 +131,24 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 			connect_to (data, spinner, connect_button);
 		});
 
-		event_box.enter_notify_event.connect ((event) => {
+		event_box.enter_notify_event.connect (event => {
 			box.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
 			return false;
 		});
 
-		event_box.leave_notify_event.connect ((event) => {
+		event_box.leave_notify_event.connect (event => {
 			if (event.detail != Gdk.NotifyType.INFERIOR) {
 				box.set_state_flags (Gtk.StateFlags.NORMAL, true);
 			}
 			return false;
+		});
+
+		open_menu.clicked.connect (event => {
+			box.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
+		});
+
+		menu_popover.closed.connect (event => {
+			box.set_state_flags (Gtk.StateFlags.NORMAL, true);
 		});
 	}
 }
