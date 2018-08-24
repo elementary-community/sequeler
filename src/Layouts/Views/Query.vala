@@ -315,11 +315,11 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		scroll_results.add (result_data);
 		scroll_results.show_all ();
 
-		if (response.get_n_rows () == 0) {
-			export_button.sensitive = false;
-		} else {
-			export_button.sensitive = true;
-		}
+		//  if (response.get_n_rows () == 0) {
+		//  	export_button.sensitive = false;
+		//  } else {
+		//  	export_button.sensitive = true;
+		//  }
 	}
 
 	public void handle_query_response (int? response) {
@@ -344,17 +344,12 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		window.main.database_schema.reload_schema ();
 
 		// Force reset all views to fetch updated data
-		window.main.database_view.content.reset ();
-		window.main.database_view.relations.reset ();
-		window.main.database_view.structure.reset ();
+		//  window.main.database_view.content.reset ();
+		//  window.main.database_view.relations.reset ();
+		//  window.main.database_view.structure.reset ();
 	}
 
 	private bool is_semicolon (unichar semicolon) {
 		return semicolon.to_string () == ";";
-	}
-
-
-	private bool is_space (unichar space) {
-		return space.isspace () || space.to_string () == "";
 	}
 }
