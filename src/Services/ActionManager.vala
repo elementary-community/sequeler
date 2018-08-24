@@ -124,7 +124,7 @@ public class Sequeler.Services.ActionManager : Object {
 			return;
 		}
 
-		var query = window.main.database_view.query.get_text ();
+		var query = window.main.database_view.query.get_text ().strip ();
 
 		if (query == "") {
 			return;

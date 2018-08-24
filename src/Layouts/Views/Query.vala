@@ -304,6 +304,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		if (result_data != null) {
 			scroll_results.remove (result_data);
+			result_data = null;
 		}
 
 		result_data = new Sequeler.Partials.TreeBuilder (response, window);
@@ -328,6 +329,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		if (result_data != null) {
 			scroll_results.remove (result_data);
+			result_data = null;
 		}
 
 		if (response == null) {
@@ -344,9 +346,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		window.main.database_schema.reload_schema ();
 
 		// Force reset all views to fetch updated data
-		//  window.main.database_view.content.reset ();
-		//  window.main.database_view.relations.reset ();
-		//  window.main.database_view.structure.reset ();
+		window.main.database_view.content.reset ();
+		window.main.database_view.relations.reset ();
+		window.main.database_view.structure.reset ();
 	}
 
 	private bool is_semicolon (unichar semicolon) {
