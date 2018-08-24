@@ -1,3 +1,13 @@
+com.github.alecaddd.sequeler (0.6.0) xenial; urgency=medium
+
+  * Ability to handle multiple SQL queries.
+  * Execute the currently highlighted query.
+  * Improved Library Popover UI.
+  * Use native GTK+ CSS attributes for better Light/Dark mode.
+  * Random UI improvements.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 24 Aug 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.5.9) xenial; urgency=high
 
   * Urgent! Fixed broken Tabs for translated version.

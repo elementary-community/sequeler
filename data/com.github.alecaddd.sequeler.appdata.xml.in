@@ -18,14 +18,28 @@
     </p>
     <ul>
       <li>Test Connections before saving them</li>
+      <li>View Table structure, content, and relations</li>
+      <li>Write multiple custom SQL Queries</li>
       <li>Switch between light and dark mode</li>
-      <li>Handy keyboard shortcuts to quit (ctrl+q), access library (ctrl+l), create new connection (ctrl+n), and open preferences (ctrl+,)</li>
+      <li>Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift+n), multiple instances (ctrl+n)</li>
     </ul>
   </description>
   <provides>
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.6.0" date="2018-08-24">
+      <description>
+        <p>We got Multi SQL Query support.</p>
+        <ul>
+          <li>Ability to handle multiple SQL queries.</li>
+          <li>Execute the currently highlighted query.</li>
+          <li>Improved Library Popover UI.</li>
+          <li>Use native GTK+ CSS attributes for better Light/Dark mode.</li>
+          <li>Random UI improvements.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.5.9" date="2018-07-17">
       <description>
         <p>Urgent! Fixed broken Tabs for translated version.</p>
