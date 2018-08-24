@@ -198,7 +198,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
-		var connection = new Sequeler.Services.ConnectionManager (data);
+		var connection = new Sequeler.Services.ConnectionManager (window, data);
 
 		var loop = new MainLoop ();
 		connection.init_connection.begin (connection, (obj, res) => {

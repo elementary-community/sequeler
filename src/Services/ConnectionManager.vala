@@ -20,6 +20,7 @@
 */
 
 public class Sequeler.Services.ConnectionManager : Object {
+	public weak Sequeler.Window window { get; construct; }
 	public Gee.HashMap<string, string> data { get; construct; }
 	private Object _db_type;
 
@@ -31,8 +32,9 @@ public class Sequeler.Services.ConnectionManager : Object {
 	public Gda.Connection? connection { get; set; default = null; }
 	public Gda.DataModel? output_select;
 
-	public ConnectionManager (Gee.HashMap<string, string> data) {
+	public ConnectionManager (Sequeler.Window window, Gee.HashMap<string, string> data) {
 		Object (
+			window: window,
 			data: data
 		);
 
@@ -187,7 +189,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 	public void query_warning (string message) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Error!"), message, "dialog-error", Gtk.ButtonsType.NONE);
-		// message_dialog.transient_for = Sequeler.Window;
+		message_dialog.transient_for = window;
 		
 		var suggested_button = new Gtk.Button.with_label ("Close");
 		message_dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);

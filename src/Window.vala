@@ -55,6 +55,10 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 		show_app ();
 	}
 
+	public Sequeler.Window get_instance () {
+		return this;
+	}
+
 	private void build_ui () {
 		Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
 

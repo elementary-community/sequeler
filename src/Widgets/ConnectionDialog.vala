@@ -368,7 +368,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		toggle_spinner (true);
 		write_response (_("Testing Connection\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (package_data ());
+		var connection = new Sequeler.Services.ConnectionManager (window, package_data ());
 		SourceFunc callback = test_connection.callback;
 
 		new Thread <void*> (null, () => {
@@ -406,7 +406,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		toggle_spinner (true);
 		write_response (_("Connecting\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (data);
+		var connection = new Sequeler.Services.ConnectionManager (window, data);
 
 		var loop = new MainLoop ();
 		connection.init_connection.begin (connection, (obj, res) => {
