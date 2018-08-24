@@ -99,6 +99,8 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		result_message.label = _("No Results Available");
+		table_name = "";
+		database = "";
 		placeholder ();
 
 		scroll.show_all ();
@@ -110,6 +112,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		if (table == _table_name && db_name == _database) {
+			debug ("Already loaded");
 			return;
 		}
 

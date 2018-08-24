@@ -99,6 +99,8 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 		}
 
 		result_message.label = _("No Results Available");
+		table_name = "";
+		database = "";
 		placeholder ();
 
 		scroll.show_all ();
