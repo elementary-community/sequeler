@@ -24,12 +24,12 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 	public Gtk.Label title;
 	public Gdk.RGBA color;
 
-	public Gtk.MenuItem connect_button;
+	public Gtk.ModelButton connect_button;
 	public Gtk.Spinner spinner;
 
 	public signal void edit_dialog (Gee.HashMap data);
 	public signal void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap data);
-	public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.MenuItem button);
+	public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.ModelButton button);
 
 	public LibraryItem (Gee.HashMap<string, string> data) {
 		Object (
@@ -71,27 +71,40 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 		box.attach (color_box, 0, 0, 1, 1);
 		box.attach (title, 1, 0, 1, 1);
 
-		var menu = new Gtk.Menu ();
-		
-		connect_button = new Gtk.MenuItem.with_label (_("Connect"));
-		menu.add (connect_button);
+		connect_button = new Gtk.ModelButton ();
+		connect_button.text = _("Connect");
 
-		var edit_button = new Gtk.MenuItem.with_label (_("Edit Connection"));
-		menu.add (edit_button);
+		var edit_button = new Gtk.ModelButton ();
+		edit_button.text = _("Edit Connection");
 
-		menu.add (new Gtk.SeparatorMenuItem ());
-
-		var delete_button = new Gtk.MenuItem.with_label (_("Delete Connection"));
-		menu.add (delete_button);
-
-		menu.show_all  ();
+		var delete_button = new Gtk.ModelButton ();
+		delete_button.text = _("Delete Connection");
 
 		var open_menu = new Gtk.MenuButton ();
 		open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
 		open_menu.get_style_context ().add_class ("library-btn");
 		open_menu.tooltip_text = _("Options");
 
-		open_menu.popup = menu;
+		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+		menu_separator.margin_top = 6;
+		menu_separator.margin_bottom = 6;
+
+		var menu_grid = new Gtk.Grid ();
+		menu_grid.expand = true;
+		menu_grid.margin_top = 3;
+		menu_grid.margin_bottom = 3;
+		menu_grid.orientation = Gtk.Orientation.VERTICAL;
+
+		menu_grid.attach (connect_button, 0, 1, 1, 1);
+		menu_grid.attach (edit_button, 0, 2, 1, 1);
+		menu_grid.attach (menu_separator, 0, 3, 1, 1);
+		menu_grid.attach (delete_button, 0, 4, 1, 1);
+		menu_grid.show_all ();
+
+		var menu_popover = new Gtk.Popover (null);
+		menu_popover.add (menu_grid);
+
+		open_menu.popover = menu_popover;
 		open_menu.relief = Gtk.ReliefStyle.NONE;
 		open_menu.valign = Gtk.Align.CENTER;
 
@@ -104,15 +117,15 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 		event_box.add (box);
 		this.add (event_box);
 
-		delete_button.activate.connect (() => {
+		delete_button.clicked.connect (() => {
 			confirm_delete (this, data);
 		});
 
-		edit_button.activate.connect (() => {
+		edit_button.clicked.connect (() => {
 			edit_dialog (data);
 		});
 
-		connect_button.activate.connect (() => {
+		connect_button.clicked.connect (() => {
 			spinner.start ();
 			connect_button.sensitive = false;
 			connect_to (data, spinner, connect_button);
