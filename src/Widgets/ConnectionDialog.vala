@@ -94,7 +94,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		header_grid.margin_end = 5;
 		header_grid.margin_bottom = 20;
 
-		var image = new Gtk.Image.from_icon_name ("drive-multidisk", Gtk.IconSize.DIALOG);
+		var image = new Gtk.Image.from_icon_name ("office-database", Gtk.IconSize.DIALOG);
 		image.margin_end = 10;
 
 		header_title = new Gtk.Label (_("New Connection"));
@@ -174,10 +174,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_password_label = new Sequeler.Partials.LabelForm (_("Password:"));
 		db_password_entry = new Sequeler.Partials.Entry ("", null);
 		db_password_entry.visibility = false;
-		db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "dialog-information-symbolic");
+		db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
 		db_password_entry.icon_press.connect ((pos, event) => {
 			if (pos == Gtk.EntryIconPosition.SECONDARY) {
 				db_password_entry.visibility = !db_password_entry.visibility;
+			}
+ 			if (db_password_entry.visibility) {
+				db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-allow-symbolic");
+			} else {
+				db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
 			}
 		});
 
