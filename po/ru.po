@@ -13,11 +13,11 @@ msgstr "Отключиться"
 
 #: src/Layouts/HeaderBar.vala:53
 msgid "Light background"
-msgstr ""
+msgstr "Светлый фон"
 
 #: src/Layouts/HeaderBar.vala:54
 msgid "Dark background"
-msgstr ""
+msgstr "Тёмный фон"
 
 #: src/Layouts/HeaderBar.vala:63
 msgid "About"
@@ -114,7 +114,7 @@ msgstr "Подключиться к базе данных и сохранить 
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a new Sequeler Window"
-msgstr ""
+msgstr "Открыть новое окно Sequeler"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
@@ -158,20 +158,19 @@ msgstr "ТАБЛИЦЫ"
 
 #: src/Layouts/DataBaseView.vala:45
 msgid "Structure"
-msgstr ""
+msgstr "Структура"
 
 #: src/Layouts/DataBaseView.vala:46
 msgid "Content"
-msgstr ""
+msgstr "Данные"
 
 #: src/Layouts/DataBaseView.vala:47
 msgid "Relations"
-msgstr ""
+msgstr "Отношения"
 
 #: src/Layouts/DataBaseView.vala:48
-#, fuzzy
 msgid "Query"
-msgstr "Выполнить запрос"
+msgstr "Запрос"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101

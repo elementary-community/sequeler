@@ -72,7 +72,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 		main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.SLIDE_LEFT);
 
 		var host = connection.data["host"] != "" ? connection.data["host"] : "127.0.0.1";
-		window.headerbar.title = _("Connected to ") + connection.data["title"];
+		window.headerbar.title = _("Connected to %s").printf (connection.data["title"]);
 		window.headerbar.subtitle = connection.data["username"] + "@" + host;
 
 		database_schema.reload_schema ();
