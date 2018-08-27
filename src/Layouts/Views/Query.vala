@@ -27,6 +27,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.Spinner spinner;
 	public Gtk.Label loading_msg;
 	public Gtk.Label result_message;
+	public Gtk.Image icon_success;
+	public Gtk.Image icon_fail;
 	public Gtk.Button run_button;
 	public Gtk.MenuButton export_button;
 
@@ -186,7 +188,19 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return run_button;
 	}
 
-	public Gtk.Label build_results_msg () {
+	public Gtk.Grid build_results_msg () {
+		var result_box = new Gtk.Grid ();
+
+		icon_success = new Gtk.Image.from_icon_name ("process-completed-symbolic", Gtk.IconSize.BUTTON);
+		icon_success.margin_start = 7;
+		icon_success.visible = false;
+		icon_success.no_show_all = true;
+
+		icon_fail = new Gtk.Image.from_icon_name ("dialog-error-symbolic", Gtk.IconSize.BUTTON);
+		icon_fail.margin_start = 7;
+		icon_fail.visible = false;
+		icon_fail.no_show_all = true;
+
 		result_message = new Gtk.Label (_("No Results Available"));
 		result_message.halign = Gtk.Align.START;
 		result_message.margin = 7;
@@ -194,7 +208,26 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		result_message.hexpand = true;
 		result_message.wrap = true;
 
-		return result_message;
+		result_box.attach (icon_success, 0, 0, 1, 1);
+		result_box.attach (icon_fail, 1, 0, 1, 1);
+		result_box.attach (result_message, 2, 0, 1, 1);
+
+		return result_box;
+	}
+
+	public void show_result_icon (bool status) {
+		if (status) {
+			icon_success.visible = true;
+			icon_success.no_show_all = false;
+			icon_fail.visible = false;
+			icon_fail.no_show_all = true;
+			return;
+		}
+
+		icon_success.visible = false;
+		icon_success.no_show_all = true;
+		icon_fail.visible = true;
+		icon_fail.no_show_all = false;
 	}
 
 	public Gtk.Button build_export_btn () {
@@ -225,7 +258,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public void run_query (string query) {
 		toggle_loading_msg (true);
 		spinner.start ();
-		result_message.label = "\u2026";
 
 		var select_pos = query.down ().index_of ("select", 0);
 		var show_pos = query.down ().index_of ("show", 0);
@@ -258,7 +290,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			window.main.connection.query_warning (error);
 			toggle_loading_msg (false);
 			spinner.stop ();
+
 			result_message.label = error;
+			show_result_icon (false);
+
 			return null;
 		}
 
@@ -286,7 +321,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			window.main.connection.query_warning (error);
 			toggle_loading_msg (false);
 			spinner.stop ();
+
 			result_message.label = error;
+			show_result_icon (false);
+
 			return null;
 		}
 
@@ -297,7 +335,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		if (response == null) {
 			toggle_loading_msg (false);
 			spinner.stop ();
+
 			result_message.label = _("Unable to process Query!");
+			show_result_icon (false);
+
 			export_button.sensitive = false;
 			return;
 		}
@@ -311,7 +352,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		toggle_loading_msg (false);
 		spinner.stop ();
+
 		result_message.label = _("%d Total Results").printf (response.get_n_rows ());
+		show_result_icon (true);
 
 		scroll_results.add (result_data);
 		scroll_results.show_all ();
@@ -334,13 +377,16 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		if (response == null) {
 			result_message.label = _("Unable to process Query!");
+			show_result_icon (false);
 			return;
 		}
 
 		if (response > 0) {
 			result_message.label = _("Query Successfully Executed! Rows Affected: ") + response.to_string ();
+			show_result_icon (true);
 		} else {
 			result_message.label = _("Query Executed!");
+			show_result_icon (true);
 		}
 
 		window.main.database_schema.reload_schema ();
