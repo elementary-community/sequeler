@@ -47,8 +47,10 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 		return "PRAGMA table_info('" + table + "')";
 	}
 
-	public string show_table_content (string table) {
-		return "SELECT * FROM " + table;
+	public string show_table_content (string table, int limit, int page) {
+		string start = (limit * (page - 1)).to_string ();
+		string end = (limit * page).to_string ();
+		return "SELECT * FROM " + table + " LIMIT " + start + "," + end;
 	}
 
 	public string show_table_relations (string table, string database) {

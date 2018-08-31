@@ -49,7 +49,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         return "SELECT * FROM information_schema.COLUMNS WHERE table_name='" + table + "'";
     }
 
-    public string show_table_content (string table) {
+    public string show_table_content (string table, int limit, int page) {
         return "SELECT * FROM " + table;
     }
     
