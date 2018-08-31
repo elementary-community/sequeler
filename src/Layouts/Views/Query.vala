@@ -286,17 +286,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		loop.run ();
 
-		if (error != "") {
-			window.main.connection.query_warning (error);
-			toggle_loading_msg (false);
-			spinner.stop ();
-
-			result_message.label = error;
-			show_result_icon (false);
-
-			return null;
-		}
-
 		return result;
 	}
 
@@ -319,6 +308,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		if (error != "") {
 			window.main.connection.query_warning (error);
+		}
+
+		if (result == 0 || result == -1) {
 			toggle_loading_msg (false);
 			spinner.stop ();
 
@@ -339,7 +331,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			result_message.label = _("Unable to process Query!");
 			show_result_icon (false);
 
-			export_button.sensitive = false;
+			//  export_button.sensitive = false;
 			return;
 		}
 
