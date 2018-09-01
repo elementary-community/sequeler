@@ -24,6 +24,8 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 	public Gtk.ScrolledWindow scroll;
 	public Gtk.Label result_message;
+	public Sequeler.Partials.HeaderBarButton page_prev_btn;
+	public Sequeler.Partials.HeaderBarButton page_next_btn;
 
 	private string _table_name = "";
 
@@ -54,13 +56,40 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
-		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
-		info_bar.attach (build_reload_btn (), 1, 0, 1, 1);
+		info_bar.attach (build_pagination (), 0, 0, 1, 1);
+		info_bar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
+		info_bar.attach (build_results_msg (), 2, 0, 1, 1);
+		info_bar.attach (build_reload_btn (), 3, 0, 1, 1);
 
 		attach (scroll, 0, 0, 1, 1);
 		attach (info_bar, 0, 1, 1, 1);
 
 		placeholder ();
+	}
+
+	public Gtk.Grid build_pagination () {
+		var page_grid = new Gtk.Grid ();
+
+		page_prev_btn = new Sequeler.Partials.HeaderBarButton ("go-previous-symbolic", _("Previous Page"));
+		page_prev_btn.clicked.connect (go_prev_page);
+		page_prev_btn.halign = Gtk.Align.START;
+		page_prev_btn.sensitive = false;
+
+		page_next_btn = new Sequeler.Partials.HeaderBarButton ("go-next-symbolic", _("Next Page"));
+		page_next_btn.clicked.connect (go_next_page);
+		page_next_btn.halign = Gtk.Align.END;
+		page_next_btn.sensitive = false;
+
+		var pages_count = new Gtk.Label ("0 Pages");
+		pages_count.margin = 7;
+
+		page_grid.attach (page_prev_btn, 0, 0, 1, 1);
+		page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
+		page_grid.attach (pages_count, 2, 0, 1, 1);
+		page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 3, 0, 1, 1);
+		page_grid.attach (page_next_btn, 4, 0, 1, 1);
+
+		return page_grid;
 	}
 
 	public Gtk.Label build_results_msg () {
@@ -182,5 +211,13 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		return result;
+	}
+
+	public void go_prev_page () {
+
+	}
+
+	public void go_next_page () {
+
 	}
 }
