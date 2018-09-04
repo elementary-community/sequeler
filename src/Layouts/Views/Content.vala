@@ -24,8 +24,11 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 	public Gtk.ScrolledWindow scroll;
 	public Gtk.Label result_message;
-	public Sequeler.Partials.HeaderBarButton page_prev_btn;
-	public Sequeler.Partials.HeaderBarButton page_next_btn;
+	private Sequeler.Partials.HeaderBarButton page_prev_btn;
+	private Sequeler.Partials.HeaderBarButton page_next_btn;
+	private Gtk.Label pages_label;
+	private int tot_pages { get; set; default = 0; }
+	private int current_page { get; set; default = 1; }
 
 	private string _table_name = "";
 
@@ -80,16 +83,29 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		page_next_btn.halign = Gtk.Align.END;
 		page_next_btn.sensitive = false;
 
-		var pages_count = new Gtk.Label ("0 Pages");
-		pages_count.margin = 7;
+		pages_label = new Gtk.Label (tot_pages.to_string () + _(" Pages"));
+		pages_label.margin = 7;
 
 		page_grid.attach (page_prev_btn, 0, 0, 1, 1);
 		page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
-		page_grid.attach (pages_count, 2, 0, 1, 1);
+		page_grid.attach (pages_label, 2, 0, 1, 1);
 		page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 3, 0, 1, 1);
 		page_grid.attach (page_next_btn, 4, 0, 1, 1);
 
 		return page_grid;
+	}
+
+	private void update_pagination (Gda.DataModel? results) {
+		var tot_results = results.get_n_rows ();
+
+		if (tot_results <= settings.limit_results) {
+			pages_label.set_text (_("1 Page"));
+			return;
+		}
+
+		tot_pages = (int) Math.ceilf (((float) tot_results) / settings.limit_results);
+		pages_label.set_text (current_page.to_string () + _(" of ") + tot_pages.to_string () + _(" Pages"));
+		page_next_btn.sensitive = true;
 	}
 
 	public Gtk.Label build_results_msg () {
@@ -160,6 +176,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		result_message.label = _("%d Entries").printf (table_content.get_n_rows ());
 
 		clear ();
+		update_pagination (table_content);
 
 		scroll.add (result_data);
 		scroll.show_all ();
@@ -182,6 +199,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		result_message.label = table_content.get_n_rows ().to_string () + _(" Entries");
 
 		clear ();
+		update_pagination (table_content);
 
 		scroll.add (result_data);
 		scroll.show_all ();

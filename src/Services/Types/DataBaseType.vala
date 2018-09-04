@@ -48,7 +48,7 @@ public interface DataBaseType : Object {
 	/*
 	 * Show table content
 	 */
-	public abstract string show_table_content (string table, int limit = 100, int page = 1);
+	public abstract string show_table_content (string table);
 
 	/*
 	 * Show table relations

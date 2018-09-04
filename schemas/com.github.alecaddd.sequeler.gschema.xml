@@ -30,6 +30,12 @@
             <description>Increase the amount at every new connection, set a unique ID for every connection.</description>		
         </key>
 
+        <key name="limit-results" type="i">		
+            <default>100</default>		
+            <summary>Max rows to show in Content tab.</summary>		
+            <description>Split results based on max amount, helps generate the pagination.</description>		
+        </key>
+
         <key name="saved-connections" type="as">
             <default>[]</default>
             <summary>The saved configured conenctions</summary>

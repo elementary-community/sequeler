@@ -65,6 +65,7 @@ executable(
         dependency('libgda-5.0'),
         dependency('libsecret-1'),
         dependency('gtksourceview-3.0'),
+        m_dep
     ],
     install: true
 )

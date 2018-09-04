@@ -49,11 +49,8 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 		return "DESCRIBE " + table + ";";
 	}
 
-	public string show_table_content (string table, int limit, int page) {
-		string offset = (limit * (page - 1)).to_string ();
-		string amount = (limit * page).to_string ();
-
-		return "SELECT * FROM " + table + " LIMIT " + amount + "," + offset;
+	public string show_table_content (string table) {
+		return "SELECT * FROM " + table;
 	}
 
 	public string show_table_relations (string table, string database) {
