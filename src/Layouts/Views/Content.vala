@@ -164,22 +164,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		table_name = table;
 		database = db_name;
 
-		var query = (window.main.connection.db_type as DataBaseType).show_table_content (table);
-
-		var table_content = get_table_content (query);
-
-		if (table_content == null) {
-			return;
-		}
-
-		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window);
-		result_message.label = _("%d Entries").printf (table_content.get_n_rows ());
-
-		clear ();
-		update_pagination (table_content);
-
-		scroll.add (result_data);
-		scroll.show_all ();
+		get_content_and_fill ();
 	}
 
 	public void reload_results () {
@@ -187,6 +172,10 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			return;
 		}
 
+		get_content_and_fill ();
+	}
+	
+	public void get_content_and_fill () {
 		var query = (window.main.connection.db_type as DataBaseType).show_table_content (table_name);
 
 		var table_content = get_table_content (query);
@@ -196,7 +185,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window);
-		result_message.label = table_content.get_n_rows ().to_string () + _(" Entries");
+		result_message.label = _("%d Entries").printf (table_content.get_n_rows ());
 
 		clear ();
 		update_pagination (table_content);
