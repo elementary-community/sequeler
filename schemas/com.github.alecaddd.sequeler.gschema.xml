@@ -31,7 +31,7 @@
         </key>
 
         <key name="limit-results" type="i">		
-            <default>100</default>		
+            <default>1000</default>		
             <summary>Max rows to show in Content tab.</summary>		
             <description>Split results based on max amount, helps generate the pagination.</description>		
         </key>
