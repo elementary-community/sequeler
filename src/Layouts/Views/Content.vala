@@ -157,7 +157,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		if (table == _table_name && db_name == _database) {
-			debug ("Already loaded");
 			return;
 		}
 

@@ -118,21 +118,7 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 		table_name = table;
 		database = db_name;
 
-		var query = (window.main.connection.db_type as DataBaseType).show_table_relations (table, db_name);
-
-		var table_relations = get_table_relations (query);
-
-		if (table_relations == null) {
-			return;
-		}
-
-		var result_data = new Sequeler.Partials.TreeBuilder (table_relations, window);
-		result_message.label = _("%d Constraints").printf (table_relations.get_n_rows ());
-
-		clear ();
-
-		scroll.add (result_data);
-		scroll.show_all ();
+		get_content_and_fill ();
 	}
 
 	public void reload_results () {
@@ -140,6 +126,10 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 			return;
 		}
 
+		get_content_and_fill ();
+	}
+
+	public void get_content_and_fill () {
 		var query = (window.main.connection.db_type as DataBaseType).show_table_relations (table_name, database);
 
 		var table_relations = get_table_relations (query);

@@ -59,15 +59,15 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 			}
 
 			if (tab.name == "Structure") {
-				window.main.database_view.structure.fill (item_selected.name, "");
+				window.main.database_view.structure.fill (item_selected.name, window.main.database_view.structure.database);
 			}
 
 			if (tab.name == "Content") {
-				window.main.database_view.content.fill (item_selected.name, "");
+				window.main.database_view.content.fill (item_selected.name, window.main.database_view.content.database);
 			}
 
 			if (tab.name == "Relations") {
-				window.main.database_view.relations.fill (item_selected.name, "");
+				window.main.database_view.relations.fill (item_selected.name, window.main.database_view.relations.database);
 			}
 		});
 

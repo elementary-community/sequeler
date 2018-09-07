@@ -285,6 +285,10 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				window.main.database_view.relations.fill (item.name, database);
 			}
 		});
+
+		window.main.database_view.structure.database = database;
+		window.main.database_view.content.database = database;
+		window.main.database_view.relations.database = database;
 	}
 
 	public Gda.DataModel? get_schema_table (string table) {
