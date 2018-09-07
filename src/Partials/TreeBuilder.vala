@@ -22,14 +22,18 @@
 public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public weak Sequeler.Window window { get; construct; }
 	public Gda.DataModel data { get; construct; }
+	public int per_page { get; construct; }
+	public int current_page { get; construct; }
 
 	private string bg_light = "rgba(255,255,255,0.05)";
 	private string bg_dark = "rgba(0,0,0,0.05)";
 
-	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window) {
+	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window, int per_page = 0, int current_page = 0) {
 		Object (
 			window: main_window,
-			data: response
+			data: response,
+			per_page: per_page,
+			current_page: current_page
 		);
 	}
 
@@ -53,7 +57,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 				column.sizing = Gtk.TreeViewColumnSizing.FIXED;
 				column.fixed_width = 150;
 			}
-			this.append_column (column);
+			append_column (column);
 		}
 
 		theTypes[tot_columns] = typeof (string);
@@ -64,24 +68,54 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		var error_message = GLib.Value (typeof (string));
 		var background = bg_light;
 
-		while (_iter.move_next ()) {
+		if (per_page != 0 && data.get_n_rows () > per_page) {
+			int counter = 1;
+			int offset = (per_page * (current_page - 1));
 
-			if (_iter.get_row () % 2 == 0) {
-				background = bg_light;
-			} else {
-				background = bg_dark;
+			if (current_page != 0 && offset != 0) {
+				_iter.move_to_row (offset);
 			}
 
-			store.append (out iter);
+			while (counter <= per_page && _iter.move_next ()) {
 
-			for (int i = 0; i < tot_columns; i++) {
-				try {
-					store.set_value (iter, i, _iter.get_value_at_e (i));
-				} catch (Error e) {
-					error_message.set_string ("Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ());
+				if (_iter.get_row () % 2 == 0) {
+					background = bg_light;
+				} else {
+					background = bg_dark;
 				}
+
+				store.append (out iter);
+
+				for (int i = 0; i < tot_columns; i++) {
+					try {
+						store.set_value (iter, i, _iter.get_value_at_e (i));
+					} catch (Error e) {
+						error_message.set_string ("Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ());
+					}
+				}
+				store.set_value (iter, tot_columns, background);
+				counter++;
 			}
-			store.set_value (iter, tot_columns, background);
+		} else {
+			while (_iter.move_next ()) {
+
+				if (_iter.get_row () % 2 == 0) {
+					background = bg_light;
+				} else {
+					background = bg_dark;
+				}
+
+				store.append (out iter);
+
+				for (int i = 0; i < tot_columns; i++) {
+					try {
+						store.set_value (iter, i, _iter.get_value_at_e (i));
+					} catch (Error e) {
+						error_message.set_string ("Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ());
+					}
+				}
+				store.set_value (iter, tot_columns, background);
+			}
 		}
 
 		if (error_message.get_string () != null) {
@@ -89,6 +123,6 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			error_message.unset ();
 		}
 
-		this.set_model (store);
+		set_model (store);
 	}
 }

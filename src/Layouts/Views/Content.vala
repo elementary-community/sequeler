@@ -22,6 +22,7 @@
 public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	private Gda.DataModel? table_content;
 	public Gtk.ScrolledWindow scroll;
 	public Gtk.Label result_message;
 	private Sequeler.Partials.HeaderBarButton page_prev_btn;
@@ -96,6 +97,8 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	}
 
 	private void update_pagination (Gda.DataModel? results) {
+		page_prev_btn.sensitive = false;
+		page_next_btn.sensitive = false;
 		var tot_results = results.get_n_rows ();
 
 		if (tot_results <= settings.limit_results) {
@@ -163,6 +166,9 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		table_name = table;
 		database = db_name;
 
+		tot_pages = 0;
+		current_page = 1;
+
 		get_content_and_fill ();
 	}
 
@@ -177,13 +183,13 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	public void get_content_and_fill () {
 		var query = (window.main.connection.db_type as DataBaseType).show_table_content (table_name);
 
-		var table_content = get_table_content (query);
+		table_content = get_table_content (query);
 
 		if (table_content == null) {
 			return;
 		}
 
-		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window);
+		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
 		result_message.label = _("%d Entries").printf (table_content.get_n_rows ());
 
 		clear ();
@@ -220,10 +226,34 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	}
 
 	public void go_prev_page () {
+		current_page--;
+		page_next_btn.sensitive = true;
 
+		if (current_page == 1) {
+			page_prev_btn.sensitive = false;
+		}
+
+		change_page ();
 	}
 
 	public void go_next_page () {
+		current_page++;
+		page_prev_btn.sensitive = true;
 
+		if (current_page == tot_pages) {
+			page_next_btn.sensitive = false;
+		}
+
+		change_page ();
+	}
+
+	private void change_page () {
+		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
+
+		clear ();
+		pages_label.set_text (current_page.to_string () + _(" of ") + tot_pages.to_string () + _(" Pages"));
+
+		scroll.add (result_data);
+		scroll.show_all ();
 	}
 }
