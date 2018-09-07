@@ -73,7 +73,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			int offset = (per_page * (current_page - 1));
 
 			if (current_page != 0 && offset != 0) {
-				_iter.move_to_row (offset);
+				_iter.move_to_row ((offset - 1));
 			}
 
 			while (counter <= per_page && _iter.move_next ()) {
