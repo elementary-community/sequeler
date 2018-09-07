@@ -28,6 +28,16 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.6.1" date="2018-09-07">
+      <description>
+        <p>Here comes the power of Pagination!!!</p>
+        <ul>
+          <li>Paginate results in the Content tab.</li>
+          <li>Query messages UI improvements.</li>
+          <li>Relations table bug fixes.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.0" date="2018-08-24">
       <description>
         <p>We got Multi SQL Query support.</p>

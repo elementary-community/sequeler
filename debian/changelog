@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.6.1) xenial; urgency=medium
+
+  * Paginate results in the Content tab.
+  * Query messages UI improvements.
+  * Relations table bug fixes.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 7 Sept 2018 12:28:00 -0500
+
 com.github.alecaddd.sequeler (0.6.0) xenial; urgency=medium
 
   * Ability to handle multiple SQL queries.
