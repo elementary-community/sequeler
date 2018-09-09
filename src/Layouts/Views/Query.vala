@@ -147,7 +147,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
 		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
-		// info_bar.attach (build_export_btn (), 1, 0, 1, 1);
+		info_bar.attach (build_export_btn (), 1, 0, 1, 1);
 
 		results_view.attach (action_bar, 0, 0, 1, 1);
 		results_view.attach (scroll_results, 0, 1, 1, 1);
@@ -239,16 +239,36 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		export_button.set_image (export_image);
 		export_button.can_focus = false;
 
-		var export_menu = new Gtk.Menu ();
-		var export_sql = new Gtk.MenuItem.with_label (_("Export as SQL"));
-		var export_csv = new Gtk.MenuItem.with_label (_("Export as CSV"));
-		var export_text = new Gtk.MenuItem.with_label (_("Export as Text"));
-		export_menu.add (export_sql);
-		export_menu.add (export_csv);
-		export_menu.add (export_text);
-		export_menu.show_all ();
+		var menu_grid = new Gtk.Grid ();
+		menu_grid.expand = true;
+		menu_grid.margin_top = 3;
+		menu_grid.margin_bottom = 3;
+		menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-		export_button.popup = export_menu;
+		var export_sql = new Gtk.ModelButton ();
+		export_sql.image = new Gtk.Image.from_icon_name ("office-database", Gtk.IconSize.BUTTON);
+		export_sql.label = (_("Export as SQL"));
+		export_sql.always_show_image = true;
+
+		var export_csv = new Gtk.ModelButton ();
+		export_csv.label = _("Export as CSV");
+		export_csv.image = new Gtk.Image.from_icon_name ("x-office-spreadsheet", Gtk.IconSize.BUTTON);
+		export_csv.always_show_image = true;
+
+		var export_text = new Gtk.ModelButton ();
+		export_text.label = _("Export as Text");
+		export_text.image = new Gtk.Image.from_icon_name ("text-x-generic", Gtk.IconSize.BUTTON);
+		export_text.always_show_image = true;
+
+		menu_grid.attach (export_sql, 0, 1, 1, 1);
+		menu_grid.attach (export_csv, 0, 2, 1, 1);
+		menu_grid.attach (export_text, 0, 3, 1, 1);
+		menu_grid.show_all ();
+
+		var export_menu = new Gtk.Popover (null);
+		export_menu.add (menu_grid);
+
+		export_button.popover = export_menu;
 		export_button.direction = Gtk.ArrowType.UP;
 		export_button.sensitive = false;
 
@@ -331,7 +351,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			result_message.label = _("Unable to process Query!");
 			show_result_icon (false);
 
-			//  export_button.sensitive = false;
+			export_button.sensitive = false;
 			return;
 		}
 
@@ -351,11 +371,11 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		scroll_results.add (result_data);
 		scroll_results.show_all ();
 
-		//  if (response.get_n_rows () == 0) {
-		//  	export_button.sensitive = false;
-		//  } else {
-		//  	export_button.sensitive = true;
-		//  }
+		if (response.get_n_rows () == 0) {
+			export_button.sensitive = false;
+		} else {
+			export_button.sensitive = true;
+		}
 	}
 
 	public void handle_query_response (int? response) {
