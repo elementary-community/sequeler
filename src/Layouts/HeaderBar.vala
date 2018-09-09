@@ -24,6 +24,10 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 	private Gtk.Button logout_button;
 	private ModeSwitch mode_switch;
+	//  public const Gdk.RGBA light_header = { 0.58, 0.63, 0.67, 1.0 };
+	//  public const Gdk.RGBA dark_header = { 0.28, 0.35, 0.42, 1.0 };
+	public Gdk.RGBA light_header;
+	public Gdk.RGBA dark_header;
 
 	public bool logged_out { get; set; }
 
@@ -49,13 +53,26 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		logout_button.can_focus = false;
 		logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
 
+		light_header = Gdk.RGBA ();
+		light_header.parse ("#95a3ab");
+		dark_header = Gdk.RGBA ();
+		dark_header.parse ("#485a6c");
+
+		Granite.Widgets.Utils.set_color_primary (window, light_header);
+
 		mode_switch = new ModeSwitch ("display-brightness-symbolic", "weather-clear-night-symbolic");
         mode_switch.primary_icon_tooltip_text = _("Light background");
         mode_switch.secondary_icon_tooltip_text = _("Dark background");
         mode_switch.valign = Gtk.Align.CENTER;
 		mode_switch.bind_property ("active", settings, "dark-theme");
 		mode_switch.notify.connect (() => {
-            Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
+			Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
+			
+			if (settings.dark_theme) {
+				Granite.Widgets.Utils.set_color_primary (window, dark_header);
+			} else {
+				Granite.Widgets.Utils.set_color_primary (window, light_header);
+			}
 		});
 		
 		if (settings.dark_theme) {
