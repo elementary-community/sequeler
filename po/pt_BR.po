@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-17 09:17-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-09-09 00:58-0300\n"
 "Last-Translator: Helder Bertoldo <helder.bertoldo@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -23,11 +23,11 @@ msgstr "Sair"
 
 #: src/Layouts/HeaderBar.vala:53
 msgid "Light background"
-msgstr ""
+msgstr "Fundo claro"
 
 #: src/Layouts/HeaderBar.vala:54
 msgid "Dark background"
-msgstr ""
+msgstr "Fundo escuro"
 
 #: src/Layouts/HeaderBar.vala:63
 msgid "About"
@@ -124,7 +124,7 @@ msgstr "Conecte-se a um Banco de Dados e Salve ele em sua Biblioteca"
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a new Sequeler Window"
-msgstr ""
+msgstr "Abrir uma nova janela do Sequeler"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
@@ -170,15 +170,15 @@ msgstr "TABELAS"
 
 #: src/Layouts/DataBaseView.vala:45
 msgid "Structure"
-msgstr ""
+msgstr "Estrutura"
 
 #: src/Layouts/DataBaseView.vala:46
 msgid "Content"
-msgstr ""
+msgstr "Conteúdo"
 
 #: src/Layouts/DataBaseView.vala:47
 msgid "Relations"
-msgstr ""
+msgstr "Relacionamentos"
 
 #: src/Layouts/DataBaseView.vala:48
 #, fuzzy
@@ -190,7 +190,7 @@ msgstr "Executar Consulta"
 #: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
 #: src/Layouts/Views/Query.vala:158
 msgid "No Results Available"
-msgstr "Não há resultados disponíveis"
+msgstr "Não Há Resultados Disponíveis"
 
 #: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
 #: src/Layouts/Views/Relations.vala:78
@@ -254,7 +254,7 @@ msgstr " Total de Resultados"
 
 #: src/Layouts/Views/Query.vala:307
 msgid "Query Successfully Executed! Rows affected: "
-msgstr "Consulta executada com êxito! Linhas afetadas: "
+msgstr "Consulta Executada com Sucesso! Linhas Afetadas: "
 
 #: src/Layouts/Views/Query.vala:309
 msgid "Query Executed!"
