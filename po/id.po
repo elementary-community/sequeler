@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 09:17-0700\n"
+"POT-Creation-Date: 2018-09-08 22:07-0700\n"
 "PO-Revision-Date: 2018-04-12 18:35+0700\n"
 "Last-Translator: Mahyuddin <yudi.al@gmail.com>\n"
 "Language-Team: \n"
@@ -30,30 +30,26 @@ msgstr ""
 msgid "Dark background"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:63
-msgid "About"
-msgstr "Tentang"
-
-#: src/Layouts/HeaderBar.vala:71
-msgid "Report a Problem…"
-msgstr "Laporkan Masalah…"
-
-#: src/Layouts/HeaderBar.vala:81 src/Layouts/Welcome.vala:39
+#: src/Layouts/HeaderBar.vala:66 src/Layouts/Welcome.vala:39
 msgid "New Window"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:86 src/Widgets/ConnectionDialog.vala:100
+#: src/Layouts/HeaderBar.vala:71 src/Widgets/ConnectionDialog.vala:100
 #: src/Widgets/ConnectionDialog.vala:126
 msgid "New Connection"
 msgstr "Koneksi Baru"
 
-#: src/Layouts/HeaderBar.vala:93
+#: src/Layouts/HeaderBar.vala:76
 msgid "Quit"
 msgstr ""
 
+#: src/Layouts/HeaderBar.vala:98
+msgid "Menu"
+msgstr ""
+
 #: src/Layouts/Main.vala:75
-#, fuzzy
-msgid "Connected to "
+#, fuzzy, c-format
+msgid "Connected to %s"
 msgstr "Menghubungkan"
 
 #: src/Layouts/Library.vala:44
@@ -79,7 +75,7 @@ msgid "Are you sure you want to proceed?"
 msgstr ""
 
 #: src/Layouts/Library.vala:134
-msgid "By deleting this connection you won't be able to recover this data."
+msgid "By deleting this connection you won’t be able to recover this data."
 msgstr ""
 
 #: src/Layouts/Library.vala:137
@@ -87,7 +83,7 @@ msgid "Yes, Delete!"
 msgstr ""
 
 #: src/Layouts/Library.vala:152
-msgid "All the data will be deleted and you won't be able to recover it."
+msgid "All the data will be deleted and you won’t be able to recover it."
 msgstr ""
 
 #: src/Layouts/Library.vala:155
@@ -104,8 +100,8 @@ msgid "_Save"
 msgstr ""
 
 #: src/Layouts/Library.vala:302
-#, fuzzy
-msgid "Unable to Connect to "
+#, fuzzy, c-format
+msgid "Unable to Connect to %s"
 msgstr "Hapus Koneksi"
 
 #: src/Layouts/Library.vala:315
@@ -119,7 +115,7 @@ msgstr "Selamat datang di Sequeler"
 
 #: src/Layouts/Welcome.vala:29
 #, fuzzy
-msgid "Connect to any Local or Remote Database."
+msgid "Connect to Any Local or Remote Database."
 msgstr "Hubungkan ke Basis Data Lokal atau Jauh"
 
 #: src/Layouts/Welcome.vala:38
@@ -129,11 +125,11 @@ msgstr "Tambahkan Basis Data Baru"
 
 #: src/Layouts/Welcome.vala:38
 #, fuzzy
-msgid "Connect to a Database and Save it in your Library"
+msgid "Connect to a Database and Save It in Your Library"
 msgstr "Hubungkan ke Basis Data dan simpan di Pustaka Anda."
 
 #: src/Layouts/Welcome.vala:39
-msgid "Open a new Sequeler Window"
+msgid "Open a New Sequeler Window"
 msgstr ""
 
 #: src/Layouts/Welcome.vala:40
@@ -197,95 +193,122 @@ msgid "Query"
 msgstr "Jalankan Query"
 
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
-#: src/Layouts/Views/Content.vala:67 src/Layouts/Views/Content.vala:101
+#: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:149
 #: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
-#: src/Layouts/Views/Query.vala:158
+#: src/Layouts/Views/Query.vala:204
 msgid "No Results Available"
 msgstr "Tidak Ada hasil Yang Tersedia"
 
-#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:78
+#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:126
 #: src/Layouts/Views/Relations.vala:78
 msgid "Reload Results"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:134
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select Table"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:86
+#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:134
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:128 src/Layouts/Views/Structure.vala:150
+#: src/Layouts/Views/Structure.vala:142
 msgid " Fields"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:128 src/Layouts/Views/Content.vala:150
-msgid " Entries"
+#: src/Layouts/Views/Content.vala:77
+msgid "Previous Page"
 msgstr ""
 
-#: src/Layouts/Views/Relations.vala:128 src/Layouts/Views/Relations.vala:150
+#: src/Layouts/Views/Content.vala:82
+msgid "Next Page"
+msgstr ""
+
+#: src/Layouts/Views/Content.vala:87 src/Layouts/Views/Content.vala:110
+#: src/Layouts/Views/Content.vala:254
+msgid " Pages"
+msgstr ""
+
+#: src/Layouts/Views/Content.vala:105
+msgid "1 Page"
+msgstr ""
+
+#: src/Layouts/Views/Content.vala:110 src/Layouts/Views/Content.vala:254
+msgid " of "
+msgstr ""
+
+#: src/Layouts/Views/Content.vala:193
+#, c-format
+msgid "%d Entries"
+msgstr ""
+
+#: src/Layouts/Views/Relations.vala:142
 msgid " Constraints"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:126
+#: src/Layouts/Views/Query.vala:160
 #, fuzzy
 msgid "Running Query…"
 msgstr "Query sedang jalan..."
 
-#: src/Layouts/Views/Query.vala:143
+#: src/Layouts/Views/Query.vala:177
 msgid "Run Query"
 msgstr "Jalankan Query"
 
-#: src/Layouts/Views/Query.vala:171
+#: src/Layouts/Views/Query.vala:236
 msgid "Export Results"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:178
-msgid "Export as Sql"
+#: src/Layouts/Views/Query.vala:243
+msgid "Export as SQL"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:179
-msgid "Export as Csv"
+#: src/Layouts/Views/Query.vala:244
+msgid "Export as CSV"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:180
+#: src/Layouts/Views/Query.vala:245
 msgid "Export as Text"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:268 src/Layouts/Views/Query.vala:302
+#: src/Layouts/Views/Query.vala:331 src/Layouts/Views/Query.vala:371
 msgid "Unable to process Query!"
 msgstr "Tidak dapat memproses Query!"
 
-#: src/Layouts/Views/Query.vala:281
-msgid " Total Results"
+#: src/Layouts/Views/Query.vala:348
+#, c-format
+msgid "%d Total Results"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:307
+#: src/Layouts/Views/Query.vala:377
 #, fuzzy
-msgid "Query Successfully Executed! Rows affected: "
+msgid "Query Successfully Executed! Rows Affected: "
 msgstr "Query Berhasil Dijalankan!"
 
-#: src/Layouts/Views/Query.vala:309
+#: src/Layouts/Views/Query.vala:380
 #, fuzzy
 msgid "Query Executed!"
 msgstr "Query Berhasil Dijalankan!"
 
-#: src/Partials/LibraryItem.vala:76 src/Widgets/ConnectionDialog.vala:227
+#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:232
 msgid "Connect"
 msgstr "Menghubungkan"
 
-#: src/Partials/LibraryItem.vala:79
+#: src/Partials/LibraryItem.vala:78
 msgid "Edit Connection"
 msgstr "Sunting Koneksi"
 
-#: src/Partials/LibraryItem.vala:84
+#: src/Partials/LibraryItem.vala:81
 msgid "Delete Connection"
 msgstr "Hapus Koneksi"
 
-#: src/Services/ConnectionManager.vala:189
+#: src/Partials/LibraryItem.vala:86
+msgid "Options"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:191
 msgid "Error!"
 msgstr ""
 
@@ -311,10 +334,6 @@ msgstr "Tipe Basis Data:"
 msgid "Host:"
 msgstr "Utama:"
 
-#: src/Widgets/ConnectionDialog.vala:156
-msgid "127.0.0.1"
-msgstr "127.0.0.1"
-
 #: src/Widgets/ConnectionDialog.vala:161
 msgid "Database Name:"
 msgstr "Nama Basis Data:"
@@ -327,53 +346,62 @@ msgstr "Nama pengguna:"
 msgid "Password:"
 msgstr "Kata sandi:"
 
-#: src/Widgets/ConnectionDialog.vala:187
+#: src/Widgets/ConnectionDialog.vala:192
 msgid "Port:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:193
+#: src/Widgets/ConnectionDialog.vala:198
 msgid "File Path:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:194
-msgid "Select your SQLite File…"
+#: src/Widgets/ConnectionDialog.vala:199
+msgid "Select Your SQLite File…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:221
+#: src/Widgets/ConnectionDialog.vala:226
 msgid "Close"
 msgstr "Tutup"
 
-#: src/Widgets/ConnectionDialog.vala:222
+#: src/Widgets/ConnectionDialog.vala:227
 msgid "Save Connection"
 msgstr "Simpan Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:224
+#: src/Widgets/ConnectionDialog.vala:229
 msgid "Test Connection"
 msgstr "Uji Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:364
+#: src/Widgets/ConnectionDialog.vala:369
 #, fuzzy
 msgid "Testing Connection…"
 msgstr "Uji Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:372
+#: src/Widgets/ConnectionDialog.vala:377
 #, fuzzy
 msgid "Successfully Connected!"
 msgstr "Query Berhasil Dijalankan!"
 
-#: src/Widgets/ConnectionDialog.vala:389
+#: src/Widgets/ConnectionDialog.vala:394
 #, fuzzy
 msgid "Saving Connection…"
 msgstr "Simpan Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:394
+#: src/Widgets/ConnectionDialog.vala:399
 msgid "Connection Saved!"
 msgstr "Koneksi Tersimpan!"
 
-#: src/Widgets/ConnectionDialog.vala:402
+#: src/Widgets/ConnectionDialog.vala:407
 #, fuzzy
 msgid "Connecting…"
 msgstr "Menghubungkan"
+
+#~ msgid "About"
+#~ msgstr "Tentang"
+
+#~ msgid "Report a Problem…"
+#~ msgstr "Laporkan Masalah…"
+
+#~ msgid "127.0.0.1"
+#~ msgstr "127.0.0.1"
 
 #, fuzzy
 #~ msgid "Connect via Terminal"
