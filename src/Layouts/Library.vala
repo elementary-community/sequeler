@@ -234,7 +234,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		file = null;
 		buffer = new Gtk.TextBuffer (null);
 
-		var save_dialog = new Gtk.FileChooserDialog ("Pick a file",
+		var save_dialog = new Gtk.FileChooserDialog (_("Pick a file"),
 													 window,
 													 Gtk.FileChooserAction.SAVE,
 													 _("_Cancel"),
@@ -244,7 +244,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		save_dialog.set_do_overwrite_confirmation (true);
 		save_dialog.set_modal (true);
-		save_dialog.response.connect ((dialog,response_id) => {
+		save_dialog.response.connect ((dialog, response_id) => {
 			switch (response_id) {
 				case Gtk.ResponseType.ACCEPT:
 					file = save_dialog.get_file ();

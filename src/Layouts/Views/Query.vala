@@ -32,6 +32,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.Button run_button;
 	public Gtk.MenuButton export_button;
 
+	GLib.File? file;
+	Gda.DataModel? response_data;
+
 	public Sequeler.Partials.TreeBuilder result_data;
 
 	public Query (Sequeler.Window main_window) {
@@ -247,18 +250,27 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		var export_sql = new Gtk.ModelButton ();
 		export_sql.image = new Gtk.Image.from_icon_name ("office-database", Gtk.IconSize.BUTTON);
-		export_sql.label = (_("Export as SQL"));
+		export_sql.label = _("Export as SQL");
 		export_sql.always_show_image = true;
+		export_sql.clicked.connect (() => { 
+			export_results (1);
+		});
 
 		var export_csv = new Gtk.ModelButton ();
 		export_csv.label = _("Export as CSV");
 		export_csv.image = new Gtk.Image.from_icon_name ("x-office-spreadsheet", Gtk.IconSize.BUTTON);
 		export_csv.always_show_image = true;
+		export_csv.clicked.connect (() => { 
+			export_results (2);
+		});
 
 		var export_text = new Gtk.ModelButton ();
 		export_text.label = _("Export as Text");
 		export_text.image = new Gtk.Image.from_icon_name ("text-x-generic", Gtk.IconSize.BUTTON);
 		export_text.always_show_image = true;
+		export_text.clicked.connect (() => { 
+			export_results (3);
+		});
 
 		menu_grid.attach (export_sql, 0, 1, 1, 1);
 		menu_grid.attach (export_csv, 0, 2, 1, 1);
@@ -344,6 +356,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	public void handle_select_response (Gda.DataModel? response) {
+		response_data = response;
+
 		if (response == null) {
 			toggle_loading_msg (false);
 			spinner.stop ();
@@ -411,5 +425,51 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 	private bool is_semicolon (unichar semicolon) {
 		return semicolon.to_string () == ";";
+	}
+
+	private void export_results (int type) {
+		file = null;
+
+		var save_dialog = new Gtk.FileChooserDialog (_("Pick a file"),
+													 window,
+													 Gtk.FileChooserAction.SAVE,
+													 _("_Cancel"),
+													 Gtk.ResponseType.CANCEL,
+													 _("_Save"),
+													 Gtk.ResponseType.ACCEPT);
+
+		save_dialog.set_do_overwrite_confirmation (true);
+		save_dialog.set_modal (true);
+		save_dialog.response.connect ((dialog, response_id) => {
+			switch (response_id) {
+				case Gtk.ResponseType.ACCEPT:
+					file = save_dialog.get_file ();
+					save_to_file (type);
+					break;
+				default:
+					break;
+			}
+			dialog.destroy ();
+		});
+
+		save_dialog.show ();
+	}
+
+	private void save_to_file (int type) {
+		switch (type) {
+			case 3:
+				// Export as plain text
+				try {
+					FileOutputStream ostream = file.replace (null, false, FileCreateFlags.NONE);
+					DataOutputStream dostream = new DataOutputStream (ostream);
+					dostream.put_string (response_data.dump_as_string ());
+				}
+				catch (GLib.Error err) {
+					window.main.connection.query_warning (err.message);
+				}
+			break;
+			default:
+			break;
+		}
 	}
 }
