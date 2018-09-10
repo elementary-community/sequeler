@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-08 22:07-0700\n"
+"POT-Creation-Date: 2018-09-09 23:36-0700\n"
 "PO-Revision-Date: 2018-06-D26 16:56-0700\n"
 "Last-Translator: Alessandro Castellani <castellani.ale@gmail.com>\n"
 "Language: it\n"
@@ -82,11 +82,16 @@ msgstr "Tutti i dati verranno cancellati a non potranno essere recuperati."
 msgid "Yes, Delete All!"
 msgstr "Si, Cancella Tutto!"
 
+#: src/Layouts/Library.vala:237 src/Layouts/Views/Query.vala:424
+msgid "Pick a file"
+msgstr ""
+
 #: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:61
+#: src/Layouts/Views/Query.vala:427
 msgid "_Cancel"
 msgstr ""
 
-#: src/Layouts/Library.vala:242
+#: src/Layouts/Library.vala:242 src/Layouts/Views/Query.vala:429
 msgid "_Save"
 msgstr ""
 
@@ -181,7 +186,7 @@ msgstr "Esegui Query"
 #: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
 #: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:149
 #: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
-#: src/Layouts/Views/Query.vala:204
+#: src/Layouts/Views/Query.vala:207
 msgid "No Results Available"
 msgstr "Nessun Risultato Disponibile"
 
@@ -234,47 +239,42 @@ msgstr " Dati"
 msgid " Constraints"
 msgstr " Relazioni"
 
-#: src/Layouts/Views/Query.vala:160
+#: src/Layouts/Views/Query.vala:163
 msgid "Running Query…"
 msgstr "In esecuzione…"
 
-#: src/Layouts/Views/Query.vala:177
+#: src/Layouts/Views/Query.vala:180
 msgid "Run Query"
 msgstr "Esegui Query"
 
-#: src/Layouts/Views/Query.vala:236
+#: src/Layouts/Views/Query.vala:239
 msgid "Export Results"
 msgstr "Esporta Risultati"
 
-#: src/Layouts/Views/Query.vala:243
-#, fuzzy
-msgid "Export as SQL"
-msgstr "Esporta come SQL"
-
-#: src/Layouts/Views/Query.vala:244
+#: src/Layouts/Views/Query.vala:252
 #, fuzzy
 msgid "Export as CSV"
 msgstr "Esporta come CSV"
 
-#: src/Layouts/Views/Query.vala:245
+#: src/Layouts/Views/Query.vala:260
 msgid "Export as Text"
 msgstr "Esporta come File di Testo"
 
-#: src/Layouts/Views/Query.vala:331 src/Layouts/Views/Query.vala:371
+#: src/Layouts/Views/Query.vala:356 src/Layouts/Views/Query.vala:396
 msgid "Unable to process Query!"
 msgstr "Impossibile esequire la Query"
 
-#: src/Layouts/Views/Query.vala:348
+#: src/Layouts/Views/Query.vala:373
 #, fuzzy, c-format
 msgid "%d Total Results"
 msgstr " Risultati Totali"
 
-#: src/Layouts/Views/Query.vala:377
+#: src/Layouts/Views/Query.vala:402
 #, fuzzy
 msgid "Query Successfully Executed! Rows Affected: "
 msgstr "Query Eseguita Correttamente! Entrate Modificate: "
 
-#: src/Layouts/Views/Query.vala:380
+#: src/Layouts/Views/Query.vala:405
 msgid "Query Executed!"
 msgstr "Query Eseguita"
 
@@ -374,6 +374,10 @@ msgstr "Connessione Salvata!"
 #: src/Widgets/ConnectionDialog.vala:407
 msgid "Connecting…"
 msgstr "Connessione in Corso…"
+
+#, fuzzy
+#~ msgid "Export as SQL"
+#~ msgstr "Esporta come SQL"
 
 #~ msgid "About"
 #~ msgstr "Informazioni"
