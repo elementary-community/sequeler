@@ -248,20 +248,12 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		menu_grid.margin_bottom = 3;
 		menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-		var export_sql = new Gtk.ModelButton ();
-		export_sql.image = new Gtk.Image.from_icon_name ("office-database", Gtk.IconSize.BUTTON);
-		export_sql.label = _("Export as SQL");
-		export_sql.always_show_image = true;
-		export_sql.clicked.connect (() => { 
-			export_results (1);
-		});
-
 		var export_csv = new Gtk.ModelButton ();
 		export_csv.label = _("Export as CSV");
 		export_csv.image = new Gtk.Image.from_icon_name ("x-office-spreadsheet", Gtk.IconSize.BUTTON);
 		export_csv.always_show_image = true;
 		export_csv.clicked.connect (() => { 
-			export_results (2);
+			export_results (1);
 		});
 
 		var export_text = new Gtk.ModelButton ();
@@ -269,12 +261,11 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		export_text.image = new Gtk.Image.from_icon_name ("text-x-generic", Gtk.IconSize.BUTTON);
 		export_text.always_show_image = true;
 		export_text.clicked.connect (() => { 
-			export_results (3);
+			export_results (2);
 		});
 
-		menu_grid.attach (export_sql, 0, 1, 1, 1);
-		menu_grid.attach (export_csv, 0, 2, 1, 1);
-		menu_grid.attach (export_text, 0, 3, 1, 1);
+		menu_grid.attach (export_csv, 0, 1, 1, 1);
+		menu_grid.attach (export_text, 0, 2, 1, 1);
 		menu_grid.show_all ();
 
 		var export_menu = new Gtk.Popover (null);
@@ -456,18 +447,71 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	private void save_to_file (int type) {
+		var options_list = new GLib.SList<Gda.Holder> ();
+		var separator_holder = new Gda.Holder (GLib.Type.STRING);
+		var first_line_holder = new Gda.Holder (GLib.Type.BOOLEAN);
+		var overwrite_holder = new Gda.Holder (GLib.Type.BOOLEAN);
+
+		separator_holder.id = "SEPARATOR";
+		try {
+			separator_holder.set_value (",");
+		}
+		catch (GLib.Error err) {
+			window.main.connection.query_warning (err.message);
+		}
+
+		first_line_holder.id = "NAMES_ON_FIRST_LINE";
+		try {
+			first_line_holder.set_value (true);
+		}
+		catch (GLib.Error err) {
+			window.main.connection.query_warning (err.message);
+		}
+
+		overwrite_holder.id = "OVERWRITE";
+		try {
+			overwrite_holder.set_value (true);
+		}
+		catch (GLib.Error err) {
+			window.main.connection.query_warning (err.message);
+		}
+
+		options_list.append (separator_holder);
+		options_list.append (first_line_holder);
+		options_list.append (overwrite_holder);
+
+		var options = new Gda.Set (options_list);
+
 		switch (type) {
-			case 3:
-				// Export as plain text
+			case 1:
+				// Export as CSV
 				try {
-					FileOutputStream ostream = file.replace (null, false, FileCreateFlags.NONE);
-					DataOutputStream dostream = new DataOutputStream (ostream);
-					dostream.put_string (response_data.dump_as_string ());
+					response_data.export_to_file (Gda.DataModelIOFormat.TEXT_SEPARATED, file.get_path (), null, null, options);
 				}
 				catch (GLib.Error err) {
 					window.main.connection.query_warning (err.message);
 				}
 			break;
+			case 2:
+				// Export as plain text
+				try {
+					response_data.export_to_file (Gda.DataModelIOFormat.TEXT_TABLE, file.get_path (), null, null, options);
+				}
+				catch (GLib.Error err) {
+					window.main.connection.query_warning (err.message);
+				}
+			break;
+			//  case 2:
+			//  	// Export as plain text
+			//  	try {
+			//  		FileOutputStream ostream = file.replace (null, false, FileCreateFlags.NONE);
+			//  		DataOutputStream dostream = new DataOutputStream (ostream);
+			//  		dostream.put_string (response_data.dump_as_string ());
+			//  	}
+			//  	catch (GLib.Error err) {
+			//  		window.main.connection.query_warning (err.message);
+			//  	}
+			//  break;
 			default:
 			break;
 		}
