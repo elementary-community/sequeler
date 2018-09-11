@@ -24,6 +24,9 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public Gda.DataModel data { get; construct; }
 	public int per_page { get; construct; }
 	public int current_page { get; construct; }
+	public Gtk.ListStore store;
+	public string background;
+	public int tot_columns;
 
 	private string bg_light = "rgba(255,255,255,0.05)";
 	private string bg_dark = "rgba(0,0,0,0.05)";
@@ -42,7 +45,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		var renderer = new Gtk.CellRendererText ();
 		renderer.single_paragraph_mode = true;
 
-		var tot_columns = data.get_n_columns ();
+		tot_columns = data.get_n_columns ();
 
 		var theTypes = new GLib.Type[tot_columns+1];
 		for (int col = 0; col < tot_columns; col++) {
@@ -53,20 +56,23 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			column.clickable = true;
 			column.resizable = true;
 			column.expand = true;
+			column.sort_column_id = col;
 			if (col > 0) {
 				column.sizing = Gtk.TreeViewColumnSizing.FIXED;
 				column.fixed_width = 150;
 			}
+
+			column.clicked.connect (redraw);
 			append_column (column);
 		}
 
 		theTypes[tot_columns] = typeof (string);
 
-		var store = new Gtk.ListStore.newv (theTypes);
+		store = new Gtk.ListStore.newv (theTypes);
 		Gda.DataModelIter _iter = data.create_iter ();
 		Gtk.TreeIter iter;
 		var error_message = GLib.Value (typeof (string));
-		var background = bg_light;
+		background = bg_light;
 
 		if (per_page != 0 && data.get_n_rows () > per_page) {
 			int counter = 1;
@@ -124,5 +130,17 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		}
 
 		set_model (store);
+	}
+
+	public void redraw () {
+		Gtk.TreeIter iter;
+		background = bg_light;
+		var i = 0;
+
+		for (bool next = store.get_iter_first (out iter); next; next = store.iter_next (ref iter)) {
+			background = i % 2 == 0 ? bg_light : bg_dark;
+			store.set_value (iter, tot_columns, background);
+			i++;
+		}
 	}
 }
