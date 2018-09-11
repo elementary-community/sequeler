@@ -25,6 +25,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public int per_page { get; construct; }
 	public int current_page { get; construct; }
 	public Gtk.ListStore store;
+	public string? error_message { get; set; default = null; }
 	public string background;
 	public int tot_columns;
 
@@ -71,8 +72,6 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		store = new Gtk.ListStore.newv (theTypes);
 		Gda.DataModelIter _iter = data.create_iter ();
 		Gtk.TreeIter iter;
-		var error_message = GLib.Value (typeof (string));
-		background = bg_light;
 
 		if (per_page != 0 && data.get_n_rows () > per_page) {
 			int counter = 1;
@@ -83,58 +82,39 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			}
 
 			while (counter <= per_page && _iter.move_next ()) {
-
-				if (_iter.get_row () % 2 == 0) {
-					background = bg_light;
-				} else {
-					background = bg_dark;
-				}
-
-				store.append (out iter);
-
-				for (int i = 0; i < tot_columns; i++) {
-					try {
-						store.set_value (iter, i, _iter.get_value_at_e (i));
-					} catch (Error e) {
-						error_message.set_string ("Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ());
-					}
-				}
-				store.set_value (iter, tot_columns, background);
+				append_value (_iter, iter);
 				counter++;
 			}
 		} else {
 			while (_iter.move_next ()) {
-
-				if (_iter.get_row () % 2 == 0) {
-					background = bg_light;
-				} else {
-					background = bg_dark;
-				}
-
-				store.append (out iter);
-
-				for (int i = 0; i < tot_columns; i++) {
-					try {
-						store.set_value (iter, i, _iter.get_value_at_e (i));
-					} catch (Error e) {
-						error_message.set_string ("Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ());
-					}
-				}
-				store.set_value (iter, tot_columns, background);
+				append_value (_iter, iter);
 			}
 		}
 
-		if (error_message.get_string () != null) {
-			window.main.connection.query_warning (error_message.get_string ());
-			error_message.unset ();
+		if (error_message != null) {
+			window.main.connection.query_warning (error_message);
+			error_message = null;
 		}
 
 		set_model (store);
 	}
 
+	private void append_value (Gda.DataModelIter _iter, Gtk.TreeIter iter) {
+		background = _iter.get_row () % 2 == 0 ? bg_light : bg_dark;
+		store.append (out iter);
+
+		for (int i = 0; i < tot_columns; i++) {
+			try {
+				store.set_value (iter, i, _iter.get_value_at_e (i));
+			} catch (Error e) {
+				error_message = "Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ();
+			}
+		}
+		store.set_value (iter, tot_columns, background);
+	}
+
 	public void redraw () {
 		Gtk.TreeIter iter;
-		background = bg_light;
 		var i = 0;
 
 		for (bool next = store.get_iter_first (out iter); next; next = store.iter_next (ref iter)) {
