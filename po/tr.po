@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 23:36-0700\n"
+"POT-Creation-Date: 2018-09-11 14:26-0700\n"
 "PO-Revision-Date: 2018-07-24 19:32+0300\n"
 "Last-Translator: Çağatay Yiğit Şahin <cyigitsahin@outlook.com>\n"
 "Language-Team: Türkçe <>\n"
@@ -300,6 +300,15 @@ msgstr "Bağlantıyı Sil"
 #, fuzzy
 msgid "Options"
 msgstr "İlişkiler"
+
+#: src/Partials/TreeBuilder.vala:110
+#, fuzzy
+msgid "Error"
+msgstr "Hata!"
+
+#: src/Partials/TreeBuilder.vala:110
+msgid "on Column"
+msgstr ""
 
 #: src/Services/ConnectionManager.vala:191
 msgid "Error!"

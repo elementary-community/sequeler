@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 23:36-0700\n"
+"POT-Creation-Date: 2018-09-11 14:26-0700\n"
 "PO-Revision-Date: 2018-09-09 00:58-0300\n"
 "Last-Translator: Helder Bertoldo <helder.bertoldo@gmail.com>\n"
 "Language-Team: \n"
@@ -305,6 +305,15 @@ msgstr "Deletar Conexões"
 #, fuzzy
 msgid "Options"
 msgstr "Relacionamentos"
+
+#: src/Partials/TreeBuilder.vala:110
+#, fuzzy
+msgid "Error"
+msgstr "Erro!"
+
+#: src/Partials/TreeBuilder.vala:110
+msgid "on Column"
+msgstr ""
 
 #: src/Services/ConnectionManager.vala:191
 msgid "Error!"
