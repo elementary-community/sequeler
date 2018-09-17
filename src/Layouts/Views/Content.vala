@@ -84,7 +84,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		page_next_btn.halign = Gtk.Align.END;
 		page_next_btn.sensitive = false;
 
-		pages_label = new Gtk.Label (tot_pages.to_string () + _(" Pages"));
+		pages_label = new Gtk.Label (_("%d Pages").printf(tot_pages));
 		pages_label.margin = 7;
 
 		page_grid.attach (page_prev_btn, 0, 0, 1, 1);
@@ -107,7 +107,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		tot_pages = (int) Math.ceilf (((float) tot_results) / settings.limit_results);
-		pages_label.set_text (current_page.to_string () + _(" of ") + tot_pages.to_string () + _(" Pages"));
+		pages_label.set_text (_("%d of %d Pages").printf(current_page, tot_pages));
 		page_next_btn.sensitive = true;
 	}
 
@@ -179,7 +179,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 		get_content_and_fill ();
 	}
-	
+
 	public void get_content_and_fill () {
 		var query = (window.main.connection.db_type as DataBaseType).show_table_content (table_name);
 
@@ -251,7 +251,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
 
 		clear ();
-		pages_label.set_text (current_page.to_string () + _(" of ") + tot_pages.to_string () + _(" Pages"));
+		pages_label.set_text (_("%d of %d Pages").printf(current_page, tot_pages));
 
 		scroll.add (result_data);
 		scroll.show_all ();
