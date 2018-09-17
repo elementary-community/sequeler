@@ -252,7 +252,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		export_csv.label = _("Export as CSV");
 		export_csv.image = new Gtk.Image.from_icon_name ("x-office-spreadsheet", Gtk.IconSize.BUTTON);
 		export_csv.always_show_image = true;
-		export_csv.clicked.connect (() => { 
+		export_csv.clicked.connect (() => {
 			export_results (1);
 		});
 
@@ -260,7 +260,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		export_text.label = _("Export as Text");
 		export_text.image = new Gtk.Image.from_icon_name ("text-x-generic", Gtk.IconSize.BUTTON);
 		export_text.always_show_image = true;
-		export_text.clicked.connect (() => { 
+		export_text.clicked.connect (() => {
 			export_results (2);
 		});
 
@@ -399,7 +399,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		}
 
 		if (response > 0) {
-			result_message.label = _("Query Successfully Executed! Rows Affected: ") + response.to_string ();
+			result_message.label = _("Query Successfully Executed! Rows Affected: %d").printf(response);
 			show_result_icon (true);
 		} else {
 			result_message.label = _("Query Executed!");
