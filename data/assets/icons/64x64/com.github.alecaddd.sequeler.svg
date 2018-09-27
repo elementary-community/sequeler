@@ -12,8 +12,8 @@
    id="svg4332"
    height="64px"
    width="64px"
-   inkscape:version="0.92.2 (unknown)"
-   sodipodi:docname="sequeler.svg">
+   inkscape:version="0.92.3 (unknown)"
+   sodipodi:docname="com.github.alecaddd.sequeler.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,15 +23,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="3840"
+     inkscape:window-height="2034"
      id="namedview46"
-     showgrid="true"
-     inkscape:zoom="14.37931"
-     inkscape:cx="32.000054"
-     inkscape:cy="30.999999"
+     showgrid="false"
+     inkscape:zoom="5.0838538"
+     inkscape:cx="14.718279"
+     inkscape:cy="30.443644"
      inkscape:window-x="0"
-     inkscape:window-y="30"
+     inkscape:window-y="60"
      inkscape:window-maximized="1"
      inkscape:current-layer="g4178"
      showguides="false">
@@ -271,11 +271,11 @@
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.62505341"
        id="path868"
        cx="11.500214"
-       cy="13.999787"
+       cy="13.499786"
        r="2.5002136" />
     <circle
        r="2.5002136"
-       cy="31.999786"
+       cy="32.499786"
        cx="11.500214"
        id="circle876"
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.62505341" />
@@ -283,17 +283,17 @@
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.62505341"
        id="circle878"
        cx="19.500214"
-       cy="31.999786"
+       cy="32.499786"
        r="2.5002136" />
     <circle
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.62505341"
        id="circle884"
        cx="11.500214"
-       cy="49.999786"
+       cy="50.499786"
        r="2.5002136" />
     <circle
        r="2.5002136"
-       cy="49.999786"
+       cy="50.499786"
        cx="19.500214"
        id="circle886"
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.62505341" />
@@ -301,23 +301,23 @@
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.62505341"
        id="circle888"
        cx="27.500214"
-       cy="49.999786"
+       cy="50.499786"
        r="2.5002136" />
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path898"
-       d="M 5,23.508233 H 59"
+       d="M 5,23.5 H 59"
        style="opacity:1;fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        style="opacity:1;fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 5,41.508233 H 59"
+       d="M 5,41.5 H 59"
        id="path900"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <circle
        r="2.5002136"
-       cy="12.984162"
+       cy="12.499786"
        cx="11.500214"
        id="circle902"
        style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.62505341" />
@@ -325,17 +325,17 @@
        style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.62505341"
        id="circle904"
        cx="11.500214"
-       cy="30.999786"
+       cy="31.499786"
        r="2.5002136" />
     <circle
        r="2.5002136"
-       cy="30.999786"
+       cy="31.499786"
        cx="19.500214"
        id="circle906"
        style="opacity:1;fill:#ffa154;fill-opacity:1;stroke-width:0.62505341" />
     <circle
        r="2.5002136"
-       cy="48.999786"
+       cy="49.499786"
        cx="11.500214"
        id="circle908"
        style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.62505341" />
@@ -343,11 +343,11 @@
        style="opacity:1;fill:#ffa154;fill-opacity:1;stroke-width:0.62505341"
        id="circle910"
        cx="19.500214"
-       cy="48.999786"
+       cy="49.499786"
        r="2.5002136" />
     <circle
        r="2.5002136"
-       cy="48.999786"
+       cy="49.499786"
        cx="27.500214"
        id="circle912"
        style="opacity:1;fill:#ed5353;fill-opacity:1;stroke-width:0.62505341" />

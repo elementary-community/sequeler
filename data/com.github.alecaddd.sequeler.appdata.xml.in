@@ -28,6 +28,17 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.6.2" date="2018-09-11">
+      <description>
+        <p>Export all the things!</p>
+        <ul>
+          <li>Export results from Query Tab.</li>
+          <li>Export in CSV or Plain Text format.</li>
+          <li>Sort Columns order everywhere.</li>
+          <li>Brazilian translation.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.1" date="2018-09-07">
       <description>
         <p>Here comes the power of Pagination!!!</p>

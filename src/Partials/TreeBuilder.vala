@@ -107,7 +107,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			try {
 				store.set_value (iter, i, _iter.get_value_at_e (i));
 			} catch (Error e) {
-				error_message = "Error " + e.code.to_string () + " on Column '" + data.get_column_title (i) + "': " + e.message.to_string ();
+				error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
 			}
 		}
 		store.set_value (iter, tot_columns, background);
