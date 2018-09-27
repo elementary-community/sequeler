@@ -24,6 +24,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 	private Gtk.Button logout_button;
 	private ModeSwitch mode_switch;
+	private Gtk.Popover menu_popover;
 
 	public bool logged_out { get; set; }
 
@@ -65,10 +66,31 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 			mode_switch.active = true;
 		}
 
-		var new_window_item = new Gtk.ModelButton ();
-		new_window_item.text = _("New Window");
+		//  var new_window_item = new Gtk.ModelButton ();
+		//  new_window_item.text = _("New Window");
+		//  new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
+		//  new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
+
+		var new_window_item = new Gtk.MenuItem.with_label (_("New Window"));
 		new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 		new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
+		new_window_item.get_style_context ().add_class ("popover-item");
+		new_window_item.expand = true;
+		new_window_item.button_press_event.connect (event => {
+			new_window_item.activate ();
+			menu_popover.closed ();
+			return false;
+		});
+
+		new_window_item.enter_notify_event.connect (event => {
+			new_window_item.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
+			return false;
+		});
+
+		new_window_item.leave_notify_event.connect (event => {
+			new_window_item.set_state_flags (Gtk.StateFlags.NORMAL, true);
+			return false;
+		});
 
 		var new_connection_item = new Gtk.ModelButton ();
 		new_connection_item.text = _("New Connection");
@@ -78,13 +100,14 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		var quit_item = new Gtk.ModelButton ();
 		quit_item.text = _("Quit");
 		quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
-		quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);		
+		quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
 
 		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
 		menu_separator.margin_top = 6;
 		menu_separator.margin_bottom = 6;
 
 		var menu_grid = new Gtk.Grid ();
+		menu_grid.halign = Gtk.Align.FILL;
 		menu_grid.expand = true;
 		menu_grid.margin_top = 3;
 		menu_grid.margin_bottom = 3;
@@ -94,13 +117,15 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		menu_grid.attach (new_connection_item, 0, 2, 1, 1);
 		menu_grid.attach (menu_separator, 0, 3, 1, 1);
 		menu_grid.attach (quit_item, 0, 4, 1, 1);
+		menu_grid.width_request = 240;
 		menu_grid.show_all ();
 		
 		var open_menu = new Gtk.MenuButton ();
 		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
 		open_menu.tooltip_text = _("Menu");
 
-		var menu_popover = new Gtk.Popover (null);
+		menu_popover = new Gtk.Popover (null);
+		menu_popover.width_request = 240;
 		menu_popover.add (menu_grid);
 
 		open_menu.popover = menu_popover;
@@ -115,6 +140,38 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 		pack_end (separator);
 		pack_end (mode_switch);
+	}
+
+	public void show_menuitem_accel_labels(Gtk.Widget widget) {
+		Gtk.MenuItem? item = widget as Gtk.MenuItem;
+		if (item == null) {
+			debug ("no model button");
+			return;
+		}
+		
+		string? path = item.get_accel_path ();
+		if (path == null) {
+			debug ("no accel path");
+			return;
+		}
+		Gtk.AccelKey? key = null;
+		Gtk.AccelMap.lookup_entry (path, out key);
+		if (key == null) {
+			return;
+		}
+		item.foreach (
+			(widget) => { add_accel_to_label (widget, key); }
+		);
+	}
+
+	private void add_accel_to_label(Gtk.Widget widget, Gtk.AccelKey key) {
+		Gtk.AccelLabel? label = widget as Gtk.AccelLabel;
+		if (label == null) {
+			return;
+		}
+
+		label.set_accel (key.accel_key, key.accel_mods);
+		label.refetch ();
 	}
 
 	public void toggle_logout () {

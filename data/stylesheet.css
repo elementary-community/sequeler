@@ -58,3 +58,7 @@
 .headerbar-separator {
     margin-left: 0;
 }
+
+.popover-item {
+    padding: 4px 10px;
+}
