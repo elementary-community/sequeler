@@ -125,7 +125,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 		var accel = new Gtk.Label (accelerator);
 		accel.halign = Gtk.Align.END;
-		accel.get_style_context ().add_class ("accelerator");
+		accel.get_style_context ().add_class (Gtk.STYLE_CLASS_ACCELERATOR);
 
 		button_grid.attach (label, 0, 0, 1, 1);
 		button_grid.attach (accel, 1, 0, 1, 1);
