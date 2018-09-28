@@ -59,6 +59,6 @@
     margin-left: 0;
 }
 
-.popover-item {
-    padding: 4px 10px;
+.accelerator {
+    opacity: 0.3;
 }

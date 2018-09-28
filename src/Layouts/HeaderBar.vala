@@ -66,25 +66,17 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 			mode_switch.active = true;
 		}
 
-		//  var new_window_item = new Gtk.ModelButton ();
-		//  new_window_item.text = _("New Window");
-		//  new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
-		//  new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-
-		var new_window_item = new Gtk.MenuItem.with_label (_("New Window"));
+		var new_window_item = new Gtk.ModelButton ();
 		new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
-		new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-		activate_item_signals (new_window_item);
+		set_button_grid (new_window_item, _("New Window"), "Ctrl+N");
 
-		var new_connection_item = new Gtk.MenuItem.with_label (_("New Connection"));
+		var new_connection_item = new Gtk.ModelButton ();
 		new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
-		new_connection_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK + Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE);
-		activate_item_signals (new_connection_item);
+		set_button_grid (new_connection_item, _("New Connection"), "Ctrl+Shift+N");
 
-		var quit_item = new Gtk.MenuItem.with_label (_("Quit"));
+		var quit_item = new Gtk.ModelButton ();
 		quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
-		quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
-		activate_item_signals (quit_item);
+		set_button_grid (quit_item, _("Quit"), "Ctrl+Q");
 
 		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
 		menu_separator.margin_top = 6;
@@ -100,7 +92,6 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		menu_grid.attach (new_connection_item, 0, 2, 1, 1);
 		menu_grid.attach (menu_separator, 0, 3, 1, 1);
 		menu_grid.attach (quit_item, 0, 4, 1, 1);
-		menu_grid.width_request = 280;
 		menu_grid.show_all ();
 		
 		var open_menu = new Gtk.MenuButton ();
@@ -108,7 +99,6 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		open_menu.tooltip_text = _("Menu");
 
 		menu_popover = new Gtk.Popover (null);
-		menu_popover.width_request = 280;
 		menu_popover.add (menu_grid);
 
 		open_menu.popover = menu_popover;
@@ -125,24 +115,23 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		pack_end (mode_switch);
 	}
 
-	private void activate_item_signals (Gtk.MenuItem item) {
-		item.get_style_context ().add_class ("popover-item");
-		item.expand = true;
-		item.button_press_event.connect (event => {
-			item.activate ();
-			menu_popover.closed ();
-			return false;
-		});
+	public void set_button_grid (Gtk.ModelButton button, string text, string accelerator) {
+		var button_grid = new Gtk.Grid ();
 
-		item.enter_notify_event.connect (event => {
-			item.set_state_flags (Gtk.StateFlags.PRELIGHT, true);
-			return false;
-		});
+		var label = new Gtk.Label (text);
+		label.expand = true;
+		label.halign = Gtk.Align.START;
+		label.margin_end = 10;
 
-		item.leave_notify_event.connect (event => {
-			item.set_state_flags (Gtk.StateFlags.NORMAL, true);
-			return false;
-		});
+		var accel = new Gtk.Label (accelerator);
+		accel.halign = Gtk.Align.END;
+		accel.get_style_context ().add_class ("accelerator");
+
+		button_grid.attach (label, 0, 0, 1, 1);
+		button_grid.attach (accel, 1, 0, 1, 1);
+
+		button.remove (button.get_child ());
+		button.add (button_grid);
 	}
 
 	public void toggle_logout () {
