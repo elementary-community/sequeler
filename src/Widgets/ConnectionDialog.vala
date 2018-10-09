@@ -227,10 +227,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		var save_button = new Sequeler.Partials.ButtonClass (_("Save Connection"), null);
 
 		test_button = new Sequeler.Partials.ButtonClass (_("Test Connection"), null);
-		test_button.sensitive = false;
 
 		connect_button = new Sequeler.Partials.ButtonClass (_("Connect"), "suggested-action");
-		connect_button.sensitive = false;
 
 		add_action_widget (test_button, 1);
 		add_action_widget (save_button, 2);
@@ -337,7 +335,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	}
 
 	private void change_sensitivity () {
-		if ((db_type_entry.get_active () != 3 && db_name_entry.text != "") || (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
+		if (db_type_entry.get_active () != 3 || (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
 			test_button.sensitive = true;
 			connect_button.sensitive = true;
 			return;
