@@ -69,6 +69,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		build_content ();
 		build_actions ();
 		populate_data ();
+		change_sensitivity ();
 
 		response.connect (on_response);
 	}
@@ -337,7 +338,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	}
 
 	private void change_sensitivity () {
-		if ((db_type_entry.get_active () != 3 && db_name_entry.text != "") || (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
+		if ((db_type_entry.get_active () != 3) || (db_type_entry.get_active () == 3 && db_file_entry.get_uri () != null)) {
 			test_button.sensitive = true;
 			connect_button.sensitive = true;
 			return;
