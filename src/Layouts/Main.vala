@@ -81,8 +81,10 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 	public void connection_closed () {
 		if (connection.connection.is_opened ()) {
 			connection.connection.clear_events_list ();
+			connection.connection.close ();
 			connection.connection = null;
 		}
+
 		connection = null;
 		sidebar_stack.set_visible_child_full ("library", Gtk.StackTransitionType.CROSSFADE);
 		main_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.UNDER_RIGHT);

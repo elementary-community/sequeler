@@ -24,6 +24,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 	private Gtk.Button logout_button;
 	private ModeSwitch mode_switch;
+	private Gtk.Popover menu_popover;
 
 	public bool logged_out { get; set; }
 
@@ -44,15 +45,18 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		var eject_image = new Gtk.Image.from_icon_name ("media-eject-symbolic", Gtk.IconSize.BUTTON);
 		logout_button = new Gtk.Button.with_label (_("Logout"));
 		logout_button.get_style_context ().add_class ("back-button");
+		logout_button.valign = Gtk.Align.CENTER;
 		logout_button.always_show_image = true;
 		logout_button.set_image (eject_image);
 		logout_button.can_focus = false;
 		logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
+		logout_button.has_tooltip = true;
+		logout_button.tooltip_text = "Ctrl+Esc";
 
 		mode_switch = new ModeSwitch ("display-brightness-symbolic", "weather-clear-night-symbolic");
-        mode_switch.primary_icon_tooltip_text = _("Light background");
-        mode_switch.secondary_icon_tooltip_text = _("Dark background");
-        mode_switch.valign = Gtk.Align.CENTER;
+		mode_switch.primary_icon_tooltip_text = _("Light background");
+		mode_switch.secondary_icon_tooltip_text = _("Dark background");
+		mode_switch.valign = Gtk.Align.CENTER;
 		mode_switch.bind_property ("active", settings, "dark-theme");
 		mode_switch.notify.connect (() => {
 			Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
@@ -63,19 +67,16 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		}
 
 		var new_window_item = new Gtk.ModelButton ();
-		new_window_item.text = _("New Window");
 		new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
-		new_window_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);
+		set_button_grid (new_window_item, _("New Window"), "Ctrl+N");
 
 		var new_connection_item = new Gtk.ModelButton ();
-		new_connection_item.text = _("New Connection");
 		new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
-		new_connection_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("N"), Gdk.ModifierType.CONTROL_MASK + Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE);
+		set_button_grid (new_connection_item, _("New Connection"), "Ctrl+Shift+N");
 
 		var quit_item = new Gtk.ModelButton ();
-		quit_item.text = _("Quit");
 		quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
-		quit_item.add_accelerator ("activate", window.accel_group, Gdk.keyval_from_name("Q"), Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE);		
+		set_button_grid (quit_item, _("Quit"), "Ctrl+Q");
 
 		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
 		menu_separator.margin_top = 6;
@@ -97,7 +98,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
 		open_menu.tooltip_text = _("Menu");
 
-		var menu_popover = new Gtk.Popover (null);
+		menu_popover = new Gtk.Popover (null);
 		menu_popover.add (menu_grid);
 
 		open_menu.popover = menu_popover;
@@ -112,6 +113,25 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 		pack_end (separator);
 		pack_end (mode_switch);
+	}
+
+	public void set_button_grid (Gtk.ModelButton button, string text, string accelerator) {
+		var button_grid = new Gtk.Grid ();
+
+		var label = new Gtk.Label (text);
+		label.expand = true;
+		label.halign = Gtk.Align.START;
+		label.margin_end = 10;
+
+		var accel = new Gtk.Label (accelerator);
+		accel.halign = Gtk.Align.END;
+		accel.get_style_context ().add_class (Gtk.STYLE_CLASS_ACCELERATOR);
+
+		button_grid.attach (label, 0, 0, 1, 1);
+		button_grid.attach (accel, 1, 0, 1, 1);
+
+		button.remove (button.get_child ());
+		button.add (button_grid);
 	}
 
 	public void toggle_logout () {

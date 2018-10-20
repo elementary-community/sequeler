@@ -12,8 +12,8 @@
    height="24"
    width="24"
    version="1.1"
-   inkscape:version="0.92.2 (unknown)"
-   sodipodi:docname="sequeler.svg">
+   inkscape:version="0.92.3 (unknown)"
+   sodipodi:docname="com.github.alecaddd.sequeler.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,15 +23,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="3840"
+     inkscape:window-height="2034"
      id="namedview46"
-     showgrid="true"
-     inkscape:zoom="22.627417"
-     inkscape:cx="-38.877682"
-     inkscape:cy="34.960156"
+     showgrid="false"
+     inkscape:zoom="64"
+     inkscape:cx="12.652725"
+     inkscape:cy="12.995652"
      inkscape:window-x="0"
-     inkscape:window-y="30"
+     inkscape:window-y="60"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4157">
     <inkscape:grid
@@ -340,57 +340,48 @@
      d="M 3,12.5 H 21.000001"
      style="opacity:1;fill:none;stroke:#ffffff;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <rect
-     style="opacity:1;fill:#000000;fill-opacity:0.05789472;stroke:none;stroke-width:0.44821078;stroke-opacity:1"
-     id="rect914-6-9-5"
-     width="2.5000007"
-     height="18"
-     x="17"
-     y="3"
-     rx="0"
-     ry="0" />
-  <rect
      ry="0"
      rx="0"
      y="3"
-     x="13"
+     x="15"
      height="18"
-     width="2.5000007"
+     width="3"
      id="rect981"
      style="opacity:1;fill:#000000;fill-opacity:0.05789472;stroke:none;stroke-width:0.44821078;stroke-opacity:1" />
   <circle
      style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.32190493"
-     id="path868-5-7-6"
-     cx="6.2598925"
-     cy="7.8383136"
-     r="1.2876197" />
+     id="circle874"
+     cx="6.5"
+     cy="7.5"
+     r="1.5" />
   <circle
-     r="1.2876197"
-     cy="7.3152633"
-     cx="6.2598925"
+     r="1.5"
+     cy="6.5"
+     cx="6.5"
      id="circle902-7-6-2"
      style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.32190493" />
   <circle
-     r="1.2876197"
-     cy="17.310783"
-     cx="6.2841644"
-     id="circle876-6-0-9"
+     r="1.5"
+     cy="17.5"
+     cx="6.5"
+     id="circle876"
      style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.32190493" />
-  <circle
-     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.32190493"
-     id="circle878-2-9-1"
-     cx="9.82967"
-     cy="17.310783"
-     r="1.2876197" />
   <circle
      style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.32190493"
      id="circle904-0-2-2"
-     cx="6.2841644"
-     cy="16.79578"
-     r="1.2876197" />
+     cx="6.5"
+     cy="16.5"
+     r="1.5" />
   <circle
-     r="1.2876197"
-     cy="16.79578"
-     cx="9.82967"
+     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.32190493"
+     id="circle878"
+     cx="11.5"
+     cy="17.5"
+     r="1.5" />
+  <circle
+     r="1.5"
+     cy="16.5"
+     cx="11.5"
      id="circle906-9-6-7"
      style="opacity:1;fill:#ffa154;fill-opacity:1;stroke-width:0.32190493" />
 </svg>

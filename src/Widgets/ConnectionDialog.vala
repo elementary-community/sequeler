@@ -69,6 +69,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		build_content ();
 		build_actions ();
 		populate_data ();
+		change_sensitivity ();
 
 		response.connect (on_response);
 	}

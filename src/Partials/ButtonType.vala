@@ -36,7 +36,7 @@ namespace Sequeler.Partials {
 
 			get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 			set_tooltip_text (tooltip);
-			this.add (image);
+			add (image);
 		}
 	}
 

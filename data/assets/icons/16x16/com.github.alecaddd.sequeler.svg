@@ -12,8 +12,8 @@
    width="16"
    height="16"
    id="svg4372"
-   inkscape:version="0.92.2 (unknown)"
-   sodipodi:docname="sequeler.svg">
+   inkscape:version="0.92.3 (unknown)"
+   sodipodi:docname="com.github.alecaddd.sequeler.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,15 +23,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="3840"
+     inkscape:window-height="2034"
      id="namedview23"
-     showgrid="true"
-     inkscape:zoom="16"
-     inkscape:cx="6.3100297"
-     inkscape:cy="5.0998364"
+     showgrid="false"
+     inkscape:zoom="64"
+     inkscape:cx="6.3256547"
+     inkscape:cy="6.4904614"
      inkscape:window-x="0"
-     inkscape:window-y="30"
+     inkscape:window-y="60"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4372">
     <inkscape:grid
@@ -262,44 +262,44 @@
      id="rect914-6-9-5-5"
      width="1.9999998"
      height="12"
-     x="11"
+     x="10"
      y="2"
      rx="0"
      ry="0" />
   <circle
      style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.25940493"
-     id="path868-5-7-6-6"
-     cx="4.0276108"
-     cy="4.4555101"
-     r="1.0376197" />
+     id="circle856"
+     cx="3.9999998"
+     cy="5"
+     r="1" />
   <circle
-     r="1.0376197"
-     cy="4.0340137"
-     cx="4.0276108"
+     r="1"
+     cy="4"
+     cx="3.9999998"
      id="circle902-7-6-2-2"
      style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.25940493" />
   <circle
-     r="1.0792834"
-     cy="11.51912"
-     cx="4.0935473"
-     id="circle876-6-0-9-9"
+     r="1"
+     cy="12"
+     cx="3.9999998"
+     id="circle858"
      style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.26982084" />
-  <circle
-     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.26982084"
-     id="circle878-2-9-1-1"
-     cx="7.0653915"
-     cy="11.51912"
-     r="1.0792834" />
   <circle
      style="opacity:1;fill:#2af62b;fill-opacity:1;stroke-width:0.26982084"
      id="circle904-0-2-2-2"
-     cx="4.0935473"
-     cy="11.087445"
-     r="1.0792834" />
+     cx="3.9999998"
+     cy="11"
+     r="1" />
   <circle
-     r="1.0792834"
-     cy="11.087445"
-     cx="7.0653915"
+     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.26982084"
+     id="circle860"
+     cx="7"
+     cy="12"
+     r="1" />
+  <circle
+     r="1"
+     cy="11"
+     cx="7"
      id="circle906-9-6-7-7"
      style="opacity:1;fill:#ffa154;fill-opacity:1;stroke-width:0.26982084" />
 </svg>
