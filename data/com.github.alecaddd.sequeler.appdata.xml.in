@@ -28,6 +28,17 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.6.3" date="2018-09-19">
+      <description>
+        <p>UI Fixes and Performance Improvements</p>
+        <ul>
+          <li>UI fix for logout button.</li>
+          <li>View shortcuts on preferences dropdown.</li>
+          <li>Performance Improvements.</li>
+          <li>Italian translation.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.2" date="2018-09-11">
       <description>
         <p>Export all the things!</p>
