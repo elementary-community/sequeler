@@ -12,6 +12,11 @@ Sequeler, is primarily available from the AppCenter of elementary OS. Download i
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.alecaddd.sequeler)
 
+## Get it from Flathub!
+You can get Sequeler form Flathub no matter what distribution you're using. Download it or follow the instructions to install it from here!
+
+<a href="https://flathub.org/apps/details/com.github.alecaddd.sequeler"><img src="https://flathub.org/assets/badges/flathub-badge-i-en.svg" width="160px" alt="Get it from Flathub!"></a>
+
 ## Install it from source
 You can install Sequeler by compiling from source, here's the list of dependencies required:
  - `gtk+-3.0>=3.9.10`
