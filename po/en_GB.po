@@ -118,11 +118,11 @@ msgstr "Add a New Database"
 
 #: src/Layouts/Welcome.vala:38
 msgid "Connect to a Database and Save It in Your Library"
-msgstr ""
+msgstr "Connect to a Database and Save It in Your Library"
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a New Sequeler Window"
-msgstr "Connect to a Database and Save It in Your Library"
+msgstr "Open a New Sequeler Window"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
