@@ -46,6 +46,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Sequeler.Partials.Entry db_port_entry;
 	private Gtk.FileChooserButton db_file_entry;
 
+	private Gtk.Grid ssh_grid;
+	private Gtk.Revealer revealer;
+	private Gtk.Switch ssh_switch;
+	private Sequeler.Partials.Entry ssh_host;
+	private Sequeler.Partials.Entry ssh_username;
+
 	private Gtk.Spinner spinner;
 	private Sequeler.Partials.ResponseMessage response_msg;
 
@@ -215,6 +221,18 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_file_entry.no_show_all = true;
 
 		body.add (form_grid);
+
+		ssh_grid = new Gtk.Grid ();
+		ssh_grid.margin_top = 5;
+		ssh_grid.margin_bottom = 20;
+		ssh_grid.margin_start = 30;
+		ssh_grid.margin_end = 30;
+		ssh_grid.row_spacing = 10;
+		ssh_grid.column_spacing = 20;
+
+		ssh_grid.attach (new Sequeler.Partials.LabelForm (_("SSH Tunnel")), 0, 0, 1, 1);
+
+		body.add (ssh_grid);
 
 		spinner = new Gtk.Spinner ();
 		response_msg = new Sequeler.Partials.ResponseMessage ();
