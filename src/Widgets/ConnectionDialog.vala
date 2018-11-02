@@ -45,7 +45,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Sequeler.Partials.Entry db_password_entry;
 	private Sequeler.Partials.Entry db_port_entry;
 	private Gtk.FileChooserButton db_file_entry;
+	private Gtk.Separator db_separator;
 
+	private Gtk.Separator ssh_separator;
 	private Gtk.Grid ssh_grid;
 	private Gtk.Revealer revealer;
 	private Gtk.Switch ssh_switch;
@@ -165,18 +167,22 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (db_host_label, 0, 2, 1, 1);
 		form_grid.attach (db_host_entry, 1, 2, 1, 1);
 
+		db_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+		db_separator.margin = 20;
+		form_grid.attach (db_separator, 0, 3, 2, 1);
+
 		db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
 		db_name_entry = new Sequeler.Partials.Entry ("", null);
 		db_name_entry.changed.connect (change_sensitivity);
 
-		form_grid.attach (db_name_label, 0, 3, 1, 1);
-		form_grid.attach (db_name_entry, 1, 3, 1, 1);
+		form_grid.attach (db_name_label, 0, 4, 1, 1);
+		form_grid.attach (db_name_entry, 1, 4, 1, 1);
 
 		db_username_label = new Sequeler.Partials.LabelForm (_("Username:"));
 		db_username_entry = new Sequeler.Partials.Entry ("", null);
 
-		form_grid.attach (db_username_label, 0, 4, 1, 1);
-		form_grid.attach (db_username_entry, 1, 4, 1, 1);
+		form_grid.attach (db_username_label, 0, 5, 1, 1);
+		form_grid.attach (db_username_entry, 1, 5, 1, 1);
 
 		db_password_label = new Sequeler.Partials.LabelForm (_("Password:"));
 		db_password_entry = new Sequeler.Partials.Entry ("", null);
@@ -193,14 +199,14 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			}
 		});
 
-		form_grid.attach (db_password_label, 0, 5, 1, 1);
-		form_grid.attach (db_password_entry, 1, 5, 1, 1);
+		form_grid.attach (db_password_label, 0, 6, 1, 1);
+		form_grid.attach (db_password_entry, 1, 6, 1, 1);
 
 		db_port_label = new Sequeler.Partials.LabelForm (_("Port:"));
 		db_port_entry = new Sequeler.Partials.Entry ("3306", null);
 
-		form_grid.attach (db_port_label, 0, 6, 1, 1);
-		form_grid.attach (db_port_entry, 1, 6, 1, 1);
+		form_grid.attach (db_port_label, 0, 7, 1, 1);
+		form_grid.attach (db_port_entry, 1, 7, 1, 1);
 
 		db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
 		db_file_entry = new Gtk.FileChooserButton (_("Select Your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
@@ -213,12 +219,16 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		db_file_entry.selection_changed.connect (change_sensitivity);
 
-		form_grid.attach (db_file_label, 0, 7, 1, 1);
-		form_grid.attach (db_file_entry, 1, 7, 1, 1);
+		form_grid.attach (db_file_label, 0, 8, 1, 1);
+		form_grid.attach (db_file_entry, 1, 8, 1, 1);
 		db_file_label.visible = false;
 		db_file_label.no_show_all = true;
 		db_file_entry.visible = false;
 		db_file_entry.no_show_all = true;
+
+		ssh_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+		ssh_separator.margin = 20;
+		form_grid.attach (ssh_separator, 0, 9, 2, 1);
 
 		body.add (form_grid);
 
@@ -230,7 +240,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_grid.row_spacing = 10;
 		ssh_grid.column_spacing = 20;
 
+		ssh_switch = new Gtk.Switch ();
 		ssh_grid.attach (new Sequeler.Partials.LabelForm (_("SSH Tunnel")), 0, 0, 1, 1);
+		ssh_grid.attach (ssh_switch, 1, 0, 1, 1);
 
 		body.add (ssh_grid);
 
@@ -351,6 +363,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_port_label.no_show_all = toggle;
 		db_port_entry.visible = !toggle;
 		db_port_entry.no_show_all = toggle;
+
+		db_separator.visible = !toggle;
+		db_separator.no_show_all = toggle;
 	}
 
 	private void change_sensitivity () {
