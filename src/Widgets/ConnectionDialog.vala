@@ -48,11 +48,13 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Gtk.Separator db_separator;
 
 	private Gtk.Separator ssh_separator;
-	private Gtk.Grid ssh_grid;
-	private Gtk.Revealer revealer;
+	private Sequeler.Partials.LabelForm ssh_switch_label;
+	private Gtk.Grid ssh_switch_container;
 	private Gtk.Switch ssh_switch;
-	private Sequeler.Partials.Entry ssh_host;
-	private Sequeler.Partials.Entry ssh_username;
+	private Sequeler.Partials.LabelForm ssh_host_label;
+	private Sequeler.Partials.Entry ssh_host_entry;
+	private Sequeler.Partials.LabelForm ssh_username_label;
+	private Sequeler.Partials.Entry ssh_username_entry;
 
 	private Gtk.Spinner spinner;
 	private Sequeler.Partials.ResponseMessage response_msg;
@@ -99,9 +101,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_types.set (3,"SQLite");
 
 		var header_grid = new Gtk.Grid ();
-		header_grid.margin_start = 5;
-		header_grid.margin_end = 5;
-		header_grid.margin_bottom = 20;
+		header_grid.margin_start = 30;
+		header_grid.margin_end = 30;
+		header_grid.margin_bottom = 10;
 
 		var image = new Gtk.Image.from_icon_name ("office-database", Gtk.IconSize.DIALOG);
 		image.margin_end = 10;
@@ -124,10 +126,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		body.add (header_grid);
 
 		var form_grid = new Gtk.Grid ();
-		form_grid.margin_top = 5;
-		form_grid.margin_bottom = 20;
-		form_grid.margin_start = 30;
-		form_grid.margin_end = 30;
+		form_grid.margin = 30;
 		form_grid.row_spacing = 10;
 		form_grid.column_spacing = 20;
 
@@ -168,7 +167,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (db_host_entry, 1, 2, 1, 1);
 
 		db_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-		db_separator.margin = 20;
+		db_separator.margin_top = 20;
+		db_separator.margin_bottom = 20;
 		form_grid.attach (db_separator, 0, 3, 2, 1);
 
 		db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
@@ -227,24 +227,30 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_file_entry.no_show_all = true;
 
 		ssh_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-		ssh_separator.margin = 20;
+		ssh_separator.margin_top = 20;
+		ssh_separator.margin_bottom = 20;
 		form_grid.attach (ssh_separator, 0, 9, 2, 1);
 
-		body.add (form_grid);
-
-		ssh_grid = new Gtk.Grid ();
-		ssh_grid.margin_top = 5;
-		ssh_grid.margin_bottom = 20;
-		ssh_grid.margin_start = 30;
-		ssh_grid.margin_end = 30;
-		ssh_grid.row_spacing = 10;
-		ssh_grid.column_spacing = 20;
-
 		ssh_switch = new Gtk.Switch ();
-		ssh_grid.attach (new Sequeler.Partials.LabelForm (_("SSH Tunnel")), 0, 0, 1, 1);
-		ssh_grid.attach (ssh_switch, 1, 0, 1, 1);
+		ssh_switch_container = new Gtk.Grid ();
+		ssh_switch_container.add (ssh_switch);
+		ssh_switch_label = new Sequeler.Partials.LabelForm (_("Connect via SSH Tunnel:"));
 
-		body.add (ssh_grid);
+		form_grid.attach (ssh_switch_label, 0, 10, 1, 1);
+		form_grid.attach (ssh_switch_container, 1, 10, 1, 1);
+
+		ssh_host_label = new Sequeler.Partials.LabelForm (_("SSH Host:"));;
+		ssh_host_entry = new Sequeler.Partials.Entry ("", null);
+		ssh_username_label = new Sequeler.Partials.LabelForm (_("SSH Username:"));;
+		ssh_username_entry = new Sequeler.Partials.Entry ("", null);
+
+		form_grid.attach (ssh_host_label, 0, 11, 1, 1);
+		form_grid.attach (ssh_host_entry, 1, 11, 1, 1);
+
+		form_grid.attach (ssh_username_label, 0, 12, 1, 1);
+		form_grid.attach (ssh_username_entry, 1, 12, 1, 1);
+
+		body.add (form_grid);
 
 		spinner = new Gtk.Spinner ();
 		response_msg = new Sequeler.Partials.ResponseMessage ();
