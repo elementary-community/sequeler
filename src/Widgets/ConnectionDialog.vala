@@ -77,6 +77,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	construct {
 		set_id ();
 		build_content ();
+		toggle_ssh_fields (false);
 		build_actions ();
 		populate_data ();
 		change_sensitivity ();
@@ -167,8 +168,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (db_host_entry, 1, 2, 1, 1);
 
 		db_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-		db_separator.margin_top = 20;
-		db_separator.margin_bottom = 20;
+		db_separator.margin_top = 10;
+		db_separator.margin_bottom = 10;
 		form_grid.attach (db_separator, 0, 3, 2, 1);
 
 		db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
@@ -227,14 +228,18 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_file_entry.no_show_all = true;
 
 		ssh_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-		ssh_separator.margin_top = 20;
-		ssh_separator.margin_bottom = 20;
+		ssh_separator.margin_top = 10;
+		ssh_separator.margin_bottom = 10;
 		form_grid.attach (ssh_separator, 0, 9, 2, 1);
 
 		ssh_switch = new Gtk.Switch ();
 		ssh_switch_container = new Gtk.Grid ();
 		ssh_switch_container.add (ssh_switch);
 		ssh_switch_label = new Sequeler.Partials.LabelForm (_("Connect via SSH Tunnel:"));
+
+		ssh_switch.notify.connect (() => {
+			toggle_ssh_fields (ssh_switch.get_active ());
+		});
 
 		form_grid.attach (ssh_switch_label, 0, 10, 1, 1);
 		form_grid.attach (ssh_switch_container, 1, 10, 1, 1);
@@ -257,6 +262,17 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		body.add (spinner);
 		body.add (response_msg);
+	}
+
+	private void toggle_ssh_fields (bool toggle) {
+		ssh_host_label.visible = toggle;
+		ssh_host_label.no_show_all = !toggle;
+		ssh_host_entry.visible = toggle;
+		ssh_host_entry.no_show_all = !toggle;
+		ssh_username_label.visible = toggle;
+		ssh_username_label.no_show_all = !toggle;
+		ssh_username_entry.visible = toggle;
+		ssh_username_entry.no_show_all = !toggle;
 	}
 
 	private void build_actions () {
@@ -372,6 +388,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		db_separator.visible = !toggle;
 		db_separator.no_show_all = toggle;
+
+		if (toggle) ssh_switch.active = false;
+
+		ssh_separator.visible = !toggle;
+		ssh_separator.no_show_all = toggle;
+		ssh_switch_container.visible = !toggle;
+		ssh_switch_container.no_show_all = toggle;
+		ssh_switch_label.visible = !toggle;
+		ssh_switch_label.no_show_all = toggle;
 	}
 
 	private void change_sensitivity () {
