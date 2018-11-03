@@ -47,6 +47,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Gtk.FileChooserButton db_file_entry;
 	private Gtk.Separator db_separator;
 
+	private string keyfile1;
+	private string keyfile2;
 	private Gtk.Separator ssh_separator;
 	private Sequeler.Partials.LabelForm ssh_switch_label;
 	private Gtk.Grid ssh_switch_container;
@@ -237,7 +239,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_switch_container.add (ssh_switch);
 		ssh_switch_label = new Sequeler.Partials.LabelForm (_("Connect via SSH Tunnel:"));
 
-		ssh_switch.notify.connect (() => {
+		ssh_switch.notify["active"].connect (() => {
 			toggle_ssh_fields (ssh_switch.get_active ());
 		});
 
@@ -273,6 +275,14 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_username_label.no_show_all = !toggle;
 		ssh_username_entry.visible = toggle;
 		ssh_username_entry.no_show_all = !toggle;
+
+		if (toggle) {
+			var home_dir = Environment.get_home_dir ();
+			keyfile1 = home_dir + "/.ssh/id_rsa.pub";
+			keyfile2 = home_dir + "/.ssh/id_rsa";
+			File file = File.new_for_path (keyfile1);
+			bool tmp = file.query_exists ();
+		}
 	}
 
 	private void build_actions () {
