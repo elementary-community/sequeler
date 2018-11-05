@@ -57,6 +57,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Sequeler.Partials.Entry ssh_host_entry;
 	private Sequeler.Partials.LabelForm ssh_username_label;
 	private Sequeler.Partials.Entry ssh_username_entry;
+	private Sequeler.Partials.LabelForm ssh_password_label;
+	private Sequeler.Partials.Entry ssh_password_entry;
+	private Sequeler.Partials.LabelForm ssh_port_label;
+	private Sequeler.Partials.Entry ssh_port_entry;
 
 	private Gtk.Spinner spinner;
 	private Sequeler.Partials.ResponseMessage response_msg;
@@ -248,14 +252,23 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		ssh_host_label = new Sequeler.Partials.LabelForm (_("SSH Host:"));;
 		ssh_host_entry = new Sequeler.Partials.Entry ("", null);
-		ssh_username_label = new Sequeler.Partials.LabelForm (_("SSH Username:"));;
-		ssh_username_entry = new Sequeler.Partials.Entry ("", null);
-
 		form_grid.attach (ssh_host_label, 0, 11, 1, 1);
 		form_grid.attach (ssh_host_entry, 1, 11, 1, 1);
-
+		
+		ssh_username_label = new Sequeler.Partials.LabelForm (_("SSH Username:"));;
+		ssh_username_entry = new Sequeler.Partials.Entry ("", null);
 		form_grid.attach (ssh_username_label, 0, 12, 1, 1);
 		form_grid.attach (ssh_username_entry, 1, 12, 1, 1);
+
+		ssh_password_label = new Sequeler.Partials.LabelForm (_("SSH Password:"));;
+		ssh_password_entry = new Sequeler.Partials.Entry ("", null);
+		form_grid.attach (ssh_password_label, 0, 13, 1, 1);
+		form_grid.attach (ssh_password_entry, 1, 13, 1, 1);
+		
+		ssh_port_label = new Sequeler.Partials.LabelForm (_("SSH Port:"));;
+		ssh_port_entry = new Sequeler.Partials.Entry (_("Optional"), null);
+		form_grid.attach (ssh_port_label, 0, 14, 1, 1);
+		form_grid.attach (ssh_port_entry, 1, 14, 1, 1);
 
 		body.add (form_grid);
 
@@ -275,6 +288,16 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_username_label.no_show_all = !toggle;
 		ssh_username_entry.visible = toggle;
 		ssh_username_entry.no_show_all = !toggle;
+		ssh_username_label.visible = toggle;
+		ssh_username_label.no_show_all = !toggle;
+		ssh_password_entry.visible = toggle;
+		ssh_password_entry.no_show_all = !toggle;
+		ssh_password_label.visible = toggle;
+		ssh_password_label.no_show_all = !toggle;
+		ssh_port_entry.visible = toggle;
+		ssh_port_entry.no_show_all = !toggle;
+		ssh_port_label.visible = toggle;
+		ssh_port_label.no_show_all = !toggle;
 
 		if (toggle) {
 			var home_dir = Environment.get_home_dir ();
