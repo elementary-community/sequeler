@@ -95,4 +95,33 @@ namespace Sequeler.Partials {
             halign = Gtk.Align.END;
         }
     }
+
+    class UrlButton : Gtk.Button {
+        public UrlButton (string label, string uri, string icon_name) {
+            get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
+            get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            tooltip_text = uri;
+
+            var icon = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.SMALL_TOOLBAR);
+            icon.valign = Gtk.Align.CENTER;
+
+            var title = new Gtk.Label (label);
+            title.ellipsize = Pango.EllipsizeMode.END;
+
+            var grid = new Gtk.Grid ();
+            grid.column_spacing = 6;
+            grid.add (icon);
+            grid.add (title);
+
+            add (grid);
+
+            clicked.connect (() => {
+                try {
+                    AppInfo.launch_default_for_uri (uri, null);
+                } catch (Error e) {
+                    warning ("%s\n", e.message);
+                }
+            });
+        }
+    }
 }
