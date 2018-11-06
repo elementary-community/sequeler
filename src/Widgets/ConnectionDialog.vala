@@ -277,6 +277,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		infobar = new Gtk.InfoBar ();
 		infobar.message_type = Gtk.MessageType.WARNING;
+		infobar.get_style_context ().add_class ("inline");
 		infobar.get_content_area ().add (info_label);
 		infobar.show_close_button = false;
 		infobar.add_button (_("Generate SSH Key"), 0);
@@ -304,6 +305,16 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	}
 
 	private void toggle_ssh_fields (bool toggle) {
+		if (toggle) {
+			var home_dir = Environment.get_home_dir ();
+			keyfile1 = home_dir + "/.ssh/id_rsa_test.pub";
+			keyfile2 = home_dir + "/.ssh/id_rsa";
+			if (! File.new_for_path (keyfile1).query_exists () || ! File.new_for_path (keyfile2).query_exists ()) {
+				infobar.revealed = true;
+				return;
+			}
+		}
+
 		ssh_host_label.visible = toggle;
 		ssh_host_label.no_show_all = !toggle;
 		ssh_host_entry.visible = toggle;
@@ -324,37 +335,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_port_entry.visible = toggle;
 		ssh_port_entry.no_show_all = !toggle;
 
-		if (toggle) {
-			var home_dir = Environment.get_home_dir ();
-			keyfile1 = home_dir + "/.ssh/id_rsa_test.pub";
-			keyfile2 = home_dir + "/.ssh/id_rsa";
-			if (! File.new_for_path (keyfile1).query_exists () || ! File.new_for_path (keyfile2).query_exists ()) {
-				ssh_key_warning (false);
-				return;
-			}
-		}
-		ssh_key_warning (true);
-	}
-
-	private void ssh_key_warning (bool status) {
-		ssh_host_entry.sensitive = status;
-		ssh_username_entry.sensitive = status;
-		ssh_password_entry.sensitive = status;
-		ssh_port_entry.sensitive = status;
-		infobar.revealed = !status;
-		
-		//  var ssh_msg = new Sequeler.Partials.LabelForm (_("Missing SSH key file!"));
-		//  var website_button = new Sequeler.Partials.UrlButton (_("Generate a new SSH key"),
-		//  									"https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/",
-		//  									"web-browser-symbolic");
-
-		//  form_grid.attach (ssh_msg, 0, 15, 1, 1);
-		//  form_grid.attach (website_button, 1, 15, 1, 1);
-
-		//  ssh_msg.visible = !status;
-		//  ssh_msg.no_show_all = status;
-		//  website_button.visible = !status;
-		//  website_button.no_show_all = status;
+		infobar.revealed = false;
 	}
 
 	private void build_actions () {

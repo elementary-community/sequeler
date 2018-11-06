@@ -58,3 +58,9 @@
 .headerbar-separator {
     margin-left: 0;
 }
+
+infobar.inline revealer > box {
+    box-shadow: inset 0 -1px 0 0 alpha (#fff, 0.4);
+    border-width: 1px;
+    border-radius: 4px;
+}
