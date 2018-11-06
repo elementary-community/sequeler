@@ -28,6 +28,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Gtk.Label header_title;
 	private Gtk.ColorButton color_picker;
 	private Gtk.Grid form_grid;
+	private Gtk.InfoBar infobar;
 
 	private Sequeler.Partials.LabelForm db_file_label;
 	private Sequeler.Partials.LabelForm db_host_label;
@@ -271,6 +272,28 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (ssh_port_label, 0, 14, 1, 1);
 		form_grid.attach (ssh_port_entry, 1, 14, 1, 1);
 
+		var info_label = new Gtk.Label (_("Missing SSH Key file!"));
+		info_label.show ();
+
+		infobar = new Gtk.InfoBar ();
+		infobar.message_type = Gtk.MessageType.WARNING;
+		infobar.get_content_area ().add (info_label);
+		infobar.show_close_button = false;
+		infobar.add_button (_("Generate SSH Key"), 0);
+		infobar.revealed = false;
+
+		infobar.response.connect ((response) => {
+			if (response == 0) {
+				try {
+                    AppInfo.launch_default_for_uri ("https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/", null);
+                } catch (Error e) {
+                    warning ("%s\n", e.message);
+                }
+			}
+		});
+
+		form_grid.attach (infobar, 0, 15, 2, 1);
+
 		body.add (form_grid);
 
 		spinner = new Gtk.Spinner ();
@@ -310,7 +333,6 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				return;
 			}
 		}
-
 		ssh_key_warning (true);
 	}
 
@@ -319,14 +341,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_username_entry.sensitive = status;
 		ssh_password_entry.sensitive = status;
 		ssh_port_entry.sensitive = status;
+		infobar.revealed = !status;
 		
-		var ssh_msg = new Sequeler.Partials.LabelForm (_("Missing SSH key file!"));
-		var website_button = new Sequeler.Partials.UrlButton (_("Generate a new SSH key"),
-											"https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/",
-											"web-browser-symbolic");
+		//  var ssh_msg = new Sequeler.Partials.LabelForm (_("Missing SSH key file!"));
+		//  var website_button = new Sequeler.Partials.UrlButton (_("Generate a new SSH key"),
+		//  									"https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/",
+		//  									"web-browser-symbolic");
 
-		form_grid.attach (ssh_msg, 0, 15, 1, 1);
-		form_grid.attach (website_button, 1, 15, 1, 1);
+		//  form_grid.attach (ssh_msg, 0, 15, 1, 1);
+		//  form_grid.attach (website_button, 1, 15, 1, 1);
 
 		//  ssh_msg.visible = !status;
 		//  ssh_msg.no_show_all = status;
