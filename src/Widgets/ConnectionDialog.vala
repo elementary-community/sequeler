@@ -286,6 +286,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		infobar.response.connect ((response) => {
 			if (response == 0) {
 				try {
+					ssh_switch.active = false;
                     AppInfo.launch_default_for_uri ("https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/", null);
                 } catch (Error e) {
                     warning ("%s\n", e.message);
@@ -307,7 +308,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private void toggle_ssh_fields (bool toggle) {
 		if (toggle) {
 			var home_dir = Environment.get_home_dir ();
-			keyfile1 = home_dir + "/.ssh/id_rsa_test.pub";
+			keyfile1 = home_dir + "/.ssh/id_rsa.pub";
 			keyfile2 = home_dir + "/.ssh/id_rsa";
 			if (! File.new_for_path (keyfile1).query_exists () || ! File.new_for_path (keyfile2).query_exists ()) {
 				infobar.revealed = true;
@@ -407,6 +408,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		if (update_data["port"] != null) {
 			db_port_entry.text = update_data["port"];
+		}
+
+		if (update_data["has_ssh"] != null) {
+			ssh_switch.active = bool.parse (update_data["has_ssh"]);
+			
+			ssh_host_entry.text = (update_data["ssh_host"] != null) ? update_data["ssh_host"] : "";
+			ssh_username_entry.text = (update_data["ssh_username"] != null) ? update_data["ssh_username"] : "";
+			ssh_password_entry.text = (update_data["ssh_password"] != null) ? update_data["ssh_password"] : "";
+			ssh_port_entry.text = (update_data["ssh_port"] != null) ? update_data["ssh_port"] : "";
 		}
 	}
 
@@ -575,6 +585,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		packaged_data.set ("username", db_username_entry.text);
 		packaged_data.set ("password", db_password_entry.text);
 		packaged_data.set ("port", db_port_entry.text);
+
+		packaged_data.set ("has_ssh", ssh_switch.active.to_string ());
+		packaged_data.set ("ssh_host", ssh_switch.active ? ssh_host_entry.text : "");
+		packaged_data.set ("ssh_username", ssh_switch.active ? ssh_username_entry.text : "");
+		packaged_data.set ("ssh_password", ssh_switch.active ? ssh_password_entry.text : "");
+		packaged_data.set ("ssh_port", ssh_switch.active ? ssh_port_entry.text : "");
 
 		return packaged_data;
 	}
