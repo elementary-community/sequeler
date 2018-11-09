@@ -71,6 +71,10 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void test () throws Error {
+		if (bool.parse (data["has_ssh"])) {
+			ssh_tunnel_init.begin ();
+		}
+
 		var connection_string = (db_type as DataBaseType).connection_string (data);
 
 		try {
@@ -80,6 +84,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		}
 
 		if (connection.is_opened ()) {
+			ssh_tunnel_close ();
 			connection.close ();
 		}
 	}
@@ -92,6 +97,43 @@ public class Sequeler.Services.ConnectionManager : Object {
 		} catch ( Error e ) {
 			throw e;
 		}
+	}
+
+	private async void ssh_tunnel_init () throws ThreadError {
+		SourceFunc callback = ssh_tunnel_init.callback;
+
+		new Thread <void*> (null, () => {
+			try {
+				ssh_tunnel_open ();
+			}
+			catch (Error e) {
+				window.connection_dialog.write_response (e.message);
+			}
+			Idle.add ((owned) callback);
+			return null;
+		});
+
+		yield;
+	}
+
+	private void ssh_tunnel_open () throws Error {
+		var home_dir = Environment.get_home_dir ();
+		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
+		var keyfile2 = home_dir + "/.ssh/id_rsa";
+		var ssh_host = Posix.inet_addr (data["ssh_host"]);
+		var ssh_username = data["ssh_username"];
+		Quark q = Quark.from_string ("ssh-error-str");
+
+		var rc = SSH2.init (0);
+		if (rc != SSH2.Error.NONE) {
+			throw new Error.literal (q, 1, _("libssh2 initialization failed (%d)").printf (rc));
+			return;
+		}
+	}
+
+	public void ssh_tunnel_close () {
+		// TO DO: If is open, close
+		SSH2.exit ();
 	}
 
 	public int run_query (string query) throws Error requires (connection.is_opened ()) {

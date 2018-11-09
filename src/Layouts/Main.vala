@@ -83,6 +83,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 			connection.connection.clear_events_list ();
 			connection.connection.close ();
 			connection.connection = null;
+			connection.ssh_tunnel_close ();
 		}
 
 		connection = null;
