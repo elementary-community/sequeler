@@ -127,7 +127,20 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var rc = SSH2.init (0);
 		if (rc != SSH2.Error.NONE) {
 			throw new Error.literal (q, 1, _("libssh2 initialization failed (%d)").printf (rc));
-			return;
+		}
+
+		var sock = Posix.socket(Posix.AF_INET, Posix.SOCK_STREAM, 0);
+		Posix.SockAddrIn sin = Posix.SockAddrIn ();
+		sin.sin_family = Posix.AF_INET;
+		sin.sin_port = Posix.htons (22);
+		sin.sin_addr.s_addr = ssh_host;
+		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
+			throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
+		}
+
+		var session = SSH2.Session.create<bool>();
+		if (session.handshake(sock) != SSH2.Error.NONE) {
+			throw new Error.literal (q, 1, _("Failed to establish SSH session"));
 		}
 	}
 
