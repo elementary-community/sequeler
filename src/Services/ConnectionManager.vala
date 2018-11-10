@@ -23,6 +23,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 	public weak Sequeler.Window window { get; construct; }
 	public Gee.HashMap<string, string> data { get; construct; }
 	private Object _db_type;
+	private int sock;
+	private SSH2.Session session;
 
 	public Object db_type {
 		get { return _db_type; }
@@ -71,10 +73,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void test () throws Error {
-		if (bool.parse (data["has_ssh"])) {
-			ssh_tunnel_init.begin ();
-		}
-
 		var connection_string = (db_type as DataBaseType).connection_string (data);
 
 		try {
@@ -99,53 +97,66 @@ public class Sequeler.Services.ConnectionManager : Object {
 		}
 	}
 
-	private async void ssh_tunnel_init () throws ThreadError {
-		SourceFunc callback = ssh_tunnel_init.callback;
-
-		new Thread <void*> (null, () => {
-			try {
-				ssh_tunnel_open ();
-			}
-			catch (Error e) {
-				window.connection_dialog.write_response (e.message);
-			}
-			Idle.add ((owned) callback);
-			return null;
-		});
-
-		yield;
+	public void ssh_tunnel_init () throws Error {
+		try {
+			ssh_tunnel_open ();
+		}
+		catch (Error e) {
+			throw e;
+		}
 	}
 
 	private void ssh_tunnel_open () throws Error {
+		debug ("Opening tunnel");
+		
 		var home_dir = Environment.get_home_dir ();
 		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
 		var keyfile2 = home_dir + "/.ssh/id_rsa";
 		var ssh_host = Posix.inet_addr (data["ssh_host"]);
 		var ssh_username = data["ssh_username"];
+		uint16 ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
 		Quark q = Quark.from_string ("ssh-error-str");
-
+		//  throw new Error.literal (q, 1, _("Oopsie"));
+		
 		var rc = SSH2.init (0);
 		if (rc != SSH2.Error.NONE) {
-			throw new Error.literal (q, 1, _("libssh2 initialization failed (%d)").printf (rc));
+			debug ("Libssh2 initialization failed (%d)", rc);
+			throw new Error.literal (q, 1, _("Libssh2 initialization failed (%d)").printf (rc));
 		}
 
-		var sock = Posix.socket(Posix.AF_INET, Posix.SOCK_STREAM, 0);
+		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, 0);
 		Posix.SockAddrIn sin = Posix.SockAddrIn ();
 		sin.sin_family = Posix.AF_INET;
-		sin.sin_port = Posix.htons (22);
+		sin.sin_port = Posix.htons (ssh_port);
 		sin.sin_addr.s_addr = ssh_host;
 		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
+			debug ("Failed to Connect via SSH");
 			throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
 		}
 
-		var session = SSH2.Session.create<bool>();
+		session = SSH2.Session.create<bool> ();
 		if (session.handshake(sock) != SSH2.Error.NONE) {
+			debug ("Failed to establish SSH session");
 			throw new Error.literal (q, 1, _("Failed to establish SSH session"));
 		}
+
+		int auth_pw = 0;
+		var userauthlist = session.list_authentication (ssh_username.data);
+		debug ("Authentication methods: %s", userauthlist);
+		if ("password" in userauthlist) {
+			auth_pw |= 1;
+		}
+		if ("publickey" in userauthlist) {
+			auth_pw |= 4;
+		}
+
+		debug ("No errors so far");
 	}
 
 	public void ssh_tunnel_close () {
-		// TO DO: If is open, close
+		session.disconnect ( "Normal Shutdown, Thank you for playing");
+		session = null;
+		Posix.close (sock);
 		SSH2.exit ();
 	}
 

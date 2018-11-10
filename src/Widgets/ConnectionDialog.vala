@@ -486,7 +486,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private void on_response (Gtk.Dialog source, int response_id) {
 		switch (response_id) {
 			case 1:
-				test_connection.begin ();
+				if (ssh_switch.active) {
+					open_ssh_connection.begin (false);
+				} else {
+					test_connection.begin ();
+				}
 				break;
 			case 2:
 				save_connection ();
@@ -498,6 +502,33 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				init_connection_begin ();
 				break;
 		}
+	}
+
+	public async void open_ssh_connection (bool is_real) throws ThreadError {
+		toggle_spinner (true);
+		write_response (_("Opening SSH Tunnel\u2026"));
+
+		var connection = new Sequeler.Services.ConnectionManager (window, package_data ());
+		SourceFunc callback = open_ssh_connection.callback;
+		
+		new Thread <void*> (null, () => {
+			try {
+				connection.ssh_tunnel_init ();
+				if (! is_real) {
+					test_connection.begin ();
+				} else {
+					init_connection_begin ();
+				}
+			}
+			catch (Error e) {
+				write_response (e.message);
+			}
+			Idle.add ((owned) callback);
+			toggle_spinner (false);
+			return null;
+		});
+
+		yield;
 	}
 
 	private async void test_connection () throws ThreadError {
