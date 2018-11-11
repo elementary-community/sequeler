@@ -28,7 +28,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 		var password = Gda.rfc1738_encode (data["password"]);
 		var name = Gda.rfc1738_encode (data["name"]);
 		host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
-		port =  data["port"] != "" ? data["port"] : port;
+		port = data["port"] != "" ? data["port"] : port;
 
 		return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
 	}

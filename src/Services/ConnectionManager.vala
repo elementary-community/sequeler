@@ -73,11 +73,13 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void test () throws Error {
+		debug (data["port"]);
 		var connection_string = (db_type as DataBaseType).connection_string (data);
 
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
-		} catch ( Error e ) {
+		} catch (Error e) {
+			ssh_tunnel_close ();
 			throw e;
 		}
 
@@ -92,7 +94,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
-		} catch ( Error e ) {
+		} catch (Error e) {
 			throw e;
 		}
 	}
@@ -115,8 +117,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var ssh_host = Posix.inet_addr (data["ssh_host"]);
 		var ssh_username = data["ssh_username"];
 		uint16 ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+		var host_port = data["port"] != "" ? int.parse (data["port"]) : 3307;
 		Quark q = Quark.from_string ("ssh-error-str");
-		//  throw new Error.literal (q, 1, _("Oopsie"));
 		
 		var rc = SSH2.init (0);
 		if (rc != SSH2.Error.NONE) {
@@ -140,24 +142,58 @@ public class Sequeler.Services.ConnectionManager : Object {
 			throw new Error.literal (q, 1, _("Failed to establish SSH session"));
 		}
 
-		int auth_pw = 0;
+		bool auth_key = false;
 		var userauthlist = session.list_authentication (ssh_username.data);
 		debug ("Authentication methods: %s", userauthlist);
-		if ("password" in userauthlist) {
-			auth_pw |= 1;
-		}
+		
 		if ("publickey" in userauthlist) {
-			auth_pw |= 4;
+			auth_key = true;
 		}
+
+		if (auth_key) {
+			if (session.auth_publickey_from_file (ssh_username, keyfile1, keyfile2, null) != SSH2.Error.NONE) {
+				ssh_tunnel_close ();
+				throw new Error.literal (q, 1, _("Error! Public Key doesn't match."));
+			}
+		} else {
+			ssh_tunnel_close ();
+			throw new Error.literal (q, 1, _("No SSH Authentication methods available."));
+		}
+
+		SSH2.Channel? channel = null;
+		if (session.authenticated && (channel = session.open_session ()) == null) {
+			ssh_tunnel_close ();
+			throw new Error.literal (q, 1, _("Unable to open SSH Session."));
+		} else {
+			debug ("SESSION OPEN!!!");
+		}
+
+		/* At this point the shell can be interacted with using
+		* libssh2_channel_read()
+		* libssh2_channel_read_stderr()
+		* libssh2_channel_write()
+		* libssh2_channel_write_stderr()
+		*
+		* Blocking mode may be (en|dis)abled with: libssh2_channel_set_blocking()
+		* If the server send EOF, libssh2_channel_eof() will return non-0
+		* To send EOF to the server use: libssh2_channel_send_eof()
+		* A channel can be closed with: libssh2_channel_close()
+		* A channel can be freed with: libssh2_channel_free()
+		*/
+		//  int remote_port;
+		session.forward_listen (host_port);
+		//  debug (remote_port.to_string ());
+		data["port"] = host_port.to_string ();
 
 		debug ("No errors so far");
 	}
 
 	public void ssh_tunnel_close () {
-		session.disconnect ( "Normal Shutdown, Thank you for playing");
+		// session.disconnect (_("Normal Shutdown, Thank you for playing"));
 		session = null;
 		Posix.close (sock);
 		SSH2.exit ();
+		debug ("SSH tunnel closed");
 	}
 
 	public int run_query (string query) throws Error requires (connection.is_opened ()) {

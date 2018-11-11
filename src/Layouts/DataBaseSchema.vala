@@ -261,7 +261,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 					edit_table_name (item.name, new_name);
 				}
 			});
-			tables_category.add (item);      
+			tables_category.add (item);
 			top++;
 		}
 

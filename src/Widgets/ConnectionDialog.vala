@@ -508,14 +508,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		toggle_spinner (true);
 		write_response (_("Opening SSH Tunnel\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (window, package_data ());
+		var data = package_data ();
+		var connection = new Sequeler.Services.ConnectionManager (window, data);
 		SourceFunc callback = open_ssh_connection.callback;
 		
 		new Thread <void*> (null, () => {
 			try {
 				connection.ssh_tunnel_init ();
 				if (! is_real) {
-					test_connection.begin ();
+					test_connection.begin (connection);
 				} else {
 					init_connection_begin ();
 				}
@@ -531,16 +532,16 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		yield;
 	}
 
-	private async void test_connection () throws ThreadError {
+	private async void test_connection (Sequeler.Services.ConnectionManager? connection = null) throws ThreadError {
 		toggle_spinner (true);
 		write_response (_("Testing Connection\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (window, package_data ());
+		var cnn = connection != null ? connection : new Sequeler.Services.ConnectionManager (window, package_data ());
 		SourceFunc callback = test_connection.callback;
 
 		new Thread <void*> (null, () => {
 			try {
-				connection.test ();
+				cnn.test ();
 				write_response (_("Successfully Connected!"));
 			}
 			catch (Error e) {

@@ -691,7 +691,7 @@ namespace SSH2 {
 		[CCode (cname = "libssh2_channel_open_ex")]
 		public Channel? open ([CCode (array_length_type = "unsigned int")] uint8[] channel_type, uint window_size = Channel.WINDOW_DEFAULT, uint packet_size = Channel.PACKET_DEFAULT, [CCode (array_length_type = "unsigned int")] uint8[]? message = null);
 		[CCode (cname = "libssh2_channel_open_session")]
-		public Channel? open_channel ();
+		public Channel? open_session ();
 		[CCode (cname = "libssh2_scp_recv")]
 		public Channel? scp_recv (string path, out Posix.Stat sb);
 		[CCode (cname = "libssh2_scp_send64")]
