@@ -189,6 +189,10 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void ssh_tunnel_close () {
+		if (session == null) {
+			return;
+		}
+
 		// session.disconnect (_("Normal Shutdown, Thank you for playing"));
 		session = null;
 		Posix.close (sock);
