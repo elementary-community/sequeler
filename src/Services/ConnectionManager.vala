@@ -168,6 +168,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 			debug ("SESSION OPEN!!!");
 		}
 
+		if (channel.start_shell () != SSH2.Error.NONE) {
+			ssh_tunnel_close ();
+			throw new Error.literal (q, 1, _("Unable to request shell."));
+		}
+
 		/* At this point the shell can be interacted with using
 		* libssh2_channel_read()
 		* libssh2_channel_read_stderr()
@@ -181,8 +186,13 @@ public class Sequeler.Services.ConnectionManager : Object {
 		* A channel can be freed with: libssh2_channel_free()
 		*/
 		//  int remote_port;
-		session.forward_listen (host_port);
-		//  debug (remote_port.to_string ());
+		SSH2.Listener? listener = null;
+		int bound_port;
+		if ((listener = session.forward_listen_ex (data["host"], host_port, out bound_port)) == null) {
+			ssh_tunnel_close ();
+			throw new Error.literal (q, 1, _("Unable to port forwarding."));
+		}
+		debug (bound_port.to_string ());
 		data["port"] = host_port.to_string ();
 
 		debug ("No errors so far");
