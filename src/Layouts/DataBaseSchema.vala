@@ -268,7 +268,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		source_list.root.add (tables_category);
 		scroll.add (source_list);
 
-		source_list.item_selected.connect ((item) => {
+		source_list.item_selected.connect (item => {
 			if (item == null) {
 				return;
 			}
