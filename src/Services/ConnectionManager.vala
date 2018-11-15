@@ -114,10 +114,13 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var home_dir = Environment.get_home_dir ();
 		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
 		var keyfile2 = home_dir + "/.ssh/id_rsa";
+
 		var ssh_host = Posix.inet_addr (data["ssh_host"]);
 		var ssh_username = data["ssh_username"];
-		uint16 ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+		var host = data["host"] != "" ? data["host"] : "127.0.0.1";
 		var host_port = data["port"] != "" ? int.parse (data["port"]) : 3307;
+
 		Quark q = Quark.from_string ("ssh-error-str");
 		
 		var rc = SSH2.init (0);
@@ -168,22 +171,14 @@ public class Sequeler.Services.ConnectionManager : Object {
 			debug ("SESSION OPEN!!!");
 		}
 
-		/* At this point the shell can be interacted with using
-		* libssh2_channel_read()
-		* libssh2_channel_read_stderr()
-		* libssh2_channel_write()
-		* libssh2_channel_write_stderr()
-		*
-		* Blocking mode may be (en|dis)abled with: libssh2_channel_set_blocking()
-		* If the server send EOF, libssh2_channel_eof() will return non-0
-		* To send EOF to the server use: libssh2_channel_send_eof()
-		* A channel can be closed with: libssh2_channel_close()
-		* A channel can be freed with: libssh2_channel_free()
-		*/
-		//  int remote_port;
-		session.forward_listen (host_port);
-		//  debug (remote_port.to_string ());
-		data["port"] = host_port.to_string ();
+		int bound_port;
+		SSH2.Listener? listener = null;
+		if ((listener = session.forward_listen_ex (host, host_port, out bound_port)) == null) {
+			ssh_tunnel_close ();
+			throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
+		}
+		debug (bound_port.to_string ());
+		data["port"] = bound_port.to_string ();
 
 		debug ("No errors so far");
 	}
