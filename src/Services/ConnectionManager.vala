@@ -117,6 +117,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		var ssh_host = Posix.inet_addr (data["ssh_host"]);
 		var ssh_username = data["ssh_username"];
+		var ssh_password = data["ssh_password"];
 		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
 		var host = data["host"] != "" ? data["host"] : "127.0.0.1";
 		var host_port = data["port"] != "" ? int.parse (data["port"]) : 3307;
@@ -154,7 +155,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		}
 
 		if (auth_key) {
-			if (session.auth_publickey_from_file (ssh_username, keyfile1, keyfile2, null) != SSH2.Error.NONE) {
+			if (session.auth_publickey_from_file (ssh_username, keyfile1, keyfile2, ssh_password) != SSH2.Error.NONE) {
 				ssh_tunnel_close ();
 				throw new Error.literal (q, 1, _("Error! Public Key doesn't match."));
 			}
