@@ -117,19 +117,25 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		var ssh_host = Posix.inet_addr (data["ssh_host"]);
 		var ssh_username = data["ssh_username"];
+		var ssh_password = data["ssh_password"];
 		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
-		var host = data["host"] != "" ? data["host"] : "127.0.0.1";
-		var host_port = data["port"] != "" ? int.parse (data["port"]) : 3307;
+		var host = data["host"] != "" || data["host"] != "127.0.0.1" ? data["host"] : "localhost";
+		var host_port = data["port"] != "" ? int.parse (data["port"]) : 9000;
 
 		Quark q = Quark.from_string ("ssh-error-str");
 		
-		var rc = SSH2.init (0);
+		var rc = SSH2.init (SSH2.InitFlags.NONE);
 		if (rc != SSH2.Error.NONE) {
 			debug ("Libssh2 initialization failed (%d)", rc);
 			throw new Error.literal (q, 1, _("Libssh2 initialization failed (%d)").printf (rc));
 		}
 
 		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, 0);
+		if (sock == -1) {
+			debug ("Error opening Socket");
+			throw new Error.literal (q, 1, _("Error opening Socket"));
+		}
+
 		Posix.SockAddrIn sin = Posix.SockAddrIn ();
 		sin.sin_family = Posix.AF_INET;
 		sin.sin_port = Posix.htons (ssh_port);
@@ -145,6 +151,13 @@ public class Sequeler.Services.ConnectionManager : Object {
 			throw new Error.literal (q, 1, _("Failed to establish SSH session"));
 		}
 
+		var fingerprint = session.get_host_key_hash(SSH2.HashType.SHA1);
+		debug ("Fingerprint: ");
+		for (var i = 0; i < 20; i++) {
+			stdout.printf ("%02X ", fingerprint[i]);
+		}
+		stdout.printf ("\n");
+
 		bool auth_key = false;
 		var userauthlist = session.list_authentication (ssh_username.data);
 		debug ("Authentication methods: %s", userauthlist);
@@ -154,7 +167,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		}
 
 		if (auth_key) {
-			if (session.auth_publickey_from_file (ssh_username, keyfile1, keyfile2, null) != SSH2.Error.NONE) {
+			if (session.auth_publickey_from_file (ssh_username, keyfile1, keyfile2, ssh_password) != SSH2.Error.NONE) {
 				ssh_tunnel_close ();
 				throw new Error.literal (q, 1, _("Error! Public Key doesn't match."));
 			}
@@ -164,31 +177,78 @@ public class Sequeler.Services.ConnectionManager : Object {
 		}
 
 		SSH2.Channel? channel = null;
-		if (session.authenticated && (channel = session.open_session ()) == null) {
+		if (session.authenticated && (channel = session.open_channel ()) == null) {
 			ssh_tunnel_close ();
 			throw new Error.literal (q, 1, _("Unable to open SSH Session."));
 		} else {
 			debug ("SESSION OPEN!!!");
 		}
 
-		int bound_port;
-		SSH2.Listener? listener = null;
-		if ((listener = session.forward_listen_ex (host, host_port, out bound_port)) == null) {
+        if (channel.request_pty ("vanilla".data) != SSH2.Error.NONE) {
 			ssh_tunnel_close ();
-			throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
+			throw new Error.literal (q, 1, _("Failed requesting virtual terminal."));
+        }
+
+        if (channel.start_shell () != SSH2.Error.NONE) {
+			ssh_tunnel_close ();
+			throw new Error.literal (q, 1, _("Unable to request Shell."));
 		}
-		debug (bound_port.to_string ());
-		data["port"] = bound_port.to_string ();
+
+		//  SSH2.Listener? listener = null;
+		//  int bound_port;
+		//  if ((listener = session.forward_listen_ex (host, host_port, out bound_port, 1)) == null) {
+		//  	ssh_tunnel_close ();
+		//  	throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
+		//  } else {
+		//  	debug ("Port forwarded");
+		//  }
+
+		//  data["port"] = host_port.to_string ();
+
+		//  forward_port.begin (session, channel, listener);
+
+		//  yield;
+		//  channel = listener.accept ();
+		//  while ((channel = listener.accept ()) != null) {
+		//  	debug ("Channel accepted");
+		//  }
+		//  if (channel == null) {
+		//  	ssh_tunnel_close ();
+		//  	throw new Error.literal (q, 1, _("Could not accept connection! Check your Server Log"));
+		//  } else {
+		//  	debug ("SESSION OPEN!!!");
+		//  }
+
+		//  SSH2.Channel? channel_forward = null;
+		//  channel = listener.accept ();
+		//  if (channel == null) {
+		//  	ssh_tunnel_close ();
+		//  	throw new Error.literal (q, 1, _("Unable to open SSH Session."));
+		//  } else {
+		//  	debug ("SESSION OPEN!!!");
+		//  }
+
+		//  debug (bound_port.to_string ());
+		//  data["port"] = host_port.to_string ();
 
 		debug ("No errors so far");
 	}
+
+	//  private async void forward_port (SSH2.Session? session, SSH2.Channel? channel, SSH2.Listener? listener) throws ThreadError {
+		//  yield;
+		//  while (listener.accept () != null) {
+		//  	yield;
+		//  }
+		//  while ((channel = listener.accept ()) != null) {
+		//  	debug ("Channel accepted");
+		//  }
+	//  }
 
 	public void ssh_tunnel_close () {
 		if (session == null) {
 			return;
 		}
 
-		// session.disconnect (_("Normal Shutdown, Thank you for playing"));
 		session = null;
 		Posix.close (sock);
 		SSH2.exit ();
