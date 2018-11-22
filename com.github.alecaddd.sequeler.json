@@ -1,7 +1,7 @@
 {
   "app-id": "com.github.alecaddd.sequeler",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "3.26",
+  "runtime-version": "3.28",
   "sdk": "org.gnome.Sdk",
   "command": "com.github.alecaddd.sequeler",
   "build-options": {
@@ -54,8 +54,8 @@
       ],
       "sources": [{
         "type": "archive",
-        "url": "https://github.com/elementary/granite/archive/0.5.tar.gz",
-        "sha256": "cc4905ae70fddeba3d2ded44bb642be77d419aa090251a7ab24c155b8616be06"
+        "url": "https://github.com/elementary/granite/archive/5.2.1.tar.gz",
+        "sha256": "2166902654f62d300c6990d634f494632aaf14dfe10395dd9ff9d52a503c7ca8"
       }]
     },
     {
@@ -171,6 +171,39 @@
         "url": "https://github.com/GNOME/libgda/archive/LIBGDA_5_2_4.tar.gz",
         "sha256": "cd3bf74ead03dc1715f51463a9e4864d55b9bdcffb732dc88095dbd919a67180"
       }]
+    },
+    {
+      "name": "libfixposix",
+      "buildsystem":"simple",
+      "build-commands": [
+        "autoreconf -i -f",
+        "./configure",
+        "make",
+        "make prefix=/app install"
+      ],
+      "sources": [{
+        "type": "git",
+        "url": "https://github.com/sionescu/libfixposix"
+      }]
+    },
+    {
+            "name" : "libssh2",
+            "buildsystem" : "cmake-ninja",
+            "config-opts" : [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib",
+                "-DBUILD_SHARED_LIBS:BOOL=ON"
+            ],
+            "cleanup" : [
+                "/share/doc"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/libssh2/libssh2.git",
+                    "branch" : "libssh2-1.8.0"
+                }
+            ]
     },
     {
       "name": "sequeler",
