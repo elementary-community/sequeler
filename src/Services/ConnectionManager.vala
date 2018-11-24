@@ -221,6 +221,9 @@ public class Sequeler.Services.ConnectionManager : Object {
 		Posix.SockAddrIn sin = Posix.SockAddrIn ();
 		sin.sin_family = Posix.AF_INET;
 		sin.sin_port = Posix.htons (db_port);
+		//TODO: host forwarded doesn't have to be the same as ssh host to connect
+		//      you can connect to host my.ssh.server and there go to my.database.server
+		//      this will only work for 127.0.0.1
 		sin.sin_addr.s_addr = ssh_host;
 		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
 			debug ("Failed to Connect via SSH");
