@@ -66,6 +66,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 	private Gtk.Spinner spinner;
 	private Sequeler.Partials.ResponseMessage response_msg;
+	private Sequeler.Services.ConnectionManager? connection;
 
 	enum Column {
 		DBTYPE
@@ -496,6 +497,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				save_connection ();
 				break;
 			case 3:
+				close_connection ();
 				destroy ();
 				break;
 			case 4:
@@ -509,7 +511,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		write_response (_("Opening SSH Tunnel\u2026"));
 
 		var data = package_data ();
-		var connection = new Sequeler.Services.ConnectionManager (window, data);
+		connection = new Sequeler.Services.ConnectionManager (window, data);
 		SourceFunc callback = open_ssh_connection.callback;
 		
 		new Thread <void*> (null, () => {
@@ -574,7 +576,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		toggle_spinner (true);
 		write_response (_("Connecting\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (window, data);
+		connection = new Sequeler.Services.ConnectionManager (window, data);
 
 		var loop = new MainLoop ();
 		connection.init_connection.begin (connection, (obj, res) => {
@@ -601,6 +603,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		} else {
 			write_response (result["msg"]);
 			toggle_spinner (false);
+		}
+	}
+
+	private void close_connection () {
+		if (connection != null) {
+			connection.ssh_tunnel_close ();
 		}
 	}
 
