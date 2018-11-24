@@ -264,6 +264,18 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		ssh_password_label = new Sequeler.Partials.LabelForm (_("SSH Password:"));;
 		ssh_password_entry = new Sequeler.Partials.Entry ("", null);
+		ssh_password_entry.visibility = false;
+		ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+		ssh_password_entry.icon_press.connect ((pos, event) => {
+			if (pos == Gtk.EntryIconPosition.SECONDARY) {
+				ssh_password_entry.visibility = !ssh_password_entry.visibility;
+			}
+			if (ssh_password_entry.visibility) {
+				ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-allow-symbolic");
+			} else {
+				ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+			}
+		});
 		form_grid.attach (ssh_password_label, 0, 13, 1, 1);
 		form_grid.attach (ssh_password_entry, 1, 13, 1, 1);
 		
