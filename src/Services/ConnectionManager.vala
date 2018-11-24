@@ -204,6 +204,9 @@ public class Sequeler.Services.ConnectionManager : Object {
 	private int forward_tunnel (SSH2.Session? session, SSH2.Channel? channel) {
 		var ssh_host = Posix.inet_addr (data["ssh_host"]);
 		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+		//TODO: The tunnel should connect to the db port, so if port is not set up is the default one
+		//      shoud be choosed. Here hacked to use mariadb default port if not set
+		var db_port = data["port"] != "" ? (uint16) (data["port"]).hash () : 3306;
 
 		debug ("Accepted remote connection");
 
@@ -217,7 +220,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		Posix.SockAddrIn sin = Posix.SockAddrIn ();
 		sin.sin_family = Posix.AF_INET;
-		sin.sin_port = Posix.htons (ssh_port);
+		sin.sin_port = Posix.htons (db_port);
 		sin.sin_addr.s_addr = ssh_host;
 		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
 			debug ("Failed to Connect via SSH");
