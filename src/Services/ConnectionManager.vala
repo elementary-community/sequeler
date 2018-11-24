@@ -121,6 +121,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
 		var host = data["host"] != "" || data["host"] != "127.0.0.1" ? data["host"] : "localhost";
 		var host_port = data["port"] != "" ? int.parse (data["port"]) : 9000;
+		int bound_port;
 
 		Quark q = Quark.from_string ("ssh-error-str");
 		
@@ -130,7 +131,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			throw new Error.literal (q, 1, _("Libssh2 initialization failed (%d)").printf (rc));
 		}
 
-		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, 0);
+		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
 		if (sock == -1) {
 			debug ("Error opening Socket");
 			throw new Error.literal (q, 1, _("Error opening Socket"));
@@ -150,13 +151,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 			debug ("Failed to establish SSH session");
 			throw new Error.literal (q, 1, _("Failed to establish SSH session"));
 		}
-
-		var fingerprint = session.get_host_key_hash(SSH2.HashType.SHA1);
-		debug ("Fingerprint: ");
-		for (var i = 0; i < 20; i++) {
-			stdout.printf ("%02X ", fingerprint[i]);
-		}
-		stdout.printf ("\n");
 
 		bool auth_key = false;
 		var userauthlist = session.list_authentication (ssh_username.data);
@@ -180,30 +174,27 @@ public class Sequeler.Services.ConnectionManager : Object {
 		if (session.authenticated && (channel = session.open_channel ()) == null) {
 			ssh_tunnel_close ();
 			throw new Error.literal (q, 1, _("Unable to open SSH Session."));
-		} else {
-			debug ("SESSION OPEN!!!");
 		}
 
-        if (channel.request_pty ("vanilla".data) != SSH2.Error.NONE) {
+		SSH2.Listener? listener = null;
+		if ((listener = session.forward_listen_ex (host, host_port, out bound_port, 1)) == null) {
 			ssh_tunnel_close ();
-			throw new Error.literal (q, 1, _("Failed requesting virtual terminal."));
-        }
-
-        if (channel.start_shell () != SSH2.Error.NONE) {
-			ssh_tunnel_close ();
-			throw new Error.literal (q, 1, _("Unable to request Shell."));
+			throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
 		}
 
-		//  SSH2.Listener? listener = null;
-		//  int bound_port;
-		//  if ((listener = session.forward_listen_ex (host, host_port, out bound_port, 1)) == null) {
-		//  	ssh_tunnel_close ();
-		//  	throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
-		//  } else {
-		//  	debug ("Port forwarded");
-		//  }
+		data["port"] = host_port.to_string ();
 
-		//  data["port"] = host_port.to_string ();
+		while (true) {
+			debug ("Waiting for remote connection");
+
+			channel = listener.accept ();
+			if (channel == null) {
+				ssh_tunnel_close ();
+				throw new Error.literal (q, 1, _("Unable to open SSH Session."));
+			}
+
+			forward_tunnel (session, channel);
+		}
 
 		//  forward_port.begin (session, channel, listener);
 
@@ -234,15 +225,101 @@ public class Sequeler.Services.ConnectionManager : Object {
 		debug ("No errors so far");
 	}
 
-	//  private async void forward_port (SSH2.Session? session, SSH2.Channel? channel, SSH2.Listener? listener) throws ThreadError {
-		//  yield;
-		//  while (listener.accept () != null) {
-		//  	yield;
-		//  }
-		//  while ((channel = listener.accept ()) != null) {
-		//  	debug ("Channel accepted");
-		//  }
-	//  }
+	private int forward_tunnel (SSH2.Session? session, SSH2.Channel? channel) {
+		var ssh_host = Posix.inet_addr (data["ssh_host"]);
+		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+
+		debug ("Accepted remote connection");
+
+		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
+		if (sock == -1) {
+			debug ("Error opening Socket");
+			ssh_tunnel_close ();
+			return 0;
+			//  throw new Error.literal (q, 1, _("Error opening Socket"));
+		}
+
+		Posix.SockAddrIn sin = Posix.SockAddrIn ();
+		sin.sin_family = Posix.AF_INET;
+		sin.sin_port = Posix.htons (ssh_port);
+		sin.sin_addr.s_addr = ssh_host;
+		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
+			debug ("Failed to Connect via SSH");
+			ssh_tunnel_close ();
+			return 0;
+			//  throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
+		}
+
+		session.blocking = false;
+
+		uint8[] buf = new uint8[16384];
+		while (true) {
+			Posix.fd_set fds;
+			Posix.FD_ZERO ( out fds);
+			Posix.FD_SET (sock, ref fds);
+			Posix.timeval tv = { 0, 100000};
+			int rc = Posix.select (sock + 1, &fds, null, null, tv);
+
+			if (-1 == rc) {
+				debug ("Failed to Connect via SSH");
+				ssh_tunnel_close ();
+				return 0;
+				//  throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
+			}
+
+			if (rc > 0  && Posix.FD_ISSET (sock, fds) > 0) {
+				var len = Posix.recv (sock, buf, 16384, 0);
+
+				if (len < 0) {
+					debug ("Error reading from the sock!");
+					ssh_tunnel_close ();
+					return rc;
+				} else if (0 == len) {
+					debug ("The local server at %s:%d disconnected!", data["ssh_host"], ssh_port);
+					ssh_tunnel_close ();
+					return rc;
+				}
+
+				ssize_t wr = 0;
+				ssize_t i = 0;
+				do {
+					i = channel.write (buf);
+					if (i < 0) {
+						debug ("Error writing on the SSH channel: %s", i.to_string());
+						ssh_tunnel_close ();
+						return rc;
+					}
+					wr += i;
+				} while (i > 0 && wr < len);
+			}
+
+			while (true) {
+				ssize_t len = channel.read (buf);
+				if (SSH2.Error.AGAIN == len)
+					break;
+				else if (len < 0) {
+					debug ("Error reading from the SSH channel: %d", (int) len);
+					ssh_tunnel_close ();
+					return rc;
+				}
+				ssize_t wr = 0;
+				while (wr < len) {
+					ssize_t i = Posix.send (sock, buf [wr:buf.length], len - wr, 0);
+					if (i <= 0) {
+						debug ("Error writing on the sock!");
+						ssh_tunnel_close ();
+						return rc;
+					}
+					wr += i;
+				}
+				if (channel.eof() != SSH2.Error.NONE) {
+					debug ("The remote client disconnected!");
+					ssh_tunnel_close ();
+					return rc;
+				}
+			}
+		}
+	}
 
 	public void ssh_tunnel_close () {
 		if (session == null) {
