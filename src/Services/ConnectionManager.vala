@@ -198,32 +198,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 			}
 		}
 
-		//  forward_port.begin (session, channel, listener);
-
-		//  yield;
-		//  channel = listener.accept ();
-		//  while ((channel = listener.accept ()) != null) {
-		//  	debug ("Channel accepted");
-		//  }
-		//  if (channel == null) {
-		//  	ssh_tunnel_close ();
-		//  	throw new Error.literal (q, 1, _("Could not accept connection! Check your Server Log"));
-		//  } else {
-		//  	debug ("SESSION OPEN!!!");
-		//  }
-
-		//  SSH2.Channel? channel_forward = null;
-		//  channel = listener.accept ();
-		//  if (channel == null) {
-		//  	ssh_tunnel_close ();
-		//  	throw new Error.literal (q, 1, _("Unable to open SSH Session."));
-		//  } else {
-		//  	debug ("SESSION OPEN!!!");
-		//  }
-
-		//  debug (bound_port.to_string ());
-		//  data["port"] = host_port.to_string ();
-
 		debug ("No errors so far");
 	}
 
