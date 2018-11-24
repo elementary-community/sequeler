@@ -120,7 +120,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var ssh_password = data["ssh_password"];
 		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
 		var host = data["host"] != "" || data["host"] != "127.0.0.1" ? data["host"] : "localhost";
-		var host_port = data["port"] != "" ? int.parse (data["port"]) : 9000;
+		var host_port = 0;
 		int bound_port;
 
 		Quark q = Quark.from_string ("ssh-error-str");
@@ -182,7 +182,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
 		}
 
-		data["port"] = host_port.to_string ();
+		data["port"] = bound_port.to_string ();
 
 		while (true) {
 			debug ("Waiting for remote connection");
@@ -190,10 +190,12 @@ public class Sequeler.Services.ConnectionManager : Object {
 			channel = listener.accept ();
 			if (channel == null) {
 				ssh_tunnel_close ();
-				throw new Error.literal (q, 1, _("Unable to open SSH Session."));
 			}
 
 			forward_tunnel (session, channel);
+			if (session == null) {
+				break;
+			}
 		}
 
 		//  forward_port.begin (session, channel, listener);
@@ -250,6 +252,9 @@ public class Sequeler.Services.ConnectionManager : Object {
 			//  throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
 		}
 
+		if (session == null) {
+			return 0;
+		}
 		session.blocking = false;
 
 		uint8[] buf = new uint8[16384];
