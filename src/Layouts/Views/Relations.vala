@@ -130,7 +130,7 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 	}
 
 	public void get_content_and_fill () {
-		var query = (window.main.connection.db_type as DataBaseType).show_table_relations (table_name, database);
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_relations (table_name, database);
 
 		var table_relations = get_table_relations (query);
 
@@ -152,9 +152,9 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_select_query.end (res);
+				result = window.main.connection_manager.init_select_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = null;
@@ -165,7 +165,7 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 		loop.run ();
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			result_message.label = error;
 			return null;
 		}

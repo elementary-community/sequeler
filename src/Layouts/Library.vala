@@ -198,12 +198,12 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
-		var connection = new Sequeler.Services.ConnectionManager (window, data);
+		var connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
 		var loop = new MainLoop ();
-		connection.init_connection.begin (connection, (obj, res) => {
+		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
 			try {
-				Gee.HashMap<string, string> result = connection.init_connection.end (res);
+				Gee.HashMap<string, string> result = connection_manager.init_connection.end (res);
 				if (result["status"] == "true") {
 					loop.quit ();
 					spinner.stop ();
@@ -213,7 +213,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 						window.main.library.check_add_item (data);
 					}
 
-					window.main.connection_opened (connection);
+					window.main.connection_opened (connection_manager);
 				} else {
 					connection_warning (result["msg"], data["name"]);
 					spinner.stop ();
