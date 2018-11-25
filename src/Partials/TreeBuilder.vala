@@ -92,7 +92,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		}
 
 		if (error_message != null) {
-			window.main.connection.query_warning (error_message);
+			window.main.connection_manager.query_warning (error_message);
 			error_message = null;
 		}
 
