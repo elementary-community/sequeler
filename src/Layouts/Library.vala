@@ -29,6 +29,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
 
+	public Gee.HashMap<string, string> real_data;
+	public Gtk.Spinner real_spinner;
+	public Gtk.ModelButton real_button;
+	public Sequeler.Services.ConnectionManager connection_manager;
+
 	public signal void edit_dialog (Gee.HashMap data);
 
 	public Library (Sequeler.Window main_window) {
@@ -196,11 +201,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		reload_library ();
 	}
-
-	Gee.HashMap<string, string> real_data;
-	Gtk.Spinner real_spinner;
-	Gtk.ModelButton real_button;
-	Sequeler.Services.ConnectionManager connection_manager;
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
 		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
