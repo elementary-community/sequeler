@@ -209,7 +209,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			real_data = data;
 			real_spinner = spinner;
 			real_button = button;
-			connection_manager.ssh_tunnel_ready.connect(init_real_connection_begin_callback);
+			connection_manager.ssh_tunnel_ready.connect (init_real_connection_begin_callback);
 
 			new Thread <void*> (null, () => {
 				try {
@@ -259,7 +259,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			loop.quit ();
 		});
 
-		loop.run();
+		loop.run ();
 	}
 
 	private void export_library () {

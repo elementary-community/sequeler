@@ -284,7 +284,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 					}
 					wr += i;
 				}
-				if (channel.eof() != SSH2.Error.NONE) {
+				if (channel.eof () != SSH2.Error.NONE) {
 					debug ("The remote client disconnected!");
 					ssh_tunnel_close ();
 				}
