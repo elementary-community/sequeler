@@ -73,8 +73,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void test () throws Error {
-		debug (data["port"]);
 		var connection_string = (db_type as DataBaseType).connection_string (data);
+		debug("connection string %s", connection_string);
 
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
@@ -91,6 +91,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 	public void open () throws Error {
 		var connection_string = (db_type as DataBaseType).connection_string (data);
+		debug("connection string %s", connection_string);
 
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
@@ -120,7 +121,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var ssh_password = data["ssh_password"];
 		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
 		var host = data["host"] != "" || data["host"] != "127.0.0.1" ? data["host"] : "localhost";
-		var host_port = 0;
+		var host_port = 9000;
 		int bound_port;
 
 		Quark q = Quark.from_string ("ssh-error-str");
@@ -181,8 +182,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 			ssh_tunnel_close ();
 			throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
 		}
-
-		data["port"] = bound_port.to_string ();
 
 		while (true) {
 			debug ("Waiting for remote connection");
