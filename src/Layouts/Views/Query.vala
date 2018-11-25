@@ -297,9 +297,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_select_query.end (res);
+				result = window.main.connection_manager.init_select_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = null;
@@ -317,9 +317,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_query.end (res);
+				result = window.main.connection_manager.init_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = 0;
@@ -330,7 +330,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		loop.run ();
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 		}
 
 		if (result == 0 || result == -1) {
@@ -457,7 +457,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			separator_holder.set_value (",");
 		}
 		catch (GLib.Error err) {
-			window.main.connection.query_warning (err.message);
+			window.main.connection_manager.query_warning (err.message);
 		}
 
 		first_line_holder.id = "NAMES_ON_FIRST_LINE";
@@ -465,7 +465,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			first_line_holder.set_value (true);
 		}
 		catch (GLib.Error err) {
-			window.main.connection.query_warning (err.message);
+			window.main.connection_manager.query_warning (err.message);
 		}
 
 		overwrite_holder.id = "OVERWRITE";
@@ -473,7 +473,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			overwrite_holder.set_value (true);
 		}
 		catch (GLib.Error err) {
-			window.main.connection.query_warning (err.message);
+			window.main.connection_manager.query_warning (err.message);
 		}
 
 		options_list.append (separator_holder);
@@ -489,7 +489,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 					response_data.export_to_file (Gda.DataModelIOFormat.TEXT_SEPARATED, file.get_path (), null, null, options);
 				}
 				catch (GLib.Error err) {
-					window.main.connection.query_warning (err.message);
+					window.main.connection_manager.query_warning (err.message);
 				}
 			break;
 			case 2:
@@ -498,7 +498,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 					response_data.export_to_file (Gda.DataModelIOFormat.TEXT_TABLE, file.get_path (), null, null, options);
 				}
 				catch (GLib.Error err) {
-					window.main.connection.query_warning (err.message);
+					window.main.connection_manager.query_warning (err.message);
 				}
 			break;
 			//  case 2:
@@ -509,7 +509,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			//  		dostream.put_string (response_data.dump_as_string ());
 			//  	}
 			//  	catch (GLib.Error err) {
-			//  		window.main.connection.query_warning (err.message);
+			//  		window.main.connection_manager.query_warning (err.message);
 			//  	}
 			//  break;
 			default:

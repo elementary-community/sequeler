@@ -198,15 +198,15 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public Gda.DataModel? get_schema () {
-		var query = (window.main.connection.db_type as DataBaseType).show_schema ();
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_schema ();
 
 		Gda.DataModel? result = null;
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_select_query.end (res);
+				result = window.main.connection_manager.init_select_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = null;
@@ -217,7 +217,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		loop.run ();
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			return null;
 		}
 
@@ -292,15 +292,15 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public Gda.DataModel? get_schema_table (string table) {
-		var query = (window.main.connection.db_type as DataBaseType).show_table_list (table);
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_list (table);
 
 		Gda.DataModel? result = null;
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_select_query.end (res);
+				result = window.main.connection_manager.init_select_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = null;
@@ -311,7 +311,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		loop.run ();
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			return null;
 		}
 
@@ -331,21 +331,21 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		toolbar_spinner.start ();
 
-		window.main.connection.connection.close ();
-		var new_connection = new Sequeler.Services.ConnectionManager (window, window.data_manager.data);
+		window.main.connection_manager.connection.close ();
+		var new_connection_manager = new Sequeler.Services.ConnectionManager (window, window.data_manager.data);
 
 		var loop = new MainLoop ();
-		new_connection.init_connection.begin (new_connection, (obj, res) => {
+		new_connection_manager.init_connection.begin (new_connection_manager, (obj, res) => {
 			try {
-				Gee.HashMap<string, string> result = new_connection.init_connection.end (res);
+				Gee.HashMap<string, string> result = new_connection_manager.init_connection.end (res);
 				if (result["status"] == "true") {
-					window.main.connection = new_connection;
+					window.main.connection_manager = new_connection_manager;
 					reload_schema ();
 				} else {
-					window.main.connection.query_warning (result["msg"]);
+					window.main.connection_manager.query_warning (result["msg"]);
 				}
 			} catch (ThreadError e) {
-				window.main.connection.query_warning (e.message);
+				window.main.connection_manager.query_warning (e.message);
 			}
 			loop.quit ();
 		});
@@ -355,15 +355,15 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	private void edit_table_name (string old_name, string new_name) {
-		var query = (window.main.connection.db_type as DataBaseType).edit_table_name (old_name, new_name);
+		var query = (window.main.connection_manager.db_type as DataBaseType).edit_table_name (old_name, new_name);
 
 		int result = 0;
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_query.end (res);
+				result = window.main.connection_manager.init_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = 0;
@@ -374,7 +374,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		loop.run ();
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			return;
 		}
 

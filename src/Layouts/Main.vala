@@ -21,7 +21,7 @@
 
 public class Sequeler.Layouts.Main : Gtk.Paned {
 	public weak Sequeler.Window window { get; construct; }
-	public Sequeler.Services.ConnectionManager? connection { get; set; default = null; }
+	public Sequeler.Services.ConnectionManager? connection_manager { get; set; default = null; }
 
 	public Sequeler.Layouts.Library library;
 	public Sequeler.Layouts.DataBaseSchema database_schema;
@@ -65,28 +65,28 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 		pack2 (main_stack, true, false);
 	}
 
-	public void connection_opened (Sequeler.Services.ConnectionManager? cnn) {
+	public void connection_opened (Sequeler.Services.ConnectionManager? cnn_manager) {
 		window.headerbar.toggle_logout ();
-		connection = cnn;
+		connection_manager = cnn_manager;
 		sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
 		main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.SLIDE_LEFT);
 
-		var host = connection.data["host"] != "" ? connection.data["host"] : "127.0.0.1";
-		window.headerbar.title = _("Connected to %s").printf (connection.data["title"]);
-		window.headerbar.subtitle = connection.data["username"] + "@" + host;
+		var host = connection_manager.data["host"] != "" ? connection_manager.data["host"] : "127.0.0.1";
+		window.headerbar.title = _("Connected to %s").printf (connection_manager.data["title"]);
+		window.headerbar.subtitle = connection_manager.data["username"] + "@" + host;
 
 		database_schema.reload_schema ();
 	}
 
 	public void connection_closed () {
-		if (connection.connection.is_opened ()) {
-			connection.connection.clear_events_list ();
-			connection.connection.close ();
-			connection.connection = null;
-			connection.ssh_tunnel_close ();
+		if (connection_manager.connection.is_opened ()) {
+			connection_manager.connection.clear_events_list ();
+			connection_manager.connection.close ();
+			connection_manager.connection = null;
+			connection_manager.ssh_tunnel_close ();
 		}
 
-		connection = null;
+		connection_manager = null;
 		sidebar_stack.set_visible_child_full ("library", Gtk.StackTransitionType.CROSSFADE);
 		main_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.UNDER_RIGHT);
 	}
