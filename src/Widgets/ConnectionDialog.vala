@@ -506,11 +506,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		switch (response_id) {
 			case Action.TEST:
 				if (ssh_switch.active) {
-					open_ssh_connection ();
+					open_ssh_connection (false);
 				}
-				//TODO: Listen to a signal when ssh tunnel is ready
-				Posix.sleep (3);
-				test_connection ();
 				break;
 			case Action.SAVE:
 				save_connection ();
@@ -521,21 +518,31 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			case Action.CONNECT:
 				debug("init connection");
 				if (ssh_switch.active) {
-					open_ssh_connection ();
+					open_ssh_connection (true);
 				}
-				Posix.sleep (3);
-				//TODO: Listen to a signal when ssh tunnel is ready
-				init_connection_begin ();
 				break;
 		}
 	}
 
-	public async void open_ssh_connection () throws ThreadError {
+	public void test_connection_callback () {
+		test_connection ();
+	}
+
+	public void init_connection_begin_callback () {
+		init_connection_begin ();
+	}
+
+	public async void open_ssh_connection (bool is_real) throws ThreadError {
 		toggle_spinner (true);
 		write_response (_("Opening SSH Tunnel\u2026"));
 
 		var data = package_data ();
 		var connection_manager = new Sequeler.Services.ConnectionManager (window, data);
+		if (is_real) {
+			connection_manager.ssh_tunnel_ready.connect(init_connection_begin_callback);
+		} else {
+			connection_manager.ssh_tunnel_ready.connect(test_connection_callback);
+		}
 		SourceFunc callback = open_ssh_connection.callback;
 		
 		new Thread <void*> (null, () => {

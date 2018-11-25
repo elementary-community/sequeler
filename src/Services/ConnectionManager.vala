@@ -25,6 +25,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	private Object _db_type;
 	private int sock;
 	private SSH2.Session session;
+	public signal void ssh_tunnel_ready ();
 
 	public Object db_type {
 		get { return _db_type; }
@@ -186,6 +187,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		while (true) {
 			debug ("Waiting for remote connection");
 
+			ssh_tunnel_ready ();
 			channel = listener.accept ();
 			if (channel == null) {
 				ssh_tunnel_close ();
