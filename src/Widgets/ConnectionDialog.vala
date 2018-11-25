@@ -507,6 +507,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			case Action.TEST:
 				if (ssh_switch.active) {
 					open_ssh_connection (false);
+				} else {
+					test_connection ();
 				}
 				break;
 			case Action.SAVE:
@@ -519,6 +521,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				debug("init connection");
 				if (ssh_switch.active) {
 					open_ssh_connection (true);
+				} else {
+					init_connection_begin ();
 				}
 				break;
 		}
