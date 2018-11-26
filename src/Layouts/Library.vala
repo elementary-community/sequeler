@@ -213,7 +213,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 			new Thread <void*> (null, () => {
 				try {
-					connection_manager.ssh_tunnel_init ();
+					connection_manager.ssh_tunnel_init (true);
 				}
 				catch (Error e) {
 					connection_warning (e.message, data["name"]);
