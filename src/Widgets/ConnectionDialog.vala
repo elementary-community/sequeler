@@ -522,7 +522,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				if (ssh_switch.active) {
 					open_ssh_connection.begin (true);
 				} else {
-					init_connection_begin ();
+					init_connection.begin ();
 				}
 				break;
 		}
@@ -532,8 +532,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		test_connection.begin ();
 	}
 
-	public void init_connection_begin_callback () {
-		init_connection_begin ();
+	public void init_connection_callback () {
+		init_connection.begin ();
 	}
 
 	public async void open_ssh_connection (bool is_real) throws ThreadError {
@@ -543,7 +543,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		var data = package_data ();
 		var connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 		if (is_real) {
-			connection_manager.ssh_tunnel_ready.connect(init_connection_begin_callback);
+			connection_manager.ssh_tunnel_ready.connect(init_connection_callback);
 		} else {
 			connection_manager.ssh_tunnel_ready.connect(test_connection_callback);
 		}
@@ -551,7 +551,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		
 		new Thread <void*> (null, () => {
 			try {
-				connection_manager.ssh_tunnel_init ();
+				connection_manager.ssh_tunnel_init (is_real);
 			}
 			catch (Error e) {
 				write_response (e.message);
@@ -569,6 +569,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		write_response (_("Testing Connection\u2026"));
 
 		var cnn_manager = connection_manager != null ? connection_manager : new Sequeler.Services.ConnectionManager (window, package_data ());
+
 		SourceFunc callback = test_connection.callback;
 
 		new Thread <void*> (null, () => {
@@ -599,7 +600,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		write_response (_("Connection Saved!"));
 	}
 
-	private void init_connection_begin () {
+	private async void init_connection () {
 		var data = package_data ();
 		var result = new Gee.HashMap<string, string> ();
 
@@ -608,32 +609,42 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		var connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
-		var loop = new MainLoop ();
-		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
-			try {
-				result = connection_manager.init_connection.end (res);
-			} catch (ThreadError e) {
-				write_response (e.message);
+		SourceFunc callback = init_connection.callback;
+
+		new Thread <void*> (null, () => {
+			Idle.add ((owned) callback);
+			var loop = new MainLoop ();
+			connection_manager.init_connection.begin (connection_manager, (obj, res) => {
+				try {
+					result = connection_manager.init_connection.end (res);
+					connection_manager.ssh_tunnel_close();
+				} catch (ThreadError e) {
+					write_response (e.message);
+					toggle_spinner (false);
+				}
+				loop.quit ();
+			});
+
+			loop.run ();
+
+			if (result["status"] == "true") {
+				destroy ();
+
+				if (settings.save_quick) {
+					window.main.library.check_add_item (data);
+				}
+
+				window.data_manager.data = data;
+				window.main.connection_opened (connection_manager);
+			} else {
+				write_response (result["msg"]);
 				toggle_spinner (false);
 			}
-			loop.quit ();
+
+			return null;
 		});
 
-		loop.run ();
-
-		if (result["status"] == "true") {
-			destroy ();
-
-			if (settings.save_quick) {
-				window.main.library.check_add_item (data);
-			}
-
-			window.data_manager.data = data;
-			window.main.connection_opened (connection_manager);
-		} else {
-			write_response (result["msg"]);
-			toggle_spinner (false);
-		}
+		yield;
 	}
 
 	private Gee.HashMap<string, string> package_data () {
