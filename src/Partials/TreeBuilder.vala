@@ -163,7 +163,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			//menu.popup_at_pointer (event);
 			// XXX : This is deprecated but actually works...
 			menu.popup (null, null, null, event.button, event.time);
-            return true;
+			return true;
 		}
 		return base.button_press_event (event);
 	}
