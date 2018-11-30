@@ -125,9 +125,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		}
 	}
 
-	private void copy_column_data (Gdk.EventButton event,
-								   Gtk.TreePath path,
-								   Gtk.TreeViewColumn column) {
+	private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
 		Value val;
 		Gtk.TreeIter iter;
 		Gdk.Display display = Gdk.Display.get_default ();
@@ -139,9 +137,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		return;
 	}
 
-	private Gtk.Menu create_context_menu (Gdk.EventButton event,
-										  Gtk.TreePath path,
-										  Gtk.TreeViewColumn column) {
+	private Gtk.Menu create_context_menu (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
 
 		Gtk.Menu menu = new Gtk.Menu ();
 		Gtk.MenuItem item = new Gtk.MenuItem.with_label (_("Copy %s").printf (column.get_title ()));
@@ -167,6 +163,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			//menu.popup_at_pointer (event);
 			// XXX : This is deprecated but actually works...
 			menu.popup (null, null, null, event.button, event.time);
+            return true;
 		}
 		return base.button_press_event (event);
 	}
