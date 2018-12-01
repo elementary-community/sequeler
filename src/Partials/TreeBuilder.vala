@@ -123,4 +123,46 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			i++;
 		}
 	}
+
+	private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
+		Value val;
+		Gtk.TreeIter iter;
+		Gdk.Display display = Gdk.Display.get_default ();
+		Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
+		model.get_iter (out iter, path);
+		model.get_value (iter, column.get_sort_column_id(), out val);
+		Gda.DataHandler handler = Gda.DataHandler.get_default (val.type ());
+		string? column_data = handler.get_str_from_value (val);
+		if (column_data == null)
+			column_data = "";
+		clipboard.set_text (column_data, -1);
+		return;
+	}
+
+	private Gtk.Menu create_context_menu (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
+		Gtk.Menu menu = new Gtk.Menu ();
+		Gtk.MenuItem item = new Gtk.MenuItem.with_label (_("Copy %s").printf (column.get_title ()));
+		item.activate.connect (() => { copy_column_data (event, path, column); });
+		item.show ();
+		menu.append (item);
+		/* Wayland complains if not set */
+		menu.realize.connect (() => {
+			Gdk.Window child = menu.get_window ();
+			child.set_type_hint (Gdk.WindowTypeHint.POPUP_MENU);
+		});
+		return menu;
+	}
+
+	public override bool button_press_event (Gdk.EventButton event) {
+		if (event.triggers_context_menu () && event.type == Gdk.EventType.BUTTON_PRESS) {
+			Gtk.TreePath path;
+			Gtk.TreeViewColumn column;
+			get_path_at_pos ((int) event.x, (int) event.y, out path, out column, null, null);
+			var menu = create_context_menu (event, path, column);
+			menu.popup_at_pointer (event);
+			return true;
+		}
+		return base.button_press_event (event);
+	}
+
 }
