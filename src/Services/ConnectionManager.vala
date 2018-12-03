@@ -112,8 +112,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 			ssh_tunnel_open (is_real);
 		}
 		catch (Error e) {
-			throw e;
 			debug (e.message);
+			throw e;
 		}
 	}
 
@@ -121,7 +121,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		debug ("Opening tunnel");
 
 		
-		Quark q = Quark.from_string ("ssh-error-str");
+		//  Quark q = Quark.from_string ("ssh-error-str");
 		var home_dir = Environment.get_home_dir ();
 		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
 		var keyfile2 = home_dir + "/.ssh/id_rsa";
@@ -133,7 +133,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var server_ip = data["ssh_host"];
 		var server_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
 		// The IP address where the DB is available on your SSH
-		var local_listenip = data["host"] != "" ? data["host"] : "localhost";
+		var local_listenip = data["host"] != "" ? data["host"] : "127.0.0.1";
 		// The Port used by the DB on your SSH host
 		uint16 local_listenport = data["port"] != "" ? (uint16) int.parse (data["port"]) : 9000;
 		// Default vars for TCPIP Tunnelling
@@ -149,7 +149,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		/* Connect to SSH server */
 		var sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
 		if (sock == -1) {
-			debug ("failed to open socket");
+			debug ("Failed to open socket");
 			return;
 		}
 
@@ -179,11 +179,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 		* may have it hard coded, may go to a file, may present it to the
 		* user, that's your call
 		*/
-		//  var fingerprint = session.get_host_key_hash (SSH2.HashType.SHA1);
-		//  debug ("Fingerprint: ");
-		//  for (int i = 0; i < 20; i++) {
-		//  	debug ("%02X ", fingerprint[i]);
-		//  }
+		var fingerprint = session.get_host_key_hash (SSH2.HashType.SHA1);
+		debug ("Fingerprint: ");
+		for (int i = 0; i < 20; i++) {
+			debug ("%02X ", fingerprint[i]);
+		}
 
 		/* check what authentication methods are available */
 		int auth_pw = 0;
@@ -250,11 +250,34 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		debug ("Waiting for TCP connection on %s:%d...", local_listenip, local_listenport);
 
+		while (true) {
+			var forwardsock = Posix.accept (listensock, null, null);
+
+			debug ("forwardsock %d", forwardsock);
+
+			if (forwardsock == -1) {
+				debug ("Failed to accept!");
+				ssh_tunnel_close (null, sock, listensock, forwardsock);
+				return;
+			}
+
+			debug ("Forwarding connection from %s:%d here to remote %s:%d", local_listenip, local_listenport, remote_desthost, remote_destport);
+
+			var channel = session.direct_tcpip (remote_desthost, remote_destport, local_listenip, local_listenport);
+			if (channel == null) {
+				debug ("Could not open the direct-tcpip channel! (Note that this can be a problem at the server! Please review the server logs.)");
+				ssh_tunnel_close (session, sock, listensock, forwardsock);
+				return;
+			}
+
+			session.blocking = false;
+		}
+
 	}
 
-	private int forward_tunnel () {
-		//
-	}
+	//  private int forward_tunnel () {
+	//  	//
+	//  }
 
 	public void ssh_tunnel_close (SSH2.Session? session, int sock, int listensock, int forwardsock) {
 		Posix.close (listensock);

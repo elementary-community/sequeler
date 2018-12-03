@@ -67,7 +67,8 @@ executable(
         dependency('libssh2'),
         dependency('libsecret-1'),
         dependency('gtksourceview-3.0'),
-        m_dep
+        m_dep,
+        linux_dep
     ],
     install: true
 )

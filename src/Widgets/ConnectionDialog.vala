@@ -617,7 +617,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			connection_manager.init_connection.begin (connection_manager, (obj, res) => {
 				try {
 					result = connection_manager.init_connection.end (res);
-					connection_manager.ssh_tunnel_close();
+					connection_manager.ssh_tunnel_close (null, -1, -1, -1);
 				} catch (ThreadError e) {
 					write_response (e.message);
 					toggle_spinner (false);
