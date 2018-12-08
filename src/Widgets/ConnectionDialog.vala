@@ -53,7 +53,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		DBTYPE
 	}
 
-	public ConnectionDialog (Sequeler.Window? parent) {
+	public ConnectionDialog (Sequeler.Window? parent, string? path = null, string? name = null) {
 		Object (
 			border_width: 5,
 			deletable: false,
@@ -62,6 +62,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			transient_for: parent,
 			window: parent
 		);
+
+		if (path != null) {
+		    db_file_entry.set_uri (path);
+            db_type_entry.set_active (3);
+
+            if (name != null) {
+                title_entry.text = name;
+            }
+		}
 	}
 
 	construct {
