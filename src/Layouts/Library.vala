@@ -204,6 +204,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 				settings.edit_connection (check, conn);
 				reload_library ();
 				// open connection
+				item_box.get_child_at_index (0).activate ();
 				return;
 			}
 		}
@@ -226,6 +227,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		reload_library ();
 		// open connection
+		item_box.get_child_at_index (0).activate ();
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
