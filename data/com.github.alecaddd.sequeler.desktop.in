@@ -9,4 +9,4 @@ Icon=com.github.alecaddd.sequeler
 Terminal=false
 Type=Application
 Keywords=SQL;MySql;Database;MariaDB;S3;PostgreSQL;
-MimeType=application/vnd.sqlite3;
+MimeType=application/x-sqlite3;

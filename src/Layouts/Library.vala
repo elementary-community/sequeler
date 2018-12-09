@@ -197,6 +197,37 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		reload_library ();
 	}
 
+	public void check_open_sqlite_file (string path, string name) {
+		foreach (var conn in settings.saved_connections) {
+			var check = settings.arraify_data (conn);
+			if (check["file_path"] == path) {
+				settings.edit_connection (check, conn);
+				reload_library ();
+				// open connection
+				return;
+			}
+		}
+
+		var data = new Gee.HashMap<string, string> ();
+
+		data.set ("id", settings.tot_connections.to_string ());
+		data.set ("title", name);
+		data.set ("color", "rgb(222,222,222)");
+		data.set ("type", "SQLite");
+		data.set ("host", "");
+		data.set ("name", "");
+		data.set ("file_path", path);
+		data.set ("username", "");
+		data.set ("password", "");
+		data.set ("port", "");
+
+		settings.add_connection (data);
+		add_item (data);
+
+		reload_library ();
+		// open connection
+	}
+
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
 		var connection = new Sequeler.Services.ConnectionManager (window, data);
 

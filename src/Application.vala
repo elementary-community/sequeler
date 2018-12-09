@@ -56,15 +56,16 @@ public class Sequeler.Application : Gtk.Application {
     protected override void open (File[] files, string hint) {
         foreach (var file in files) {
             var type = file.query_file_type (FileQueryInfoFlags.NONE);
+
             switch (type) {
                 case FileType.DIRECTORY: // File handle represents a directory.
-                    critical ("Directories are not supported");
+                    critical (_("Directories are not supported"));
                     continue;
 
                 case FileType.UNKNOWN:   // File's type is unknown
                 case FileType.SPECIAL:   // File is a "special" file, such as a socket, fifo, block device, or character device.
                 case FileType.MOUNTABLE: // File is a mountable location.
-                    critical ("Don't know what to do");
+                    critical (_("Don't know what to do"));
                     continue;
 
                 case FileType.REGULAR:       // File handle represents a regular file.
@@ -73,20 +74,11 @@ public class Sequeler.Application : Gtk.Application {
                     var window = new Sequeler.Window (this);
                     this.add_window (window);
 
-                    if (window.connection_dialog == null) {
-			            window.connection_dialog = new Sequeler.Widgets.ConnectionDialog (window, file.get_uri (), file.get_basename ());
-			            window.connection_dialog.show_all ();
-
-			            window.connection_dialog.destroy.connect (() => {
-				            window.connection_dialog = null;
-			            });
-		            }
-
-		            window.connection_dialog.present ();
+                    window.main.library.check_open_sqlite_file (file.get_uri (), file.get_basename ());
 		            break;
 
 		        default:
-		            error ("Something completely unexpected happened");
+		            error (_("Something completely unexpected happened"));
 		    }
         }
     }
