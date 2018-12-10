@@ -28,6 +28,16 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.6.4" date="2018-12-09">
+      <description>
+        <p>Open SQLite files</p>
+        <ul>
+          <li>Open SQLite files directly in Sequeler.</li>
+          <li>Right click to copy data inside a column.</li>
+          <li>Bug fixes and Improvements.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.3" date="2018-09-19">
       <description>
         <p>UI Fixes and Performance Improvements</p>

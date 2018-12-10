@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.6.4) xenial; urgency=medium
+
+  * Open SQLite files directly in Sequeler.
+  * Right click to copy data inside a column.
+  * Bug fixes and Improvements.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 9 Dec 2018 20:30:00 -0700
+
 com.github.alecaddd.sequeler (0.6.3) xenial; urgency=medium
 
   * UI fix for logout button.
