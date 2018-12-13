@@ -252,12 +252,18 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		bool signal_launched = false;
 		while (true) {
-			debug ("Waiting for remote connection");
 
-			if (!is_real || !signal_launched) {
+			if (!signal_launched) {
 				signal_launched = true;
 				ssh_tunnel_ready ();
+			} else {
+				if (!is_real) {
+					ssh_tunnel_close (session, sock, listensock, -1);
+					return;
+				}
 			}
+
+			debug ("Waiting for remote connection");
 
 			var forwardsock = Posix.accept (listensock, null, null);
 
