@@ -137,7 +137,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		// The Port used by the DB on your SSH host
 		uint16 local_listenport = data["port"] != "" ? (uint16) int.parse (data["port"]) : 9000;
 		// Default vars for TCPIP Tunnelling
-		var remote_desthost = "localhost";
+		var remote_desthost = "127.0.0.1";
 		var remote_destport = 3306;
 
 		var rc = SSH2.init (0);
