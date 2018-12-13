@@ -271,13 +271,72 @@ public class Sequeler.Services.ConnectionManager : Object {
 			}
 
 			session.blocking = false;
+
+			uint8[] buf = new uint8[16384];
+			while (true) {
+				Posix.fd_set fds;
+				Posix.FD_ZERO( out fds);
+				Posix.FD_SET(forwardsock, ref fds);
+				Posix.timeval tv = { 0, 100000};
+				var res = Posix.select(forwardsock + 1, &fds, null, null, tv);
+				if (-1 == res) {
+					stderr.printf("Error on select!\n");
+					direct_shutdown(session, forwardsock);
+					break;
+				}
+				if (res > 0  && Posix.FD_ISSET(forwardsock, fds) > 0) {
+					var len = Posix.recv(forwardsock, buf, 16384, 0);
+					if (len < 0) {
+						stderr.printf("Error reading from the forwardsock!\n");
+						direct_shutdown(session, forwardsock);
+						break;
+					} else if (0 == len) {
+						stderr.printf("The client at %s:%d disconnected!\n",
+							local_listenip, local_listenport);
+						direct_shutdown(session, forwardsock);
+						break;
+					}
+					ssize_t wr = 0;
+					ssize_t i = 0;
+					do {
+						i = channel.write(buf[0:len]);
+						if (i < 0) {
+							stderr.printf("Error writing on the SSH channel: %s\n", i.to_string());
+							direct_shutdown(session, forwardsock);
+							break;
+						}
+						wr += i;
+					} while(i > 0 && wr < len);
+				}
+				while (true) {
+					ssize_t len = channel.read(buf);
+					if (SSH2.Error.AGAIN == len)
+						break;
+					else if (len < 0) {
+						stderr.printf("Error reading from the SSH channel: %d\n", (int)len);
+						direct_shutdown(session, forwardsock);
+						break;
+					}
+					ssize_t wr = 0;
+					while (wr < len) {
+						ssize_t i = Posix.send(forwardsock, buf[wr:buf.length], len - wr, 0);
+						if (i <= 0) {
+							stderr.printf("Error writing on the forwardsock!\n");
+							direct_shutdown(session, forwardsock);
+							break;
+						}
+						wr += i;
+					}
+					if (channel.eof() != SSH2.Error.NONE) {
+						stderr.printf("The remote client at %s:%d disconnected!\n",
+										  remote_desthost, remote_destport);
+						direct_shutdown(session, forwardsock);
+						break;
+					}
+				}
+			}
 		}
-
 	}
-
-	//  private int forward_tunnel () {
-	//  	//
-	//  }
 
 	public void ssh_tunnel_close (SSH2.Session? session, int sock, int listensock, int forwardsock) {
 		Posix.close (listensock);
