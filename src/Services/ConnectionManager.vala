@@ -250,7 +250,15 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		debug ("Waiting for TCP connection on %s:%d...", local_listenip, local_listenport);
 
+		bool signal_launched = false;
 		while (true) {
+			debug ("Waiting for remote connection");
+
+			if (!is_real || !signal_launched) {
+				signal_launched = true;
+				ssh_tunnel_ready ();
+			}
+
 			var forwardsock = Posix.accept (listensock, null, null);
 
 			debug ("forwardsock %d", forwardsock);
