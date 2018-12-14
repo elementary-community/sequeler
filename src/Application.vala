@@ -53,6 +53,36 @@ public class Sequeler.Application : Gtk.Application {
         base.window_added (window);
     }
 
+    protected override void open (File[] files, string hint) {
+        foreach (var file in files) {
+            var type = file.query_file_type (FileQueryInfoFlags.NONE);
+
+            switch (type) {
+                case FileType.DIRECTORY: // File handle represents a directory.
+                    critical (_("Directories are not supported"));
+                    continue;
+
+                case FileType.UNKNOWN:   // File's type is unknown
+                case FileType.SPECIAL:   // File is a "special" file, such as a socket, fifo, block device, or character device.
+                case FileType.MOUNTABLE: // File is a mountable location.
+                    critical (_("Don't know what to do"));
+                    continue;
+
+                case FileType.REGULAR:       // File handle represents a regular file.
+                case FileType.SYMBOLIC_LINK: // File handle represents a symbolic link (Unix systems).
+                case FileType.SHORTCUT:      // File is a shortcut (Windows systems).
+                    var window = new Sequeler.Window (this);
+                    this.add_window (window);
+
+                    window.main.library.check_open_sqlite_file (file.get_uri (), file.get_basename ());
+		            break;
+
+		        default:
+		            error (_("Something completely unexpected happened"));
+		    }
+        }
+    }
+
     public override void window_removed (Gtk.Window window) {
         windows.remove (window as Window);
         base.window_removed (window);
