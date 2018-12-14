@@ -55,22 +55,21 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 	}
 
 	private void import_file () {
-		var open_dialog = new Gtk.FileChooserDialog ("Select a file",
+		var open_dialog = new Gtk.FileChooserNative (_("Select a file"),
 													 window,
 													 Gtk.FileChooserAction.OPEN,
-													 _("_Cancel"),
-													 Gtk.ResponseType.CANCEL,
 													 _("_Open"),
-													 Gtk.ResponseType.ACCEPT);
+													 _("_Cancel"));
 
 		open_dialog.local_only = true;
-		open_dialog.set_modal (true);
+		open_dialog.modal = true;
 		open_dialog.response.connect (open_file);
-		open_dialog.show ();
+
+		open_dialog.run ();
 	}
 
-	private void open_file (Gtk.Dialog dialog, int response_id) {
-		var open_dialog = dialog as Gtk.FileChooserDialog;
+	private void open_file (Gtk.NativeDialog dialog, int response_id) {
+		var open_dialog = dialog as Gtk.FileChooserNative;
 
 		switch (response_id) {
 			case Gtk.ResponseType.ACCEPT:
