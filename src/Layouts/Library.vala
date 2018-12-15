@@ -29,6 +29,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
 
+	public Gee.HashMap<string, string> real_data;
+	public Gtk.Spinner real_spinner;
+	public Gtk.ModelButton real_button;
+	public Sequeler.Services.ConnectionManager connection_manager;
+
 	public signal void edit_dialog (Gee.HashMap data);
 
 	public Library (Sequeler.Window main_window) {
@@ -198,12 +203,39 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
-		var connection = new Sequeler.Services.ConnectionManager (window, data);
+		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
+		if (data["has_ssh"] == "true") {
+			real_data = data;
+			real_spinner = spinner;
+			real_button = button;
+			connection_manager.ssh_tunnel_ready.connect (init_real_connection_begin_callback);
+
+			new Thread <void*> (null, () => {
+				try {
+					connection_manager.ssh_tunnel_init (true);
+				}
+				catch (Error e) {
+					connection_warning (e.message, data["name"]);
+				}
+				return null;
+			});
+
+			yield;
+		} else {
+			init_real_connection_begin (data, spinner, button);
+		}
+	}
+
+	public void init_real_connection_begin_callback () {
+		init_real_connection_begin (real_data, real_spinner, real_button);
+	}
+
+	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
 		var loop = new MainLoop ();
-		connection.init_connection.begin (connection, (obj, res) => {
+		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
 			try {
-				Gee.HashMap<string, string> result = connection.init_connection.end (res);
+				Gee.HashMap<string, string> result = connection_manager.init_connection.end (res);
 				if (result["status"] == "true") {
 					loop.quit ();
 					spinner.stop ();
@@ -213,7 +245,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 						window.main.library.check_add_item (data);
 					}
 
-					window.main.connection_opened (connection);
+					window.main.connection_opened (connection_manager);
 				} else {
 					connection_warning (result["msg"], data["name"]);
 					spinner.stop ();
@@ -227,7 +259,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			loop.quit ();
 		});
 
-		loop.run();
+		loop.run ();
 	}
 
 	private void export_library () {

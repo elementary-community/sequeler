@@ -101,7 +101,7 @@ public class Sequeler.Services.ActionManager : Object {
 	}
 
 	private void action_new_connection () {
-		if (window.main.connection != null) {
+		if (window.main.connection_manager != null) {
 			return;
 		}
 
@@ -120,7 +120,7 @@ public class Sequeler.Services.ActionManager : Object {
 	}
 
 	private void action_run_query () {
-		if (window.main.connection == null) {
+		if (window.main.connection_manager == null) {
 			return;
 		}
 
