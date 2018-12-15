@@ -298,7 +298,9 @@
     </screenshot>
   </screenshots>
   <developer_name>Alessandro Castellani</developer_name>
+  <launchable type="desktop-id">com.github.alecaddd.sequeler.desktop</launchable>
   <url type="homepage">https://github.com/Alecaddd/sequeler</url>
+  <url type="donation">https://www.paypal.me/alecaddd</url>
   <url type="bugtracker">https://github.com/Alecaddd/sequeler/issues</url>
   <url type="help">https://github.com/Alecaddd/sequeler/issues</url>
   <update_contact>castellani.ale@gmail.com</update_contact>
@@ -336,4 +338,9 @@
     <value key="x-appcenter-color-primary-text">#ffffff</value>
     <value key="x-appcenter-suggested-price">15</value>
   </custom>
+  <kudos>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>HighContrast</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
 </component>
