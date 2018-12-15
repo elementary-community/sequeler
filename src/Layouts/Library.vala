@@ -202,6 +202,39 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		reload_library ();
 	}
 
+	public void check_open_sqlite_file (string path, string name) {
+		foreach (var conn in settings.saved_connections) {
+			var check = settings.arraify_data (conn);
+			if (check["file_path"] == path) {
+				settings.edit_connection (check, conn);
+				reload_library ();
+				// open connection
+				item_box.get_child_at_index (0).activate ();
+				return;
+			}
+		}
+
+		var data = new Gee.HashMap<string, string> ();
+
+		data.set ("id", settings.tot_connections.to_string ());
+		data.set ("title", name);
+		data.set ("color", "rgb(222,222,222)");
+		data.set ("type", "SQLite");
+		data.set ("host", "");
+		data.set ("name", "");
+		data.set ("file_path", path);
+		data.set ("username", "");
+		data.set ("password", "");
+		data.set ("port", "");
+
+		settings.add_connection (data);
+		add_item (data);
+
+		reload_library ();
+		// open connection
+		item_box.get_child_at_index (0).activate ();
+	}
+
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
 		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
@@ -266,13 +299,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		file = null;
 		buffer = new Gtk.TextBuffer (null);
 
-		var save_dialog = new Gtk.FileChooserDialog (_("Pick a file"),
+		var save_dialog = new Gtk.FileChooserNative (_("Pick a file"),
 													 window,
 													 Gtk.FileChooserAction.SAVE,
-													 _("_Cancel"),
-													 Gtk.ResponseType.CANCEL,
 													 _("_Save"),
-													 Gtk.ResponseType.ACCEPT);
+													 _("_Cancel"));
 
 		save_dialog.set_do_overwrite_confirmation (true);
 		save_dialog.set_modal (true);
@@ -288,7 +319,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			dialog.destroy ();
 		});
 
-		save_dialog.show ();
+		save_dialog.run ();
 	}
 
 	private void save_to_file () {
@@ -311,6 +342,20 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			});
 
 			loop.run ();
+
+			array["ssh_password"] = "";
+
+			//  var ssh_loop = new MainLoop ();
+			//  password_mngr.get_password_async.begin (array["id"] + "_ssh", (obj, res) => {
+			//  	try {
+			//  		array["ssh_password"] = password_mngr.get_password_async.end (res);
+			//  	} catch (Error e) {
+			//  		debug ("Unable to get the SSH password from libsecret");
+			//  	}
+			//  	ssh_loop.quit ();
+			//  });
+
+			//  ssh_loop.run ();
 			
 			buffer_content += settings.stringify_data (array) + "---\n";
 		}

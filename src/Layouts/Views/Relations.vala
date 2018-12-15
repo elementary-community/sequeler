@@ -88,9 +88,18 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 	}
 
 	public void clear () {
-		if (scroll.get_child () != null) {
-			scroll.remove (scroll.get_child ());
+		if (scroll == null) {
+			return;
 		}
+
+		scroll.destroy ();
+
+		scroll = new Gtk.ScrolledWindow (null, null);
+		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll.expand = true;
+
+		attach (scroll, 0, 0, 1, 1);
 	}
 
 	public void reset () {

@@ -23,8 +23,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 	public weak Sequeler.Window window { get; construct; }
 	public Gee.HashMap<string, string> data { get; construct; }
 	private Object _db_type;
-	private int sock;
-	private SSH2.Session session;
 
 	public signal void ssh_tunnel_ready ();
 
@@ -35,6 +33,12 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 	public Gda.Connection? connection { get; set; default = null; }
 	public Gda.DataModel? output_select;
+
+	enum Auth {
+		NONE,
+		PASSWORD,
+		PUBLICKEY
+	}
 
 	public ConnectionManager (Sequeler.Window window, Gee.HashMap<string, string> data) {
 		Object (
@@ -57,6 +61,22 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 			loop.run ();
 		}
+
+		//  if (data ["ssh_password"] == null) {
+		//  	data ["ssh_password"] = "";
+
+		//  	var loop = new MainLoop ();
+		//  	password_mngr.get_password_async.begin (data["id"] + "_ssh", (obj, res) => {
+		//  		try {
+		//  			data ["ssh_password"] = password_mngr.get_password_async.end (res);
+		//  		} catch (Error e) {
+		//  			debug ("Unable to get the SSH password from libsecret");
+		//  		}
+		//  		loop.quit ();
+		//  	});
+
+		//  	loop.run ();
+		//  }
 
 		switch (data ["type"]) {
 			case "MySQL":
@@ -81,12 +101,12 @@ public class Sequeler.Services.ConnectionManager : Object {
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
 		} catch (Error e) {
-			ssh_tunnel_close ();
+			ssh_tunnel_close (null, -1, -1, -1);
 			throw e;
 		}
 
 		if (connection.is_opened ()) {
-			ssh_tunnel_close ();
+			ssh_tunnel_close (null, -1, -1, -1);
 			connection.close ();
 		}
 	}
@@ -108,238 +128,261 @@ public class Sequeler.Services.ConnectionManager : Object {
 			ssh_tunnel_open (is_real);
 		}
 		catch (Error e) {
-			//throw e;
-			debug(e.message);
+			debug (e.message);
+			throw e;
 		}
 	}
 
 	private void ssh_tunnel_open (bool is_real) throws Error {
 		debug ("Opening tunnel");
+
 		
+		//  Quark q = Quark.from_string ("ssh-error-str");
 		var home_dir = Environment.get_home_dir ();
 		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
 		var keyfile2 = home_dir + "/.ssh/id_rsa";
 
-		var ssh_host = Posix.inet_addr (data["ssh_host"]);
-		var ssh_username = data["ssh_username"];
-		var ssh_password = data["ssh_password"];
-		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
-		var host = data["host"] != "" || data["host"] != "127.0.0.1" ? data["host"] : "localhost";
-		var host_port = data["port"] != "" ? int.parse (data["port"]) : 9000;
-		int bound_port;
+		// SSH credentials if password authentication is required
+		var username = data["ssh_username"];
+		var password = data["ssh_password"];
+		// SSH HOST address and Port
+		var server_ip = data["ssh_host"];
+		var server_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+		// The IP address where the DB is available on your SSH
+		var local_listenip = data["host"] != "" ? data["host"] : "127.0.0.1";
+		// The Port used by the DB on your SSH host
+		uint16 local_listenport = data["port"] != "" ? (uint16) int.parse (data["port"]) : 9000;
+		// Default vars for TCPIP Tunnelling
+		var remote_desthost = "127.0.0.1";
+		var remote_destport = 3306;
 
-		Quark q = Quark.from_string ("ssh-error-str");
-		
-		var rc = SSH2.init (SSH2.InitFlags.NONE);
+		var rc = SSH2.init (0);
 		if (rc != SSH2.Error.NONE) {
-			debug ("Libssh2 initialization failed (%d)", rc);
-			//throw new Error.literal (q, 1, _("Libssh2 initialization failed (%d)").printf (rc));
+			debug ("libssh2 initialization failed (%d)", rc);
 			return;
 		}
 
-		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
+		/* Connect to SSH server */
+		var sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
 		if (sock == -1) {
-			debug ("Error opening Socket");
-			//throw new Error.literal (q, 1, _("Error opening Socket"));
+			debug ("Failed to open socket");
 			return;
 		}
 
-		Posix.SockAddrIn sin = Posix.SockAddrIn ();
+		Posix.SockAddrIn sin = Posix.SockAddrIn();
 		sin.sin_family = Posix.AF_INET;
-		sin.sin_port = Posix.htons (ssh_port);
-		sin.sin_addr.s_addr = ssh_host;
+		sin.sin_addr.s_addr = Posix.inet_addr (server_ip);
+		sin.sin_port = Posix.htons (server_port);
 		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
-			debug ("Failed to Connect via SSH");
-			//throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
+			debug ("Failed to connect!");
 			return;
 		}
 
-		session = SSH2.Session.create<bool> ();
-		if (session.handshake(sock) != SSH2.Error.NONE) {
-			debug ("Failed to establish SSH session");
-			//throw new Error.literal (q, 1, _("Failed to establish SSH session"));
+		/* Create a session instance */
+		var session = SSH2.Session.create<bool> ();
+
+		/* ... start it up. This will trade welcome banners, exchange keys,
+		* and setup crypto, compression, and MAC layers
+		*/
+		rc = session.handshake (sock);
+		if (rc != SSH2.Error.NONE) {
+			debug ("Error when starting up SSH session: %d", rc);
 			return;
 		}
 
-		bool auth_key = false;
-		var userauthlist = session.list_authentication (ssh_username.data);
+		/* At this point we haven't yet authenticated.  The first thing to do
+		* is check the hostkey's fingerprint against our known hosts Your app
+		* may have it hard coded, may go to a file, may present it to the
+		* user, that's your call
+		*/
+		var fingerprint = session.get_host_key_hash (SSH2.HashType.SHA1);
+		debug ("Fingerprint: ");
+		for (int i = 0; i < 20; i++) {
+			debug ("%02X ", fingerprint[i]);
+		}
+
+		/* check what authentication methods are available */
+		int auth_pw = 0;
+		var userauthlist = session.list_authentication (username.data);
 		debug ("Authentication methods: %s", userauthlist);
-		
-		if ("publickey" in userauthlist) {
-			auth_key = true;
+		if ("password" in userauthlist) {
+			auth_pw |= Auth.PASSWORD;
 		}
 
-		if (auth_key) {
-			if (session.auth_publickey_from_file (ssh_username, keyfile1, keyfile2, ssh_password) != SSH2.Error.NONE) {
-				ssh_tunnel_close ();
-				//throw new Error.literal (q, 1, _("Error! Public Key doesn't match."));
+		if ("publickey" in userauthlist) {
+			auth_pw |= Auth.PUBLICKEY;
+		}
+
+		if ((auth_pw & Auth.PASSWORD) != 0) {
+			if (session.auth_password (username, password) != SSH2.Error.NONE) {
+				debug ("Authentication by password failed.");
+				ssh_tunnel_close (null, sock, -1, -1);
 				return;
 			}
+		} else if ((auth_pw & Auth.PUBLICKEY) != 0) {
+			if (session.auth_publickey_from_file (username,
+												keyfile1,
+												keyfile2,
+												password
+											) != SSH2.Error.NONE) {
+				debug ("Authentication by public key failed!");
+				ssh_tunnel_close (null, sock, -1, -1);
+				return;
+			}
+			debug ("Authentication by public key succeeded.");
 		} else {
-			ssh_tunnel_close ();
-			//throw new Error.literal (q, 1, _("No SSH Authentication methods available."));
+			debug ("No supported authentication methods found!");
+			ssh_tunnel_close (null, sock, -1, -1);
 			return;
 		}
 
-		debug("host_port %d", host_port);
-		SSH2.Listener? listener = null;
-		if ((listener = session.forward_listen_ex (host, host_port, out bound_port, 1)) == null) {
-			ssh_tunnel_close ();
-			//throw new Error.literal (q, 1, _("Unable to create Port Forwarding."));
+		var listensock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
+		if (listensock == -1) {
+			debug ("failed to open listen socket");
+			ssh_tunnel_close (null, sock, listensock, -1);
 			return;
 		}
+
+		debug ("listensock %d", listensock);
+
+		sin = Posix.SockAddrIn ();
+		sin.sin_family = Posix.AF_INET;
+		sin.sin_addr.s_addr = Posix.inet_addr (local_listenip);
+		sin.sin_port = Posix.htons (local_listenport);
+
+		var sockopt = 1;
+		Posix.setsockopt (listensock, Linux.Socket.SOL_SOCKET, Linux.Socket.SO_REUSEADDR, &sockopt, (Posix.socklen_t) sizeof (int)); 
+		if (Posix.bind (listensock, &sin, sizeof (Posix.SockAddrIn)) == -1) {
+			debug ("Failed to bind!");
+			ssh_tunnel_close (null, sock, listensock, -1);
+			return;
+		}
+
+		if (Posix.listen (listensock, 2) == -1) {
+			debug ("Failed to listen!");
+			ssh_tunnel_close (null, sock, listensock, -1);
+			return;
+		}
+
+		debug ("Waiting for TCP connection on %s:%d...", local_listenip, local_listenport);
 
 		bool signal_launched = false;
 		while (true) {
-			debug ("Waiting for remote connection");
 
-			if (!is_real || !signal_launched) {
+			if (!signal_launched) {
 				signal_launched = true;
 				ssh_tunnel_ready ();
-			}
-			var channel = listener.accept ();
-			if (channel == null) {
-				debug ("Unable to accept channel listener.");
+			} else {
 				if (!is_real) {
-					ssh_tunnel_close ();
+					ssh_tunnel_close (session, sock, listensock, -1);
+					return;
 				}
-				throw new Error.literal (q, 1, _("Unable to accept channel listener."));
 			}
 
-			forward_tunnel (session, channel, is_real);
-			if (session == null) {
-				break;
-			}
-		}
+			debug ("Waiting for remote connection");
 
-		debug ("No errors so far");
-	}
+			var forwardsock = Posix.accept (listensock, null, null);
 
-	private int forward_tunnel (SSH2.Session? session, SSH2.Channel? channel, bool is_real) {
-		var ssh_host = Posix.inet_addr (data["ssh_host"]);
-		var ssh_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
-		// TODO: The tunnel should connect to the db port, so if port is not set up is the default one
-		//      shoud be choosed. Here hacked to use mariadb default port if not set
-		var db_port = data["port"] != "" ? (uint16) (data["port"]).hash () : 3306;
-		debug("db port %d", db_port);
+			debug ("forwardsock %d", forwardsock);
 
-		debug ("Accepted remote connection");
-
-		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
-		if (sock == -1) {
-			debug ("Error opening Socket");
-			ssh_tunnel_close ();
-			return 0;
-			//  throw new Error.literal (q, 1, _("Error opening Socket"));
-		}
-
-		Posix.SockAddrIn sin = Posix.SockAddrIn ();
-		sin.sin_family = Posix.AF_INET;
-		sin.sin_port = Posix.htons (db_port);
-		// TODO: host forwarded doesn't have to be the same as ssh host to connect
-		//      you can connect to host my.ssh.server and there go to my.database.server
-		//      this will only work for 127.0.0.1
-		sin.sin_addr.s_addr = ssh_host;
-		if (Posix.connect (sock, &sin, sizeof (Posix.SockAddrIn)) != 0) {
-			debug ("Failed to Connect via SSH");
-			ssh_tunnel_close ();
-			return 0;
-			//  throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
-		}
-
-		if (session == null) {
-			return 0;
-		}
-		session.blocking = false;
-
-		uint8[] buf = new uint8[16384];
-		while (true) {
-			Posix.fd_set fds;
-			Posix.FD_ZERO (out fds);
-			Posix.FD_SET (sock, ref fds);
-			Posix.timeval tv = {0, 100000};
-			int rc = Posix.select (sock + 1, &fds, null, null, tv);
-
-			if (-1 == rc) {
-				debug ("Failed to Connect via SSH");
-				ssh_tunnel_close ();
-				return 0;
-				//  throw new Error.literal (q, 1, _("Failed to Connect via SSH"));
+			if (forwardsock == -1) {
+				debug ("Failed to accept!");
+				ssh_tunnel_close (null, sock, listensock, forwardsock);
+				return;
 			}
 
-			if (rc > 0  && Posix.FD_ISSET (sock, fds) > 0) {
-				var len = Posix.recv (sock, buf, 16384, 0);
+			debug ("Forwarding connection from %s:%d here to remote %s:%d", local_listenip, local_listenport, remote_desthost, remote_destport);
 
-				if (len < 0) {
-					debug ("Error reading from the sock!");
-					ssh_tunnel_close ();
-					return rc;
-				} else if (0 == len) {
-					debug ("The local server at %s:%d disconnected!", data["ssh_host"], ssh_port);
-					ssh_tunnel_close ();
-					return rc;
-				}
-
-				ssize_t wr = 0;
-				ssize_t i = 0;
-				do {
-					i = channel.write (buf [0:len]);
-					debug("writing");
-					if (i < 0) {
-						debug ("Error writing on the SSH channel: %s", i.to_string ());
-						ssh_tunnel_close ();
-						return rc;
-					}
-					wr += i;
-				} while (i > 0 && wr < len);
+			var channel = session.direct_tcpip (remote_desthost, remote_destport, local_listenip, local_listenport);
+			if (channel == null) {
+				debug ("Could not open the direct-tcpip channel! (Note that this can be a problem at the server! Please review the server logs.)");
+				ssh_tunnel_close (session, sock, listensock, forwardsock);
+				return;
 			}
 
+			session.blocking = false;
+
+			uint8[] buf = new uint8[16384];
 			while (true) {
-				ssize_t len = channel.read (buf);
-				if (SSH2.Error.AGAIN == len)
+				Posix.fd_set fds;
+				Posix.FD_ZERO( out fds);
+				Posix.FD_SET(forwardsock, ref fds);
+				Posix.timeval tv = { 0, 100000};
+				var res = Posix.select(forwardsock + 1, &fds, null, null, tv);
+				if (-1 == res) {
+					stderr.printf("Error on select!\n");
+					direct_shutdown(session, forwardsock);
 					break;
-				else if (len < 0) {
-					if (!is_real) {
-						debug ("Error reading from the SSH channel: %d", (int) len);
-						ssh_tunnel_close ();
-					}
-					return rc;
 				}
-				ssize_t wr = 0;
-				while (wr < len) {
-					ssize_t i = Posix.send (sock, buf [wr:buf.length], len - wr, 0);
-					debug("send");
-					if (i <= 0) {
-						if (!is_real) {
-							debug ("Error writing on the sock!");
-							ssh_tunnel_close ();
+				if (res > 0  && Posix.FD_ISSET(forwardsock, fds) > 0) {
+					var len = Posix.recv(forwardsock, buf, 16384, 0);
+					if (len < 0) {
+						stderr.printf("Error reading from the forwardsock!\n");
+						direct_shutdown(session, forwardsock);
+						break;
+					} else if (0 == len) {
+						stderr.printf("The client at %s:%d disconnected!\n",
+							local_listenip, local_listenport);
+						direct_shutdown(session, forwardsock);
+						break;
+					}
+					ssize_t wr = 0;
+					ssize_t i = 0;
+					do {
+						i = channel.write(buf[0:len]);
+						if (i < 0) {
+							stderr.printf("Error writing on the SSH channel: %s\n", i.to_string());
+							direct_shutdown(session, forwardsock);
+							break;
 						}
-						return rc;
-					}
-					wr += i;
+						wr += i;
+					} while(i > 0 && wr < len);
 				}
-				if (channel.eof () != SSH2.Error.NONE) {
-					if (!is_real) {
-						debug ("The remote client disconnected!");
-						ssh_tunnel_close ();
+				while (true) {
+					ssize_t len = channel.read(buf);
+					if (SSH2.Error.AGAIN == len)
+						break;
+					else if (len < 0) {
+						stderr.printf("Error reading from the SSH channel: %d\n", (int)len);
+						direct_shutdown(session, forwardsock);
+						break;
 					}
-					return rc;
+					ssize_t wr = 0;
+					while (wr < len) {
+						ssize_t i = Posix.send(forwardsock, buf[wr:buf.length], len - wr, 0);
+						if (i <= 0) {
+							stderr.printf("Error writing on the forwardsock!\n");
+							direct_shutdown(session, forwardsock);
+							break;
+						}
+						wr += i;
+					}
+					if (channel.eof() != SSH2.Error.NONE) {
+						stderr.printf("The remote client at %s:%d disconnected!\n",
+										  remote_desthost, remote_destport);
+						direct_shutdown(session, forwardsock);
+						break;
+					}
 				}
 			}
 		}
 	}
 
-	public void ssh_tunnel_close () {
-		if (session == null) {
-			debug ("no session to close");
-			return;
+	public void ssh_tunnel_close (SSH2.Session? session, int sock, int listensock, int forwardsock) {
+		Posix.close (listensock);
+		Posix.close (forwardsock);
+
+		if (session != null) {
+			session.disconnect ("Client disconnecting normally\n");
 		}
 
-		session.disconnect ("Client disconnecting normally\n");
-		session = null;
 		Posix.close (sock);
 		SSH2.exit ();
-		debug ("SSH tunnel closed");
+	}
+
+	public void direct_shutdown (SSH2.Session? session, int forwardsock) {
+		session.blocking = true;
+		Posix.close (forwardsock);
 	}
 
 	public int run_query (string query) throws Error requires (connection.is_opened ()) {
