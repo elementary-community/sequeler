@@ -28,6 +28,16 @@
     <binary>com.github.alecaddd.sequeler</binary>
   </provides>
   <releases>
+    <release version="0.6.5" date="2018-12-15">
+      <description>
+        <p>Fancy New Icon!</p>
+        <ul>
+          <li>New fancy Icon.</li>
+          <li>Use GtkNativeDialog.</li>
+          <li>Bug fixes and Improvements.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.4" date="2018-12-09">
       <description>
         <p>Open SQLite files</p>
