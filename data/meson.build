@@ -11,14 +11,6 @@ foreach i : icon_sizes
     )
 endforeach
 
-# we need to rename these in a post install script because meson doesn't rename things
-foreach i : icon_sizes
-    install_data(
-        join_paths('assets/icons', i + 'x' + i, meson.project_name() + '.svg'),
-        install_dir: join_paths(get_option('datadir'), 'icons/hicolor', i + 'x' + i, 'mimetypes')
-    )
-endforeach
-
 install_data(
     'assets/icons/128x128/' + meson.project_name() + '.svg',
     install_dir: join_paths(get_option('datadir'), 'icons/hicolor/scalable/apps')
