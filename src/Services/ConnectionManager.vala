@@ -62,6 +62,22 @@ public class Sequeler.Services.ConnectionManager : Object {
 			loop.run ();
 		}
 
+		//  if (data ["ssh_password"] == null) {
+		//  	data ["ssh_password"] = "";
+
+		//  	var loop = new MainLoop ();
+		//  	password_mngr.get_password_async.begin (data["id"] + "_ssh", (obj, res) => {
+		//  		try {
+		//  			data ["ssh_password"] = password_mngr.get_password_async.end (res);
+		//  		} catch (Error e) {
+		//  			debug ("Unable to get the SSH password from libsecret");
+		//  		}
+		//  		loop.quit ();
+		//  	});
+
+		//  	loop.run ();
+		//  }
+
 		switch (data ["type"]) {
 			case "MySQL":
 				db_type = new Sequeler.Services.Types.MySQL ();
