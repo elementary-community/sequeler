@@ -72,7 +72,7 @@ public class Sequeler.Services.ActionManager : Object {
 	}
 
 	private void action_logout () {
-		window.headerbar.toggle_logout ();
+		window.headerbar.toggle_logout.begin ();
 		window.headerbar.title = APP_NAME;
 		window.headerbar.subtitle = null;
 

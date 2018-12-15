@@ -65,17 +65,19 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 		pack2 (main_stack, true, false);
 	}
 
-	public void connection_opened (Sequeler.Services.ConnectionManager? cnn_manager) {
-		window.headerbar.toggle_logout ();
+	public async void connection_opened (Sequeler.Services.ConnectionManager? cnn_manager) {
+		yield window.headerbar.toggle_logout ();
 		connection_manager = cnn_manager;
 		sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
 		main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.SLIDE_LEFT);
 
-		var host = connection_manager.data["host"] != "" ? connection_manager.data["host"] : "127.0.0.1";
-		window.headerbar.title = _("Connected to %s").printf (connection_manager.data["title"]);
-		window.headerbar.subtitle = connection_manager.data["username"] + "@" + host;
+		var host = cnn_manager.data["host"] != "" ? cnn_manager.data["host"] : "127.0.0.1";
+		window.headerbar.title = _("Connected to %s").printf (cnn_manager.data["title"]);
+		window.headerbar.subtitle = cnn_manager.data["username"] + "@" + host;
 
 		database_schema.reload_schema ();
+
+		yield;
 	}
 
 	public void connection_closed () {
@@ -83,7 +85,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 			connection_manager.connection.clear_events_list ();
 			connection_manager.connection.close ();
 			connection_manager.connection = null;
-			connection_manager.ssh_tunnel_close (null, -1, -1, -1);
+			connection_manager.ssh_tunnel_close (-1, -1, -1);
 		}
 
 		connection_manager = null;

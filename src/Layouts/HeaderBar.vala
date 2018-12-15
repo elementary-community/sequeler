@@ -38,7 +38,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		set_show_close_button (true);
 
 		build_ui ();
-		toggle_logout ();
+		toggle_logout.begin ();
 	}
 
 	private void build_ui () {
@@ -134,9 +134,11 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		button.add (button_grid);
 	}
 
-	public void toggle_logout () {
+	public async void toggle_logout () {
 		logged_out = !logged_out;
 		logout_button.visible = logged_out;
 		logout_button.no_show_all = !logged_out;
+
+		yield;
 	}
 }
