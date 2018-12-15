@@ -1,37 +1,49 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-11 14:26-0700\n"
+"POT-Creation-Date: 2018-12-15 13:53-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: src/Layouts/HeaderBar.vala:45
+#: src/Application.vala:62
+msgid "Directories are not supported"
+msgstr ""
+
+#: src/Application.vala:68
+msgid "Don't know what to do"
+msgstr ""
+
+#: src/Application.vala:81
+msgid "Something completely unexpected happened"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:46
 msgid "Logout"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:53
+#: src/Layouts/HeaderBar.vala:57
 msgid "Light background"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:54
+#: src/Layouts/HeaderBar.vala:58
 msgid "Dark background"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:66 src/Layouts/Welcome.vala:39
+#: src/Layouts/HeaderBar.vala:71 src/Layouts/Welcome.vala:39
 msgid "New Window"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:71 src/Widgets/ConnectionDialog.vala:100
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:101
+#: src/Widgets/ConnectionDialog.vala:127
 msgid "New Connection"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:76
+#: src/Layouts/HeaderBar.vala:79
 msgid "Quit"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:98
+#: src/Layouts/HeaderBar.vala:99
 msgid "Menu"
 msgstr ""
 
@@ -76,25 +88,25 @@ msgstr ""
 msgid "Yes, Delete All!"
 msgstr ""
 
-#: src/Layouts/Library.vala:237 src/Layouts/Views/Query.vala:424
+#: src/Layouts/Library.vala:270 src/Layouts/Views/Query.vala:424
 msgid "Pick a file"
 msgstr ""
 
-#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:61
-#: src/Layouts/Views/Query.vala:427
-msgid "_Cancel"
-msgstr ""
-
-#: src/Layouts/Library.vala:242 src/Layouts/Views/Query.vala:429
+#: src/Layouts/Library.vala:273 src/Layouts/Views/Query.vala:427
 msgid "_Save"
 msgstr ""
 
-#: src/Layouts/Library.vala:302
+#: src/Layouts/Library.vala:274 src/Layouts/Welcome.vala:62
+#: src/Layouts/Views/Query.vala:428
+msgid "_Cancel"
+msgstr ""
+
+#: src/Layouts/Library.vala:333
 #, c-format
 msgid "Unable to Connect to %s"
 msgstr ""
 
-#: src/Layouts/Library.vala:315
+#: src/Layouts/Library.vala:346
 msgid "Unable to Export Library "
 msgstr ""
 
@@ -126,11 +138,15 @@ msgstr ""
 msgid "Import Previously Exported Sequeler Connections"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:63
+#: src/Layouts/Welcome.vala:58
+msgid "Select a file"
+msgstr ""
+
+#: src/Layouts/Welcome.vala:61
 msgid "_Open"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:108
+#: src/Layouts/Welcome.vala:106
 msgid "Unable to Import Library "
 msgstr ""
 
@@ -174,9 +190,9 @@ msgstr ""
 msgid "Query"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
-#: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:149
-#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
+#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:110
+#: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:158
+#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:110
 #: src/Layouts/Views/Query.vala:207
 msgid "No Results Available"
 msgstr ""
@@ -196,7 +212,7 @@ msgstr ""
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:142
+#: src/Layouts/Views/Structure.vala:151
 msgid " Fields"
 msgstr ""
 
@@ -208,25 +224,26 @@ msgstr ""
 msgid "Next Page"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:87 src/Layouts/Views/Content.vala:110
-#: src/Layouts/Views/Content.vala:254
-msgid " Pages"
+#: src/Layouts/Views/Content.vala:87
+#, c-format
+msgid "%d Pages"
 msgstr ""
 
 #: src/Layouts/Views/Content.vala:105
 msgid "1 Page"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:110 src/Layouts/Views/Content.vala:254
-msgid " of "
+#: src/Layouts/Views/Content.vala:110 src/Layouts/Views/Content.vala:263
+#, c-format
+msgid "%d of %d Pages"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:193
+#: src/Layouts/Views/Content.vala:202
 #, c-format
 msgid "%d Entries"
 msgstr ""
 
-#: src/Layouts/Views/Relations.vala:142
+#: src/Layouts/Views/Relations.vala:151
 msgid " Constraints"
 msgstr ""
 
@@ -260,7 +277,8 @@ msgid "%d Total Results"
 msgstr ""
 
 #: src/Layouts/Views/Query.vala:402
-msgid "Query Successfully Executed! Rows Affected: "
+#, c-format
+msgid "Query Successfully Executed! Rows Affected: %d"
 msgstr ""
 
 #: src/Layouts/Views/Query.vala:405
@@ -291,6 +309,11 @@ msgstr ""
 msgid "on Column"
 msgstr ""
 
+#: src/Partials/TreeBuilder.vala:148
+#, c-format
+msgid "Copy %s"
+msgstr ""
+
 #: src/Services/ConnectionManager.vala:191
 msgid "Error!"
 msgstr ""
@@ -299,74 +322,74 @@ msgstr ""
 msgid "Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:125
+#: src/Widgets/ConnectionDialog.vala:126
 msgid "Connection Name:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:127
 msgid "Connection's name"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:133
+#: src/Widgets/ConnectionDialog.vala:134
 msgid "Database Type:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:155
+#: src/Widgets/ConnectionDialog.vala:156
 msgid "Host:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:161
+#: src/Widgets/ConnectionDialog.vala:162
 msgid "Database Name:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:168
+#: src/Widgets/ConnectionDialog.vala:169
 msgid "Username:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:174
+#: src/Widgets/ConnectionDialog.vala:175
 msgid "Password:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:192
+#: src/Widgets/ConnectionDialog.vala:193
 msgid "Port:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:198
+#: src/Widgets/ConnectionDialog.vala:199
 msgid "File Path:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:199
+#: src/Widgets/ConnectionDialog.vala:200
 msgid "Select Your SQLite File…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:226
+#: src/Widgets/ConnectionDialog.vala:227
 msgid "Close"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:227
+#: src/Widgets/ConnectionDialog.vala:228
 msgid "Save Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:229
+#: src/Widgets/ConnectionDialog.vala:230
 msgid "Test Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:369
+#: src/Widgets/ConnectionDialog.vala:368
 msgid "Testing Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:377
+#: src/Widgets/ConnectionDialog.vala:376
 msgid "Successfully Connected!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:394
+#: src/Widgets/ConnectionDialog.vala:393
 msgid "Saving Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:399
+#: src/Widgets/ConnectionDialog.vala:398
 msgid "Connection Saved!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:407
+#: src/Widgets/ConnectionDialog.vala:406
 msgid "Connecting…"
 msgstr ""
