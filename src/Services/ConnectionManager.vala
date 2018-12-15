@@ -46,13 +46,13 @@ public class Sequeler.Services.ConnectionManager : Object {
 			data: data
 		);
 
-		if (data ["password"] == null) {
-			data ["password"] = "";
+		if (data["password"] == null) {
+			data["password"] = "";
 
 			var loop = new MainLoop ();
 			password_mngr.get_password_async.begin (data["id"], (obj, res) => {
 				try {
-					data ["password"] = password_mngr.get_password_async.end (res);
+					data["password"] = password_mngr.get_password_async.end (res);
 				} catch (Error e) {
 					debug ("Unable to get the password from libsecret");
 				}
@@ -62,23 +62,23 @@ public class Sequeler.Services.ConnectionManager : Object {
 			loop.run ();
 		}
 
-		//  if (data ["ssh_password"] == null) {
-		//  	data ["ssh_password"] = "";
+		if (data["has_ssh"] == "true") {
+			data["ssh_password"] = "";
 
-		//  	var loop = new MainLoop ();
-		//  	password_mngr.get_password_async.begin (data["id"] + "_ssh", (obj, res) => {
-		//  		try {
-		//  			data ["ssh_password"] = password_mngr.get_password_async.end (res);
-		//  		} catch (Error e) {
-		//  			debug ("Unable to get the SSH password from libsecret");
-		//  		}
-		//  		loop.quit ();
-		//  	});
+			var loop = new MainLoop ();
+			password_mngr.get_password_async.begin (data["id"] + "9999", (obj, res) => {
+				try {
+					data["ssh_password"] = password_mngr.get_password_async.end (res);
+				} catch (Error e) {
+					debug ("Unable to get the SSH password from libsecret");
+				}
+				loop.quit ();
+			});
 
-		//  	loop.run ();
-		//  }
+			loop.run ();
+		}
 
-		switch (data ["type"]) {
+		switch (data["type"]) {
 			case "MySQL":
 				db_type = new Sequeler.Services.Types.MySQL ();
 			break;
@@ -96,7 +96,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 	public void test () throws Error {
 		var connection_string = (db_type as DataBaseType).connection_string (data);
-		debug("connection string %s", connection_string);
+		debug ("connection string %s", connection_string);
 
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
@@ -113,14 +113,14 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 	public void open () throws Error {
 		var connection_string = (db_type as DataBaseType).connection_string (data);
-		debug("connection string %s", connection_string);
+		debug ("connection string %s", connection_string);
 
 		try {
 			connection = Gda.Connection.open_from_string (null, connection_string, null, Gda.ConnectionOptions.NONE);
 		} catch (Error e) {
 			throw e;
 		}
-		debug("open ends");
+		debug ("open ends");
 	}
 
 	public void ssh_tunnel_init (bool is_real) throws Error {
@@ -135,7 +135,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 	private void ssh_tunnel_open (bool is_real) throws Error {
 		debug ("Opening tunnel");
-
 		
 		//  Quark q = Quark.from_string ("ssh-error-str");
 		var home_dir = Environment.get_home_dir ();

@@ -343,20 +343,22 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 			loop.run ();
 
-			array["ssh_password"] = "";
+			if (array["has_ssh"] == "true") {
+				array["ssh_password"] = "";
 
-			//  var ssh_loop = new MainLoop ();
-			//  password_mngr.get_password_async.begin (array["id"] + "_ssh", (obj, res) => {
-			//  	try {
-			//  		array["ssh_password"] = password_mngr.get_password_async.end (res);
-			//  	} catch (Error e) {
-			//  		debug ("Unable to get the SSH password from libsecret");
-			//  	}
-			//  	ssh_loop.quit ();
-			//  });
+				var ssh_loop = new MainLoop ();
+				password_mngr.get_password_async.begin (array["id"] + "9999", (obj, res) => {
+					try {
+						array["ssh_password"] = password_mngr.get_password_async.end (res);
+					} catch (Error e) {
+						debug ("Unable to get the SSH password from libsecret");
+					}
+					ssh_loop.quit ();
+				});
 
-			//  ssh_loop.run ();
-			
+				ssh_loop.run ();
+			}
+	
 			buffer_content += settings.stringify_data (array) + "---\n";
 		}
 

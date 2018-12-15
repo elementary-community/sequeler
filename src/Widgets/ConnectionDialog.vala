@@ -429,11 +429,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			db_port_entry.text = update_data["port"];
 		}
 
-		if (bool.parse (update_data["has_ssh"]) == true) {
+		if (update_data["has_ssh"] == "true") {
 			string? old_ssh_password = "";
 
 			var ssh_loop = new MainLoop ();
-			password_mngr.get_password_async.begin (update_data["id"] + "_ssh", (obj, res) => {
+			password_mngr.get_password_async.begin (update_data["id"] + "9999", (obj, res) => {
 				try {
 					old_ssh_password = password_mngr.get_password_async.end (res);
 				} catch (Error e) {
@@ -448,7 +448,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			
 			ssh_host_entry.text = (update_data["ssh_host"] != null) ? update_data["ssh_host"] : "";
 			ssh_username_entry.text = (update_data["ssh_username"] != null) ? update_data["ssh_username"] : "";
-			ssh_password_entry.text = old_ssh_password;
+			ssh_password_entry.text = (old_ssh_password != null) ? old_ssh_password : "";
 			ssh_port_entry.text = (update_data["ssh_port"] != null) ? update_data["ssh_port"] : "";
 		}
 	}
