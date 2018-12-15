@@ -267,16 +267,14 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		file = null;
 		buffer = new Gtk.TextBuffer (null);
 
-		var save_dialog = new Gtk.FileChooserDialog (_("Pick a file"),
+		var save_dialog = new Gtk.FileChooserNative (_("Pick a file"),
 													 window,
 													 Gtk.FileChooserAction.SAVE,
-													 _("_Cancel"),
-													 Gtk.ResponseType.CANCEL,
 													 _("_Save"),
-													 Gtk.ResponseType.ACCEPT);
+													 _("_Cancel"));
 
-		save_dialog.set_do_overwrite_confirmation (true);
-		save_dialog.set_modal (true);
+		save_dialog.do_overwrite_confirmation = true;
+		save_dialog.modal = true;
 		save_dialog.response.connect ((dialog, response_id) => {
 			switch (response_id) {
 				case Gtk.ResponseType.ACCEPT:
@@ -289,7 +287,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			dialog.destroy ();
 		});
 
-		save_dialog.show ();
+		save_dialog.run ();
 	}
 
 	private void save_to_file () {
