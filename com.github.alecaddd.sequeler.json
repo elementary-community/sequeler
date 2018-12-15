@@ -1,20 +1,12 @@
 {
   "app-id": "com.github.alecaddd.sequeler",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "3.26",
+  "runtime-version": "3.30",
   "sdk": "org.gnome.Sdk",
+  "base":"io.elementary.BaseApp",
+  "base-version": "juno",
   "command": "com.github.alecaddd.sequeler",
-  "build-options": {
-    "cflags": "-O2",
-    "cxxflags": "-O2",
-    "env": {
-      "PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_GIRDIR": "/app/share/gir-1.0",
-      "PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_TYPELIBDIR": "/app/lib/girepository-1.0"
-    }
-  },
   "cleanup": [
-    "/bin/granite-demo",
-    "/share/applications/granite-demo.desktop",
     "/include",
     "/lib/pkgconfig",
     "/lib/debug",
@@ -38,26 +30,7 @@
     /* access localhost databases */
     "--share=network"
   ],
-  "modules": [{
-      "name": "libgee",
-      "sources": [{
-        "type": "archive",
-        "url": "https://github.com/GNOME/libgee/archive/0.20.1.tar.gz",
-        "sha256": "d76d0bf8ae6659dba6018fadf2ccce218ccbc107666925552008806a29702c4b"
-      }]
-    },
-    {
-      "name": "granite",
-      "buildsystem": "cmake-ninja",
-      "config-opts": [
-        "-DCMAKE_BUILD_TYPE=Release"
-      ],
-      "sources": [{
-        "type": "archive",
-        "url": "https://github.com/elementary/granite/archive/0.5.tar.gz",
-        "sha256": "cc4905ae70fddeba3d2ded44bb642be77d419aa090251a7ab24c155b8616be06"
-      }]
-    },
+  "modules": [
     {
       "name": "libxml2",
       "build-options": {
@@ -80,8 +53,8 @@
       },
       "sources": [{
         "type": "archive",
-        "url": "https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.6.tar.xz",
-        "sha256": "7aa6bdfebcdc73a763dddeaa42f190c40835e6f8495bb9eb8f78587e2577c188"
+        "url": "https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.9.tar.xz",
+        "sha256": "699d76a453e6a3d3331906346e3dbfa25f2cbc9ec090e46635e9c6bb595e07c2"
       }]
     },
     {
@@ -91,14 +64,13 @@
           "--with-python=no",
           "--with-perl=no",
           "--with-libxml",
-          "--with-openssl",
-          "--with-tcl"
+          "--with-openssl"
         ]
       },
       "sources": [{
         "type": "archive",
-        "url": "https://ftp.postgresql.org/pub/source/v10.3/postgresql-10.3.tar.bz2",
-        "sha256": "6ea268780ee35e88c65cdb0af7955ad90b7d0ef34573867f223f14e43467931a"
+        "url": "https://ftp.postgresql.org/pub/source/v10.5/postgresql-10.5.tar.bz2",
+        "sha256": "6c8e616c91a45142b85c0aeb1f29ebba4a361309e86469e0fb4617b6a73c4011"
       }]
     },
     {
@@ -116,6 +88,13 @@
     {
       "name": "libaio",
       "buildsystem": "simple",
+      "build-options": {
+         "arch": {
+            "i386": {
+              "cflags": "-march=x86-64 -mtune=generic -O2 -pipe -fno-stack-protector -fno-plt"
+            }
+         }
+      },
       "build-commands": [
         "make",
         "make prefix=/app install"
@@ -168,8 +147,8 @@
       },
       "sources": [{
         "type": "archive",
-        "url": "https://github.com/GNOME/libgda/archive/LIBGDA_5_2_4.tar.gz",
-        "sha256": "cd3bf74ead03dc1715f51463a9e4864d55b9bdcffb732dc88095dbd919a67180"
+        "url": "https://download.gnome.org/sources/libgda/5.2/libgda-5.2.8.tar.xz",
+        "sha256": "e2876d987c00783ac3c1358e9da52794ac26f557e262194fcba60ac88bafa445"
       }]
     },
     {
