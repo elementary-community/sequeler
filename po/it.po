@@ -2,42 +2,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-11 14:26-0700\n"
+"POT-Creation-Date: 2018-12-15 13:53-0800\n"
 "PO-Revision-Date: 2018-10-04 23:51+0200\n"
 "Last-Translator: Luca Andrea Rossi <lucaandrea.rossi@hexation.com>\n"
+"Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: src/Layouts/HeaderBar.vala:45
+#: src/Application.vala:62
+msgid "Directories are not supported"
+msgstr ""
+
+#: src/Application.vala:68
+msgid "Don't know what to do"
+msgstr ""
+
+#: src/Application.vala:81
+msgid "Something completely unexpected happened"
+msgstr ""
+
+#: src/Layouts/HeaderBar.vala:46
 msgid "Logout"
 msgstr "Disconnetti"
 
-#: src/Layouts/HeaderBar.vala:53
+#: src/Layouts/HeaderBar.vala:57
 msgid "Light background"
 msgstr "Sfondo chiaro"
 
-#: src/Layouts/HeaderBar.vala:54
+#: src/Layouts/HeaderBar.vala:58
 msgid "Dark background"
 msgstr "Sfondo scuro"
 
-#: src/Layouts/HeaderBar.vala:66 src/Layouts/Welcome.vala:39
+#: src/Layouts/HeaderBar.vala:71 src/Layouts/Welcome.vala:39
 msgid "New Window"
 msgstr "Nuova finestra"
 
-#: src/Layouts/HeaderBar.vala:71 src/Widgets/ConnectionDialog.vala:100
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:101
+#: src/Widgets/ConnectionDialog.vala:127
 msgid "New Connection"
 msgstr "Nuova connessione"
 
-#: src/Layouts/HeaderBar.vala:76
+#: src/Layouts/HeaderBar.vala:79
 msgid "Quit"
 msgstr "Chiudi"
 
-#: src/Layouts/HeaderBar.vala:98
+#: src/Layouts/HeaderBar.vala:99
 msgid "Menu"
 msgstr "Menu"
 
@@ -68,7 +80,8 @@ msgstr "Si è sicuri di voler procedere?"
 
 #: src/Layouts/Library.vala:134
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr "Eliminando questa connessione non sarà possibile recuperare questi dati."
+msgstr ""
+"Eliminando questa connessione non sarà possibile recuperare questi dati."
 
 #: src/Layouts/Library.vala:137
 msgid "Yes, Delete!"
@@ -82,26 +95,26 @@ msgstr "Tutti i dati saranno cancellati e non potranno essere recuperati."
 msgid "Yes, Delete All!"
 msgstr "Sì, elimina tutto!"
 
-#: src/Layouts/Library.vala:237 src/Layouts/Views/Query.vala:424
+#: src/Layouts/Library.vala:270 src/Layouts/Views/Query.vala:424
 msgid "Pick a file"
 msgstr "Seleziona un file"
 
-#: src/Layouts/Library.vala:240 src/Layouts/Welcome.vala:61
-#: src/Layouts/Views/Query.vala:427
+#: src/Layouts/Library.vala:273 src/Layouts/Views/Query.vala:427
+msgid "_Save"
+msgstr "_Salva"
+
+#: src/Layouts/Library.vala:274 src/Layouts/Welcome.vala:62
+#: src/Layouts/Views/Query.vala:428
 #, fuzzy
 msgid "_Cancel"
 msgstr "A_nnulla"
 
-#: src/Layouts/Library.vala:242 src/Layouts/Views/Query.vala:429
-msgid "_Save"
-msgstr "_Salva"
-
-#: src/Layouts/Library.vala:302
+#: src/Layouts/Library.vala:333
 #, c-format
 msgid "Unable to Connect to %s"
 msgstr "Impossibile connettersi a %s"
 
-#: src/Layouts/Library.vala:315
+#: src/Layouts/Library.vala:346
 msgid "Unable to Export Library "
 msgstr "Impossibile esportare la libreria "
 
@@ -133,11 +146,16 @@ msgstr "Importa connessioni"
 msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importa un file di connessioni di Sequeler precedentemente esportato"
 
-#: src/Layouts/Welcome.vala:63
+#: src/Layouts/Welcome.vala:58
+#, fuzzy
+msgid "Select a file"
+msgstr "Seleziona tabella"
+
+#: src/Layouts/Welcome.vala:61
 msgid "_Open"
 msgstr "_Apri"
 
-#: src/Layouts/Welcome.vala:108
+#: src/Layouts/Welcome.vala:106
 msgid "Unable to Import Library "
 msgstr "Impossibile importare la libreria "
 
@@ -181,9 +199,9 @@ msgstr "Relazioni"
 msgid "Query"
 msgstr "Esegui query"
 
-#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:101
-#: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:149
-#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:101
+#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:110
+#: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:158
+#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:110
 #: src/Layouts/Views/Query.vala:207
 msgid "No Results Available"
 msgstr "Nessun risultato disponibile"
@@ -201,9 +219,11 @@ msgstr "Seleziona tabella"
 #: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:134
 #: src/Layouts/Views/Relations.vala:86
 msgid "Select a table from the left sidebar to activate this view."
-msgstr "Selezionare una tabella dal pannello a sinistra per attivare questa visualizzazione."
+msgstr ""
+"Selezionare una tabella dal pannello a sinistra per attivare questa "
+"visualizzazione."
 
-#: src/Layouts/Views/Structure.vala:142
+#: src/Layouts/Views/Structure.vala:151
 msgid " Fields"
 msgstr " campi"
 
@@ -215,25 +235,26 @@ msgstr "Pagina precedente"
 msgid "Next Page"
 msgstr "Pagina successiva"
 
-#: src/Layouts/Views/Content.vala:87 src/Layouts/Views/Content.vala:110
-#: src/Layouts/Views/Content.vala:254
-msgid " Pages"
+#: src/Layouts/Views/Content.vala:87
+#, fuzzy, c-format
+msgid "%d Pages"
 msgstr " pagine"
 
 #: src/Layouts/Views/Content.vala:105
 msgid "1 Page"
 msgstr "1 pagina"
 
-#: src/Layouts/Views/Content.vala:110 src/Layouts/Views/Content.vala:254
-msgid " of "
-msgstr " di "
+#: src/Layouts/Views/Content.vala:110 src/Layouts/Views/Content.vala:263
+#, fuzzy, c-format
+msgid "%d of %d Pages"
+msgstr " pagine"
 
-#: src/Layouts/Views/Content.vala:193
+#: src/Layouts/Views/Content.vala:202
 #, c-format
 msgid "%d Entries"
 msgstr "%d voci"
 
-#: src/Layouts/Views/Relations.vala:142
+#: src/Layouts/Views/Relations.vala:151
 msgid " Constraints"
 msgstr " vincoli"
 
@@ -267,7 +288,8 @@ msgid "%d Total Results"
 msgstr "%d risultati totali"
 
 #: src/Layouts/Views/Query.vala:402
-msgid "Query Successfully Executed! Rows Affected: "
+#, fuzzy, c-format
+msgid "Query Successfully Executed! Rows Affected: %d"
 msgstr "Query eseguita correttamente! Righe alterate: "
 
 #: src/Layouts/Views/Query.vala:405
@@ -298,6 +320,11 @@ msgstr "Errore"
 msgid "on Column"
 msgstr "sulla colonna"
 
+#: src/Partials/TreeBuilder.vala:148
+#, c-format
+msgid "Copy %s"
+msgstr ""
+
 #: src/Services/ConnectionManager.vala:191
 msgid "Error!"
 msgstr "Errore!"
@@ -306,77 +333,80 @@ msgstr "Errore!"
 msgid "Connection"
 msgstr "Connessione"
 
-#: src/Widgets/ConnectionDialog.vala:125
+#: src/Widgets/ConnectionDialog.vala:126
 msgid "Connection Name:"
 msgstr "Nome connessione:"
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:127
 msgid "Connection's name"
 msgstr "Nome della connessione"
 
-#: src/Widgets/ConnectionDialog.vala:133
+#: src/Widgets/ConnectionDialog.vala:134
 msgid "Database Type:"
 msgstr "Tipo database:"
 
-#: src/Widgets/ConnectionDialog.vala:155
+#: src/Widgets/ConnectionDialog.vala:156
 msgid "Host:"
 msgstr "Server:"
 
-#: src/Widgets/ConnectionDialog.vala:161
+#: src/Widgets/ConnectionDialog.vala:162
 msgid "Database Name:"
 msgstr "Nome database:"
 
-#: src/Widgets/ConnectionDialog.vala:168
+#: src/Widgets/ConnectionDialog.vala:169
 msgid "Username:"
 msgstr "Nome utente:"
 
-#: src/Widgets/ConnectionDialog.vala:174
+#: src/Widgets/ConnectionDialog.vala:175
 msgid "Password:"
 msgstr "Password:"
 
-#: src/Widgets/ConnectionDialog.vala:192
+#: src/Widgets/ConnectionDialog.vala:193
 msgid "Port:"
 msgstr "Porta:"
 
-#: src/Widgets/ConnectionDialog.vala:198
+#: src/Widgets/ConnectionDialog.vala:199
 msgid "File Path:"
 msgstr "Indirizzo del file:"
 
-#: src/Widgets/ConnectionDialog.vala:199
+#: src/Widgets/ConnectionDialog.vala:200
 msgid "Select Your SQLite File…"
 msgstr "Selezionare il file SQLite…"
 
-#: src/Widgets/ConnectionDialog.vala:226
+#: src/Widgets/ConnectionDialog.vala:227
 msgid "Close"
 msgstr "Chiudi"
 
-#: src/Widgets/ConnectionDialog.vala:227
+#: src/Widgets/ConnectionDialog.vala:228
 msgid "Save Connection"
 msgstr "Salva connessione"
 
-#: src/Widgets/ConnectionDialog.vala:229
+#: src/Widgets/ConnectionDialog.vala:230
 msgid "Test Connection"
 msgstr "Prova connessione"
 
-#: src/Widgets/ConnectionDialog.vala:369
+#: src/Widgets/ConnectionDialog.vala:368
 msgid "Testing Connection…"
 msgstr "Verifica connessione in corso…"
 
-#: src/Widgets/ConnectionDialog.vala:377
+#: src/Widgets/ConnectionDialog.vala:376
 msgid "Successfully Connected!"
 msgstr "Connesso correttamente!"
 
-#: src/Widgets/ConnectionDialog.vala:394
+#: src/Widgets/ConnectionDialog.vala:393
 msgid "Saving Connection…"
 msgstr "Salvataggio connessione…"
 
-#: src/Widgets/ConnectionDialog.vala:399
+#: src/Widgets/ConnectionDialog.vala:398
 msgid "Connection Saved!"
 msgstr "Connessione salvata!"
 
-#: src/Widgets/ConnectionDialog.vala:407
+#: src/Widgets/ConnectionDialog.vala:406
 msgid "Connecting…"
 msgstr "Connessione in corso…"
+
+#~ msgid " of "
+#~ msgstr " di "
 
 #, fuzzy
 #~ msgid "Export as SQL"

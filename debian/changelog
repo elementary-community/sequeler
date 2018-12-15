@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.6.5) xenial; urgency=medium
+
+  * New fancy Icon.
+  * Use GtkNativeDialog.
+  * Bug fixes and Improvements.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 15 Dec 2018 14:30:00 -0700
+
 com.github.alecaddd.sequeler (0.6.4) xenial; urgency=medium
 
   * Open SQLite files directly in Sequeler.

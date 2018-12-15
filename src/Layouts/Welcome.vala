@@ -64,7 +64,6 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 		open_dialog.local_only = true;
 		open_dialog.modal = true;
 		open_dialog.response.connect (open_file);
-
 		open_dialog.run ();
 	}
 

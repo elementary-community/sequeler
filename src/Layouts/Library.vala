@@ -305,8 +305,8 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 													 _("_Save"),
 													 _("_Cancel"));
 
-		save_dialog.set_do_overwrite_confirmation (true);
-		save_dialog.set_modal (true);
+		save_dialog.do_overwrite_confirmation = true;
+		save_dialog.modal = true;
 		save_dialog.response.connect ((dialog, response_id) => {
 			switch (response_id) {
 				case Gtk.ResponseType.ACCEPT:
