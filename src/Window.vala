@@ -98,13 +98,13 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 	private void update_status () {
 		int width, height, x, y;
 
-        get_size (out width, out height);
-        get_position (out x, out y);
+		get_size (out width, out height);
+		get_position (out x, out y);
 
-        settings.pos_x = x;
-        settings.pos_y = y;
-        settings.window_width = width;
-        settings.window_height = height;
+		settings.pos_x = x;
+		settings.pos_y = y;
+		settings.window_width = width;
+		settings.window_height = height;
 	}
 
 	public void show_app () {

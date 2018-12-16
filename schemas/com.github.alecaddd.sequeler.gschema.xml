@@ -1,63 +1,63 @@
 <schemalist>
-    <schema id="com.github.alecaddd.sequeler" path="/com/github/alecaddd/sequeler/" gettext-domain="sequeler">
-        <key name="pos-x" type="i">
-            <default>360</default>
-            <summary>The saved horizontal position of the window.</summary>
-            <description>The saved horizontal position of the window.</description>
-        </key>
+	<schema id="com.github.alecaddd.sequeler" path="/com/github/alecaddd/sequeler/" gettext-domain="sequeler">
+		<key name="pos-x" type="i">
+			<default>360</default>
+			<summary>The saved horizontal position of the window.</summary>
+			<description>The saved horizontal position of the window.</description>
+		</key>
 
-        <key name="pos-y" type="i">
-            <default>360</default>
-            <summary>The vertical position width of the window.</summary>
-            <description>The saved vertical position of the window.</description>
-        </key>
+		<key name="pos-y" type="i">
+			<default>360</default>
+			<summary>The vertical position width of the window.</summary>
+			<description>The saved vertical position of the window.</description>
+		</key>
 
-        <key name="window-width" type="i">
-            <default>900</default>
-            <summary>The saved width of the window.</summary>
-            <description>The saved width of the window. Must be greater than 750, or it will not take effect.</description>
-        </key>
+		<key name="window-width" type="i">
+			<default>900</default>
+			<summary>The saved width of the window.</summary>
+			<description>The saved width of the window. Must be greater than 750, or it will not take effect.</description>
+		</key>
 
-        <key name="window-height" type="i">
-            <default>600</default>
-            <summary>The saved height of the window.</summary>
-            <description>The saved height of the window. Must be greater than 500, or it will not take effect.</description>
-        </key>
+		<key name="window-height" type="i">
+			<default>600</default>
+			<summary>The saved height of the window.</summary>
+			<description>The saved height of the window. Must be greater than 500, or it will not take effect.</description>
+		</key>
 
-        <key name="tot-connections" type="i">		
-            <default>0</default>		
-            <summary>Total amount of saved connections.</summary>		
-            <description>Increase the amount at every new connection, set a unique ID for every connection.</description>		
-        </key>
+		<key name="tot-connections" type="i">		
+			<default>0</default>		
+			<summary>Total amount of saved connections.</summary>		
+			<description>Increase the amount at every new connection, set a unique ID for every connection.</description>		
+		</key>
 
-        <key name="limit-results" type="i">		
-            <default>1000</default>		
-            <summary>Max rows to show in Content tab.</summary>		
-            <description>Split results based on max amount, helps generate the pagination.</description>		
-        </key>
+		<key name="limit-results" type="i">		
+			<default>1000</default>		
+			<summary>Max rows to show in Content tab.</summary>		
+			<description>Split results based on max amount, helps generate the pagination.</description>		
+		</key>
 
-        <key name="saved-connections" type="as">
-            <default>[]</default>
-            <summary>The saved configured conenctions</summary>
-            <description>All the configured connections you saved are here</description>
-        </key>
+		<key name="saved-connections" type="as">
+			<default>[]</default>
+			<summary>The saved configured conenctions</summary>
+			<description>All the configured connections you saved are here</description>
+		</key>
 
-        <key name="save-quick" type="b">
-            <default>true</default>
-            <summary>Save Quick Connections</summary>
-            <description>Automatically Save a Quick Connections into the Database Library.</description>
-        </key>
+		<key name="save-quick" type="b">
+			<default>true</default>
+			<summary>Save Quick Connections</summary>
+			<description>Automatically Save a Quick Connections into the Database Library.</description>
+		</key>
 
-        <key name="dark-theme" type="b">
-            <default>false</default>
-            <summary>Use dark theme</summary>
-            <description>Switch between Light and Dark theme.</description>
-        </key>
+		<key name="dark-theme" type="b">
+			<default>false</default>
+			<summary>Use dark theme</summary>
+			<description>Switch between Light and Dark theme.</description>
+		</key>
 
-        <key name="version" type="s">
-            <default>""</default>
-            <summary>Current Version</summary>
-            <description>Check current App version for upgrades on startup.</description>
-        </key>
-    </schema>
+		<key name="version" type="s">
+			<default>""</default>
+			<summary>Current Version</summary>
+			<description>Check current App version for upgrades on startup.</description>
+		</key>
+	</schema>
 </schemalist>
