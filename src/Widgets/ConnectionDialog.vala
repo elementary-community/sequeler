@@ -48,11 +48,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Sequeler.Partials.Entry db_password_entry;
 	private Sequeler.Partials.Entry db_port_entry;
 	private Gtk.FileChooserButton db_file_entry;
-	private Gtk.Separator db_separator;
 
 	private string keyfile1;
 	private string keyfile2;
-	private Gtk.Separator ssh_separator;
 	private Sequeler.Partials.LabelForm ssh_switch_label;
 	private Gtk.Grid ssh_switch_container;
 	private Gtk.Switch ssh_switch;
@@ -183,10 +181,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		form_grid.attach (db_host_label, 0, 2, 1, 1);
 		form_grid.attach (db_host_entry, 1, 2, 1, 1);
 
-		db_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-		db_separator.margin_top = 10;
-		db_separator.margin_bottom = 10;
-		form_grid.attach (db_separator, 0, 3, 2, 1);
+		var expander = new Gtk.Expander ("Database");
+		expander.set_expanded (true);
+
+		expander.add (form_grid);
+		body.add (expander);
+		form_grid = new Gtk.Grid ();
+		form_grid.margin = 30;
+		form_grid.row_spacing = 10;
+		form_grid.column_spacing = 20;
 
 		db_name_label = new Sequeler.Partials.LabelForm (_("Database Name:"));
 		db_name_entry = new Sequeler.Partials.Entry ("", null);
@@ -209,7 +212,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			if (pos == Gtk.EntryIconPosition.SECONDARY) {
 				db_password_entry.visibility = !db_password_entry.visibility;
 			}
- 			if (db_password_entry.visibility) {
+			if (db_password_entry.visibility) {
 				db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-allow-symbolic");
 			} else {
 				db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
@@ -243,10 +246,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_file_entry.visible = false;
 		db_file_entry.no_show_all = true;
 
-		ssh_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
-		ssh_separator.margin_top = 10;
-		ssh_separator.margin_bottom = 10;
-		form_grid.attach (ssh_separator, 0, 9, 2, 1);
+		expander = new Gtk.Expander ("Properties");
+		expander.set_expanded (true);
+
+		expander.add (form_grid);
+		body.add (expander);
+		form_grid = new Gtk.Grid ();
+		form_grid.margin = 30;
+		form_grid.row_spacing = 10;
+		form_grid.column_spacing = 20;
 
 		ssh_switch = new Gtk.Switch ();
 		ssh_switch_container = new Gtk.Grid ();
@@ -264,7 +272,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_host_entry = new Sequeler.Partials.Entry ("", null);
 		form_grid.attach (ssh_host_label, 0, 11, 1, 1);
 		form_grid.attach (ssh_host_entry, 1, 11, 1, 1);
-		
+
 		ssh_username_label = new Sequeler.Partials.LabelForm (_("SSH Username:"));;
 		ssh_username_entry = new Sequeler.Partials.Entry ("", null);
 		form_grid.attach (ssh_username_label, 0, 12, 1, 1);
@@ -286,7 +294,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		});
 		form_grid.attach (ssh_password_label, 0, 13, 1, 1);
 		form_grid.attach (ssh_password_entry, 1, 13, 1, 1);
-		
+
 		ssh_port_label = new Sequeler.Partials.LabelForm (_("SSH Port:"));;
 		ssh_port_entry = new Sequeler.Partials.Entry (_("Optional"), null);
 		form_grid.attach (ssh_port_label, 0, 14, 1, 1);
@@ -307,12 +315,22 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			if (response == 0) {
 				try {
 					ssh_switch.active = false;
-                    AppInfo.launch_default_for_uri ("https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/", null);
-                } catch (Error e) {
-                    warning ("%s\n", e.message);
-                }
+						AppInfo.launch_default_for_uri ("https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/", null);
+					} catch (Error e) {
+						warning ("%s\n", e.message);
+					}
 			}
 		});
+
+		expander = new Gtk.Expander ("SSH properties");
+
+		expander.add (form_grid);
+		body.add (expander);
+
+		form_grid = new Gtk.Grid ();
+		form_grid.margin = 30;
+		form_grid.row_spacing = 10;
+		form_grid.column_spacing = 20;
 
 		form_grid.attach (infobar, 0, 15, 2, 1);
 
@@ -446,7 +464,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			ssh_loop.run ();
 
 			ssh_switch.active = bool.parse (update_data["has_ssh"]);
-			
+
 			ssh_host_entry.text = (update_data["ssh_host"] != null) ? update_data["ssh_host"] : "";
 			ssh_username_entry.text = (update_data["ssh_username"] != null) ? update_data["ssh_username"] : "";
 			ssh_password_entry.text = (old_ssh_password != null) ? old_ssh_password : "";
@@ -493,13 +511,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_port_entry.visible = !toggle;
 		db_port_entry.no_show_all = toggle;
 
-		db_separator.visible = !toggle;
-		db_separator.no_show_all = toggle;
-
 		if (toggle) ssh_switch.active = false;
 
-		ssh_separator.visible = !toggle;
-		ssh_separator.no_show_all = toggle;
 		ssh_switch_container.visible = !toggle;
 		ssh_switch_container.no_show_all = toggle;
 		ssh_switch_label.visible = !toggle;
@@ -568,7 +581,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		}
 
 		SourceFunc callback = open_ssh_connection.callback;
-		
+
 		new Thread <void*> (null, () => {
 			try {
 				connection_manager.ssh_tunnel_init (is_real);
