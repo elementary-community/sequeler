@@ -39,4 +39,4 @@ subdir('data')
 subdir('po')
 subdir('schemas')
 
-meson.add_install_script('meson/post_install.py')
+meson.add_install_script('build-aux/meson_post_install.py')
