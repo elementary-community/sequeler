@@ -59,7 +59,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 
 		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
-		reload_btn.clicked.connect (reload_library);
+		reload_btn.clicked.connect (() => { reload_library.begin (); });
 
 		var export_btn = new Sequeler.Partials.HeaderBarButton ("document-save-symbolic", _("Export Library"));
 		export_btn.clicked.connect (export_library);
@@ -147,7 +147,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
 			settings.delete_connection (data);
 			item_box.remove (item);
-			reload_library ();
+			reload_library.begin ();
 		}
 
 		message_dialog.destroy ();
@@ -165,19 +165,30 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
 			settings.clear_connections ();
 			item_box.forall ((item) => item_box.remove (item));
-			reload_library ();
+			reload_library.begin ();
 		}
 
 		message_dialog.destroy ();
 	}
 
-	public void reload_library () {
-		item_box.forall ((item) => item_box.remove (item));
-		foreach (var new_conn in settings.saved_connections) {
-			var array = settings.arraify_data (new_conn);
-			add_item (array);
-		}
-		item_box.show_all ();
+	public async void reload_library () {
+		SourceFunc callback = reload_library.callback;
+
+		ThreadFunc<bool> run = () => {
+			item_box.@foreach ((item) => item_box.remove (item));
+
+			foreach (var new_conn in settings.saved_connections) {
+				var array = settings.arraify_data (new_conn);
+				add_item (array);
+			}
+			item_box.show_all ();
+
+			Idle.add((owned) callback);
+			return true;
+		};
+		new Thread<bool>("reload-library", run);
+
+		yield;
 
 		if (settings.saved_connections.length > 0) {
 			delete_all.sensitive = true;
@@ -186,12 +197,12 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		}
 	}
 
-	public void check_add_item (Gee.HashMap<string, string> data) {
+	public async void check_add_item (Gee.HashMap<string, string> data) {
 		foreach (var conn in settings.saved_connections) {
 			var check = settings.arraify_data (conn);
 			if (check["id"] == data["id"]) {
 				settings.edit_connection (data, conn);
-				reload_library ();
+				//  reload_library.begin ();
 				return;
 			}
 		}
@@ -199,7 +210,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		settings.add_connection (data);
 		add_item (data);
 
-		reload_library ();
+		//  reload_library.begin ();
+
+		yield;
 	}
 
 	public void check_open_sqlite_file (string path, string name) {
@@ -207,7 +220,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			var check = settings.arraify_data (conn);
 			if (check["file_path"] == path) {
 				settings.edit_connection (check, conn);
-				reload_library ();
+				reload_library.begin ();
 				// open connection
 				item_box.get_child_at_index (0).activate ();
 				return;
@@ -230,7 +243,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		settings.add_connection (data);
 		add_item (data);
 
-		reload_library ();
+		reload_library.begin ();
 		// open connection
 		item_box.get_child_at_index (0).activate ();
 	}
@@ -275,10 +288,10 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 					button.sensitive = true;
 
 					if (settings.save_quick) {
-						window.main.library.check_add_item (data);
+						window.main.library.check_add_item.begin (data);
 					}
 
-					window.main.connection_opened (connection_manager);
+					window.main.connection_opened.begin (connection_manager);
 				} else {
 					connection_warning (result["msg"], data["name"]);
 					spinner.stop ();

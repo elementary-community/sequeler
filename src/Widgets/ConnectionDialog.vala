@@ -617,7 +617,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		toggle_spinner (true);
 		write_response (_("Saving Connection\u2026"));
 
-		window.main.library.check_add_item (data);
+		window.main.library.check_add_item.begin (data);
 
 		toggle_spinner (false);
 		write_response (_("Connection Saved!"));
@@ -652,9 +652,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			loop.run ();
 
 			if (result["status"] == "true") {
-				//  if (settings.save_quick) {
-				//  	window.main.library.check_add_item (data);
-				//  }
+				if (settings.save_quick) {
+					window.main.library.check_add_item.begin (data);
+				}
 
 				window.data_manager.data = data;
 				window.main.connection_opened.begin (connection_manager);
