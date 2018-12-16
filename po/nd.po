@@ -1,9 +1,151 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 13:53-0800\n"
+"POT-Creation-Date: 2018-12-16 16:39+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:7
+#: data/com.github.alecaddd.sequeler.desktop.in:3
+msgid "Sequeler"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:8
+#: data/com.github.alecaddd.sequeler.desktop.in:5
+msgid "Friendly SQL Client"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:10
+msgid "Easily connect to your local or remote database"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:13
+msgid ""
+"Store your Database Connections in the built-in library, type and execute "
+"SQL commands directly in the App, and do everything you need to do without "
+"the necessity of opening the terminal."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:16
+msgid "Features Include:"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:20
+msgid "Test Connections before saving them"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:21
+msgid "View Table structure, content, and relations"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:22
+msgid "Write multiple custom SQL Queries"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:23
+msgid "Switch between light and dark mode"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in:24
+msgid ""
+"Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift"
+"+n), multiple instances (ctrl+n)"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.desktop.in:4
+msgid "Sequeler App"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.desktop.in:9
+msgid "com.github.alecaddd.sequeler"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.desktop.in:12
+msgid "SQL;MySql;Database;MariaDB;S3;PostgreSQL;"
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:5
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:6
+msgid "The saved horizontal position of the window."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:11
+msgid "The vertical position width of the window."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:12
+msgid "The saved vertical position of the window."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:17
+msgid "The saved width of the window."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:18
+msgid ""
+"The saved width of the window. Must be greater than 750, or it will not take "
+"effect."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:23
+msgid "The saved height of the window."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:24
+msgid ""
+"The saved height of the window. Must be greater than 500, or it will not "
+"take effect."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:29
+msgid "Total amount of saved connections."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:30
+msgid ""
+"Increase the amount at every new connection, set a unique ID for every "
+"connection."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:35
+msgid "Max rows to show in Content tab."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:36
+msgid "Split results based on max amount, helps generate the pagination."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:41
+msgid "The saved configured conenctions"
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:42
+msgid "All the configured connections you saved are here"
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:47
+msgid "Save Quick Connections"
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:48
+msgid "Automatically Save a Quick Connections into the Database Library."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:53
+msgid "Use dark theme"
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:54
+msgid "Switch between Light and Dark theme."
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:59
+msgid "Current Version"
+msgstr ""
+
+#: schemas/com.github.alecaddd.sequeler.gschema.xml:60
+msgid "Check current App version for upgrades on startup."
+msgstr ""
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
