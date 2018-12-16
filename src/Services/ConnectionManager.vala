@@ -305,9 +305,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 				if (-1 == res) {
 					debug ("Error on select!");
-					if (is_real) {
-						ssh_tunnel_close (sock, listensock, forwardsock, Log.FILE + ":" + Log.LINE.to_string ());
-					}
+					direct_shutdown(forwardsock);
 					break;
 				}
 
@@ -315,11 +313,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 					var len = Posix.recv (forwardsock, buf, 16384, 0);
 					if (len < 0) {
 						debug ("Error reading from the forwardsock!");
-						ssh_tunnel_close (sock, listensock, forwardsock, Log.FILE + ":" + Log.LINE.to_string ());
+						direct_shutdown(forwardsock);
 						break;
 					} else if (0 == len) {
 						debug ("The client at %s:%d disconnected!", local_listenip, local_listenport);
-						//  ssh_tunnel_close (sock, listensock, forwardsock);
+						direct_shutdown(forwardsock);
 						break;
 					}
 					ssize_t wr = 0;
@@ -328,7 +326,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 						i = channel.write (buf[0:len]);
 						if (i < 0) {
 							debug ("Error writing on the SSH channel: %s", i.to_string ());
-							ssh_tunnel_close (sock, listensock, forwardsock, Log.FILE + ":" + Log.LINE.to_string ());
+							direct_shutdown(forwardsock);
 							break;
 						}
 						wr += i;
@@ -341,7 +339,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 						break;
 					else if (len < 0) {
 						debug ("Error reading from the SSH channel: %d", (int) len);
-						ssh_tunnel_close (sock, listensock, forwardsock, Log.FILE + ":" + Log.LINE.to_string ());
+						direct_shutdown(forwardsock);
 						break;
 					}
 					ssize_t wr = 0;
@@ -349,16 +347,14 @@ public class Sequeler.Services.ConnectionManager : Object {
 						ssize_t i = Posix.send (forwardsock, buf[wr:buf.length], len - wr, 0);
 						if (i <= 0) {
 							debug ("Error writing on the forwardsock!");
-							ssh_tunnel_close (sock, listensock, forwardsock, Log.FILE + ":" + Log.LINE.to_string ());
+							direct_shutdown(forwardsock);
 							break;
 						}
 						wr += i;
 					}
 					if (channel.eof () != SSH2.Error.NONE) {
 						debug ("The remote client at %s:%d disconnected!", remote_desthost, remote_destport);
-						if (is_real) {
-							ssh_tunnel_close (sock, listensock, forwardsock, Log.FILE + ":" + Log.LINE.to_string ());
-						}
+						direct_shutdown(forwardsock);
 						break;
 					}
 				}
@@ -366,24 +362,24 @@ public class Sequeler.Services.ConnectionManager : Object {
 		}
 	}
 
-	public void ssh_tunnel_close (int sock, int listensock, int forwardsock, string from = "mah") {
+	public void ssh_tunnel_close (int sock, int listensock, int forwardsock, string from = "Unknown") {
 		debug ("closing ssh tunnel from: %s", from);
 
 		Posix.close (listensock);
 		Posix.close (forwardsock);
 
 		if (session != null) {
-			session.disconnect ("Client disconnecting normally");
+	   		session.disconnect ("Client disconnecting normally");
 		}
 
 		Posix.close (sock);
 		SSH2.exit ();
 	}
 
-	//  public void direct_shutdown (int forwardsock) {
-	//  	session.blocking = true;
-	//  	Posix.close (forwardsock);
-	//  }
+	public void direct_shutdown (int forwardsock) {
+		session.blocking = true;
+		Posix.close (forwardsock);
+	}
 
 	public int run_query (string query) throws Error requires (connection.is_opened ()) {
 		return connection.execute_non_select_command (query);
