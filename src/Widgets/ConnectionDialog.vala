@@ -531,7 +531,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				break;
 			case Action.CANCEL:
 				if (connection_manager != null) {
-					connection_manager.ssh_tunnel_close (-1, -1, -1);
+					connection_manager.ssh_tunnel_close (-1, -1, -1, "ConnectionDialog:534");
 				}
 				destroy ();
 				break;
@@ -652,9 +652,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			loop.run ();
 
 			if (result["status"] == "true") {
-				if (settings.save_quick) {
-					window.main.library.check_add_item (data);
-				}
+				//  if (settings.save_quick) {
+				//  	window.main.library.check_add_item (data);
+				//  }
 
 				window.data_manager.data = data;
 				window.main.connection_opened.begin (connection_manager);

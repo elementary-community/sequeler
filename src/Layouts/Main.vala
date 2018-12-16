@@ -66,7 +66,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 	}
 
 	public async void connection_opened (Sequeler.Services.ConnectionManager? cnn_manager) {
-		yield window.headerbar.toggle_logout ();
+		window.headerbar.toggle_logout.begin ();
 		connection_manager = cnn_manager;
 		sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
 		main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.SLIDE_LEFT);
@@ -75,7 +75,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 		window.headerbar.title = _("Connected to %s").printf (cnn_manager.data["title"]);
 		window.headerbar.subtitle = cnn_manager.data["username"] + "@" + host;
 
-		database_schema.reload_schema ();
+		//  database_schema.reload_schema ();
 
 		yield;
 	}
@@ -85,7 +85,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 			connection_manager.connection.clear_events_list ();
 			connection_manager.connection.close ();
 			connection_manager.connection = null;
-			connection_manager.ssh_tunnel_close (-1, -1, -1);
+			connection_manager.ssh_tunnel_close (-1, -1, -1, "Main:88");
 		}
 
 		connection_manager = null;
