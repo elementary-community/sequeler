@@ -1,5 +1,6 @@
 # project name and programming language
-project('com.github.alecaddd.sequeler', 'vala', 'c')
+project('com.github.alecaddd.sequeler', 'vala', 'c',
+    version: '0.6.5')
 
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required: true)
@@ -22,7 +23,7 @@ asresources = gnome.compile_resources(
 )
 
 # Set our translation domain
-add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
+add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language: 'c')
 
 vala_lint = find_program('io.elementary.vala-lint', required : false)
 if vala_lint.found()
@@ -38,4 +39,4 @@ subdir('data')
 subdir('po')
 subdir('schemas')
 
-meson.add_install_script('meson/post_install.py')
+meson.add_install_script('build-aux/meson_post_install.py')

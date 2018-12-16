@@ -5,5 +5,7 @@ build/
 parts/
 prime/
 stage/
+builddir/
+.flatpak-builder/
 *~
 *.snap

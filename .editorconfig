@@ -1,0 +1,12 @@
+root = true
+[*]
+indent_style = tab
+trim_trailing_whitespace = true
+insert_final_newline = true
+charset = utf-8
+
+[*.{build,json,xml.in}]
+indent_size = 2
+
+[*.vala]
+indent_size = 4
