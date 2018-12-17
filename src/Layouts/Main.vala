@@ -89,7 +89,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 
 	public void connection_closed () {
 		if (connection_manager.data["has_ssh"] == "true") {
-			connection_manager.ssh_tunnel_close (-1, -1, -1, "Main:88");
+			connection_manager.ssh_tunnel_close ("Main:88");
 		}
 
 		if (connection_manager.connection.is_opened ()) {

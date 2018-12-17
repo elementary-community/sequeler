@@ -544,7 +544,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				break;
 			case Action.CANCEL:
 				if (connection_manager != null) {
-					connection_manager.ssh_tunnel_close (-1, -1, -1, Log.FILE + ":" + Log.LINE.to_string ());
+					connection_manager.ssh_tunnel_close (Log.FILE + ":" + Log.LINE.to_string ());
 				}
 				destroy ();
 				break;
