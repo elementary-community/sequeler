@@ -172,45 +172,51 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	public async void reload_library () {
-		SourceFunc callback = reload_library.callback;
-
-		ThreadFunc<bool> run = () => {
+		new Thread<void*> ("reload-library", () => {
 			item_box.@foreach ((item) => item_box.remove (item));
+			
+			Idle.add (() => {
+				foreach (var new_conn in settings.saved_connections) {
+					var array = settings.arraify_data (new_conn);
+					add_item (array);
+				}
+				item_box.show_all ();
 
-			foreach (var new_conn in settings.saved_connections) {
-				var array = settings.arraify_data (new_conn);
-				add_item (array);
-			}
-			item_box.show_all ();
+				return false;
+			});
 
-			Idle.add((owned) callback);
-			return true;
-		};
-		new Thread<bool>("reload-library", run);
+			delete_all.sensitive = (settings.saved_connections.length > 0);
+			return null;
+		});
 
 		yield;
-
-		if (settings.saved_connections.length > 0) {
-			delete_all.sensitive = true;
-		} else {
-			delete_all.sensitive = false;
-		}
 	}
 
 	public async void check_add_item (Gee.HashMap<string, string> data) {
-		foreach (var conn in settings.saved_connections) {
-			var check = settings.arraify_data (conn);
-			if (check["id"] == data["id"]) {
-				settings.edit_connection (data, conn);
-				//  reload_library.begin ();
-				return;
+		new Thread<void*> ("check-add-item", () => {
+			foreach (var conn in settings.saved_connections) {
+				var check = settings.arraify_data (conn);
+				if (check["id"] == data["id"]) {
+					settings.edit_connection (data, conn);
+
+					Idle.add (() => {
+						reload_library.begin ();
+						return false;
+					});
+					return null;
+				}
 			}
-		}
+			
+			settings.add_connection (data);
+			add_item (data);
+			
+			Idle.add (() => {
+				reload_library.begin ();
+				return false;
+			});
 
-		settings.add_connection (data);
-		add_item (data);
-
-		//  reload_library.begin ();
+			return null;
+		});
 
 		yield;
 	}
