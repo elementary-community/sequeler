@@ -28,30 +28,7 @@
     /* access localhost databases */
     "--share=network"
   ],
-<<<<<<< HEAD
-  "modules": [{
-      "name": "libgee",
-      "sources": [{
-        "type": "archive",
-        "url": "https://github.com/GNOME/libgee/archive/0.20.1.tar.gz",
-        "sha256": "d76d0bf8ae6659dba6018fadf2ccce218ccbc107666925552008806a29702c4b"
-      }]
-    },
-    {
-      "name": "granite",
-      "buildsystem": "cmake-ninja",
-      "config-opts": [
-        "-DCMAKE_BUILD_TYPE=Release"
-      ],
-      "sources": [{
-        "type": "archive",
-        "url": "https://github.com/elementary/granite/archive/5.2.1.tar.gz",
-        "sha256": "2166902654f62d300c6990d634f494632aaf14dfe10395dd9ff9d52a503c7ca8"
-      }]
-    },
-=======
   "modules": [
->>>>>>> master
     {
       "name": "libxml2",
       "build-options": {
