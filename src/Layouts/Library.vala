@@ -272,8 +272,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 				}
 				return null;
 			});
-
-			yield;
 		} else {
 			init_real_connection_begin (data, spinner, button);
 		}
@@ -284,34 +282,36 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
-		var loop = new MainLoop ();
+		var result = new Gee.HashMap<string, string> ();
+
 		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
-			try {
-				Gee.HashMap<string, string> result = connection_manager.init_connection.end (res);
-				if (result["status"] == "true") {
-					loop.quit ();
-					spinner.stop ();
-					button.sensitive = true;
-
-					if (settings.save_quick) {
-						window.main.library.check_add_item.begin (data);
-					}
-
-					window.main.connection_opened.begin (connection_manager);
-				} else {
-					connection_warning (result["msg"], data["name"]);
+			new Thread<void*> (null, () => {
+				try {
+					result = connection_manager.init_connection.end (res);
+				} catch (ThreadError e) {
+					connection_warning (e.message, data["name"]);
 					spinner.stop ();
 					button.sensitive = true;
 				}
-			} catch (ThreadError e) {
-				connection_warning (e.message, data["name"]);
-				spinner.stop ();
-				button.sensitive = true;
-			}
-			loop.quit ();
-		});
 
-		loop.run ();
+				Idle.add (() => {
+					spinner.stop ();
+					button.sensitive = true;
+
+					if (result["status"] == "true") {
+						if (settings.save_quick) {
+							window.main.library.check_add_item.begin (data);
+						}
+
+						window.main.connection_opened.begin (connection_manager);
+					} else {
+						connection_warning (result["msg"], data["name"]);
+					}
+					return false;
+				});
+				return null;
+			});
+		});
 	}
 
 	private void export_library () {

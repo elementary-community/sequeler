@@ -634,38 +634,33 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 		}
 
-		SourceFunc callback = init_connection.callback;
-
-		new Thread <void*> (null, () => {
-			Idle.add ((owned) callback);
-			var loop = new MainLoop ();
-			connection_manager.init_connection.begin (connection_manager, (obj, res) => {
+		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
+			new Thread<void*> (null, () => {
 				try {
 					result = connection_manager.init_connection.end (res);
 				} catch (ThreadError e) {
 					write_response (e.message);
 					toggle_spinner (false);
 				}
-				loop.quit ();
+
+				Idle.add (() => {
+					if (result["status"] == "true") {
+						if (settings.save_quick) {
+							window.main.library.check_add_item.begin (data);
+						}
+
+						window.data_manager.data = data;
+						window.main.connection_opened.begin (connection_manager);
+
+						destroy ();
+					} else {
+						write_response (result["msg"]);
+						toggle_spinner (false);
+					}
+					return false;
+				});
+				return null;
 			});
-
-			loop.run ();
-
-			if (result["status"] == "true") {
-				if (settings.save_quick) {
-					window.main.library.check_add_item.begin (data);
-				}
-
-				window.data_manager.data = data;
-				window.main.connection_opened.begin (connection_manager);
-
-				destroy ();
-			} else {
-				write_response (result["msg"]);
-				toggle_spinner (false);
-			}
-
-			return null;
 		});
 
 		yield;
