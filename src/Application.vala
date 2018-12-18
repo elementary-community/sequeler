@@ -90,6 +90,8 @@ public class Sequeler.Application : Gtk.Application {
 
     protected override void activate () {
         var window = new Sequeler.Window (this);
+        Gtk.Settings.get_default().set_property("gtk-theme-name", "elementary");
+        Gtk.Settings.get_default().set_property("gtk-icon-theme-name", "elementary");
         this.add_window (window);
     }
 }
