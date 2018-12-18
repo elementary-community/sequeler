@@ -156,45 +156,53 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 	public void reload_schema () {
 		var schema = get_schema ();
-		reset_schema_combo ();
-		
-		if (schema == null) {
-			return;
-		}
 
-		if (window.data_manager.data["type"] == "SQLite") {
-			populate_schema (null, schema);
-			return;
-		}
-
-		Gda.DataModelIter _iter = schema.create_iter ();
-		schemas = new Gee.HashMap<int, string> ();
-		int i = 1;
-		while (_iter.move_next ()) {
-			schema_list.append (out iter);
-			schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
-			schemas.set (i,_iter.get_value_at (0).get_string ());
-			i++;
-		}
-
-		if (window.data_manager.data["type"] != "PostgreSQL") {
-			schema_list_combo.sensitive = true;
-		}
-
-		if (window.data_manager.data["type"] == "PostgreSQL") {
-			foreach (var entry in schemas.entries) {
-				if ("public" == entry.value) {
-					schema_list_combo.set_active (entry.key);
+		new Thread<void*> ("reload-schema", () => {
+			reset_schema_combo ();
+			
+			if (schema == null) {
+				return null;
+			}
+	
+			Idle.add (() => {
+				if (window.data_manager.data["type"] == "SQLite") {
+					populate_schema (null, schema);
+					return false;
 				}
-			}
-			return;
-		}
+		
+				Gda.DataModelIter _iter = schema.create_iter ();
+				schemas = new Gee.HashMap<int, string> ();
+				int i = 1;
+				while (_iter.move_next ()) {
+					schema_list.append (out iter);
+					schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
+					schemas.set (i,_iter.get_value_at (0).get_string ());
+					i++;
+				}
+		
+				if (window.data_manager.data["type"] != "PostgreSQL") {
+					schema_list_combo.sensitive = true;
+				}
+		
+				if (window.data_manager.data["type"] == "PostgreSQL") {
+					foreach (var entry in schemas.entries) {
+						if ("public" == entry.value) {
+							schema_list_combo.set_active (entry.key);
+						}
+					}
+					return false;
+				}
+		
+				foreach (var entry in schemas.entries) {
+					if (window.data_manager.data["name"] == entry.value) {
+						schema_list_combo.set_active (entry.key);
+					}
+				}
 
-		foreach (var entry in schemas.entries) {
-			if (window.data_manager.data["name"] == entry.value) {
-				schema_list_combo.set_active (entry.key);
-			}
-		}
+				return false;
+			});
+			return null;
+		});
 	}
 
 	public Gda.DataModel? get_schema () {
