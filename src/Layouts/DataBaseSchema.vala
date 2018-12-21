@@ -339,7 +339,15 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		toolbar_spinner.start ();
 
-		window.main.connection_manager.connection.close ();
+		//  window.main.connection_manager.connection.close ();
+		var connection_manager = window.main.connection_manager;
+
+		if (connection_manager.connection.is_opened ()) {
+			connection_manager.connection.clear_events_list ();
+			connection_manager.connection.close ();
+			connection_manager.connection = null;
+		}
+
 		var new_connection_manager = new Sequeler.Services.ConnectionManager (window, window.data_manager.data);
 
 		var loop = new MainLoop ();
