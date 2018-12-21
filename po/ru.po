@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 13:53-0800\n"
+"POT-Creation-Date: 2018-12-21 12:18-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -15,7 +15,7 @@ msgstr ""
 msgid "Don't know what to do"
 msgstr ""
 
-#: src/Application.vala:81
+#: src/Application.vala:80
 msgid "Something completely unexpected happened"
 msgstr ""
 
@@ -35,8 +35,8 @@ msgstr "Тёмный фон"
 msgid "New Window"
 msgstr "Новое окно"
 
-#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:101
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:128
+#: src/Widgets/ConnectionDialog.vala:151
 msgid "New Connection"
 msgstr "Новое подключение"
 
@@ -48,68 +48,68 @@ msgstr "Выход"
 msgid "Menu"
 msgstr ""
 
-#: src/Layouts/Main.vala:75
+#: src/Layouts/Main.vala:78
 #, fuzzy, c-format
 msgid "Connected to %s"
 msgstr "Подключиться к "
 
-#: src/Layouts/Library.vala:44
+#: src/Layouts/Library.vala:49
 msgid "SAVED CONNECTIONS"
 msgstr "ПОДКЛЮЧЕНИЯ"
 
-#: src/Layouts/Library.vala:49
+#: src/Layouts/Library.vala:54
 msgid "Delete All"
 msgstr "Удалить всё"
 
-#: src/Layouts/Library.vala:56
+#: src/Layouts/Library.vala:61
 msgid "Reload Library"
 msgstr "Перезагрузить библиотеку"
 
-#: src/Layouts/Library.vala:59
+#: src/Layouts/Library.vala:66
 msgid "Export Library"
 msgstr "Экспортировать библиотеку"
 
-#: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:141 src/Layouts/Library.vala:159
 msgid "Are you sure you want to proceed?"
 msgstr "Вы действительно хотите сделать это?"
 
-#: src/Layouts/Library.vala:134
+#: src/Layouts/Library.vala:141
 #, fuzzy
 msgid "By deleting this connection you won’t be able to recover this data."
 msgstr "Подключение будет удалено безвозвратно."
 
-#: src/Layouts/Library.vala:137
+#: src/Layouts/Library.vala:144
 msgid "Yes, Delete!"
 msgstr "Да, удалить!"
 
-#: src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:159
 #, fuzzy
 msgid "All the data will be deleted and you won’t be able to recover it."
 msgstr "Все подключения будут удалены безвозвратно."
 
-#: src/Layouts/Library.vala:155
+#: src/Layouts/Library.vala:162
 msgid "Yes, Delete All!"
 msgstr "Да, удалить всё!"
 
-#: src/Layouts/Library.vala:270 src/Layouts/Views/Query.vala:424
+#: src/Layouts/Library.vala:360 src/Layouts/Views/Query.vala:424
 msgid "Pick a file"
 msgstr ""
 
-#: src/Layouts/Library.vala:273 src/Layouts/Views/Query.vala:427
+#: src/Layouts/Library.vala:363 src/Layouts/Views/Query.vala:427
 msgid "_Save"
 msgstr "_Сохранить"
 
-#: src/Layouts/Library.vala:274 src/Layouts/Welcome.vala:62
+#: src/Layouts/Library.vala:364 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:428
 msgid "_Cancel"
 msgstr "_Отмена"
 
-#: src/Layouts/Library.vala:333
+#: src/Layouts/Library.vala:439
 #, fuzzy, c-format
 msgid "Unable to Connect to %s"
 msgstr "Не удалось подключиться к "
 
-#: src/Layouts/Library.vala:346
+#: src/Layouts/Library.vala:452
 msgid "Unable to Export Library "
 msgstr "Не удалось экспортировать библиотеку "
 
@@ -153,7 +153,7 @@ msgstr "Выберите таблицу"
 msgid "_Open"
 msgstr "_Открыть"
 
-#: src/Layouts/Welcome.vala:106
+#: src/Layouts/Welcome.vala:107
 msgid "Unable to Import Library "
 msgstr "Не удалось импортировать библиотеку "
 
@@ -177,7 +177,7 @@ msgstr "Обновить таблицы"
 msgid "Add Table"
 msgstr "Добавить таблицу"
 
-#: src/Layouts/DataBaseSchema.vala:250
+#: src/Layouts/DataBaseSchema.vala:258
 msgid "TABLES"
 msgstr "ТАБЛИЦЫ"
 
@@ -293,7 +293,7 @@ msgstr "Запрос выполнен успешно! Строк обработ�
 msgid "Query Executed!"
 msgstr "Запрос выполнен!"
 
-#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:232
+#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:368
 msgid "Connect"
 msgstr "Подключиться"
 
@@ -324,84 +324,179 @@ msgstr ""
 msgid "Copy %s"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:191
+#: src/Services/ConnectionManager.vala:165
+#, c-format
+msgid "Libssh2 initialization failed (%d)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:172
+msgid "Failed to open socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:181
+#, fuzzy
+msgid "Failed to connect!"
+msgstr "Не удалось подключиться к "
+
+#: src/Services/ConnectionManager.vala:193
+#, c-format
+msgid "Error when starting up SSH session: %d"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:212
+msgid "Authentication by password failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:222
+msgid "Authentication by public key failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:229
+msgid "No supported authentication methods found!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:236
+msgid "Failed to open listen socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:251
+msgid "Failed to bind. Your Database Port may be wrong!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:257
+msgid "Failed to listen!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:284
+msgid "Failed to accept remote connection!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:293
+msgid ""
+"Could not open the direct-tcpip channel! (Note that this can be a problem at "
+"the server! Please review the server logs.)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:483
 msgid "Error!"
 msgstr "Ошибка!"
 
-#: src/Widgets/ConnectionDialog.vala:61
+#: src/Widgets/ConnectionDialog.vala:87
 msgid "Connection"
 msgstr "Подключение"
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:150
 msgid "Connection Name:"
 msgstr "Имя подключения:"
 
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Widgets/ConnectionDialog.vala:151
 msgid "Connection's name"
 msgstr "Имена подключений"
 
-#: src/Widgets/ConnectionDialog.vala:134
+#: src/Widgets/ConnectionDialog.vala:158
 msgid "Database Type:"
 msgstr "Тип БД:"
 
-#: src/Widgets/ConnectionDialog.vala:156
+#: src/Widgets/ConnectionDialog.vala:180
 msgid "Host:"
 msgstr "Сервер:"
 
-#: src/Widgets/ConnectionDialog.vala:162
+#: src/Widgets/ConnectionDialog.vala:191
 msgid "Database Name:"
 msgstr "Имя БД:"
 
-#: src/Widgets/ConnectionDialog.vala:169
+#: src/Widgets/ConnectionDialog.vala:198
 msgid "Username:"
 msgstr "Пользователь:"
 
-#: src/Widgets/ConnectionDialog.vala:175
+#: src/Widgets/ConnectionDialog.vala:204
 msgid "Password:"
 msgstr "Пароль:"
 
-#: src/Widgets/ConnectionDialog.vala:193
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Port:"
 msgstr "Порт:"
 
-#: src/Widgets/ConnectionDialog.vala:199
+#: src/Widgets/ConnectionDialog.vala:228
 msgid "File Path:"
 msgstr "Файл:"
 
-#: src/Widgets/ConnectionDialog.vala:200
+#: src/Widgets/ConnectionDialog.vala:229
 #, fuzzy
 msgid "Select Your SQLite File…"
 msgstr "Выберите SQLite-файл…"
 
-#: src/Widgets/ConnectionDialog.vala:227
+#: src/Widgets/ConnectionDialog.vala:254
+#, fuzzy
+msgid "Connect via SSH Tunnel:"
+msgstr "Подключиться через терминал"
+
+#: src/Widgets/ConnectionDialog.vala:263
+#, fuzzy
+msgid "SSH Host:"
+msgstr "Сервер:"
+
+#: src/Widgets/ConnectionDialog.vala:268
+#, fuzzy
+msgid "SSH Username:"
+msgstr "Пользователь:"
+
+#: src/Widgets/ConnectionDialog.vala:273
+#, fuzzy
+msgid "SSH Password:"
+msgstr "Пароль:"
+
+#: src/Widgets/ConnectionDialog.vala:290
+#, fuzzy
+msgid "SSH Port:"
+msgstr "Порт:"
+
+#: src/Widgets/ConnectionDialog.vala:291
+#, fuzzy
+msgid "Optional"
+msgstr "Отношения"
+
+#: src/Widgets/ConnectionDialog.vala:295
+msgid "Missing SSH Key file!"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:303
+msgid "Generate SSH Key"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:363
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/Widgets/ConnectionDialog.vala:228
+#: src/Widgets/ConnectionDialog.vala:364
 msgid "Save Connection"
 msgstr "Сохранить"
 
-#: src/Widgets/ConnectionDialog.vala:230
+#: src/Widgets/ConnectionDialog.vala:366
 msgid "Test Connection"
 msgstr "Проверить"
 
-#: src/Widgets/ConnectionDialog.vala:368
+#: src/Widgets/ConnectionDialog.vala:559
+msgid "Opening SSH Tunnel…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:589
 msgid "Testing Connection…"
 msgstr "Проверка подключения…"
 
-#: src/Widgets/ConnectionDialog.vala:376
+#: src/Widgets/ConnectionDialog.vala:600
 msgid "Successfully Connected!"
 msgstr "Подключение успешно!"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:618
 msgid "Saving Connection…"
 msgstr "Сохранение подключения…"
 
-#: src/Widgets/ConnectionDialog.vala:398
+#: src/Widgets/ConnectionDialog.vala:623
 msgid "Connection Saved!"
 msgstr "Подключение сохранено!"
 
-#: src/Widgets/ConnectionDialog.vala:406
+#: src/Widgets/ConnectionDialog.vala:631
 msgid "Connecting…"
 msgstr "Подключение…"
 
@@ -417,9 +512,6 @@ msgstr "Подключение…"
 
 #~ msgid "127.0.0.1"
 #~ msgstr "127.0.0.1"
-
-#~ msgid "Connect via Terminal"
-#~ msgstr "Подключиться через терминал"
 
 #~ msgid "Preferences"
 #~ msgstr "Настройки"

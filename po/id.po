@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 13:53-0800\n"
+"POT-Creation-Date: 2018-12-21 12:18-0800\n"
 "PO-Revision-Date: 2018-04-12 18:35+0700\n"
 "Last-Translator: Mahyuddin <yudi.al@gmail.com>\n"
 "Language-Team: \n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Don't know what to do"
 msgstr ""
 
-#: src/Application.vala:81
+#: src/Application.vala:80
 msgid "Something completely unexpected happened"
 msgstr ""
 
@@ -46,8 +46,8 @@ msgstr ""
 msgid "New Window"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:101
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:128
+#: src/Widgets/ConnectionDialog.vala:151
 msgid "New Connection"
 msgstr "Koneksi Baru"
 
@@ -59,69 +59,69 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: src/Layouts/Main.vala:75
+#: src/Layouts/Main.vala:78
 #, fuzzy, c-format
 msgid "Connected to %s"
 msgstr "Menghubungkan"
 
-#: src/Layouts/Library.vala:44
+#: src/Layouts/Library.vala:49
 msgid "SAVED CONNECTIONS"
 msgstr ""
 
-#: src/Layouts/Library.vala:49
+#: src/Layouts/Library.vala:54
 msgid "Delete All"
 msgstr "Hapus Semua"
 
-#: src/Layouts/Library.vala:56
+#: src/Layouts/Library.vala:61
 #, fuzzy
 msgid "Reload Library"
 msgstr "Telusuri Pustaka"
 
-#: src/Layouts/Library.vala:59
+#: src/Layouts/Library.vala:66
 #, fuzzy
 msgid "Export Library"
 msgstr "Telusuri Pustaka"
 
-#: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:141 src/Layouts/Library.vala:159
 msgid "Are you sure you want to proceed?"
 msgstr ""
 
-#: src/Layouts/Library.vala:134
+#: src/Layouts/Library.vala:141
 msgid "By deleting this connection you won’t be able to recover this data."
 msgstr ""
 
-#: src/Layouts/Library.vala:137
+#: src/Layouts/Library.vala:144
 msgid "Yes, Delete!"
 msgstr ""
 
-#: src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:159
 msgid "All the data will be deleted and you won’t be able to recover it."
 msgstr ""
 
-#: src/Layouts/Library.vala:155
+#: src/Layouts/Library.vala:162
 #, fuzzy
 msgid "Yes, Delete All!"
 msgstr "Hapus Semua"
 
-#: src/Layouts/Library.vala:270 src/Layouts/Views/Query.vala:424
+#: src/Layouts/Library.vala:360 src/Layouts/Views/Query.vala:424
 msgid "Pick a file"
 msgstr ""
 
-#: src/Layouts/Library.vala:273 src/Layouts/Views/Query.vala:427
+#: src/Layouts/Library.vala:363 src/Layouts/Views/Query.vala:427
 msgid "_Save"
 msgstr ""
 
-#: src/Layouts/Library.vala:274 src/Layouts/Welcome.vala:62
+#: src/Layouts/Library.vala:364 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:428
 msgid "_Cancel"
 msgstr "_Batal"
 
-#: src/Layouts/Library.vala:333
+#: src/Layouts/Library.vala:439
 #, fuzzy, c-format
 msgid "Unable to Connect to %s"
 msgstr "Hapus Koneksi"
 
-#: src/Layouts/Library.vala:346
+#: src/Layouts/Library.vala:452
 #, fuzzy
 msgid "Unable to Export Library "
 msgstr "Tidak dapat memproses Query!"
@@ -166,7 +166,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:106
+#: src/Layouts/Welcome.vala:107
 #, fuzzy
 msgid "Unable to Import Library "
 msgstr "Tidak dapat memproses Query!"
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Add Table"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:250
+#: src/Layouts/DataBaseSchema.vala:258
 msgid "TABLES"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr "Query Berhasil Dijalankan!"
 msgid "Query Executed!"
 msgstr "Query Berhasil Dijalankan!"
 
-#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:232
+#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:368
 msgid "Connect"
 msgstr "Menghubungkan"
 
@@ -339,88 +339,181 @@ msgstr ""
 msgid "Copy %s"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:191
+#: src/Services/ConnectionManager.vala:165
+#, c-format
+msgid "Libssh2 initialization failed (%d)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:172
+msgid "Failed to open socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:181
+#, fuzzy
+msgid "Failed to connect!"
+msgstr "Hapus Koneksi"
+
+#: src/Services/ConnectionManager.vala:193
+#, c-format
+msgid "Error when starting up SSH session: %d"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:212
+msgid "Authentication by password failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:222
+msgid "Authentication by public key failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:229
+msgid "No supported authentication methods found!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:236
+msgid "Failed to open listen socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:251
+msgid "Failed to bind. Your Database Port may be wrong!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:257
+msgid "Failed to listen!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:284
+msgid "Failed to accept remote connection!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:293
+msgid ""
+"Could not open the direct-tcpip channel! (Note that this can be a problem at "
+"the server! Please review the server logs.)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:483
 msgid "Error!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:61
+#: src/Widgets/ConnectionDialog.vala:87
 #, fuzzy
 msgid "Connection"
 msgstr "Koneksi Baru"
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:150
 #, fuzzy
 msgid "Connection Name:"
 msgstr "Nama koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Widgets/ConnectionDialog.vala:151
 msgid "Connection's name"
 msgstr "Nama koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:134
+#: src/Widgets/ConnectionDialog.vala:158
 msgid "Database Type:"
 msgstr "Tipe Basis Data:"
 
-#: src/Widgets/ConnectionDialog.vala:156
+#: src/Widgets/ConnectionDialog.vala:180
 msgid "Host:"
 msgstr "Utama:"
 
-#: src/Widgets/ConnectionDialog.vala:162
+#: src/Widgets/ConnectionDialog.vala:191
 msgid "Database Name:"
 msgstr "Nama Basis Data:"
 
-#: src/Widgets/ConnectionDialog.vala:169
+#: src/Widgets/ConnectionDialog.vala:198
 msgid "Username:"
 msgstr "Nama pengguna:"
 
-#: src/Widgets/ConnectionDialog.vala:175
+#: src/Widgets/ConnectionDialog.vala:204
 msgid "Password:"
 msgstr "Kata sandi:"
 
-#: src/Widgets/ConnectionDialog.vala:193
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Port:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:199
+#: src/Widgets/ConnectionDialog.vala:228
 msgid "File Path:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:200
+#: src/Widgets/ConnectionDialog.vala:229
 msgid "Select Your SQLite File…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:227
+#: src/Widgets/ConnectionDialog.vala:254
+#, fuzzy
+msgid "Connect via SSH Tunnel:"
+msgstr "Koneksi di Terminal"
+
+#: src/Widgets/ConnectionDialog.vala:263
+#, fuzzy
+msgid "SSH Host:"
+msgstr "Utama:"
+
+#: src/Widgets/ConnectionDialog.vala:268
+#, fuzzy
+msgid "SSH Username:"
+msgstr "Nama pengguna:"
+
+#: src/Widgets/ConnectionDialog.vala:273
+#, fuzzy
+msgid "SSH Password:"
+msgstr "Kata sandi:"
+
+#: src/Widgets/ConnectionDialog.vala:290
+msgid "SSH Port:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:291
+msgid "Optional"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:295
+msgid "Missing SSH Key file!"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:303
+msgid "Generate SSH Key"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:363
 msgid "Close"
 msgstr "Tutup"
 
-#: src/Widgets/ConnectionDialog.vala:228
+#: src/Widgets/ConnectionDialog.vala:364
 msgid "Save Connection"
 msgstr "Simpan Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:230
+#: src/Widgets/ConnectionDialog.vala:366
 msgid "Test Connection"
 msgstr "Uji Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:368
+#: src/Widgets/ConnectionDialog.vala:559
+msgid "Opening SSH Tunnel…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:589
 #, fuzzy
 msgid "Testing Connection…"
 msgstr "Uji Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:376
+#: src/Widgets/ConnectionDialog.vala:600
 #, fuzzy
 msgid "Successfully Connected!"
 msgstr "Query Berhasil Dijalankan!"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:618
 #, fuzzy
 msgid "Saving Connection…"
 msgstr "Simpan Koneksi"
 
-#: src/Widgets/ConnectionDialog.vala:398
+#: src/Widgets/ConnectionDialog.vala:623
 msgid "Connection Saved!"
 msgstr "Koneksi Tersimpan!"
 
-#: src/Widgets/ConnectionDialog.vala:406
+#: src/Widgets/ConnectionDialog.vala:631
 #, fuzzy
 msgid "Connecting…"
 msgstr "Menghubungkan"
@@ -433,10 +526,6 @@ msgstr "Menghubungkan"
 
 #~ msgid "127.0.0.1"
 #~ msgstr "127.0.0.1"
-
-#, fuzzy
-#~ msgid "Connect via Terminal"
-#~ msgstr "Koneksi di Terminal"
 
 #~ msgid "Preferences"
 #~ msgstr "Preferensi"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-15 13:53-0800\n"
+"POT-Creation-Date: 2018-12-21 12:18-0800\n"
 "PO-Revision-Date: 2018-07-24 19:32+0300\n"
 "Last-Translator: Çağatay Yiğit Şahin <cyigitsahin@outlook.com>\n"
 "Language-Team: Türkçe <>\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Don't know what to do"
 msgstr ""
 
-#: src/Application.vala:81
+#: src/Application.vala:80
 msgid "Something completely unexpected happened"
 msgstr ""
 
@@ -43,8 +43,8 @@ msgstr "Koyu arka plan"
 msgid "New Window"
 msgstr "Yeni Pencere"
 
-#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:101
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:128
+#: src/Widgets/ConnectionDialog.vala:151
 msgid "New Connection"
 msgstr "Yeni Bağlantı"
 
@@ -56,68 +56,68 @@ msgstr "Çık"
 msgid "Menu"
 msgstr ""
 
-#: src/Layouts/Main.vala:75
+#: src/Layouts/Main.vala:78
 #, fuzzy, c-format
 msgid "Connected to %s"
 msgstr "Bağlı "
 
-#: src/Layouts/Library.vala:44
+#: src/Layouts/Library.vala:49
 msgid "SAVED CONNECTIONS"
 msgstr "KAYITLI BAĞLANTILAR"
 
-#: src/Layouts/Library.vala:49
+#: src/Layouts/Library.vala:54
 msgid "Delete All"
 msgstr "Hepsini Sil"
 
-#: src/Layouts/Library.vala:56
+#: src/Layouts/Library.vala:61
 msgid "Reload Library"
 msgstr "Kütüphaneyi Yeniden Yükle"
 
-#: src/Layouts/Library.vala:59
+#: src/Layouts/Library.vala:66
 msgid "Export Library"
 msgstr "Kütüphaneyi Dışa Aktar"
 
-#: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:141 src/Layouts/Library.vala:159
 msgid "Are you sure you want to proceed?"
 msgstr "Devam etmek istediğinize emin misiniz?"
 
-#: src/Layouts/Library.vala:134
+#: src/Layouts/Library.vala:141
 #, fuzzy
 msgid "By deleting this connection you won’t be able to recover this data."
 msgstr "Bu bağlantıyı silerek, bu veriyi kurtaramayacaksınız."
 
-#: src/Layouts/Library.vala:137
+#: src/Layouts/Library.vala:144
 msgid "Yes, Delete!"
 msgstr "Evet, Sil!"
 
-#: src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:159
 #, fuzzy
 msgid "All the data will be deleted and you won’t be able to recover it."
 msgstr "Tüm veri silinecek ve kurtarılamayacak."
 
-#: src/Layouts/Library.vala:155
+#: src/Layouts/Library.vala:162
 msgid "Yes, Delete All!"
 msgstr "Evet, Hepsini Sil!"
 
-#: src/Layouts/Library.vala:270 src/Layouts/Views/Query.vala:424
+#: src/Layouts/Library.vala:360 src/Layouts/Views/Query.vala:424
 msgid "Pick a file"
 msgstr ""
 
-#: src/Layouts/Library.vala:273 src/Layouts/Views/Query.vala:427
+#: src/Layouts/Library.vala:363 src/Layouts/Views/Query.vala:427
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: src/Layouts/Library.vala:274 src/Layouts/Welcome.vala:62
+#: src/Layouts/Library.vala:364 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:428
 msgid "_Cancel"
 msgstr "_İptal Et"
 
-#: src/Layouts/Library.vala:333
+#: src/Layouts/Library.vala:439
 #, fuzzy, c-format
 msgid "Unable to Connect to %s"
 msgstr "Bağlanılamadı "
 
-#: src/Layouts/Library.vala:346
+#: src/Layouts/Library.vala:452
 msgid "Unable to Export Library "
 msgstr "Kütüphane Dışa Aktarılamadı"
 
@@ -161,7 +161,7 @@ msgstr "Tablo Seç"
 msgid "_Open"
 msgstr "_Aç"
 
-#: src/Layouts/Welcome.vala:106
+#: src/Layouts/Welcome.vala:107
 msgid "Unable to Import Library "
 msgstr "Kütüphane İçe Aktarılamadı"
 
@@ -185,7 +185,7 @@ msgstr "Tabloları Yeniden Yükle"
 msgid "Add Table"
 msgstr "Tablo Ekle"
 
-#: src/Layouts/DataBaseSchema.vala:250
+#: src/Layouts/DataBaseSchema.vala:258
 msgid "TABLES"
 msgstr "TABLOLAR"
 
@@ -302,7 +302,7 @@ msgstr "Sorgu Başarıyla Çalıştırıldı! Etkilenen satırlar: "
 msgid "Query Executed!"
 msgstr "Sorgu Çalıştırıldı!"
 
-#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:232
+#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:368
 msgid "Connect"
 msgstr "Bağlan"
 
@@ -333,84 +333,178 @@ msgstr ""
 msgid "Copy %s"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:191
+#: src/Services/ConnectionManager.vala:165
+#, c-format
+msgid "Libssh2 initialization failed (%d)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:172
+msgid "Failed to open socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:181
+#, fuzzy
+msgid "Failed to connect!"
+msgstr "Bağlanılamadı "
+
+#: src/Services/ConnectionManager.vala:193
+#, c-format
+msgid "Error when starting up SSH session: %d"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:212
+msgid "Authentication by password failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:222
+msgid "Authentication by public key failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:229
+msgid "No supported authentication methods found!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:236
+msgid "Failed to open listen socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:251
+msgid "Failed to bind. Your Database Port may be wrong!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:257
+msgid "Failed to listen!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:284
+msgid "Failed to accept remote connection!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:293
+msgid ""
+"Could not open the direct-tcpip channel! (Note that this can be a problem at "
+"the server! Please review the server logs.)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:483
 msgid "Error!"
 msgstr "Hata!"
 
-#: src/Widgets/ConnectionDialog.vala:61
+#: src/Widgets/ConnectionDialog.vala:87
 msgid "Connection"
 msgstr "Bağlantı"
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:150
 msgid "Connection Name:"
 msgstr "Bağlantı Adı:"
 
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Widgets/ConnectionDialog.vala:151
 msgid "Connection's name"
 msgstr "Bağlantının adı"
 
-#: src/Widgets/ConnectionDialog.vala:134
+#: src/Widgets/ConnectionDialog.vala:158
 msgid "Database Type:"
 msgstr "Veri Tabanı Türü:"
 
-#: src/Widgets/ConnectionDialog.vala:156
+#: src/Widgets/ConnectionDialog.vala:180
 msgid "Host:"
 msgstr "Ana Makine:"
 
-#: src/Widgets/ConnectionDialog.vala:162
+#: src/Widgets/ConnectionDialog.vala:191
 msgid "Database Name:"
 msgstr "Veri Tabanı Adı:"
 
-#: src/Widgets/ConnectionDialog.vala:169
+#: src/Widgets/ConnectionDialog.vala:198
 msgid "Username:"
 msgstr "Kullanıcı Adı:"
 
-#: src/Widgets/ConnectionDialog.vala:175
+#: src/Widgets/ConnectionDialog.vala:204
 msgid "Password:"
 msgstr "Parola:"
 
-#: src/Widgets/ConnectionDialog.vala:193
+#: src/Widgets/ConnectionDialog.vala:222
 msgid "Port:"
 msgstr "Bağlantı Kapısı:"
 
-#: src/Widgets/ConnectionDialog.vala:199
+#: src/Widgets/ConnectionDialog.vala:228
 msgid "File Path:"
 msgstr "Dosya Yolu:"
 
-#: src/Widgets/ConnectionDialog.vala:200
+#: src/Widgets/ConnectionDialog.vala:229
 #, fuzzy
 msgid "Select Your SQLite File…"
 msgstr "SQLite Dosyanı Seç…"
 
-#: src/Widgets/ConnectionDialog.vala:227
+#: src/Widgets/ConnectionDialog.vala:254
+msgid "Connect via SSH Tunnel:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:263
+#, fuzzy
+msgid "SSH Host:"
+msgstr "Ana Makine:"
+
+#: src/Widgets/ConnectionDialog.vala:268
+#, fuzzy
+msgid "SSH Username:"
+msgstr "Kullanıcı Adı:"
+
+#: src/Widgets/ConnectionDialog.vala:273
+#, fuzzy
+msgid "SSH Password:"
+msgstr "Parola:"
+
+#: src/Widgets/ConnectionDialog.vala:290
+#, fuzzy
+msgid "SSH Port:"
+msgstr "Bağlantı Kapısı:"
+
+#: src/Widgets/ConnectionDialog.vala:291
+#, fuzzy
+msgid "Optional"
+msgstr "İlişkiler"
+
+#: src/Widgets/ConnectionDialog.vala:295
+msgid "Missing SSH Key file!"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:303
+msgid "Generate SSH Key"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:363
 msgid "Close"
 msgstr "Kapat"
 
-#: src/Widgets/ConnectionDialog.vala:228
+#: src/Widgets/ConnectionDialog.vala:364
 msgid "Save Connection"
 msgstr "Bağlantıyı Kaydet"
 
-#: src/Widgets/ConnectionDialog.vala:230
+#: src/Widgets/ConnectionDialog.vala:366
 msgid "Test Connection"
 msgstr "Bağlantıyı Sına"
 
-#: src/Widgets/ConnectionDialog.vala:368
+#: src/Widgets/ConnectionDialog.vala:559
+msgid "Opening SSH Tunnel…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:589
 msgid "Testing Connection…"
 msgstr "Bağlantı Sınanıyor…"
 
-#: src/Widgets/ConnectionDialog.vala:376
+#: src/Widgets/ConnectionDialog.vala:600
 msgid "Successfully Connected!"
 msgstr "Bağlantı Başarılı!"
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:618
 msgid "Saving Connection…"
 msgstr "Bağlantı Kaydediliyor…"
 
-#: src/Widgets/ConnectionDialog.vala:398
+#: src/Widgets/ConnectionDialog.vala:623
 msgid "Connection Saved!"
 msgstr "Bağlantı Kaydedildi!"
 
-#: src/Widgets/ConnectionDialog.vala:406
+#: src/Widgets/ConnectionDialog.vala:631
 msgid "Connecting…"
 msgstr "Bağlanıyor…"
 

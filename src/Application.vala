@@ -71,10 +71,9 @@ public class Sequeler.Application : Gtk.Application {
                 case FileType.REGULAR:       // File handle represents a regular file.
                 case FileType.SYMBOLIC_LINK: // File handle represents a symbolic link (Unix systems).
                 case FileType.SHORTCUT:      // File is a shortcut (Windows systems).
-                    var window = new Sequeler.Window (this);
-                    this.add_window (window);
+                    var window = this.add_new_window ();
 
-                    window.main.library.check_open_sqlite_file (file.get_uri (), file.get_basename ());
+                    window.main.library.check_open_sqlite_file.begin (file.get_uri (), file.get_basename ());
 		            break;
 
 		        default:
@@ -86,6 +85,13 @@ public class Sequeler.Application : Gtk.Application {
     public override void window_removed (Gtk.Window window) {
         windows.remove (window as Window);
         base.window_removed (window);
+    }
+
+    private Sequeler.Window add_new_window () {
+        var window = new Sequeler.Window (this);
+        this.add_window (window);
+
+        return window;
     }
 
     protected override void activate () {
