@@ -173,6 +173,16 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		message_dialog.destroy ();
 	}
 
+	public void reload_library_sync () {
+		item_box.@foreach ((item) => item_box.remove (item));
+		foreach (var new_conn in settings.saved_connections) {
+			var array = settings.arraify_data (new_conn);
+			add_item (array);
+		}
+		item_box.show_all ();
+		delete_all.sensitive = (settings.saved_connections.length > 0);
+	}
+
 	public async void reload_library () {
 		new Thread<void*> ("reload-library", () => {
 			item_box.@foreach ((item) => item_box.remove (item));
@@ -223,74 +233,35 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		yield;
 	}
 
-	public async void check_open_sqlite_file (string path, string name) {
-		new Thread<void*> ("check-open-sqlite", () => {
-			foreach (var conn in settings.saved_connections) {
-				var check = settings.arraify_data (conn);
-				if (check["file_path"] == path) {
-					settings.edit_connection (check, conn);
-
-					Idle.add (() => {
-						reload_library.begin ();
-						return false;
-					});
-
-					open_sqlite_file (check);
-
-					return null;
-				}
+	public void check_open_sqlite_file (string path, string name) {
+		foreach (var conn in settings.saved_connections) {
+			var check = settings.arraify_data (conn);
+			if (check["file_path"] == path) {
+				settings.edit_connection (check, conn);
+				reload_library_sync ();
+				item_box.get_child_at_index (0).activate ();
+				return;
 			}
-			
-			var data = new Gee.HashMap<string, string> ();
+		}
+		
+		var data = new Gee.HashMap<string, string> ();
 
-			data.set ("id", settings.tot_connections.to_string ());
-			data.set ("title", name);
-			data.set ("color", "rgb(222,222,222)");
-			data.set ("type", "SQLite");
-			data.set ("host", "");
-			data.set ("name", "");
-			data.set ("file_path", path);
-			data.set ("username", "");
-			data.set ("password", "");
-			data.set ("port", "");
+		data.set ("id", settings.tot_connections.to_string ());
+		data.set ("title", name);
+		data.set ("color", "rgb(222,222,222)");
+		data.set ("type", "SQLite");
+		data.set ("host", "");
+		data.set ("name", "");
+		data.set ("file_path", path);
+		data.set ("username", "");
+		data.set ("password", "");
+		data.set ("port", "");
 
-			settings.add_connection (data);
-			add_item (data);
+		settings.add_connection (data);
+		add_item (data);
 
-			Idle.add (() => {
-				reload_library.begin ();
-				return false;
-			});
-			open_sqlite_file (data);
-
-			return null;
-		});
-
-		yield;
-	}
-
-	private void open_sqlite_file (Gee.HashMap<string, string> data) {
-		var result = new Gee.HashMap<string, string> ();
-
-		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
-			new Thread<void*> (null, () => {
-				try {
-					result = connection_manager.init_connection.end (res);
-				} catch (ThreadError e) {
-					connection_warning (e.message, data["name"]);
-				}
-
-				Idle.add (() => {
-					if (result["status"] == "true") {
-						window.main.connection_opened.begin (connection_manager);
-					} else {
-						connection_warning (result["msg"], data["name"]);
-					}
-					return false;
-				});
-				return null;
-			});
-		});
+		reload_library_sync ();
+		item_box.get_child_at_index (0).activate ();
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {

@@ -73,7 +73,7 @@ public class Sequeler.Application : Gtk.Application {
                 case FileType.SHORTCUT:      // File is a shortcut (Windows systems).
                     var window = this.add_new_window ();
 
-                    window.main.library.check_open_sqlite_file.begin (file.get_uri (), file.get_basename ());
+                    window.main.library.check_open_sqlite_file (file.get_uri (), file.get_basename ());
 		            break;
 
 		        default:
