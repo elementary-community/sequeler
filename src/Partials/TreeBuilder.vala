@@ -125,6 +125,10 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	}
 
 	private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
+		if (path == null || column == null) {
+			return;
+		}
+
 		Value val;
 		Gtk.TreeIter iter;
 
@@ -172,5 +176,4 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 
 		return base.button_press_event (event);
 	}
-
 }

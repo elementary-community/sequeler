@@ -339,34 +339,39 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		toolbar_spinner.start ();
 
-		//  window.main.connection_manager.connection.close ();
 		var connection_manager = window.main.connection_manager;
 
-		if (connection_manager.connection.is_opened ()) {
+		if (connection_manager.connection != null &&  connection_manager.connection.is_opened ()) {
 			connection_manager.connection.clear_events_list ();
 			connection_manager.connection.close ();
 			connection_manager.connection = null;
 		}
 
 		var new_connection_manager = new Sequeler.Services.ConnectionManager (window, window.data_manager.data);
+		var result = new Gee.HashMap<string, string> ();
 
-		var loop = new MainLoop ();
 		new_connection_manager.init_connection.begin (new_connection_manager, (obj, res) => {
-			try {
-				Gee.HashMap<string, string> result = new_connection_manager.init_connection.end (res);
-				if (result["status"] == "true") {
-					window.main.connection_manager = new_connection_manager;
-					reload_schema ();
-				} else {
-					window.main.connection_manager.query_warning (result["msg"]);
+			new Thread<void*> (null, () => {
+				try {
+					result = new_connection_manager.init_connection.end (res);
+				} catch (ThreadError e) {
+					window.main.connection_manager.query_warning (e.message);
 				}
-			} catch (ThreadError e) {
-				window.main.connection_manager.query_warning (e.message);
-			}
-			loop.quit ();
+
+				Idle.add (() => {
+					if (result["status"] == "true") {
+						window.main.connection_manager = new_connection_manager;
+						reload_schema ();
+					} else {
+						window.main.connection_manager.query_warning (result["msg"]);
+					}
+					return false;
+				});
+
+				return null;
+			});
 		});
 
-		loop.run();
 		toolbar_spinner.stop ();
 	}
 

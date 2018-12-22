@@ -59,9 +59,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 
 		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
-		reload_btn.clicked.connect (() => {
-			reload_library.begin ();
-		});
+		reload_btn.clicked.connect (() => reload_library.begin ());
 
 		var export_btn = new Sequeler.Partials.HeaderBarButton ("document-save-symbolic", _("Export Library"));
 		export_btn.clicked.connect (export_library);
@@ -271,24 +269,31 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			real_data = data;
 			real_spinner = spinner;
 			real_button = button;
-			connection_manager.ssh_tunnel_ready.connect (init_real_connection_begin_callback);
+			connection_manager.ssh_tunnel_ready.connect (() => init_real_connection_begin (real_data, real_spinner, real_button));
 
-			new Thread <void*> (null, () => {
+			new Thread<void*> (null, () => {
+				var result = new Gee.HashMap<string, string> ();
 				try {
 					connection_manager.ssh_tunnel_init (true);
+				} catch (Error e) {
+					result["status"] = "false";
+					result["message"] = e.message;
 				}
-				catch (Error e) {
-					connection_warning (e.message, data["name"]);
-				}
+
+				Idle.add (() => {
+					if (result["status"] == "false") {
+						spinner.stop ();
+						button.sensitive = true;
+						connection_warning (result["message"], data["name"]);
+					}
+					return false;
+				});
+
 				return null;
 			});
 		} else {
 			init_real_connection_begin (data, spinner, button);
 		}
-	}
-
-	public void init_real_connection_begin_callback () {
-		init_real_connection_begin (real_data, real_spinner, real_button);
 	}
 
 	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
