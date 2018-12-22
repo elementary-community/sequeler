@@ -233,70 +233,70 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public void populate_schema (string? database, Gda.DataModel? schema) {
-		if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
-			window.data_manager.data["name"] = database;
-			update_connection ();
-			return;
-		}
+		//  if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
+		//  	window.data_manager.data["name"] = database;
+		//  	update_connection ();
+		//  	return;
+		//  }
 
-		if (database == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
-			schema_table = schema;
-		} else {
-			schema_table = get_schema_table (database);
-		}
+		//  if (database == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
+		//  	schema_table = schema;
+		//  } else {
+		//  	schema_table = get_schema_table (database);
+		//  }
 
-		if (schema_table == null) {
-			return;
-		}
+		//  if (schema_table == null) {
+		//  	return;
+		//  }
 
-		if (scroll.get_child () != null) {
-			scroll.remove (scroll.get_child ());
-		}
+		//  if (scroll.get_child () != null) {
+		//  	scroll.remove (scroll.get_child ());
+		//  }
 
-		source_list = new Granite.Widgets.SourceList ();
-		source_list.set_filter_func (source_list_visible_func, true);
-		tables_category = new Granite.Widgets.SourceList.ExpandableItem (_("TABLES"));
-		tables_category.expand_all ();
+		//  source_list = new Granite.Widgets.SourceList ();
+		//  source_list.set_filter_func (source_list_visible_func, true);
+		//  tables_category = new Granite.Widgets.SourceList.ExpandableItem (_("TABLES"));
+		//  tables_category.expand_all ();
 
-		Gda.DataModelIter _iter = schema_table.create_iter ();
-		int top = 0;
-		while (_iter.move_next ()) {
-			var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
-			item.editable = true;
-			item.icon = new GLib.ThemedIcon ("drive-harddisk");
-			item.edited.connect ((new_name) => {
-				if (new_name != item.name) {
-					edit_table_name (item.name, new_name);
-				}
-			});
-			tables_category.add (item);
-			top++;
-		}
+		//  Gda.DataModelIter _iter = schema_table.create_iter ();
+		//  int top = 0;
+		//  while (_iter.move_next ()) {
+		//  	var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
+		//  	item.editable = true;
+		//  	item.icon = new GLib.ThemedIcon ("drive-harddisk");
+		//  	item.edited.connect ((new_name) => {
+		//  		if (new_name != item.name) {
+		//  			edit_table_name (item.name, new_name);
+		//  		}
+		//  	});
+		//  	tables_category.add (item);
+		//  	top++;
+		//  }
 
-		source_list.root.add (tables_category);
-		scroll.add (source_list);
+		//  source_list.root.add (tables_category);
+		//  scroll.add (source_list);
 
-		source_list.item_selected.connect (item => {
-			if (item == null) {
-				return;
-			}
+		//  source_list.item_selected.connect (item => {
+		//  	if (item == null) {
+		//  		return;
+		//  	}
 
-			if (window.main.database_view.tabs.selected == 0) {
-				window.main.database_view.structure.fill (item.name, database);
-			}
+		//  	if (window.main.database_view.tabs.selected == 0) {
+		//  		window.main.database_view.structure.fill (item.name, database);
+		//  	}
 
-			if (window.main.database_view.tabs.selected == 1) {
-				window.main.database_view.content.fill (item.name, database);
-			}
+		//  	if (window.main.database_view.tabs.selected == 1) {
+		//  		window.main.database_view.content.fill (item.name, database);
+		//  	}
 
-			if (window.main.database_view.tabs.selected == 2) {
-				window.main.database_view.relations.fill (item.name, database);
-			}
-		});
+		//  	if (window.main.database_view.tabs.selected == 2) {
+		//  		window.main.database_view.relations.fill (item.name, database);
+		//  	}
+		//  });
 
-		window.main.database_view.structure.database = database;
-		window.main.database_view.content.database = database;
-		window.main.database_view.relations.database = database;
+		//  window.main.database_view.structure.database = database;
+		//  window.main.database_view.content.database = database;
+		//  window.main.database_view.relations.database = database;
 	}
 
 	public Gda.DataModel? get_schema_table (string table) {
@@ -381,25 +381,26 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		int result = 0;
 		var error = "";
 
-		var loop = new MainLoop ();
 		window.main.connection_manager.init_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection_manager.init_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = 0;
-			}
-			loop.quit ();
+			new Thread<void*> (null, () => {
+				try {
+					result = window.main.connection_manager.init_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					result = 0;
+				}
+
+				Idle.add (() => {
+					if (error != "") {
+						window.main.connection_manager.query_warning (error);
+						return false;
+					}
+					return false;
+				});
+
+				return null;
+			});
 		});
-
-		loop.run ();
-
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-			return;
-		}
-
-		reload_schema ();
 	}
 
 	public void toggle_search_tables () {
