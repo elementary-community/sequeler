@@ -15,7 +15,12 @@ Sequeler, is primarily available from the AppCenter of elementary OS. Download i
 ## Get it from Flathub!
 You can get Sequeler form Flathub no matter what distribution you're using. Download it or follow the instructions to install it from here!
 
-<a href="https://flathub.org/apps/details/com.github.alecaddd.sequeler"><img src="https://flathub.org/assets/badges/flathub-badge-i-en.svg" width="160px" alt="Get it from Flathub!"></a>
+[![Get it from Flathub!](https://flathub.org/apps/details/com.github.alecaddd.sequeler)](https://flathub.org/assets/badges/flathub-badge-i-en.svg=160x)
+
+## Support the Project
+If you like Sequeler and you want to support its development, consider donating via [PayPal](https://www.paypal.me/alecaddd) or pledge on [Patreon](https://www.patreon.com/alecaddd).
+
+[![Become a Patron](https://appcenter.elementary.io/badge.svg)](https://c5.patreon.com/external/logo/become_a_patron_button.png=170x)
 
 ## Install it from source
 You can install Sequeler by compiling from source, here's the list of dependencies required:
@@ -37,5 +42,3 @@ cd build
 ninja && sudo ninja install
 ```
 
-### Donations
-If you like Sequeler and you want to support its development, consider donating via [PayPal](https://www.paypal.me/alecaddd) or pledge on [Patreon](https://www.patreon.com/alecaddd).
