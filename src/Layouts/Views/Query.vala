@@ -403,7 +403,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			show_result_icon (true);
 		}
 
-		window.main.database_schema.reload_schema ();
+		window.main.database_schema.reload_schema.begin ();
 
 		// Force reset all views to fetch updated data
 		window.main.database_view.content.reset ();

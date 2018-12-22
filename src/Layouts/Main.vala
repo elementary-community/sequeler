@@ -78,12 +78,12 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 				window.headerbar.title = _("Connected to %s").printf (cnn_manager.data["title"]);
 				window.headerbar.subtitle = cnn_manager.data["username"] + "@" + host;
 
-				//  database_schema.reload_schema ();
+				database_schema.reload_schema.begin ();
 				return false;
 			});
 			return null;
 		});
-
+		
 		yield;
 	}
 
