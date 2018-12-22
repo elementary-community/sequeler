@@ -20,7 +20,7 @@ You can get Sequeler form Flathub no matter what distribution you're using. Down
 ## Support the Project
 If you like Sequeler and you want to support its development, consider donating via [PayPal](https://www.paypal.me/alecaddd) or pledge on [Patreon](https://www.patreon.com/alecaddd).
 
-<a href="https://www.patreon.com/alecaddd" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" width="170px" alt="Become a Patron"></a> <a href="https://www.paypal.me/alecaddd" target="_blank"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" width="170px" alt="Donate on PayPal"></a>
+<a href="https://www.patreon.com/alecaddd" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" width="170px" alt="Become a Patron"></a> <a href="https://www.paypal.me/alecaddd" target="_blank"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" width="150px" alt="Donate on PayPal"></a>
 
 ## Install it from source
 You can install Sequeler by compiling from source, here's the list of dependencies required:
