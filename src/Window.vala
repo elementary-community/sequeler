@@ -34,7 +34,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 		Object (
 			application: sequeler_app,
 			app: sequeler_app,
-			icon_name: "com.github.alecaddd.sequeler"
+			icon_name: Constants.PROJECT_NAME
 		);
 	}
 

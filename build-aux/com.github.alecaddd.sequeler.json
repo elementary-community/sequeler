@@ -6,6 +6,8 @@
 	"base":"io.elementary.BaseApp",
 	"base-version": "juno",
 	"command": "com.github.alecaddd.sequeler",
+	"tags": ["devel", "development", "nightly"],
+	"desktop-file-name-prefix": "(Development) ",
 	"cleanup": [
 		"/include",
 		"/lib/pkgconfig",
@@ -152,7 +154,7 @@
 		{
 			"name": "sequeler",
 			"buildsystem": "meson",
-			"config-opts": ["--buildtype=release"],
+			"config-opts": ["--buildtype=release", "-Dprofile=development"],
 			"sources": [{
 				"type": "git",
 				"url": "https://github.com/Alecaddd/sequeler.git"

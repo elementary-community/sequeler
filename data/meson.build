@@ -5,23 +5,34 @@ foreach size : icon_sizes
 		asset = join_paths('assets', 'icons', '@0@x@0@'.format(size), '@0@.svg'.format(meson.project_name()))
 		install_data(
 				asset,
-				install_dir:  join_paths(icons_dir, '@0@x@0@'.format(size), 'apps')
+				install_dir:  join_paths(icons_dir, '@0@x@0@'.format(size), 'apps'),
+				rename: '@0@.svg'.format(application_id)
 		)
 		install_data(
 				asset,
-				install_dir: join_paths(icons_dir,  '@0@x@0@@2'.format(size), 'apps')
+				install_dir: join_paths(icons_dir,  '@0@x@0@@2'.format(size), 'apps'),
+				rename: '@0@.svg'.format(application_id)
 		)
 endforeach
 
 install_data(
 		join_paths('assets', 'icons', '128x128', '@0@.svg'.format(meson.project_name())),
-		install_dir: join_paths(icons_dir , 'scalable', 'apps')
+		install_dir: join_paths(icons_dir , 'scalable', 'apps'),
+		rename: '@0@.svg'.format(application_id)
 )
 
 # Install the Desktop file
+desktop_conf = configuration_data()
+desktop_conf.set('icon', application_id)
+desktop_conf.set('binary', application_id)
+
 desktop_file = i18n.merge_file(
-		input: '@0@.desktop.in'.format(meson.project_name()),
-		output:'@0@.desktop'.format(meson.project_name()),
+		input: configure_file(
+			input: '@0@.desktop.in.in'.format(meson.project_name()),
+			output: '@0@.desktop.in'.format(application_id),
+			configuration: desktop_conf
+		),
+		output:'@0@.desktop'.format(application_id),
 		po_dir: join_paths(meson.source_root(), 'po'),
 		type: 'desktop',
 		install: true,
@@ -41,9 +52,16 @@ if desktop_file_validate.found()
 endif
 
 # Install the AppData file
+appdata_conf = configuration_data()
+appdata_conf.set('appid', application_id)
+
 appdata_file = i18n.merge_file(
-		input: '@0@.appdata.xml.in'.format(meson.project_name()),
-		output: '@0@.appdata.xml'.format(meson.project_name()),
+		input: configure_file(
+			input: '@0@.appdata.xml.in.in'.format(meson.project_name()),
+			output: '@0@.appdata.xml.in'.format(application_id),
+			configuration: appdata_conf
+		),
+		output: '@0@.appdata.xml'.format(application_id),
 		po_dir: join_paths(meson.source_root(), 'po'),
 		install: true,
 		install_dir: join_paths(get_option('datadir'), 'metainfo')
