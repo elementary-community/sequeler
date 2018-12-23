@@ -326,6 +326,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 						break;
 					} else if (0 == len) {
 						debug ("The client at %s:%d disconnected!", local_listenip, local_listenport);
+						debug ("connection manager %p", this);
 						direct_shutdown ();
 						break;
 					}

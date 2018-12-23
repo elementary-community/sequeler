@@ -155,86 +155,98 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public async void reload_schema () {
-		var schema = get_schema ();
+		Gda.DataModel? schema = null;
 		Gda.DataModelIter? _iter = null;
 
-		new Thread<void*> ("reload-schema", () => {
-			reset_schema_combo ();
+		get_schema.begin ((obj, res) => {
+			new Thread<void*> ("reload-schema", () => {
+				try {
+					schema = get_schema.end (res);
+				} catch (Error e) {
+					return null;
+				}
+				
+				Idle.add (() => {
+					reset_schema_combo ();
+					
+					if (schema == null) {
+						return false;
+					}
+
+					if (window.data_manager.data["type"] == "SQLite") {
+						populate_schema.begin (null, schema);
+						return false;
+					}
 			
-			if (schema == null) {
-				return null;
-			}
-	
-			Idle.add (() => {
-				if (window.data_manager.data["type"] == "SQLite") {
-					populate_schema.begin (null, schema);
-					return false;
-				}
-		
-				_iter = schema.create_iter ();
+					_iter = schema.create_iter ();
 
-				if (_iter == null) {
-					debug ("not a valid iter");
-					return true;
-				}
+					if (_iter == null) {
+						debug ("not a valid iter");
+						return true;
+					}
 
-				schemas = new Gee.HashMap<int, string> ();
-				int i = 1;
-				while (_iter.move_next ()) {
-					schema_list.append (out iter);
-					schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
-					schemas.set (i,_iter.get_value_at (0).get_string ());
-					i++;
-				}
-				if (window.data_manager.data["type"] != "PostgreSQL") {
-					schema_list_combo.sensitive = true;
-				}
-		
-				if (window.data_manager.data["type"] == "PostgreSQL") {
+					schemas = new Gee.HashMap<int, string> ();
+					int i = 1;
+					while (_iter.move_next ()) {
+						schema_list.append (out iter);
+						schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
+						schemas.set (i,_iter.get_value_at (0).get_string ());
+						i++;
+					}
+					if (window.data_manager.data["type"] != "PostgreSQL") {
+						schema_list_combo.sensitive = true;
+					}
+			
+					if (window.data_manager.data["type"] == "PostgreSQL") {
+						foreach (var entry in schemas.entries) {
+							if ("public" == entry.value) {
+								schema_list_combo.set_active (entry.key);
+							}
+						}
+						return false;
+					}
+			
 					foreach (var entry in schemas.entries) {
-						if ("public" == entry.value) {
+						if (window.data_manager.data["name"] == entry.value) {
 							schema_list_combo.set_active (entry.key);
 						}
 					}
-					return false;
-				}
-		
-				foreach (var entry in schemas.entries) {
-					if (window.data_manager.data["name"] == entry.value) {
-						schema_list_combo.set_active (entry.key);
-					}
-				}
 
-				return false;
+					return false;
+				});
+				return null;
 			});
-			return null;
 		});
 	}
 
-	public Gda.DataModel? get_schema () {
+	public async Gda.DataModel? get_schema () throws Error {
+		SourceFunc callback = get_schema.callback;
 		var query = (window.main.connection_manager.db_type as DataBaseType).show_schema ();
 
 		Gda.DataModel? result = null;
 		var error = "";
 
-		var loop = new MainLoop ();
 		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection_manager.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
+			ThreadFunc<bool> run = () => {
+				try {
+					result = window.main.connection_manager.init_select_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					result = null;
+				}
+				Idle.add((owned) callback);
+				return true;
+			};
+			new Thread<bool>("get-schema", run);
 		});
 
-		loop.run ();
-
+		yield;
+		
 		if (error != "") {
 			window.main.connection_manager.query_warning (error);
 			return null;
 		}
-
+		
 		return result;
 	}
 
