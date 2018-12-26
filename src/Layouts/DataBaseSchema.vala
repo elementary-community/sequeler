@@ -30,13 +30,14 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	public Gee.HashMap<int, string> schemas;
 	private ulong handler_id;
 
+	public Gtk.Stack stack;
 	public Gtk.ScrolledWindow scroll;
 	private Gda.DataModel? schema_table;
 	public Granite.Widgets.SourceList.ExpandableItem tables_category;
 	public Granite.Widgets.SourceList source_list;
 
 	private Gtk.Grid toolbar;
-	private Gtk.Spinner toolbar_spinner;
+	private Gtk.Spinner spinner;
 	public Gtk.Revealer revealer;
 	public Gtk.SearchEntry search;
 	public string search_text;
@@ -79,7 +80,8 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (schema_list_combo.get_active () == 0) {
 				return;
 			}
-			populate_schema.begin (schemas[schema_list_combo.get_active ()], null);
+			start_spinner ();
+			init_populate_schema (schemas[schema_list_combo.get_active ()], null);
 		});
 
 		var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
@@ -124,18 +126,37 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		add_table_btn.clicked.connect (add_table);
 		add_table_btn.sensitive = false;
 
-		toolbar_spinner = new Gtk.Spinner ();
-		toolbar_spinner.margin = 3;
+		spinner = new Gtk.Spinner ();
+		spinner.hexpand = true;
+		spinner.vexpand = true;
+		spinner.halign = Gtk.Align.CENTER;
+		spinner.valign = Gtk.Align.CENTER;
+		spinner.start ();
 
 		toolbar.attach (add_table_btn, 0, 0, 1, 1);
 		toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
 		toolbar.attach (reload_btn, 2, 0, 1, 1);
-		toolbar.attach (toolbar_spinner, 3, 0, 1, 1);
+
+		stack = new Gtk.Stack ();
+		stack.hexpand = true;
+		stack.vexpand = true;
+		stack.add_named (scroll, "list");
+		stack.add_named (spinner, "spinner");
 
 		attach (dropdown_area, 0, 0, 1, 1);
 		attach (revealer, 0, 1, 1, 1);
-		attach (scroll, 0, 2, 1, 2);
+		attach (stack, 0, 2, 1, 2);
 		attach (toolbar, 0, 4, 1, 1);
+
+		start_spinner ();
+	}
+
+	public void start_spinner () {
+		stack.visible_child_name = "spinner";
+	}
+
+	public void stop_spinner () {
+		stack.visible_child_name = "list";
 	}
 
 	private void reset_schema_combo () {
@@ -151,8 +172,13 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (schema_list_combo.get_active () == 0) {
 				return;
 			}
-			populate_schema.begin (schemas[schema_list_combo.get_active ()], null);
+			start_spinner ();
+			init_populate_schema (schemas[schema_list_combo.get_active ()], null);
 		});
+	}
+
+	public void init_populate_schema (string? database, Gda.DataModel? schema) {
+		populate_schema.begin (schemas[schema_list_combo.get_active ()], null);
 	}
 
 	public async void reload_schema () {
@@ -183,7 +209,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 					}
 
 					if (window.data_manager.data["type"] == "SQLite") {
-						populate_schema.begin (null, schema);
+						init_populate_schema (null, schema);
 						reloading = false;
 						return false;
 					}
@@ -276,6 +302,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		if (schema_table == null) {
+			stop_spinner ();
 			return;
 		}
 
@@ -327,6 +354,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		window.main.database_view.structure.database = database;
 		window.main.database_view.content.database = database;
 		window.main.database_view.relations.database = database;
+		stop_spinner ();
 	}
 
 	public Gda.DataModel? get_schema_table (string table) {
@@ -367,8 +395,6 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			scroll.remove (scroll.get_child ());
 		}
 
-		toolbar_spinner.start ();
-
 		var connection_manager = window.main.connection_manager;
 
 		if (connection_manager.connection != null &&  connection_manager.connection.is_opened ()) {
@@ -401,8 +427,6 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				return null;
 			});
 		});
-
-		toolbar_spinner.stop ();
 	}
 
 	private void edit_table_name (string old_name, string new_name) {
