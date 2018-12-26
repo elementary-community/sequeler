@@ -439,7 +439,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			search.grab_focus_without_selecting ();
 		}
 
-		//  reload_schema.begin ();
+		search.text = "";
 	}
 
 	public void on_search_tables (Gtk.Entry searchentry) {
