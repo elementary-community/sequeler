@@ -25,6 +25,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	public Gtk.ListStore schema_list;
 	public Gtk.ComboBox schema_list_combo;
 	public Gtk.TreeIter iter;
+	private bool reloading { get; set; default = false;}
 
 	public Gee.HashMap<int, string> schemas;
 	private ulong handler_id;
@@ -155,14 +156,21 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public async void reload_schema () {
+		if (reloading) {
+			debug ("still loading");
+			return;
+		}
+
 		Gda.DataModel? schema = null;
 		Gda.DataModelIter? _iter = null;
+		reloading = true;
 
 		get_schema.begin ((obj, res) => {
 			new Thread<void*> ("reload-schema", () => {
 				try {
 					schema = get_schema.end (res);
 				} catch (Error e) {
+					reloading = false;
 					return null;
 				}
 				
@@ -170,11 +178,13 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 					reset_schema_combo ();
 					
 					if (schema == null) {
+						reloading = false;
 						return false;
 					}
 
 					if (window.data_manager.data["type"] == "SQLite") {
 						populate_schema.begin (null, schema);
+						reloading = false;
 						return false;
 					}
 			
@@ -203,6 +213,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 								schema_list_combo.set_active (entry.key);
 							}
 						}
+						reloading = false;
 						return false;
 					}
 			
@@ -212,6 +223,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 						}
 					}
 
+					reloading = false;
 					return false;
 				});
 				return null;
@@ -427,7 +439,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			search.grab_focus_without_selecting ();
 		}
 
-		reload_schema.begin ();
+		//  reload_schema.begin ();
 	}
 
 	public void on_search_tables (Gtk.Entry searchentry) {
