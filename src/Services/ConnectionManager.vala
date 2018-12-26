@@ -421,7 +421,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		output["status"] = "false";
 		SourceFunc callback = init_connection.callback;
 
-		new Thread <void*> (null, () => {
+		new Thread<void*> (null, () => {
 			bool result = true;
 			string msg = "";
 
@@ -434,7 +434,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 				msg = e.message;
 			}
 
-			Idle.add((owned) callback);
+			Idle.add ((owned) callback);
 			output["msg"] = msg;
 			output["status"] = result.to_string ();
 

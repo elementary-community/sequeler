@@ -298,7 +298,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		if (database == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
 			schema_table = schema;
 		} else {
-			schema_table = get_schema_table (database);
+			yield get_schema_table (database);
 		}
 
 		if (schema_table == null) {
@@ -357,31 +357,31 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		stop_spinner ();
 	}
 
-	public Gda.DataModel? get_schema_table (string table) {
+	public async void get_schema_table (string table) {
+		var error = "";
+		SourceFunc callback = get_schema_table.callback;
 		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_list (table);
 
-		Gda.DataModel? result = null;
-		var error = "";
-
-		var loop = new MainLoop ();
 		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection_manager.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
+			ThreadFunc<bool> run = () => {
+				try {
+					schema_table = window.main.connection_manager.init_select_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					schema_table = null;
+				}
+				Idle.add((owned) callback);
+				return true;
+			};
+			new Thread<bool> ("get-schema-table", run);
 		});
 
-		loop.run ();
+		yield;
 
 		if (error != "") {
 			window.main.connection_manager.query_warning (error);
-			return null;
+			return;
 		}
-
-		return result;
 	}
 
 	private void update_connection () {
