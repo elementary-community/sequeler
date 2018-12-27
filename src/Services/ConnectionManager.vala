@@ -51,7 +51,28 @@ public class Sequeler.Services.ConnectionManager : Object {
 			window: window,
 			data: data
 		);
+	}
+	
+	construct {
+		switch (data["type"]) {
+			case "MySQL":
+				db_type = new Sequeler.Services.Types.MySQL ();
+			break;
+			case "MariaDB":
+				db_type = new Sequeler.Services.Types.MySQL ();
+			break;
+			case "PostgreSQL":
+				db_type = new Sequeler.Services.Types.PostgreSQL ();
+			break;
+			case "SQLite":
+				db_type = new Sequeler.Services.Types.SQLite ();
+			break;
+		}
 
+		fetch_password ();
+	}
+
+	public void fetch_password () {
 		if (data["password"] == null) {
 			data["password"] = "";
 
@@ -83,21 +104,6 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 			loop.run ();
 		}
-
-		switch (data["type"]) {
-			case "MySQL":
-				db_type = new Sequeler.Services.Types.MySQL ();
-			break;
-			case "MariaDB":
-				db_type = new Sequeler.Services.Types.MySQL ();
-			break;
-			case "PostgreSQL":
-				db_type = new Sequeler.Services.Types.PostgreSQL ();
-			break;
-			case "SQLite":
-				db_type = new Sequeler.Services.Types.SQLite ();
-			break;
-		}
 	}
 
 	public void test () throws Error {
@@ -116,6 +122,10 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void open () throws Error {
+		if (data["password"] == null) {
+			fetch_password ();
+		}
+
 		var connection_string = (db_type as DataBaseType).connection_string (data);
 		debug ("connection string %s", connection_string);
 

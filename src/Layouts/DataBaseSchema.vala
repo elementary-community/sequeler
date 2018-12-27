@@ -395,28 +395,23 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			scroll.remove (scroll.get_child ());
 		}
 
-		var connection_manager = window.main.connection_manager;
-
-		if (connection_manager.connection != null && connection_manager.connection.is_opened ()) {
-			connection_manager.connection.clear_events_list ();
-			connection_manager.connection.close ();
-			connection_manager.connection = null;
+		if (window.main.connection_manager.connection != null && window.main.connection_manager.connection.is_opened ()) {
+			window.main.connection_manager.connection.clear_events_list ();
+			window.main.connection_manager.connection.close ();
 		}
 
-		var new_connection_manager = new Sequeler.Services.ConnectionManager (window, window.data_manager.data);
 		var result = new Gee.HashMap<string, string> ();
 
-		new_connection_manager.init_connection.begin ((obj, res) => {
+		window.main.connection_manager.init_connection.begin ((obj, res) => {
 			new Thread<void*> (null, () => {
 				try {
-					result = new_connection_manager.init_connection.end (res);
+					result = window.main.connection_manager.init_connection.end (res);
 				} catch (ThreadError e) {
 					window.main.connection_manager.query_warning (e.message);
 				}
 
 				Idle.add (() => {
 					if (result["status"] == "true") {
-						window.main.connection_manager = new_connection_manager;
 						reload_schema.begin ();
 					} else {
 						window.main.connection_manager.query_warning (result["msg"]);
