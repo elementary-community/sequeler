@@ -299,7 +299,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
 		var result = new Gee.HashMap<string, string> ();
 
-		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
+		connection_manager.init_connection.begin ((obj, res) => {
 			new Thread<void*> (null, () => {
 				try {
 					result = connection_manager.init_connection.end (res);

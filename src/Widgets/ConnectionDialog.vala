@@ -634,7 +634,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 		}
 
-		connection_manager.init_connection.begin (connection_manager, (obj, res) => {
+		connection_manager.init_connection.begin ((obj, res) => {
 			new Thread<void*> (null, () => {
 				try {
 					result = connection_manager.init_connection.end (res);

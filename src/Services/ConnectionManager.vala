@@ -416,7 +416,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return connection.execute_select_command (query);
 	}
 
-	public async Gee.HashMap<string, string> init_connection (Sequeler.Services.ConnectionManager connection_manager) throws ThreadError {
+	public async Gee.HashMap<string, string> init_connection () throws ThreadError {
 		var output = new Gee.HashMap<string, string> ();
 		output["status"] = "false";
 		SourceFunc callback = init_connection.callback;
@@ -426,7 +426,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			string msg = "";
 
 			try {
-				connection_manager.open ();
+				open ();
 				debug ("pass init connection");
 			}
 			catch (Error e) {
