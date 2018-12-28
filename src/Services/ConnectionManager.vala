@@ -92,17 +92,17 @@ public class Sequeler.Services.ConnectionManager : Object {
 		if (data["has_ssh"] == "true") {
 			data["ssh_password"] = "";
 
-			var loop = new MainLoop ();
+			var ssh_loop = new MainLoop ();
 			password_mngr.get_password_async.begin (data["id"] + "9999", (obj, res) => {
 				try {
 					data["ssh_password"] = password_mngr.get_password_async.end (res);
 				} catch (Error e) {
 					debug ("Unable to get the SSH password from libsecret");
 				}
-				loop.quit ();
+				ssh_loop.quit ();
 			});
 
-			loop.run ();
+			ssh_loop.run ();
 		}
 	}
 
@@ -140,8 +140,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	public void ssh_tunnel_init (bool is_real) throws Error {
 		try {
 			ssh_tunnel_open (is_real);
-		}
-		catch (Error e) {
+		} catch (Error e) {
 			debug (e.message);
 			throw e;
 		}
@@ -438,8 +437,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			try {
 				open ();
 				debug ("pass init connection");
-			}
-			catch (Error e) {
+			} catch (Error e) {
 				result = false;
 				msg = e.message;
 			}
@@ -464,8 +462,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		new Thread <void*> (null, () => {
 			try {
 				result = run_select (query);
-			}
-			catch (Error e) {
+			} catch (Error e) {
 				error = e.message;
 				result = null;
 			}
@@ -492,8 +489,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			int result = 0;
 			try {
 				result = run_query (query);
-			}
-			catch (Error e) {
+			} catch (Error e) {
 				error = e.message;
 				result = 0;
 			}

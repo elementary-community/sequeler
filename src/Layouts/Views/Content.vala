@@ -22,9 +22,12 @@
 public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.Stack stack;
 	private Gda.DataModel? table_content;
 	public Gtk.ScrolledWindow scroll;
 	public Gtk.Label result_message;
+	private Gtk.Spinner spinner;
+
 	private Sequeler.Partials.HeaderBarButton page_prev_btn;
 	private Sequeler.Partials.HeaderBarButton page_next_btn;
 	private Gtk.Label pages_label;
@@ -70,6 +73,18 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 		placeholder ();
 	}
+
+	public void start_spinner () {
+		stack.visible_child_name = "spinner";
+	}
+
+	public void stop_spinner () {
+		stack.visible_child_name = "list";
+	}
+
+	//  public void placeholder () {
+	//  	stack.visible_child_name = "placeholder";
+	//  }
 
 	public Gtk.Grid build_pagination () {
 		var page_grid = new Gtk.Grid ();
