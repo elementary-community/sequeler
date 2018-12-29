@@ -30,11 +30,28 @@ You can install Sequeler by compiling from source, here's the list of dependenci
  - `libsecret-1`
  - `meson`
 
-## Building
+## Building 
 ```
 meson build --prefix=/usr
 sudo -C build ninja install
 ```
 
+## Building development version
+The development version allows you to keep the stable version perfectly working while hacking on Sequeler.
+```
+meson build --prefix=/usr -Dprofile=development
+sudo -C build ninja install
+```
+
+You can run the application from terminal using
+```
+com.github.alecaddd.sequelerDevel
+```
+
 ### Donations
 If you like Sequeler and you want to support its development, consider donating via [PayPal](https://www.paypal.me/alecaddd) or pledge on [Patreon](https://www.patreon.com/alecaddd).
+
+### Contributors
+- Alberto Fanjul - [Github](https://github.com/albfan)
+- Bilal Elmoussaoui - [Github](https://github.com/bilelmoussaoui) - [Paypal](https://www.paypal.me/BilalELMoussaoui)
+
