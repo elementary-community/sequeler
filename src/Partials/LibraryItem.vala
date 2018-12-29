@@ -41,7 +41,6 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 
 		var box = new Gtk.Grid ();
 		box.get_style_context ().add_class ("library-inner-box");
-		box.margin = 4;
 
 		var color_box = new Gtk.Grid ();
 		color_box.get_style_context ().add_class ("library-colorbox");
