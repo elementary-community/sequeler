@@ -68,10 +68,30 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		info_bar.attach (build_results_msg (), 2, 0, 1, 1);
 		info_bar.attach (build_reload_btn (), 3, 0, 1, 1);
 
-		attach (scroll, 0, 0, 1, 1);
+		spinner = new Gtk.Spinner ();
+		spinner.hexpand = true;
+		spinner.vexpand = true;
+		spinner.halign = Gtk.Align.CENTER;
+		spinner.valign = Gtk.Align.CENTER;
+		spinner.start ();
+
+		var welcome = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
+
+		stack = new Gtk.Stack ();
+		stack.hexpand = true;
+		stack.vexpand = true;
+		stack.add_named (welcome, "welcome");
+		stack.add_named (spinner, "spinner");
+		stack.add_named (scroll, "list");
+
+		attach (stack, 0, 0, 1, 1);
 		attach (info_bar, 0, 1, 1, 1);
 
 		placeholder ();
+	}
+	
+	public void placeholder () {
+		stack.visible_child_name = "welcome";
 	}
 
 	public void start_spinner () {
@@ -81,10 +101,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	public void stop_spinner () {
 		stack.visible_child_name = "list";
 	}
-
-	//  public void placeholder () {
-	//  	stack.visible_child_name = "placeholder";
-	//  }
 
 	public Gtk.Grid build_pagination () {
 		var page_grid = new Gtk.Grid ();
@@ -145,11 +161,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		return reload_btn;
 	}
 
-	public void placeholder () {
-		var intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
-		scroll.add (intro);
-	}
-
 	public void clear () {
 		if (scroll == null) {
 			return;
@@ -174,8 +185,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		table_name = "";
 		database = "";
 		placeholder ();
-
-		scroll.show_all ();
 	}
 
 	public void fill (string? table, string? db_name = null) {

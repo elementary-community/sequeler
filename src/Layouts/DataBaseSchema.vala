@@ -178,7 +178,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public void init_populate_schema (Gda.DataModel? schema) {
-		var database = schemas[schema_list_combo.get_active ()] != null ? schemas[schema_list_combo.get_active ()] : null;
+		var database = window.data_manager.data["type"] == "SQLite" ? null : schemas[schema_list_combo.get_active ()];
 
 		populate_schema.begin (database, schema);
 	}

@@ -57,7 +57,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 		return "SELECT * FROM " + table;
 	}
 
-	public string show_table_relations (string table, string database) {
+	public string show_table_relations (string table, string? database) {
 		return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + table + "' AND TABLE_SCHEMA = '" + database + "'";
 	}
 }
