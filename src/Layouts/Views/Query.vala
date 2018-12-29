@@ -496,17 +496,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 					window.main.connection_manager.query_warning (err.message);
 				}
 			break;
-			//  case 2:
-			//  	// Export as plain text
-			//  	try {
-			//  		FileOutputStream ostream = file.replace (null, false, FileCreateFlags.NONE);
-			//  		DataOutputStream dostream = new DataOutputStream (ostream);
-			//  		dostream.put_string (response_data.dump_as_string ());
-			//  	}
-			//  	catch (GLib.Error err) {
-			//  		window.main.connection_manager.query_warning (err.message);
-			//  	}
-			//  break;
 			default:
 			break;
 		}
