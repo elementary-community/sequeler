@@ -291,6 +291,8 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public async void populate_schema (string? database, Gda.DataModel? schema) {
+		yield clear_views ();
+
 		if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
 			window.data_manager.data["name"] = database;
 			update_connection ();
@@ -475,6 +477,12 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		return item.name.down ().contains (search_text);
+	}
+
+	private async void clear_views () {
+		window.main.database_view.content.reset.begin ();
+		window.main.database_view.relations.reset.begin ();
+		window.main.database_view.structure.reset.begin ();
 	}
 
 	public void add_table () {

@@ -407,8 +407,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		// Force reset all views to fetch updated data
 		window.main.database_view.content.reset.begin ();
-		window.main.database_view.relations.reset ();
-		window.main.database_view.structure.reset ();
+		window.main.database_view.relations.reset.begin ();
+		window.main.database_view.structure.reset.begin ();
 	}
 
 	private bool is_semicolon (unichar semicolon) {

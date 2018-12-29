@@ -59,7 +59,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 	construct {
 		scroll_grid = new Gtk.Grid ();
-		scroll.expand = true;
+		scroll_grid.expand = true;
 
 		scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
@@ -264,7 +264,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 				Idle.add((owned) callback);
 				return true;
 			};
-			new Thread<bool>("get-table-content", run);
+			new Thread<bool> ("get-table-content", run);
 		});
 
 		yield;

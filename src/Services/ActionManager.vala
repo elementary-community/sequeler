@@ -83,13 +83,13 @@ public class Sequeler.Services.ActionManager : Object {
 		window.main.database_view.query.buffer.text = "";
 		window.main.database_view.query.export_button.sensitive = false;
 
-		window.main.database_view.structure.reset ();
+		window.main.database_view.structure.reset.begin ();
 		window.main.database_view.structure.table_name = "";
 
 		window.main.database_view.content.reset.begin ();
 		window.main.database_view.content.table_name = "";
 	
-		window.main.database_view.relations.reset ();
+		window.main.database_view.relations.reset.begin ();
 		window.main.database_view.relations.table_name = "";
 
 		window.main.connection_closed ();
