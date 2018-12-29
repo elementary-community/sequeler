@@ -25,7 +25,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	GLib.File? file;
 	Gtk.TextBuffer buffer;
 
-	public Gtk.FlowBox item_box;
+	public Gtk.ListBox item_box;
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
 
@@ -69,12 +69,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 
-		item_box = new Gtk.FlowBox ();
-		item_box.activate_on_single_click = false;
+		item_box = new Gtk.ListBox ();
+		item_box.set_activate_on_single_click (false);
 		item_box.valign = Gtk.Align.START;
-		item_box.min_children_per_line = 1;
-		item_box.max_children_per_line = 1;
-		item_box.margin = 6;
 		item_box.expand = false;
 
 		scroll.add (item_box);
@@ -87,7 +84,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			delete_all.sensitive = true;
 		}
 
-		item_box.child_activated.connect ((child) => {
+		item_box.row_activated.connect ((child) => {
 			var item = child as Sequeler.Partials.LibraryItem;
 			item.spinner.start ();
 			item.connect_button.sensitive = false;
@@ -130,7 +127,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 	}
 
-	public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
+	public void confirm_delete (Gtk.ListBoxRow item, Gee.HashMap<string, string> data) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("By deleting this connection you won’t be able to recover this data."), "dialog-warning", Gtk.ButtonsType.CANCEL);
 		message_dialog.transient_for = window;
 
@@ -204,7 +201,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 				settings.edit_connection (check, conn);
 				reload_library ();
 				// open connection
-				item_box.get_child_at_index (0).activate ();
+				item_box.get_row_at_index (0).activate ();
 				return;
 			}
 		}
@@ -227,7 +224,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		reload_library ();
 		// open connection
-		item_box.get_child_at_index (0).activate ();
+		item_box.get_row_at_index (0).activate ();
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
@@ -310,7 +307,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			});
 
 			loop.run ();
-			
+
 			buffer_content += settings.stringify_data (array) + "---\n";
 		}
 
@@ -341,7 +338,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 		message_dialog.destroy ();
 	}
-	
+
 	private void export_warning (string message) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Unable to Export Library "), message, "dialog-error", Gtk.ButtonsType.NONE);
 		message_dialog.transient_for = window;

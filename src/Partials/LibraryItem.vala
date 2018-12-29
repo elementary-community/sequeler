@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
+public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 	public Gee.HashMap<string, string> data { get; set; }
 	public Gtk.Label title;
 	public Gdk.RGBA color;
@@ -28,7 +28,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 	public Gtk.Spinner spinner;
 
 	public signal void edit_dialog (Gee.HashMap data);
-	public signal void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap data);
+	public signal void confirm_delete (Gtk.ListBoxRow item, Gee.HashMap data);
 	public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.ModelButton button);
 
 	public LibraryItem (Gee.HashMap<string, string> data) {
