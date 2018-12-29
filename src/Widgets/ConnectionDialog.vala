@@ -141,18 +141,18 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		var form_grid = new Gtk.Grid ();
 		form_grid.margin = 30;
-		form_grid.row_spacing = 10;
+		form_grid.row_spacing = 12;
 		form_grid.column_spacing = 20;
 
 		var ssh_grid = new Gtk.Grid ();
 		ssh_grid.margin = 30;
-		ssh_grid.row_spacing = 10;
+		ssh_grid.row_spacing = 12;
 		ssh_grid.column_spacing = 20;
 
 		var ssh_switch_grid = new Gtk.Grid ();
 		ssh_switch_grid.halign = Gtk.Align.CENTER;
 		ssh_switch_grid.column_spacing = 20;
-		ssh_switch_grid.margin_bottom = 10;
+		ssh_switch_grid.margin_bottom = 12;
 
 		var title_label = new Sequeler.Partials.LabelForm (_("Connection Name:"));
 		title_entry = new Sequeler.Partials.Entry (_("Connection's name"), _("New Connection"));
