@@ -5,10 +5,19 @@ project('com.github.alecaddd.sequeler', 'vala', 'c',
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required: true)
 
+vala_args = []
+
 add_project_arguments(
     ['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
     language: 'vala'
 )
+
+if get_option('profile') == 'default'
+	application_id = meson.project_name()
+else
+	application_id = '@0@Devel'.format(meson.project_name())
+	vala_args += ['-D', 'IS_DEVEL']
+endif
 
 
 # Include the translations module

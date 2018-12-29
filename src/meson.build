@@ -1,13 +1,7 @@
 conf_data = configuration_data()
-conf_data.set('PROJECT_NAME', meson.project_name())
-conf_data.set('EXEC_NAME', meson.project_name())
-conf_data.set('DATADIR', get_option('datadir'))
-conf_data.set('PKGDATADIR', join_paths(get_option('datadir'), meson.project_name()))
+conf_data.set('PROJECT_NAME', application_id)
 conf_data.set('GETTEXT_PACKAGE', meson.project_name())
-conf_data.set('RELEASE_NAME', 'Sequeler')
 conf_data.set('VERSION', meson.project_version())
-conf_data.set('VERSION_INFO', 'Friendly SQL Client')
-conf_data.set('PREFIX', get_option('prefix'))
 
 config_header = configure_file(
     input: 'config.vala.in',
@@ -15,9 +9,10 @@ config_header = configure_file(
     configuration: conf_data
 )
 
+
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
-    meson.project_name(),
+    application_id,
     'Main.vala',
     'Application.vala',
     'Window.vala',
@@ -67,5 +62,6 @@ executable(
         dependency('gtksourceview-3.0'),
         m_dep
     ],
+		vala_args: vala_args,
     install: true
 )

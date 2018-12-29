@@ -32,7 +32,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	public string version { get; set; }
 
 	public Settings () {
-		base ("com.github.alecaddd.sequeler");
+		base (Constants.PROJECT_NAME);
 	}
 
 	public void add_connection (Gee.HashMap<string, string> data) {

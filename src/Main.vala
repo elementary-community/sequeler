@@ -19,12 +19,16 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
+#if IS_DEVEL
+public const string APP_NAME = "(Development) Sequeler";
+#else
 public const string APP_NAME = "Sequeler";
+#endif
 public const string TERMINAL_NAME = "sequeler";
 
 public static int main (string[] args) {
-	Environment.set_application_name (APP_NAME);
-	Environment.set_prgname (APP_NAME);
+	Environment.set_application_name ("Sequeler");
+	Environment.set_prgname ("Sequeler");
 
 	var application = new Sequeler.Application ();
 
