@@ -81,7 +81,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				return;
 			}
 			start_spinner ();
-			init_populate_schema (schemas[schema_list_combo.get_active ()], null);
+			init_populate_schema (null);
 		});
 
 		var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
@@ -173,12 +173,14 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				return;
 			}
 			start_spinner ();
-			init_populate_schema (schemas[schema_list_combo.get_active ()], null);
+			init_populate_schema (null);
 		});
 	}
 
-	public void init_populate_schema (string? database, Gda.DataModel? schema) {
-		populate_schema.begin (schemas[schema_list_combo.get_active ()], null);
+	public void init_populate_schema (Gda.DataModel? schema) {
+		var database = schemas[schema_list_combo.get_active ()] != null ? schemas[schema_list_combo.get_active ()] : null;
+
+		populate_schema.begin (database, schema);
 	}
 
 	public async void reload_schema () {
@@ -209,7 +211,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 					}
 
 					if (window.data_manager.data["type"] == "SQLite") {
-						init_populate_schema (null, schema);
+						init_populate_schema (schema);
 						reloading = false;
 						return false;
 					}
