@@ -86,7 +86,7 @@ public class Sequeler.Services.ActionManager : Object {
 		window.main.database_view.structure.reset ();
 		window.main.database_view.structure.table_name = "";
 
-		window.main.database_view.content.reset ();
+		window.main.database_view.content.reset.begin ();
 		window.main.database_view.content.table_name = "";
 	
 		window.main.database_view.relations.reset ();
