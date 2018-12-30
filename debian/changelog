@@ -1,3 +1,14 @@
+com.github.alecaddd.sequeler (0.6.6) xenial; urgency=medium
+
+  * WARNING: This release packs many updates and something could break. Please, backup your connections.
+  * Connect via SSH to a remote Database.
+  * Major code refactor to handle UI updates via async methods.
+  * Use Stack container to show a loading Spinner during fetch or data processing methods.
+  * Major performance improvements to the table search and dropdown schema switcher.
+  * Bug fixes and other improvements.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 29 Dec 2018 19:00:00 -0700
+
 com.github.alecaddd.sequeler (0.6.5) xenial; urgency=medium
 
   * New fancy Icon.
