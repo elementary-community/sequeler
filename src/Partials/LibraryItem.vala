@@ -50,14 +50,11 @@ public class Sequeler.Partials.LibraryItem : Gtk.FlowBoxChild {
 
 		color = Gdk.RGBA ();
 		color.parse (data["color"]);
-		try
-		{
+		try {
 			var style = new Gtk.CssProvider ();
 			style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
 			color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-		}
-		catch (Error e)
-		{
+		} catch (Error e) {
 			debug ("Internal error loading session chooser style: %s", e.message);
 		}
 

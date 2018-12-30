@@ -22,14 +22,19 @@
 public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.Stack stack;
 	private Gda.DataModel? table_content;
+	public Gtk.Grid scroll_grid;
 	public Gtk.ScrolledWindow scroll;
 	public Gtk.Label result_message;
+	private Gtk.Spinner spinner;
+
 	private Sequeler.Partials.HeaderBarButton page_prev_btn;
 	private Sequeler.Partials.HeaderBarButton page_next_btn;
 	private Gtk.Label pages_label;
 	private int tot_pages { get; set; default = 0; }
 	private int current_page { get; set; default = 1; }
+	private bool reloading { get; set; default = false; }
 
 	private string _table_name = "";
 
@@ -53,10 +58,14 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	}
 
 	construct {
+		scroll_grid = new Gtk.Grid ();
+		scroll_grid.expand = true;
+
 		scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.expand = true;
+		scroll_grid.add (scroll);
 
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
@@ -65,10 +74,38 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		info_bar.attach (build_results_msg (), 2, 0, 1, 1);
 		info_bar.attach (build_reload_btn (), 3, 0, 1, 1);
 
-		attach (scroll, 0, 0, 1, 1);
+		spinner = new Gtk.Spinner ();
+		spinner.hexpand = true;
+		spinner.vexpand = true;
+		spinner.halign = Gtk.Align.CENTER;
+		spinner.valign = Gtk.Align.CENTER;
+		spinner.start ();
+
+		var welcome = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
+
+		stack = new Gtk.Stack ();
+		stack.hexpand = true;
+		stack.vexpand = true;
+		stack.add_named (welcome, "welcome");
+		stack.add_named (spinner, "spinner");
+		stack.add_named (scroll_grid, "list");
+
+		attach (stack, 0, 0, 1, 1);
 		attach (info_bar, 0, 1, 1, 1);
 
 		placeholder ();
+	}
+	
+	public void placeholder () {
+		stack.visible_child_name = "welcome";
+	}
+
+	public void start_spinner () {
+		stack.visible_child_name = "spinner";
+	}
+
+	public void stop_spinner () {
+		stack.visible_child_name = "list";
 	}
 
 	public Gtk.Grid build_pagination () {
@@ -130,12 +167,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		return reload_btn;
 	}
 
-	public void placeholder () {
-		var intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
-		scroll.add (intro);
-	}
-
-	public void clear () {
+	public async void clear () {
 		if (scroll == null) {
 			return;
 		}
@@ -147,10 +179,10 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.expand = true;
 
-		attach (scroll, 0, 0, 1, 1);
+		scroll_grid.add (scroll);
 	}
 
-	public void reset () {
+	public async void reset () {
 		if (scroll.get_child () != null) {
 			scroll.remove (scroll.get_child ());
 		}
@@ -159,8 +191,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		table_name = "";
 		database = "";
 		placeholder ();
-
-		scroll.show_all ();
 	}
 
 	public void fill (string? table, string? db_name = null) {
@@ -178,7 +208,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		tot_pages = 0;
 		current_page = 1;
 
-		get_content_and_fill ();
+		get_content_and_fill.begin ();
 	}
 
 	public void reload_results () {
@@ -186,13 +216,20 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			return;
 		}
 
-		get_content_and_fill ();
+		get_content_and_fill.begin ();
 	}
 
-	public void get_content_and_fill () {
-		var query = (window.main.connection.db_type as DataBaseType).show_table_content (table_name);
+	public async void get_content_and_fill () {
+		if (reloading) {
+			debug ("still loading");
+			return;
+		}
 
-		table_content = get_table_content (query);
+		start_spinner ();
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_content (table_name);
+		reloading = true;
+
+		table_content = yield get_table_content (query);
 
 		if (table_content == null) {
 			return;
@@ -201,32 +238,39 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
 		result_message.label = _("%d Entries").printf (table_content.get_n_rows ());
 
-		clear ();
+		yield clear ();
 		update_pagination (table_content);
 
 		scroll.add (result_data);
 		scroll.show_all ();
+		reloading = false;
+
+		stop_spinner ();
 	}
 
-	private Gda.DataModel? get_table_content (string query) {
+	private async Gda.DataModel? get_table_content (string query) {
+		SourceFunc callback = get_table_content.callback;
 		Gda.DataModel? result = null;
 		var error = "";
 
-		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
+			ThreadFunc<bool> run = () => {
+				try {
+					result = window.main.connection_manager.init_select_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					result = null;
+				}
+				Idle.add((owned) callback);
+				return true;
+			};
+			new Thread<bool> ("get-table-content", run);
 		});
 
-		loop.run ();
+		yield;
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			result_message.label = error;
 			return null;
 		}
@@ -242,7 +286,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			page_prev_btn.sensitive = false;
 		}
 
-		change_page ();
+		change_page.begin ();
 	}
 
 	public void go_next_page () {
@@ -253,13 +297,13 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			page_next_btn.sensitive = false;
 		}
 
-		change_page ();
+		change_page.begin ();
 	}
 
-	private void change_page () {
+	private async void change_page () {
 		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
 
-		clear ();
+		yield clear ();
 		pages_label.set_text (_("%d of %d Pages").printf(current_page, tot_pages));
 
 		scroll.add (result_data);

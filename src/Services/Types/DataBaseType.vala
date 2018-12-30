@@ -53,5 +53,5 @@ public interface DataBaseType : Object {
 	/*
 	 * Show table relations
 	 */
-	public abstract string show_table_relations (string table, string database);
+	public abstract string show_table_relations (string table, string? database);
 }

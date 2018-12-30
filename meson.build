@@ -19,6 +19,7 @@ else
 	vala_args += ['-D', 'IS_DEVEL']
 endif
 
+linux_dep = meson.get_compiler('vala').find_library('linux')
 
 # Include the translations module
 i18n = import('i18n')

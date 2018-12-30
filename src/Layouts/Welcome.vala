@@ -92,14 +92,15 @@ public class Sequeler.Layouts.Welcome : Granite.Widgets.Welcome {
 					settings.add_connection (array);
 				}
 
+				window.main.library.reload_library.begin ();
+
 			break;
 
 			case Gtk.ResponseType.CANCEL:
 			break;
 		}
-		window.main.library.reload_library ();
 
-		dialog.destroy ();
+		open_dialog.destroy ();
 	}
 
 	private void import_warning (string message) {

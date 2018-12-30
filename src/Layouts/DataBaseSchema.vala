@@ -25,17 +25,19 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	public Gtk.ListStore schema_list;
 	public Gtk.ComboBox schema_list_combo;
 	public Gtk.TreeIter iter;
+	private bool reloading { get; set; default = false;}
 
 	public Gee.HashMap<int, string> schemas;
 	private ulong handler_id;
 
+	public Gtk.Stack stack;
 	public Gtk.ScrolledWindow scroll;
 	private Gda.DataModel? schema_table;
 	public Granite.Widgets.SourceList.ExpandableItem tables_category;
 	public Granite.Widgets.SourceList source_list;
 
 	private Gtk.Grid toolbar;
-	private Gtk.Spinner toolbar_spinner;
+	private Gtk.Spinner spinner;
 	public Gtk.Revealer revealer;
 	public Gtk.SearchEntry search;
 	public string search_text;
@@ -78,7 +80,8 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (schema_list_combo.get_active () == 0) {
 				return;
 			}
-			populate_schema (schemas[schema_list_combo.get_active ()], null);
+			start_spinner ();
+			init_populate_schema (null);
 		});
 
 		var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
@@ -123,18 +126,37 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		add_table_btn.clicked.connect (add_table);
 		add_table_btn.sensitive = false;
 
-		toolbar_spinner = new Gtk.Spinner ();
-		toolbar_spinner.margin = 3;
+		spinner = new Gtk.Spinner ();
+		spinner.hexpand = true;
+		spinner.vexpand = true;
+		spinner.halign = Gtk.Align.CENTER;
+		spinner.valign = Gtk.Align.CENTER;
+		spinner.start ();
 
 		toolbar.attach (add_table_btn, 0, 0, 1, 1);
 		toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
 		toolbar.attach (reload_btn, 2, 0, 1, 1);
-		toolbar.attach (toolbar_spinner, 3, 0, 1, 1);
+
+		stack = new Gtk.Stack ();
+		stack.hexpand = true;
+		stack.vexpand = true;
+		stack.add_named (scroll, "list");
+		stack.add_named (spinner, "spinner");
 
 		attach (dropdown_area, 0, 0, 1, 1);
 		attach (revealer, 0, 1, 1, 1);
-		attach (scroll, 0, 2, 1, 2);
+		attach (stack, 0, 2, 1, 2);
 		attach (toolbar, 0, 4, 1, 1);
+
+		start_spinner ();
+	}
+
+	public void start_spinner () {
+		stack.visible_child_name = "spinner";
+	}
+
+	public void stop_spinner () {
+		stack.visible_child_name = "list";
 	}
 
 	private void reset_schema_combo () {
@@ -150,81 +172,127 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (schema_list_combo.get_active () == 0) {
 				return;
 			}
-			populate_schema (schemas[schema_list_combo.get_active ()], null);
+			start_spinner ();
+			init_populate_schema (null);
 		});
 	}
 
-	public void reload_schema () {
-		var schema = get_schema ();
-		reset_schema_combo ();
-		
-		if (schema == null) {
-			return;
-		}
+	public void init_populate_schema (Gda.DataModel? schema) {
+		var database = window.data_manager.data["type"] == "SQLite" ? null : schemas[schema_list_combo.get_active ()];
 
-		if (window.data_manager.data["type"] == "SQLite") {
-			populate_schema (null, schema);
-			return;
-		}
-
-		Gda.DataModelIter _iter = schema.create_iter ();
-		schemas = new Gee.HashMap<int, string> ();
-		int i = 1;
-		while (_iter.move_next ()) {
-			schema_list.append (out iter);
-			schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
-			schemas.set (i,_iter.get_value_at (0).get_string ());
-			i++;
-		}
-
-		if (window.data_manager.data["type"] != "PostgreSQL") {
-			schema_list_combo.sensitive = true;
-		}
-
-		if (window.data_manager.data["type"] == "PostgreSQL") {
-			foreach (var entry in schemas.entries) {
-				if ("public" == entry.value) {
-					schema_list_combo.set_active (entry.key);
-				}
-			}
-			return;
-		}
-
-		foreach (var entry in schemas.entries) {
-			if (window.data_manager.data["name"] == entry.value) {
-				schema_list_combo.set_active (entry.key);
-			}
-		}
+		populate_schema.begin (database, schema);
 	}
 
-	public Gda.DataModel? get_schema () {
-		var query = (window.main.connection.db_type as DataBaseType).show_schema ();
+	public async void reload_schema () {
+		if (reloading) {
+			debug ("still loading");
+			return;
+		}
+
+		Gda.DataModel? schema = null;
+		Gda.DataModelIter? _iter = null;
+		reloading = true;
+
+		get_schema.begin ((obj, res) => {
+			new Thread<void*> ("reload-schema", () => {
+				try {
+					schema = get_schema.end (res);
+				} catch (Error e) {
+					reloading = false;
+					return null;
+				}
+				
+				Idle.add (() => {
+					reset_schema_combo ();
+					
+					if (schema == null) {
+						reloading = false;
+						return false;
+					}
+
+					if (window.data_manager.data["type"] == "SQLite") {
+						init_populate_schema (schema);
+						reloading = false;
+						return false;
+					}
+			
+					_iter = schema.create_iter ();
+
+					if (_iter == null) {
+						debug ("not a valid iter");
+						return true;
+					}
+
+					schemas = new Gee.HashMap<int, string> ();
+					int i = 1;
+					while (_iter.move_next ()) {
+						schema_list.append (out iter);
+						schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
+						schemas.set (i,_iter.get_value_at (0).get_string ());
+						i++;
+					}
+					if (window.data_manager.data["type"] != "PostgreSQL") {
+						schema_list_combo.sensitive = true;
+					}
+			
+					if (window.data_manager.data["type"] == "PostgreSQL") {
+						foreach (var entry in schemas.entries) {
+							if ("public" == entry.value) {
+								schema_list_combo.set_active (entry.key);
+							}
+						}
+						reloading = false;
+						return false;
+					}
+			
+					foreach (var entry in schemas.entries) {
+						if (window.data_manager.data["name"] == entry.value) {
+							schema_list_combo.set_active (entry.key);
+						}
+					}
+
+					reloading = false;
+					return false;
+				});
+				return null;
+			});
+		});
+	}
+
+	public async Gda.DataModel? get_schema () throws Error {
+		SourceFunc callback = get_schema.callback;
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_schema ();
 
 		Gda.DataModel? result = null;
 		var error = "";
 
-		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
+			ThreadFunc<bool> run = () => {
+				try {
+					result = window.main.connection_manager.init_select_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					result = null;
+				}
+				Idle.add((owned) callback);
+				return true;
+			};
+			new Thread<bool>("get-schema", run);
 		});
 
-		loop.run ();
-
+		yield;
+		
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			return null;
 		}
-
+		
 		return result;
 	}
 
-	public void populate_schema (string? database, Gda.DataModel? schema) {
+	public async void populate_schema (string? database, Gda.DataModel? schema) {
+		yield clear_views ();
+
 		if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
 			window.data_manager.data["name"] = database;
 			update_connection ();
@@ -234,10 +302,11 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		if (database == null && window.data_manager.data["type"] == "SQLite" && schema != null) {
 			schema_table = schema;
 		} else {
-			schema_table = get_schema_table (database);
+			yield get_schema_table (database);
 		}
 
 		if (schema_table == null) {
+			stop_spinner ();
 			return;
 		}
 
@@ -261,14 +330,14 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 					edit_table_name (item.name, new_name);
 				}
 			});
-			tables_category.add (item);      
+			tables_category.add (item);
 			top++;
 		}
 
 		source_list.root.add (tables_category);
 		scroll.add (source_list);
 
-		source_list.item_selected.connect ((item) => {
+		source_list.item_selected.connect (item => {
 			if (item == null) {
 				return;
 			}
@@ -289,33 +358,34 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		window.main.database_view.structure.database = database;
 		window.main.database_view.content.database = database;
 		window.main.database_view.relations.database = database;
+		stop_spinner ();
 	}
 
-	public Gda.DataModel? get_schema_table (string table) {
-		var query = (window.main.connection.db_type as DataBaseType).show_table_list (table);
-
-		Gda.DataModel? result = null;
+	public async void get_schema_table (string table) {
 		var error = "";
+		SourceFunc callback = get_schema_table.callback;
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_list (table);
 
-		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
+			ThreadFunc<bool> run = () => {
+				try {
+					schema_table = window.main.connection_manager.init_select_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					schema_table = null;
+				}
+				Idle.add((owned) callback);
+				return true;
+			};
+			new Thread<bool> ("get-schema-table", run);
 		});
 
-		loop.run ();
+		yield;
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
-			return null;
+			window.main.connection_manager.query_warning (error);
+			return;
 		}
-
-		return result;
 	}
 
 	private void update_connection () {
@@ -329,56 +399,61 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			scroll.remove (scroll.get_child ());
 		}
 
-		toolbar_spinner.start ();
+		if (window.main.connection_manager.connection != null && window.main.connection_manager.connection.is_opened ()) {
+			window.main.connection_manager.connection.clear_events_list ();
+			window.main.connection_manager.connection.close ();
+		}
 
-		window.main.connection.connection.close ();
-		var new_connection = new Sequeler.Services.ConnectionManager (window, window.data_manager.data);
+		var result = new Gee.HashMap<string, string> ();
 
-		var loop = new MainLoop ();
-		new_connection.init_connection.begin (new_connection, (obj, res) => {
-			try {
-				Gee.HashMap<string, string> result = new_connection.init_connection.end (res);
-				if (result["status"] == "true") {
-					window.main.connection = new_connection;
-					reload_schema ();
-				} else {
-					window.main.connection.query_warning (result["msg"]);
+		window.main.connection_manager.init_connection.begin ((obj, res) => {
+			new Thread<void*> (null, () => {
+				try {
+					result = window.main.connection_manager.init_connection.end (res);
+				} catch (ThreadError e) {
+					window.main.connection_manager.query_warning (e.message);
 				}
-			} catch (ThreadError e) {
-				window.main.connection.query_warning (e.message);
-			}
-			loop.quit ();
-		});
 
-		loop.run();
-		toolbar_spinner.stop ();
+				Idle.add (() => {
+					if (result["status"] == "true") {
+						reload_schema.begin ();
+					} else {
+						window.main.connection_manager.query_warning (result["msg"]);
+					}
+					return false;
+				});
+
+				return null;
+			});
+		});
 	}
 
 	private void edit_table_name (string old_name, string new_name) {
-		var query = (window.main.connection.db_type as DataBaseType).edit_table_name (old_name, new_name);
+		var query = (window.main.connection_manager.db_type as DataBaseType).edit_table_name (old_name, new_name);
 
 		int result = 0;
 		var error = "";
 
-		var loop = new MainLoop ();
-		window.main.connection.init_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection.init_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = 0;
-			}
-			loop.quit ();
+		window.main.connection_manager.init_query.begin (query, (obj, res) => {
+			new Thread<void*> (null, () => {
+				try {
+					result = window.main.connection_manager.init_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					result = 0;
+				}
+
+				Idle.add (() => {
+					if (error != "") {
+						window.main.connection_manager.query_warning (error);
+						return false;
+					}
+					return false;
+				});
+
+				return null;
+			});
 		});
-
-		loop.run ();
-
-		if (error != "") {
-			window.main.connection.query_warning (error);
-			return;
-		}
-
-		reload_schema ();
 	}
 
 	public void toggle_search_tables () {
@@ -387,7 +462,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			search.grab_focus_without_selecting ();
 		}
 
-		reload_schema ();
+		search.text = "";
 	}
 
 	public void on_search_tables (Gtk.Entry searchentry) {
@@ -402,6 +477,12 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		return item.name.down ().contains (search_text);
+	}
+
+	private async void clear_views () {
+		window.main.database_view.content.reset.begin ();
+		window.main.database_view.relations.reset.begin ();
+		window.main.database_view.structure.reset.begin ();
 	}
 
 	public void add_table () {

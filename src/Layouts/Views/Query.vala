@@ -78,15 +78,12 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		Gtk.drag_dest_add_uri_targets (query_builder);
 
-		try
-		{
+		try {
 			var style = new Gtk.CssProvider ();
 			var font_name = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
 			style.load_from_data ("* {font-family: '%s';}".printf (font_name), -1);
 			query_builder.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-		}
-		catch (Error e)
-		{
+		} catch (Error e) {
 			debug ("Internal error loading session chooser style: %s", e.message);
 		}
 
@@ -297,9 +294,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_select_query.end (res);
+				result = window.main.connection_manager.init_select_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = null;
@@ -317,9 +314,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var error = "";
 
 		var loop = new MainLoop ();
-		window.main.connection.init_query.begin (query, (obj, res) => {
+		window.main.connection_manager.init_query.begin (query, (obj, res) => {
 			try {
-				result = window.main.connection.init_query.end (res);
+				result = window.main.connection_manager.init_query.end (res);
 			} catch (ThreadError e) {
 				error = e.message;
 				result = 0;
@@ -330,7 +327,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		loop.run ();
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 		}
 
 		if (result == 0 || result == -1) {
@@ -406,12 +403,12 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			show_result_icon (true);
 		}
 
-		window.main.database_schema.reload_schema ();
+		window.main.database_schema.reload_schema.begin ();
 
 		// Force reset all views to fetch updated data
-		window.main.database_view.content.reset ();
-		window.main.database_view.relations.reset ();
-		window.main.database_view.structure.reset ();
+		window.main.database_view.content.reset.begin ();
+		window.main.database_view.relations.reset.begin ();
+		window.main.database_view.structure.reset.begin ();
 	}
 
 	private bool is_semicolon (unichar semicolon) {
@@ -455,7 +452,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			separator_holder.set_value (",");
 		}
 		catch (GLib.Error err) {
-			window.main.connection.query_warning (err.message);
+			window.main.connection_manager.query_warning (err.message);
 		}
 
 		first_line_holder.id = "NAMES_ON_FIRST_LINE";
@@ -463,7 +460,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			first_line_holder.set_value (true);
 		}
 		catch (GLib.Error err) {
-			window.main.connection.query_warning (err.message);
+			window.main.connection_manager.query_warning (err.message);
 		}
 
 		overwrite_holder.id = "OVERWRITE";
@@ -471,7 +468,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			overwrite_holder.set_value (true);
 		}
 		catch (GLib.Error err) {
-			window.main.connection.query_warning (err.message);
+			window.main.connection_manager.query_warning (err.message);
 		}
 
 		options_list.append (separator_holder);
@@ -487,7 +484,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 					response_data.export_to_file (Gda.DataModelIOFormat.TEXT_SEPARATED, file.get_path (), null, null, options);
 				}
 				catch (GLib.Error err) {
-					window.main.connection.query_warning (err.message);
+					window.main.connection_manager.query_warning (err.message);
 				}
 			break;
 			case 2:
@@ -496,20 +493,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 					response_data.export_to_file (Gda.DataModelIOFormat.TEXT_TABLE, file.get_path (), null, null, options);
 				}
 				catch (GLib.Error err) {
-					window.main.connection.query_warning (err.message);
+					window.main.connection_manager.query_warning (err.message);
 				}
 			break;
-			//  case 2:
-			//  	// Export as plain text
-			//  	try {
-			//  		FileOutputStream ostream = file.replace (null, false, FileCreateFlags.NONE);
-			//  		DataOutputStream dostream = new DataOutputStream (ostream);
-			//  		dostream.put_string (response_data.dump_as_string ());
-			//  	}
-			//  	catch (GLib.Error err) {
-			//  		window.main.connection.query_warning (err.message);
-			//  	}
-			//  break;
 			default:
 			break;
 		}
