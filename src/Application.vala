@@ -95,7 +95,6 @@ public class Sequeler.Application : Gtk.Application {
     }
 
     protected override void activate () {
-        var window = new Sequeler.Window (this);
-        this.add_window (window);
+		this.add_new_window ();
     }
 }
