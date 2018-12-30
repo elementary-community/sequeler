@@ -1,151 +1,155 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 16:39+0100\n"
+"POT-Creation-Date: 2018-12-29 18:11-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3;\n"
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:7
-#: data/com.github.alecaddd.sequeler.desktop.in:3
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:7
+#: data/com.github.alecaddd.sequeler.desktop.in.in:3
 msgid "Sequeler"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:8
-#: data/com.github.alecaddd.sequeler.desktop.in:5
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:8
+#: data/com.github.alecaddd.sequeler.desktop.in.in:5
 msgid "Friendly SQL Client"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:10
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:10
 msgid "Easily connect to your local or remote database"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:13
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:13
 msgid ""
 "Store your Database Connections in the built-in library, type and execute "
 "SQL commands directly in the App, and do everything you need to do without "
 "the necessity of opening the terminal."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:16
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:16
 msgid "Features Include:"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:20
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:20
 msgid "Test Connections before saving them"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:21
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:21
 msgid "View Table structure, content, and relations"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:22
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:22
 msgid "Write multiple custom SQL Queries"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:23
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:23
 msgid "Switch between light and dark mode"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in:24
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:24
 msgid ""
 "Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift"
 "+n), multiple instances (ctrl+n)"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.desktop.in:4
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:310
+msgid "Alessandro Castellani"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.desktop.in.in:4
 msgid "Sequeler App"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.desktop.in:9
-msgid "com.github.alecaddd.sequeler"
+#: data/com.github.alecaddd.sequeler.desktop.in.in:9
+msgid "@icon@"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.desktop.in:12
+#: data/com.github.alecaddd.sequeler.desktop.in.in:12
 msgid "SQL;MySql;Database;MariaDB;S3;PostgreSQL;"
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:5
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:6
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:5
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:6
 msgid "The saved horizontal position of the window."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:11
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:11
 msgid "The vertical position width of the window."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:12
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:12
 msgid "The saved vertical position of the window."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:17
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:17
 msgid "The saved width of the window."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:18
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:18
 msgid ""
 "The saved width of the window. Must be greater than 750, or it will not take "
 "effect."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:23
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:23
 msgid "The saved height of the window."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:24
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:24
 msgid ""
 "The saved height of the window. Must be greater than 500, or it will not "
 "take effect."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:29
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:29
 msgid "Total amount of saved connections."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:30
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:30
 msgid ""
 "Increase the amount at every new connection, set a unique ID for every "
 "connection."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:35
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:35
 msgid "Max rows to show in Content tab."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:36
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:36
 msgid "Split results based on max amount, helps generate the pagination."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:41
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:41
 msgid "The saved configured conenctions"
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:42
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:42
 msgid "All the configured connections you saved are here"
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:47
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:47
 msgid "Save Quick Connections"
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:48
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:48
 msgid "Automatically Save a Quick Connections into the Database Library."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:53
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:53
 msgid "Use dark theme"
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:54
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:54
 msgid "Switch between Light and Dark theme."
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:59
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:59
 msgid "Current Version"
 msgstr ""
 
-#: schemas/com.github.alecaddd.sequeler.gschema.xml:60
+#: schemas/com.github.alecaddd.sequeler.gschema.xml.in:60
 msgid "Check current App version for upgrades on startup."
 msgstr ""
 
@@ -157,7 +161,7 @@ msgstr ""
 msgid "Don't know what to do"
 msgstr ""
 
-#: src/Application.vala:81
+#: src/Application.vala:80
 msgid "Something completely unexpected happened"
 msgstr ""
 
@@ -177,8 +181,8 @@ msgstr ""
 msgid "New Window"
 msgstr ""
 
-#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:101
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Layouts/HeaderBar.vala:75 src/Widgets/ConnectionDialog.vala:125
+#: src/Widgets/ConnectionDialog.vala:158
 msgid "New Connection"
 msgstr ""
 
@@ -190,66 +194,66 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: src/Layouts/Main.vala:75
+#: src/Layouts/Main.vala:78
 #, c-format
 msgid "Connected to %s"
 msgstr ""
 
-#: src/Layouts/Library.vala:44
+#: src/Layouts/Library.vala:49
 msgid "SAVED CONNECTIONS"
 msgstr ""
 
-#: src/Layouts/Library.vala:49
+#: src/Layouts/Library.vala:54
 msgid "Delete All"
 msgstr ""
 
-#: src/Layouts/Library.vala:56
+#: src/Layouts/Library.vala:61
 msgid "Reload Library"
 msgstr ""
 
-#: src/Layouts/Library.vala:59
+#: src/Layouts/Library.vala:64
 msgid "Export Library"
 msgstr ""
 
-#: src/Layouts/Library.vala:134 src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:139 src/Layouts/Library.vala:157
 msgid "Are you sure you want to proceed?"
 msgstr ""
 
-#: src/Layouts/Library.vala:134
+#: src/Layouts/Library.vala:139
 msgid "By deleting this connection you won’t be able to recover this data."
 msgstr ""
 
-#: src/Layouts/Library.vala:137
+#: src/Layouts/Library.vala:142
 msgid "Yes, Delete!"
 msgstr ""
 
-#: src/Layouts/Library.vala:152
+#: src/Layouts/Library.vala:157
 msgid "All the data will be deleted and you won’t be able to recover it."
 msgstr ""
 
-#: src/Layouts/Library.vala:155
+#: src/Layouts/Library.vala:160
 msgid "Yes, Delete All!"
 msgstr ""
 
-#: src/Layouts/Library.vala:270 src/Layouts/Views/Query.vala:424
+#: src/Layouts/Library.vala:336 src/Layouts/Views/Query.vala:421
 msgid "Pick a file"
 msgstr ""
 
-#: src/Layouts/Library.vala:273 src/Layouts/Views/Query.vala:427
+#: src/Layouts/Library.vala:339 src/Layouts/Views/Query.vala:424
 msgid "_Save"
 msgstr ""
 
-#: src/Layouts/Library.vala:274 src/Layouts/Welcome.vala:62
-#: src/Layouts/Views/Query.vala:428
+#: src/Layouts/Library.vala:340 src/Layouts/Welcome.vala:62
+#: src/Layouts/Views/Query.vala:425
 msgid "_Cancel"
 msgstr ""
 
-#: src/Layouts/Library.vala:333
+#: src/Layouts/Library.vala:415
 #, c-format
 msgid "Unable to Connect to %s"
 msgstr ""
 
-#: src/Layouts/Library.vala:346
+#: src/Layouts/Library.vala:428
 msgid "Unable to Export Library "
 msgstr ""
 
@@ -289,31 +293,31 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: src/Layouts/Welcome.vala:106
+#: src/Layouts/Welcome.vala:107
 msgid "Unable to Import Library "
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:64 src/Layouts/DataBaseSchema.vala:145
+#: src/Layouts/DataBaseSchema.vala:66 src/Layouts/DataBaseSchema.vala:167
 msgid "- Select Database -"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:84
+#: src/Layouts/DataBaseSchema.vala:87
 msgid "Search Tables"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:95
+#: src/Layouts/DataBaseSchema.vala:98
 msgid "Search Tables…"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:117
+#: src/Layouts/DataBaseSchema.vala:120
 msgid "Reload Tables"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:122
+#: src/Layouts/DataBaseSchema.vala:125
 msgid "Add Table"
 msgstr ""
 
-#: src/Layouts/DataBaseSchema.vala:250
+#: src/Layouts/DataBaseSchema.vala:319
 msgid "TABLES"
 msgstr ""
 
@@ -333,114 +337,114 @@ msgstr ""
 msgid "Query"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:67 src/Layouts/Views/Structure.vala:110
-#: src/Layouts/Views/Content.vala:115 src/Layouts/Views/Content.vala:158
-#: src/Layouts/Views/Relations.vala:67 src/Layouts/Views/Relations.vala:110
-#: src/Layouts/Views/Query.vala:207
-msgid "No Results Available"
-msgstr ""
-
-#: src/Layouts/Views/Structure.vala:78 src/Layouts/Views/Content.vala:126
-#: src/Layouts/Views/Relations.vala:78
-msgid "Reload Results"
-msgstr ""
-
-#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:134
-#: src/Layouts/Views/Relations.vala:86
+#: src/Layouts/Views/Structure.vala:76 src/Layouts/Views/Content.vala:84
+#: src/Layouts/Views/Relations.vala:75
 msgid "Select Table"
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:86 src/Layouts/Views/Content.vala:134
-#: src/Layouts/Views/Relations.vala:86
+#: src/Layouts/Views/Structure.vala:76 src/Layouts/Views/Content.vala:84
+#: src/Layouts/Views/Relations.vala:75
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
 
-#: src/Layouts/Views/Structure.vala:151
+#: src/Layouts/Views/Structure.vala:104 src/Layouts/Views/Structure.vala:142
+#: src/Layouts/Views/Content.vala:152 src/Layouts/Views/Content.vala:190
+#: src/Layouts/Views/Relations.vala:103 src/Layouts/Views/Relations.vala:141
+#: src/Layouts/Views/Query.vala:204
+msgid "No Results Available"
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:115 src/Layouts/Views/Content.vala:163
+#: src/Layouts/Views/Relations.vala:114
+msgid "Reload Results"
+msgstr ""
+
+#: src/Layouts/Views/Structure.vala:188
 msgid " Fields"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:77
+#: src/Layouts/Views/Content.vala:114
 msgid "Previous Page"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:82
+#: src/Layouts/Views/Content.vala:119
 msgid "Next Page"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:87
+#: src/Layouts/Views/Content.vala:124
 #, c-format
 msgid "%d Pages"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:105
+#: src/Layouts/Views/Content.vala:142
 msgid "1 Page"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:110 src/Layouts/Views/Content.vala:263
+#: src/Layouts/Views/Content.vala:147 src/Layouts/Views/Content.vala:307
 #, c-format
 msgid "%d of %d Pages"
 msgstr ""
 
-#: src/Layouts/Views/Content.vala:202
+#: src/Layouts/Views/Content.vala:239
 #, c-format
 msgid "%d Entries"
 msgstr ""
 
-#: src/Layouts/Views/Relations.vala:151
+#: src/Layouts/Views/Relations.vala:187
 msgid " Constraints"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:163
+#: src/Layouts/Views/Query.vala:160
 msgid "Running Query…"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:180
+#: src/Layouts/Views/Query.vala:177
 msgid "Run Query"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:239
+#: src/Layouts/Views/Query.vala:236
 msgid "Export Results"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:252
+#: src/Layouts/Views/Query.vala:249
 msgid "Export as CSV"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:260
+#: src/Layouts/Views/Query.vala:257
 msgid "Export as Text"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:356 src/Layouts/Views/Query.vala:396
+#: src/Layouts/Views/Query.vala:353 src/Layouts/Views/Query.vala:393
 msgid "Unable to process Query!"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:373
+#: src/Layouts/Views/Query.vala:370
 #, c-format
 msgid "%d Total Results"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:402
+#: src/Layouts/Views/Query.vala:399
 #, c-format
 msgid "Query Successfully Executed! Rows Affected: %d"
 msgstr ""
 
-#: src/Layouts/Views/Query.vala:405
+#: src/Layouts/Views/Query.vala:402
 msgid "Query Executed!"
 msgstr ""
 
-#: src/Partials/LibraryItem.vala:75 src/Widgets/ConnectionDialog.vala:232
+#: src/Partials/LibraryItem.vala:72 src/Widgets/ConnectionDialog.vala:382
 msgid "Connect"
 msgstr ""
 
-#: src/Partials/LibraryItem.vala:78
+#: src/Partials/LibraryItem.vala:75
 msgid "Edit Connection"
 msgstr ""
 
-#: src/Partials/LibraryItem.vala:81
+#: src/Partials/LibraryItem.vala:78
 msgid "Delete Connection"
 msgstr ""
 
-#: src/Partials/LibraryItem.vala:86
+#: src/Partials/LibraryItem.vala:83
 msgid "Options"
 msgstr ""
 
@@ -452,87 +456,179 @@ msgstr ""
 msgid "on Column"
 msgstr ""
 
-#: src/Partials/TreeBuilder.vala:148
+#: src/Partials/TreeBuilder.vala:152
 #, c-format
 msgid "Copy %s"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:191
+#: src/Services/ConnectionManager.vala:180
+#, c-format
+msgid "Libssh2 initialization failed (%d)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:187
+msgid "Failed to open socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:196
+msgid "Failed to connect!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:208
+#, c-format
+msgid "Error when starting up SSH session: %d"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:227
+msgid "Authentication by password failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:237
+msgid "Authentication by public key failed!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:244
+msgid "No supported authentication methods found!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:251
+msgid "Failed to open listen socket"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:266
+msgid "Failed to bind. Your Database Port may be wrong!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:272
+msgid "Failed to listen!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:299
+msgid "Failed to accept remote connection!"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:308
+msgid ""
+"Could not open the direct-tcpip channel! (Note that this can be a problem at "
+"the server! Please review the server logs.)"
+msgstr ""
+
+#: src/Services/ConnectionManager.vala:512
 msgid "Error!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:61
+#: src/Widgets/ConnectionDialog.vala:84 src/Widgets/ConnectionDialog.vala:329
 msgid "Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:126
+#: src/Widgets/ConnectionDialog.vala:157
 msgid "Connection Name:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:127
+#: src/Widgets/ConnectionDialog.vala:158
 msgid "Connection's name"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:134
+#: src/Widgets/ConnectionDialog.vala:165
 msgid "Database Type:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:156
+#: src/Widgets/ConnectionDialog.vala:187
 msgid "Host:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:162
+#: src/Widgets/ConnectionDialog.vala:193
 msgid "Database Name:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:169
+#: src/Widgets/ConnectionDialog.vala:200
 msgid "Username:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:175
+#: src/Widgets/ConnectionDialog.vala:206
 msgid "Password:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:193
+#: src/Widgets/ConnectionDialog.vala:224
 msgid "Port:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:199
+#: src/Widgets/ConnectionDialog.vala:230
 msgid "File Path:"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:200
+#: src/Widgets/ConnectionDialog.vala:231
 msgid "Select Your SQLite File…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:227
+#: src/Widgets/ConnectionDialog.vala:251
+msgid "Connect via SSH Tunnel:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:261
+msgid "SSH Host:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:266
+msgid "SSH Username:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:271
+msgid "SSH Password:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:288
+msgid "SSH Port:"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:289
+msgid "Optional"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:293
+msgid "Missing SSH Key file!"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:301
+msgid "Generate SSH Key"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:330
+msgid "SSH Tunnel"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:377
 msgid "Close"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:228
+#: src/Widgets/ConnectionDialog.vala:378
 msgid "Save Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:230
+#: src/Widgets/ConnectionDialog.vala:380
 msgid "Test Connection"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:368
+#: src/Widgets/ConnectionDialog.vala:568
+msgid "Opening SSH Tunnel…"
+msgstr ""
+
+#: src/Widgets/ConnectionDialog.vala:598
 msgid "Testing Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:376
+#: src/Widgets/ConnectionDialog.vala:609
 msgid "Successfully Connected!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:393
+#: src/Widgets/ConnectionDialog.vala:627
 msgid "Saving Connection…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:398
+#: src/Widgets/ConnectionDialog.vala:632
 msgid "Connection Saved!"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:406
+#: src/Widgets/ConnectionDialog.vala:640
 msgid "Connecting…"
 msgstr ""

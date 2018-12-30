@@ -22,8 +22,13 @@
 public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.Stack stack;
+	public Gtk.Grid scroll_grid;
 	public Gtk.ScrolledWindow scroll;
 	public Gtk.Label result_message;
+	private Gtk.Spinner spinner;
+
+	private bool reloading { get; set; default = false; }
 
 	private string _table_name = "";
 
@@ -47,20 +52,52 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 	}
 
 	construct {
+		scroll_grid = new Gtk.Grid ();
+		scroll_grid.expand = true;
+
 		scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.expand = true;
+		scroll_grid.add (scroll);
 
 		var info_bar = new Gtk.Grid ();
 		info_bar.get_style_context ().add_class ("library-toolbar");
 		info_bar.attach (build_results_msg (), 0, 0, 1, 1);
 		info_bar.attach (build_reload_btn (), 1, 0, 1, 1);
 
-		attach (scroll, 0, 0, 1, 1);
+		spinner = new Gtk.Spinner ();
+		spinner.hexpand = true;
+		spinner.vexpand = true;
+		spinner.halign = Gtk.Align.CENTER;
+		spinner.valign = Gtk.Align.CENTER;
+		spinner.start ();
+
+		var welcome = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
+
+		stack = new Gtk.Stack ();
+		stack.hexpand = true;
+		stack.vexpand = true;
+		stack.add_named (welcome, "welcome");
+		stack.add_named (spinner, "spinner");
+		stack.add_named (scroll_grid, "list");
+
+		attach (stack, 0, 0, 1, 1);
 		attach (info_bar, 0, 1, 1, 1);
 
 		placeholder ();
+	}
+
+	public void placeholder () {
+		stack.visible_child_name = "welcome";
+	}
+
+	public void start_spinner () {
+		stack.visible_child_name = "spinner";
+	}
+
+	public void stop_spinner () {
+		stack.visible_child_name = "list";
 	}
 
 	public Gtk.Label build_results_msg () {
@@ -82,12 +119,7 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		return reload_btn;
 	}
 
-	public void placeholder () {
-		var intro = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
-		scroll.add (intro);
-	}
-
-	public void clear () {
+	public async void clear () {
 		if (scroll == null) {
 			return;
 		}
@@ -99,10 +131,10 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.expand = true;
 
-		attach (scroll, 0, 0, 1, 1);
+		scroll_grid.add (scroll);
 	}
 
-	public void reset () {
+	public async void reset () {
 		if (scroll.get_child () != null) {
 			scroll.remove (scroll.get_child ());
 		}
@@ -111,8 +143,6 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		table_name = "";
 		database = "";
 		placeholder ();
-
-		scroll.show_all ();
 	}
 
 	public void fill (string? table, string? db_name = null) {
@@ -127,7 +157,7 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		table_name = table;
 		database = db_name;
 
-		get_content_and_fill ();
+		get_content_and_fill.begin ();
 	}
 
 	public void reload_results () {
@@ -135,13 +165,20 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 			return;
 		}
 
-		get_content_and_fill ();
+		get_content_and_fill.begin ();
 	}
 
-	public void get_content_and_fill () {
-		var query = (window.main.connection.db_type as DataBaseType).show_table_structure (table_name);
+	public async void get_content_and_fill () {
+		if (reloading) {
+			debug ("still loading");
+			return;
+		}
 
-		var table_schema = get_table_schema (query);
+		start_spinner ();
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_structure (table_name);
+		reloading = true;
+
+		var table_schema = yield get_table_schema (query);
 
 		if (table_schema == null) {
 			return;
@@ -150,31 +187,38 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 		var result_data = new Sequeler.Partials.TreeBuilder (table_schema, window);
 		result_message.label = table_schema.get_n_rows ().to_string () + _(" Fields");
 
-		clear ();
+		yield clear ();
 
 		scroll.add (result_data);
 		scroll.show_all ();
+		reloading = false;
+
+		stop_spinner ();
 	}
 
-	private Gda.DataModel? get_table_schema (string query) {
+	private async Gda.DataModel? get_table_schema (string query) {
+		SourceFunc callback = get_table_schema.callback;
 		Gda.DataModel? result = null;
 		var error = "";
 
-		var loop = new MainLoop ();
-		window.main.connection.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
+		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
+			ThreadFunc<bool> run = () => {
+				try {
+					result = window.main.connection_manager.init_select_query.end (res);
+				} catch (ThreadError e) {
+					error = e.message;
+					result = null;
+				}
+				Idle.add((owned) callback);
+				return true;
+			};
+			new Thread<bool> ("get-table-schema", run);
 		});
 
-		loop.run ();
+		yield;
 
 		if (error != "") {
-			window.main.connection.query_warning (error);
+			window.main.connection_manager.query_warning (error);
 			result_message.label = error;
 			return null;
 		}

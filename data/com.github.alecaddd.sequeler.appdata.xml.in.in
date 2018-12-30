@@ -28,6 +28,19 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.6.6" date="2018-12-29">
+			<description>
+				<p>Implemented SSH tunneling</p>
+				<ul>
+					<li>WARNING: This release packs many updates and something could break. Please, backup your connections.</li>
+					<li>Connect via SSH to a remote Database.</li>
+					<li>Major code refactor to handle UI updates via async methods.</li>
+					<li>Use Stack container to show a loading Spinner during fetch or data processing methods.</li>
+					<li>Major performance improvements to the table search and dropdown schema switcher.</li>
+					<li>Bug fixes and other improvements.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.6.5" date="2018-12-15">
 			<description>
 				<p>Fancy New Icon!</p>

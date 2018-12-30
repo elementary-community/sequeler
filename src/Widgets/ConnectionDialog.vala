@@ -21,12 +21,14 @@
 
 public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	public weak Sequeler.Window window { get; construct; }
+	private Sequeler.Services.ConnectionManager? connection_manager { get; set; default = null; }
 
 	public Sequeler.Partials.ButtonClass test_button;
 	public Sequeler.Partials.ButtonClass connect_button;
 
 	private Gtk.Label header_title;
 	private Gtk.ColorButton color_picker;
+	private Gtk.InfoBar infobar;
 
 	private Sequeler.Partials.LabelForm db_file_label;
 	private Sequeler.Partials.LabelForm db_host_label;
@@ -46,11 +48,32 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Sequeler.Partials.Entry db_port_entry;
 	private Gtk.FileChooserButton db_file_entry;
 
+	private string keyfile1;
+	private string keyfile2;
+	private Sequeler.Partials.LabelForm ssh_switch_label;
+	private Gtk.Grid ssh_switch_container;
+	private Gtk.Switch ssh_switch;
+	private Sequeler.Partials.LabelForm ssh_host_label;
+	private Sequeler.Partials.Entry ssh_host_entry;
+	private Sequeler.Partials.LabelForm ssh_username_label;
+	private Sequeler.Partials.Entry ssh_username_entry;
+	private Sequeler.Partials.LabelForm ssh_password_label;
+	private Sequeler.Partials.Entry ssh_password_entry;
+	private Sequeler.Partials.LabelForm ssh_port_label;
+	private Sequeler.Partials.Entry ssh_port_entry;
+
 	private Gtk.Spinner spinner;
 	private Sequeler.Partials.ResponseMessage response_msg;
 
 	enum Column {
 		DBTYPE
+	}
+
+	enum Action {
+		TEST,
+		SAVE,
+		CANCEL,
+		CONNECT
 	}
 
 	public ConnectionDialog (Sequeler.Window? parent) {
@@ -67,6 +90,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	construct {
 		set_id ();
 		build_content ();
+		toggle_ssh_fields (false);
 		build_actions ();
 		populate_data ();
 		change_sensitivity ();
@@ -91,9 +115,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_types.set (3,"SQLite");
 
 		var header_grid = new Gtk.Grid ();
-		header_grid.margin_start = 5;
-		header_grid.margin_end = 5;
-		header_grid.margin_bottom = 20;
+		header_grid.margin_start = 30;
+		header_grid.margin_end = 30;
+		header_grid.margin_bottom = 10;
 
 		var image = new Gtk.Image.from_icon_name ("office-database", Gtk.IconSize.DIALOG);
 		image.margin_end = 10;
@@ -116,12 +140,19 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		body.add (header_grid);
 
 		var form_grid = new Gtk.Grid ();
-		form_grid.margin_top = 5;
-		form_grid.margin_bottom = 20;
-		form_grid.margin_start = 30;
-		form_grid.margin_end = 30;
-		form_grid.row_spacing = 10;
+		form_grid.margin = 30;
+		form_grid.row_spacing = 12;
 		form_grid.column_spacing = 20;
+
+		var ssh_grid = new Gtk.Grid ();
+		ssh_grid.margin = 30;
+		ssh_grid.row_spacing = 12;
+		ssh_grid.column_spacing = 20;
+
+		var ssh_switch_grid = new Gtk.Grid ();
+		ssh_switch_grid.halign = Gtk.Align.CENTER;
+		ssh_switch_grid.column_spacing = 20;
+		ssh_switch_grid.margin_bottom = 12;
 
 		var title_label = new Sequeler.Partials.LabelForm (_("Connection Name:"));
 		title_entry = new Sequeler.Partials.Entry (_("Connection's name"), _("New Connection"));
@@ -214,13 +245,132 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_file_entry.visible = false;
 		db_file_entry.no_show_all = true;
 
-		body.add (form_grid);
+		ssh_switch = new Gtk.Switch ();
+		ssh_switch_container = new Gtk.Grid ();
+		ssh_switch_container.add (ssh_switch);
+		ssh_switch_label = new Sequeler.Partials.LabelForm (_("Connect via SSH Tunnel:"));
+
+		ssh_switch.notify["active"].connect (() => {
+			toggle_ssh_fields (ssh_switch.get_active ());
+		});
+
+		ssh_switch_grid.attach (ssh_switch_label, 0, 0, 1, 1);
+		ssh_switch_grid.attach (ssh_switch_container, 1, 0, 1, 1);
+		ssh_grid.attach (ssh_switch_grid, 0, 0, 2, 1);
+
+		ssh_host_label = new Sequeler.Partials.LabelForm (_("SSH Host:"));;
+		ssh_host_entry = new Sequeler.Partials.Entry ("", null);
+		ssh_grid.attach (ssh_host_label, 0, 2, 1, 1);
+		ssh_grid.attach (ssh_host_entry, 1, 2, 1, 1);
+		
+		ssh_username_label = new Sequeler.Partials.LabelForm (_("SSH Username:"));;
+		ssh_username_entry = new Sequeler.Partials.Entry ("", null);
+		ssh_grid.attach (ssh_username_label, 0, 3, 1, 1);
+		ssh_grid.attach (ssh_username_entry, 1, 3, 1, 1);
+
+		ssh_password_label = new Sequeler.Partials.LabelForm (_("SSH Password:"));;
+		ssh_password_entry = new Sequeler.Partials.Entry ("", null);
+		ssh_password_entry.visibility = false;
+		ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+		ssh_password_entry.icon_press.connect ((pos, event) => {
+			if (pos == Gtk.EntryIconPosition.SECONDARY) {
+				ssh_password_entry.visibility = !ssh_password_entry.visibility;
+			}
+			if (ssh_password_entry.visibility) {
+				ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-allow-symbolic");
+			} else {
+				ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+			}
+		});
+		ssh_grid.attach (ssh_password_label, 0, 4, 1, 1);
+		ssh_grid.attach (ssh_password_entry, 1, 4, 1, 1);
+		
+		ssh_port_label = new Sequeler.Partials.LabelForm (_("SSH Port:"));;
+		ssh_port_entry = new Sequeler.Partials.Entry (_("Optional"), null);
+		ssh_grid.attach (ssh_port_label, 0, 5, 1, 1);
+		ssh_grid.attach (ssh_port_entry, 1, 5, 1, 1);
+
+		var info_label = new Gtk.Label (_("Missing SSH Key file!"));
+		info_label.show ();
+
+		infobar = new Gtk.InfoBar ();
+		infobar.message_type = Gtk.MessageType.WARNING;
+		infobar.get_style_context ().add_class ("inline");
+		infobar.get_content_area ().add (info_label);
+		infobar.show_close_button = false;
+		infobar.add_button (_("Generate SSH Key"), 0);
+		infobar.revealed = false;
+
+		infobar.response.connect ((response) => {
+			if (response == 0) {
+				try {
+					ssh_switch.active = false;
+                    AppInfo.launch_default_for_uri ("https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/", null);
+                } catch (Error e) {
+                    warning ("%s\n", e.message);
+                }
+			}
+		});
+
+		ssh_grid.attach (infobar, 0, 6, 2, 1);
+
+		var stack_grid = new Gtk.Grid ();
+		stack_grid.expand = true;
+		stack_grid.margin_top = 20;
+
+		var stackswitcher = new Gtk.StackSwitcher ();
+		stackswitcher.halign = Gtk.Align.CENTER;
+		stack_grid.attach (stackswitcher, 0, 0, 1, 1);
+		
+		var stack = new Gtk.Stack ();
+		stack.expand = true;
+		stackswitcher.stack = stack;
+		
+		stack.add_titled (form_grid, "connection", _("Connection"));
+		stack.add_titled (ssh_grid, "ssh", _("SSH Tunnel"));
+		stack_grid.attach (stack, 0, 1, 1, 1);
+		
+		body.add (stack_grid);
 
 		spinner = new Gtk.Spinner ();
 		response_msg = new Sequeler.Partials.ResponseMessage ();
 
 		body.add (spinner);
 		body.add (response_msg);
+	}
+
+	private void toggle_ssh_fields (bool toggle) {
+		if (toggle) {
+			var home_dir = Environment.get_home_dir ();
+			keyfile1 = home_dir + "/.ssh/id_rsa.pub";
+			keyfile2 = home_dir + "/.ssh/id_rsa";
+			if (! File.new_for_path (keyfile1).query_exists () || ! File.new_for_path (keyfile2).query_exists ()) {
+				infobar.revealed = true;
+				return;
+			}
+		}
+
+		ssh_host_label.visible = toggle;
+		ssh_host_label.no_show_all = !toggle;
+		ssh_host_entry.visible = toggle;
+		ssh_host_entry.no_show_all = !toggle;
+
+		ssh_username_label.visible = toggle;
+		ssh_username_label.no_show_all = !toggle;
+		ssh_username_entry.visible = toggle;
+		ssh_username_entry.no_show_all = !toggle;
+
+		ssh_password_label.visible = toggle;
+		ssh_password_label.no_show_all = !toggle;
+		ssh_password_entry.visible = toggle;
+		ssh_password_entry.no_show_all = !toggle;
+
+		ssh_port_label.visible = toggle;
+		ssh_port_label.no_show_all = !toggle;
+		ssh_port_entry.visible = toggle;
+		ssh_port_entry.no_show_all = !toggle;
+
+		infobar.revealed = false;
 	}
 
 	private void build_actions () {
@@ -231,10 +381,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		connect_button = new Sequeler.Partials.ButtonClass (_("Connect"), "suggested-action");
 
-		add_action_widget (test_button, 1);
-		add_action_widget (save_button, 2);
-		add_action_widget (cancel_button, 3);
-		add_action_widget (connect_button, 4);
+		add_action_widget (test_button, Action.TEST);
+		add_action_widget (save_button, Action.SAVE);
+		add_action_widget (cancel_button, Action.CANCEL);
+		add_action_widget (connect_button, Action.CONNECT);
 	}
 
 	private void populate_data () {
@@ -293,6 +443,29 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		if (update_data["port"] != null) {
 			db_port_entry.text = update_data["port"];
 		}
+
+		if (update_data["has_ssh"] == "true") {
+			string? old_ssh_password = "";
+
+			var ssh_loop = new MainLoop ();
+			password_mngr.get_password_async.begin (update_data["id"] + "9999", (obj, res) => {
+				try {
+					old_ssh_password = password_mngr.get_password_async.end (res);
+				} catch (Error e) {
+					debug ("Unable to get the SSH password from libsecret");
+				}
+				ssh_loop.quit ();
+			});
+
+			ssh_loop.run ();
+
+			ssh_switch.active = bool.parse (update_data["has_ssh"]);
+			
+			ssh_host_entry.text = (update_data["ssh_host"] != null) ? update_data["ssh_host"] : "";
+			ssh_username_entry.text = (update_data["ssh_username"] != null) ? update_data["ssh_username"] : "";
+			ssh_password_entry.text = (old_ssh_password != null) ? old_ssh_password : "";
+			ssh_port_entry.text = (update_data["ssh_port"] != null) ? update_data["ssh_port"] : "";
+		}
 	}
 
 	private void db_type_changed () {
@@ -333,6 +506,13 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_port_label.no_show_all = toggle;
 		db_port_entry.visible = !toggle;
 		db_port_entry.no_show_all = toggle;
+
+		if (toggle) ssh_switch.active = false;
+
+		ssh_switch_container.visible = !toggle;
+		ssh_switch_container.no_show_all = toggle;
+		ssh_switch_label.visible = !toggle;
+		ssh_switch_label.no_show_all = toggle;
 	}
 
 	private void change_sensitivity () {
@@ -348,32 +528,86 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 	private void on_response (Gtk.Dialog source, int response_id) {
 		switch (response_id) {
-			case 1:
-				test_connection.begin ();
+			case Action.TEST:
+				if (ssh_switch.active) {
+					open_ssh_connection.begin (false);
+				} else {
+					test_connection.begin ();
+				}
 				break;
-			case 2:
+			case Action.SAVE:
 				save_connection ();
 				break;
-			case 3:
+			case Action.CANCEL:
+				if (connection_manager != null) {
+					connection_manager.ssh_tunnel_close (Log.FILE + ":" + Log.LINE.to_string ());
+				}
 				destroy ();
 				break;
-			case 4:
-				init_connection_begin ();
+			case Action.CONNECT:
+				debug ("init connection");
+				if (ssh_switch.active) {
+					open_ssh_connection.begin (true);
+				} else {
+					init_connection.begin ();
+				}
 				break;
 		}
+	}
+
+	public void test_connection_callback () {
+		test_connection.begin ();
+	}
+
+	public void init_connection_callback () {
+		init_connection.begin ();
+	}
+
+	public async void open_ssh_connection (bool is_real) throws ThreadError {
+		toggle_spinner (true);
+		write_response (_("Opening SSH Tunnel\u2026"));
+
+		var data = package_data ();
+		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
+
+		if (is_real) {
+			connection_manager.ssh_tunnel_ready.connect (init_connection_callback);
+		} else {
+			connection_manager.ssh_tunnel_ready.connect (test_connection_callback);
+		}
+
+		SourceFunc callback = open_ssh_connection.callback;
+		
+		new Thread <void*> (null, () => {
+			try {
+				connection_manager.ssh_tunnel_init (is_real);
+			}
+			catch (Error e) {
+				write_response (e.message);
+			}
+			Idle.add ((owned) callback);
+			toggle_spinner (false);
+			return null;
+		});
+
+		yield;
 	}
 
 	private async void test_connection () throws ThreadError {
 		toggle_spinner (true);
 		write_response (_("Testing Connection\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (window, package_data ());
+		if (connection_manager == null) {
+			connection_manager = new Sequeler.Services.ConnectionManager (window, package_data ());
+		}
+
 		SourceFunc callback = test_connection.callback;
 
 		new Thread <void*> (null, () => {
 			try {
-				connection.test ();
+				connection_manager.test ();
 				write_response (_("Successfully Connected!"));
+				connection_manager = null;
 			}
 			catch (Error e) {
 				write_response (e.message);
@@ -392,47 +626,53 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		toggle_spinner (true);
 		write_response (_("Saving Connection\u2026"));
 
-		window.main.library.check_add_item (data);
+		window.main.library.check_add_item.begin (data);
 
 		toggle_spinner (false);
 		write_response (_("Connection Saved!"));
 	}
 
-	private void init_connection_begin () {
+	private async void init_connection () {
 		var data = package_data ();
 		var result = new Gee.HashMap<string, string> ();
 
 		toggle_spinner (true);
 		write_response (_("Connecting\u2026"));
 
-		var connection = new Sequeler.Services.ConnectionManager (window, data);
+		if (connection_manager == null) {
+			connection_manager = new Sequeler.Services.ConnectionManager (window, data);
+		}
 
-		var loop = new MainLoop ();
-		connection.init_connection.begin (connection, (obj, res) => {
-			try {
-				result = connection.init_connection.end (res);
-			} catch (ThreadError e) {
-				write_response (e.message);
-				toggle_spinner (false);
-			}
-			loop.quit ();
+		connection_manager.init_connection.begin ((obj, res) => {
+			new Thread<void*> (null, () => {
+				try {
+					result = connection_manager.init_connection.end (res);
+				} catch (ThreadError e) {
+					write_response (e.message);
+					toggle_spinner (false);
+				}
+
+				Idle.add (() => {
+					if (result["status"] == "true") {
+						if (settings.save_quick) {
+							window.main.library.check_add_item.begin (data);
+						}
+
+						window.data_manager.data = data;
+						window.main.connection_opened.begin (connection_manager);
+
+						destroy ();
+					} else {
+						write_response (result["msg"]);
+						toggle_spinner (false);
+					}
+					return false;
+				});
+				return null;
+			});
 		});
 
-		loop.run();
-
-		if (result["status"] == "true") {
-			destroy ();
-
-			if (settings.save_quick) {
-				window.main.library.check_add_item (data);
-			}
-
-			window.data_manager.data = data;
-			window.main.connection_opened (connection);
-		} else {
-			write_response (result["msg"]);
-			toggle_spinner (false);
-		}
+		yield;
 	}
 
 	private Gee.HashMap<string, string> package_data () {
@@ -448,6 +688,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		packaged_data.set ("username", db_username_entry.text);
 		packaged_data.set ("password", db_password_entry.text);
 		packaged_data.set ("port", db_port_entry.text);
+
+		packaged_data.set ("has_ssh", ssh_switch.active.to_string ());
+		packaged_data.set ("ssh_host", ssh_switch.active ? ssh_host_entry.text : "");
+		packaged_data.set ("ssh_username", ssh_switch.active ? ssh_username_entry.text : "");
+		packaged_data.set ("ssh_password", ssh_switch.active ? ssh_password_entry.text : "");
+		packaged_data.set ("ssh_port", ssh_switch.active ? ssh_port_entry.text : "");
 
 		return packaged_data;
 	}

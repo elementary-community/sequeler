@@ -44,6 +44,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		if (data["type"] != "SQLite") {
 			update_password.begin (data);
 			data.unset ("password");
+			data.unset ("ssh_password");
 		}
 
 		existing_connections.insert (0, stringify_data (data));
@@ -64,6 +65,11 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		if (new_data["type"] != "SQLite") {
 			update_password.begin (new_data);
 			new_data.unset ("password");
+
+			if (new_data["has_ssh"] == "true" && new_data["ssh_password"] != null) {
+				update_ssh_password.begin (new_data);
+				new_data.unset ("ssh_password");
+			}
 		}
 
 		existing_connections.insert (0, stringify_data (new_data));
@@ -131,8 +137,16 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		yield password_mngr.store_password_async (data["id"], data["password"]);
 	}
 
+	public async void update_ssh_password (Gee.HashMap<string, string> data) throws Error {
+		yield password_mngr.store_password_async (data["id"] + "9999", data["ssh_password"]);
+	}
+
 	public async void delete_password (Gee.HashMap<string, string> data) throws Error {
 		yield password_mngr.clear_password_async (data["id"]);
+
+		if (data["has_ssh"] == "true" && data["ssh_password"] != null) {
+			yield password_mngr.clear_password_async (data["id"] + "9999");
+		}
 	}
 
 	public async void delete_all_passwords () throws Error {

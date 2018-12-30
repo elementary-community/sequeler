@@ -29,6 +29,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
 
+	public Gee.HashMap<string, string> real_data;
+	public Gtk.Spinner real_spinner;
+	public Gtk.ModelButton real_button;
+	public Sequeler.Services.ConnectionManager connection_manager;
+
 	public signal void edit_dialog (Gee.HashMap data);
 
 	public Library (Sequeler.Window main_window) {
@@ -54,7 +59,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 
 		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Library"));
-		reload_btn.clicked.connect (reload_library);
+		reload_btn.clicked.connect (() => reload_library.begin ());
 
 		var export_btn = new Sequeler.Partials.HeaderBarButton ("document-save-symbolic", _("Export Library"));
 		export_btn.clicked.connect (export_library);
@@ -139,7 +144,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
 			settings.delete_connection (data);
 			item_box.remove (item);
-			reload_library ();
+			reload_library.begin ();
 		}
 
 		message_dialog.destroy ();
@@ -157,41 +162,70 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {
 			settings.clear_connections ();
 			item_box.forall ((item) => item_box.remove (item));
-			reload_library ();
+			reload_library.begin ();
 		}
 
 		message_dialog.destroy ();
 	}
 
-	public void reload_library () {
-		item_box.forall ((item) => item_box.remove (item));
+	public void reload_library_sync () {
+		item_box.@foreach ((item) => item_box.remove (item));
 		foreach (var new_conn in settings.saved_connections) {
 			var array = settings.arraify_data (new_conn);
 			add_item (array);
 		}
 		item_box.show_all ();
-
-		if (settings.saved_connections.length > 0) {
-			delete_all.sensitive = true;
-		} else {
-			delete_all.sensitive = false;
-		}
+		delete_all.sensitive = (settings.saved_connections.length > 0);
 	}
 
-	public void check_add_item (Gee.HashMap<string, string> data) {
-		foreach (var conn in settings.saved_connections) {
-			var check = settings.arraify_data (conn);
-			if (check["id"] == data["id"]) {
-				settings.edit_connection (data, conn);
-				reload_library ();
-				return;
+	public async void reload_library () {
+		new Thread<void*> ("reload-library", () => {
+			item_box.@foreach ((item) => item_box.remove (item));
+			
+			Idle.add (() => {
+				foreach (var new_conn in settings.saved_connections) {
+					var array = settings.arraify_data (new_conn);
+					add_item (array);
+				}
+				item_box.show_all ();
+
+				return false;
+			});
+
+			delete_all.sensitive = (settings.saved_connections.length > 0);
+			return null;
+		});
+
+		yield;
+	}
+
+	public async void check_add_item (Gee.HashMap<string, string> data) {
+		new Thread<void*> ("check-add-item", () => {
+			foreach (var conn in settings.saved_connections) {
+				var check = settings.arraify_data (conn);
+				if (check["id"] == data["id"]) {
+					settings.edit_connection (data, conn);
+
+					Idle.add (() => {
+						reload_library.begin ();
+						return false;
+					});
+					return null;
+				}
 			}
-		}
+			
+			settings.add_connection (data);
+			add_item (data);
+			
+			Idle.add (() => {
+				reload_library.begin ();
+				return false;
+			});
 
-		settings.add_connection (data);
-		add_item (data);
+			return null;
+		});
 
-		reload_library ();
+		yield;
 	}
 
 	public void check_open_sqlite_file (string path, string name) {
@@ -199,13 +233,12 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			var check = settings.arraify_data (conn);
 			if (check["file_path"] == path) {
 				settings.edit_connection (check, conn);
-				reload_library ();
-				// open connection
+				reload_library_sync ();
 				item_box.get_row_at_index (0).activate ();
 				return;
 			}
 		}
-
+		
 		var data = new Gee.HashMap<string, string> ();
 
 		data.set ("id", settings.tot_connections.to_string ());
@@ -222,42 +255,75 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		settings.add_connection (data);
 		add_item (data);
 
-		reload_library ();
-		// open connection
+		reload_library_sync ();
 		item_box.get_row_at_index (0).activate ();
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
-		var connection = new Sequeler.Services.ConnectionManager (window, data);
+		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
-		var loop = new MainLoop ();
-		connection.init_connection.begin (connection, (obj, res) => {
-			try {
-				Gee.HashMap<string, string> result = connection.init_connection.end (res);
-				if (result["status"] == "true") {
-					loop.quit ();
-					spinner.stop ();
-					button.sensitive = true;
+		if (data["has_ssh"] == "true") {
+			real_data = data;
+			real_spinner = spinner;
+			real_button = button;
+			connection_manager.ssh_tunnel_ready.connect (() => init_real_connection_begin (real_data, real_spinner, real_button));
 
-					if (settings.save_quick) {
-						window.main.library.check_add_item (data);
+			new Thread<void*> (null, () => {
+				var result = new Gee.HashMap<string, string> ();
+				try {
+					connection_manager.ssh_tunnel_init (true);
+				} catch (Error e) {
+					result["status"] = "false";
+					result["message"] = e.message;
+				}
+
+				Idle.add (() => {
+					if (result["status"] == "false") {
+						spinner.stop ();
+						button.sensitive = true;
+						connection_warning (result["message"], data["name"]);
 					}
+					return false;
+				});
 
-					window.main.connection_opened (connection);
-				} else {
-					connection_warning (result["msg"], data["name"]);
+				return null;
+			});
+		} else {
+			init_real_connection_begin (data, spinner, button);
+		}
+	}
+
+	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
+		var result = new Gee.HashMap<string, string> ();
+
+		connection_manager.init_connection.begin ((obj, res) => {
+			new Thread<void*> (null, () => {
+				try {
+					result = connection_manager.init_connection.end (res);
+				} catch (ThreadError e) {
+					connection_warning (e.message, data["name"]);
 					spinner.stop ();
 					button.sensitive = true;
 				}
-			} catch (ThreadError e) {
-				connection_warning (e.message, data["name"]);
-				spinner.stop ();
-				button.sensitive = true;
-			}
-			loop.quit ();
-		});
 
-		loop.run();
+				Idle.add (() => {
+					spinner.stop ();
+					button.sensitive = true;
+
+					if (result["status"] == "true") {
+						if (settings.save_quick) {
+							window.main.library.check_add_item.begin (data);
+						}
+
+						window.main.connection_opened.begin (connection_manager);
+					} else {
+						connection_warning (result["msg"], data["name"]);
+					}
+					return false;
+				});
+				return null;
+			});
+		});
 	}
 
 	private void export_library () {
@@ -307,6 +373,22 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			});
 
 			loop.run ();
+
+			if (array["has_ssh"] == "true") {
+				array["ssh_password"] = "";
+
+				var ssh_loop = new MainLoop ();
+				password_mngr.get_password_async.begin (array["id"] + "9999", (obj, res) => {
+					try {
+						array["ssh_password"] = password_mngr.get_password_async.end (res);
+					} catch (Error e) {
+						debug ("Unable to get the SSH password from libsecret");
+					}
+					ssh_loop.quit ();
+				});
+
+				ssh_loop.run ();
+			}
 
 			buffer_content += settings.stringify_data (array) + "---\n";
 		}

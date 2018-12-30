@@ -1,6 +1,6 @@
 # project name and programming language
 project('com.github.alecaddd.sequeler', 'vala', 'c',
-    version: '0.6.5')
+    version: '0.6.6')
 
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required: true)
@@ -19,6 +19,7 @@ else
 	vala_args += ['-D', 'IS_DEVEL']
 endif
 
+linux_dep = meson.get_compiler('vala').find_library('linux')
 
 # Include the translations module
 i18n = import('i18n')

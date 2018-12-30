@@ -1,6 +1,6 @@
-data/com.github.alecaddd.sequeler.appdata.xml.in
-data/com.github.alecaddd.sequeler.desktop.in
-schemas/com.github.alecaddd.sequeler.gschema.xml
+data/com.github.alecaddd.sequeler.appdata.xml.in.in
+data/com.github.alecaddd.sequeler.desktop.in.in
+schemas/com.github.alecaddd.sequeler.gschema.xml.in
 src/Main.vala
 src/Application.vala
 src/Window.vala
