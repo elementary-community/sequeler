@@ -23,7 +23,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 	public weak Sequeler.Window window { get; construct; }
 
 	private Gtk.Button logout_button;
-	private ModeSwitch mode_switch;
+	private Granite.ModeSwitch mode_switch;
 	private Gtk.Popover menu_popover;
 
 	public bool logged_out { get; set; }
@@ -53,7 +53,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		logout_button.has_tooltip = true;
 		logout_button.tooltip_text = "Ctrl+Esc";
 
-		mode_switch = new ModeSwitch ("display-brightness-symbolic", "weather-clear-night-symbolic");
+		mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
 		mode_switch.primary_icon_tooltip_text = _("Light background");
 		mode_switch.secondary_icon_tooltip_text = _("Dark background");
 		mode_switch.valign = Gtk.Align.CENTER;

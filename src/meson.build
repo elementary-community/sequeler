@@ -47,7 +47,6 @@ executable(
     'Services/Types/SQLite.vala',
 
     'Widgets/ConnectionDialog.vala',
-    'Widgets/ModeSwitch.vala',
     asresources,
     config_header,
     dependencies: [
