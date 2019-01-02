@@ -50,12 +50,11 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		logout_button.set_image (eject_image);
 		logout_button.can_focus = false;
 		logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
-		logout_button.has_tooltip = true;
-		logout_button.tooltip_text = "Ctrl+Esc";
+		logout_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Ctrl>Escape"}, _("Logout"));
 
 		mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
-		mode_switch.primary_icon_tooltip_text = _("Light background");
-		mode_switch.secondary_icon_tooltip_text = _("Dark background");
+		mode_switch.primary_icon_tooltip_text = _("Light Mode");
+		mode_switch.secondary_icon_tooltip_text = _("Dark Mode");
 		mode_switch.valign = Gtk.Align.CENTER;
 		mode_switch.bind_property ("active", settings, "dark-theme");
 		mode_switch.notify.connect (() => {

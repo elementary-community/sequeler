@@ -181,9 +181,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		run_button.can_focus = false;
 		run_button.margin = 10;
 		run_button.sensitive = false;
-		run_button.tooltip_text = "Ctrl+↵";
+		run_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Ctrl>Return"}, _("Run Query"));
 
-		run_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_RUN_QUERY;
+		run_button.action_name = Services.ActionManager.ACTION_PREFIX + Services.ActionManager.ACTION_RUN_QUERY;
 
 		return run_button;
 	}
