@@ -28,6 +28,15 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.6.7" date="2019-01-02">
+			<description>
+				<p>Critical bug fix!</p>
+				<ul>
+					<li>CRITICAL: Fixes missing GSettings Schema, restore lost connections.</li>
+					<li>Other small bug fixes and improvements.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.6.6" date="2018-12-29">
 			<description>
 				<p>Implemented SSH tunneling</p>
