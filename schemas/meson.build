@@ -1,5 +1,5 @@
 schema_path = '/com/github/alecaddd/sequeler/'
-if get_option('profile') == 'default'
+if get_option('profile') == 'development'
 	schema_path += 'Devel/'
 endif
 
