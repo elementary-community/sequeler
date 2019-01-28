@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Moo, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-29 18:11-0800\n"
-"PO-Revision-Date: 2018-08-18 12:43+0300\n"
+"PO-Revision-Date: 2019-01-28 14:53+0200\n"
 "Last-Translator: Moo\n"
 "Language-Team: \n"
 "Language: lt\n"
@@ -22,17 +22,17 @@ msgstr ""
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:7
 #: data/com.github.alecaddd.sequeler.desktop.in.in:3
 msgid "Sequeler"
-msgstr ""
+msgstr "Sequeler"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:8
 #: data/com.github.alecaddd.sequeler.desktop.in.in:5
 msgid "Friendly SQL Client"
-msgstr ""
+msgstr "Draugiška SQL kliento programa"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:10
-#, fuzzy
 msgid "Easily connect to your local or remote database"
-msgstr "Prisijunkite prie bet kurios vietinės ar nuotolinės duomenų bazės"
+msgstr ""
+"Lengvai prisijunkite prie bet kurios vietinės ar nuotolinės duomenų bazės"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:13
 msgid ""
@@ -40,147 +40,155 @@ msgid ""
 "SQL commands directly in the App, and do everything you need to do without "
 "the necessity of opening the terminal."
 msgstr ""
+"Laikykite savo duomenų bazių ryšius įtaisytoje bibliotekoje, tiesiogiai "
+"programoje rašykite ir vykdykite SQL komandas ir atlikite viską, ką reikia "
+"be būtinybės atverti terminalą."
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:16
 msgid "Features Include:"
-msgstr ""
+msgstr "Ypatybės:"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:20
-#, fuzzy
 msgid "Test Connections before saving them"
-msgstr "Išbandyti ryšį"
+msgstr "Prieš įrašant ryšius, juos išbandyti"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:21
 msgid "View Table structure, content, and relations"
-msgstr ""
+msgstr "Rodyti lentelės struktūrą, turinį ir sąsajos ryšius"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:22
 msgid "Write multiple custom SQL Queries"
-msgstr ""
+msgstr "Rašyti keletą tinkintų SQL užklausų"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:23
 msgid "Switch between light and dark mode"
-msgstr ""
+msgstr "Perjungti tarp šviesios ir tamsios veiksenos"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:24
 msgid ""
 "Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift"
 "+n), multiple instances (ctrl+n)"
 msgstr ""
+"Patogūs klaviatūros susiejimai, norint išeiti (ctrl (vald)+q), sukurti naują "
+"ryšį (ctrl (vald)+shift (lyg2)+n), keli egzemplioriai (ctrl (vald)+n)"
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:310
 msgid "Alessandro Castellani"
-msgstr ""
+msgstr "Alessandro Castellani"
 
 #: data/com.github.alecaddd.sequeler.desktop.in.in:4
 msgid "Sequeler App"
-msgstr ""
+msgstr "Sequeler programa"
 
 #: data/com.github.alecaddd.sequeler.desktop.in.in:9
 msgid "@icon@"
-msgstr ""
+msgstr "@icon@"
 
 #: data/com.github.alecaddd.sequeler.desktop.in.in:12
 msgid "SQL;MySql;Database;MariaDB;S3;PostgreSQL;"
-msgstr ""
+msgstr "SQL;MySql;Database;MariaDB;S3;PostgreSQL;"
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:5
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:6
 msgid "The saved horizontal position of the window."
-msgstr ""
+msgstr "Įrašyta horizontali lango pozicija."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:11
 msgid "The vertical position width of the window."
-msgstr ""
+msgstr "Lango vertikalios pozicijos plotis."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:12
 msgid "The saved vertical position of the window."
-msgstr ""
+msgstr "Įrašyta vertikali lango pozicija."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:17
 msgid "The saved width of the window."
-msgstr ""
+msgstr "Įrašytas lango plotis."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:18
 msgid ""
 "The saved width of the window. Must be greater than 750, or it will not take "
 "effect."
 msgstr ""
+"Įrašytas lango plotis. Privalo būti didesnis nei 750 arba jis neįsigalios."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:23
 msgid "The saved height of the window."
-msgstr ""
+msgstr "Įrašytas lango aukštis."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:24
 msgid ""
 "The saved height of the window. Must be greater than 500, or it will not "
 "take effect."
 msgstr ""
+"Įrašytas lango aukštis. Privalo būti didesnis nei 500 arba jis neįsigalios."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:29
 msgid "Total amount of saved connections."
-msgstr ""
+msgstr "Bendras įrašytų ryšių skaičius."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:30
 msgid ""
 "Increase the amount at every new connection, set a unique ID for every "
 "connection."
 msgstr ""
+"Esant kiekvienam naujam ryšiui, padidintį kiekį, kiekvienam ryšiui nustatyti "
+"unikalų ID."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:35
 msgid "Max rows to show in Content tab."
-msgstr ""
+msgstr "Daugiausiai turinio kortelėje rodoma eilučių."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:36
 msgid "Split results based on max amount, helps generate the pagination."
 msgstr ""
+"Padalyti rezultatus pagal didžiusią kiekį, padeda generuoti puslapių "
+"numeravimą."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:41
 msgid "The saved configured conenctions"
-msgstr ""
+msgstr "Įrašyti sukonfigūruoti ryšiai"
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:42
 msgid "All the configured connections you saved are here"
-msgstr ""
+msgstr "Visi jūsų įrašyti sukonfigūruoti ryšiai yra čia"
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:47
-#, fuzzy
 msgid "Save Quick Connections"
-msgstr "Įrašyti ryšį"
+msgstr "Įrašyti sparčiuosius ryšius"
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:48
-#, fuzzy
 msgid "Automatically Save a Quick Connections into the Database Library."
-msgstr "Automatiškai įrašyti naujus ryšius:"
+msgstr "Automatiškai įrašyti sparčiuosius ryšius į duomenų bazės biblioteką."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:53
-#, fuzzy
 msgid "Use dark theme"
-msgstr "Naudoti tamsią temą:"
+msgstr "Naudoti tamsią temą"
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:54
 msgid "Switch between Light and Dark theme."
-msgstr ""
+msgstr "Perjungti tarp šviesios ir tamsios temos."
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:59
 msgid "Current Version"
-msgstr ""
+msgstr "Dabartinė versija"
 
 #: schemas/com.github.alecaddd.sequeler.gschema.xml.in:60
 msgid "Check current App version for upgrades on startup."
 msgstr ""
+"Paleidimo metu tikrinti ar dabartinei programos versijai yra atnaujinimų."
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "Katalogai yra nepalaikomi"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "Nežinau ką daryti"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "Nutiko kažkas visiškai netikėto"
 
 #: src/Layouts/HeaderBar.vala:46
 msgid "Logout"
@@ -209,12 +217,12 @@ msgstr "Išeiti"
 
 #: src/Layouts/HeaderBar.vala:99
 msgid "Menu"
-msgstr ""
+msgstr "Meniu"
 
 #: src/Layouts/Main.vala:78
-#, fuzzy, c-format
+#, c-format
 msgid "Connected to %s"
-msgstr "Prisijungta prie "
+msgstr "Prisijungta prie %s"
 
 #: src/Layouts/Library.vala:49
 msgid "SAVED CONNECTIONS"
@@ -237,7 +245,6 @@ msgid "Are you sure you want to proceed?"
 msgstr "Ar tikrai norite tęsti?"
 
 #: src/Layouts/Library.vala:139
-#, fuzzy
 msgid "By deleting this connection you won’t be able to recover this data."
 msgstr "Ištrynę šį ryšį, nebegalėsite atkurti šių duomenų."
 
@@ -246,9 +253,8 @@ msgid "Yes, Delete!"
 msgstr "Taip, ištrinti!"
 
 #: src/Layouts/Library.vala:157
-#, fuzzy
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr "Visi duomenys bus ištrinti ir nebegalėsite jų atkurti."
+msgstr "Visi duomenys bus ištrinti ir jūs nebegalėsite jų atkurti."
 
 #: src/Layouts/Library.vala:160
 msgid "Yes, Delete All!"
@@ -256,7 +262,7 @@ msgstr "Taip, ištrinti visus!"
 
 #: src/Layouts/Library.vala:336 src/Layouts/Views/Query.vala:421
 msgid "Pick a file"
-msgstr ""
+msgstr "Pasirinkti failą"
 
 #: src/Layouts/Library.vala:339 src/Layouts/Views/Query.vala:424
 msgid "_Save"
@@ -268,9 +274,9 @@ msgid "_Cancel"
 msgstr "_Atsisakyti"
 
 #: src/Layouts/Library.vala:415
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to Connect to %s"
-msgstr "Nepavyko prisijungti prie "
+msgstr "Nepavyko prisijungti prie %s"
 
 #: src/Layouts/Library.vala:428
 msgid "Unable to Export Library "
@@ -281,7 +287,6 @@ msgid "Welcome to Sequeler"
 msgstr "Sveiki atvykę į Sequeler"
 
 #: src/Layouts/Welcome.vala:29
-#, fuzzy
 msgid "Connect to Any Local or Remote Database."
 msgstr "Prisijunkite prie bet kurios vietinės ar nuotolinės duomenų bazės."
 
@@ -290,12 +295,10 @@ msgid "Add a New Database"
 msgstr "Pridėti naują duomenų bazę"
 
 #: src/Layouts/Welcome.vala:38
-#, fuzzy
 msgid "Connect to a Database and Save It in Your Library"
-msgstr "Prisijunkite prie duomenų bazės ir įrašykite ją į savo biblioteką"
+msgstr "Prisijunkite prie duomenų bazės ir įrašykite ją savo bibliotekoje"
 
 #: src/Layouts/Welcome.vala:39
-#, fuzzy
 msgid "Open a New Sequeler Window"
 msgstr "Atverkite naują Sequeler langą"
 
@@ -308,9 +311,8 @@ msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importuokite anksčiau eksportuotus Sequeler ryšius"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
-msgstr "Pasirinkti lentelę"
+msgstr "Pasirinkti failą"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -390,30 +392,30 @@ msgstr " laukai"
 
 #: src/Layouts/Views/Content.vala:114
 msgid "Previous Page"
-msgstr ""
+msgstr "Ankstesnis puslapis"
 
 #: src/Layouts/Views/Content.vala:119
 msgid "Next Page"
-msgstr ""
+msgstr "Kitas puslapis"
 
 #: src/Layouts/Views/Content.vala:124
 #, c-format
 msgid "%d Pages"
-msgstr ""
+msgstr "%d puslapių"
 
 #: src/Layouts/Views/Content.vala:142
 msgid "1 Page"
-msgstr ""
+msgstr "1 puslapis"
 
 #: src/Layouts/Views/Content.vala:147 src/Layouts/Views/Content.vala:307
 #, c-format
 msgid "%d of %d Pages"
-msgstr ""
+msgstr "%d iš %d puslapių"
 
 #: src/Layouts/Views/Content.vala:239
-#, fuzzy, c-format
+#, c-format
 msgid "%d Entries"
-msgstr " įrašai"
+msgstr "%d įrašų"
 
 #: src/Layouts/Views/Relations.vala:187
 msgid " Constraints"
@@ -432,9 +434,8 @@ msgid "Export Results"
 msgstr "Eksportuoti rezultatus"
 
 #: src/Layouts/Views/Query.vala:249
-#, fuzzy
 msgid "Export as CSV"
-msgstr "Eksportuoti kaip Csv"
+msgstr "Eksportuoti kaip CSV"
 
 #: src/Layouts/Views/Query.vala:257
 msgid "Export as Text"
@@ -445,14 +446,14 @@ msgid "Unable to process Query!"
 msgstr "Nepavyksta įvykdyti užklausos!"
 
 #: src/Layouts/Views/Query.vala:370
-#, fuzzy, c-format
+#, c-format
 msgid "%d Total Results"
-msgstr " viso rezultatų"
+msgstr "Iš viso %d rezultatų"
 
 #: src/Layouts/Views/Query.vala:399
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %d"
-msgstr "Užklausa sėkmingai įvykdyta! Paveiktos eilutės: "
+msgstr "Užklausa sėkmingai įvykdyta! Paveiktos eilutės: %d"
 
 #: src/Layouts/Views/Query.vala:402
 msgid "Query Executed!"
@@ -471,76 +472,77 @@ msgid "Delete Connection"
 msgstr "Ištrinti ryšį"
 
 #: src/Partials/LibraryItem.vala:83
-#, fuzzy
 msgid "Options"
-msgstr "Sąsajos"
+msgstr "Parametrai"
 
 #: src/Partials/TreeBuilder.vala:110
-#, fuzzy
 msgid "Error"
-msgstr "Klaida!"
+msgstr "Klaida"
 
 #: src/Partials/TreeBuilder.vala:110
 msgid "on Column"
-msgstr ""
+msgstr "ties stulpeliu"
 
 #: src/Partials/TreeBuilder.vala:152
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "Kopijuoti %s"
 
 #: src/Services/ConnectionManager.vala:180
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Libssh2 inicijavimas patyrė nesėkmę (%d)"
 
 #: src/Services/ConnectionManager.vala:187
 msgid "Failed to open socket"
-msgstr ""
+msgstr "Nepavyko atidaryti lizdo"
 
 #: src/Services/ConnectionManager.vala:196
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Nepavyko prisijungti prie "
+msgstr "Nepavyko prisijungti!"
 
 #: src/Services/ConnectionManager.vala:208
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "Klaida, paleidžiant SSH seansą: %d"
 
 #: src/Services/ConnectionManager.vala:227
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "Tapatybės nustatymas slaptažodžiu patyrė nesėkmę!"
 
 #: src/Services/ConnectionManager.vala:237
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "Tapatybės nustatymas viešuoju raktu patyrė nesėkmę!"
 
 #: src/Services/ConnectionManager.vala:244
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "Rasti nepalaikomi tapatybės nustatymo metodai!"
 
 #: src/Services/ConnectionManager.vala:251
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "Nepavyko atidaryti klausymosi lizdo"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to bind. Your Database Port may be wrong!"
 msgstr ""
+"Nepavyko susieti. Gali būti, kad jūsų duomenų bazės prievadas yra "
+"neteisingas!"
 
 #: src/Services/ConnectionManager.vala:272
 msgid "Failed to listen!"
-msgstr ""
+msgstr "Nepavyko klausytis!"
 
 #: src/Services/ConnectionManager.vala:299
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "Nepavyko priimti nuotolinio ryšio!"
 
 #: src/Services/ConnectionManager.vala:308
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"Nepavyko atidaryti direct-tcpip kanalo! (Turėkite omenyje, kad ši problema "
+"gali būti serveryje! Peržiūrėkite serverio žurnalus.)"
 
 #: src/Services/ConnectionManager.vala:512
 msgid "Error!"
@@ -587,52 +589,44 @@ msgid "File Path:"
 msgstr "Failo kelias:"
 
 #: src/Widgets/ConnectionDialog.vala:231
-#, fuzzy
 msgid "Select Your SQLite File…"
 msgstr "Pasirinkite savo SQLite failą…"
 
 #: src/Widgets/ConnectionDialog.vala:251
-#, fuzzy
 msgid "Connect via SSH Tunnel:"
-msgstr "Prisijungti per Terminalą"
+msgstr "Prisijungti per SSH tunelį:"
 
 #: src/Widgets/ConnectionDialog.vala:261
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Serveris:"
+msgstr "SSH serveris:"
 
 #: src/Widgets/ConnectionDialog.vala:266
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Naudotojo vardas:"
+msgstr "SSH naudotojo vardas:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Slaptažodis:"
+msgstr "SSH slaptažodis:"
 
 #: src/Widgets/ConnectionDialog.vala:288
-#, fuzzy
 msgid "SSH Port:"
-msgstr "Prievadas:"
+msgstr "SSH prievadas:"
 
 #: src/Widgets/ConnectionDialog.vala:289
-#, fuzzy
 msgid "Optional"
-msgstr "Sąsajos"
+msgstr "Nebūtina"
 
 #: src/Widgets/ConnectionDialog.vala:293
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "Trūksta SSH rakto failo!"
 
 #: src/Widgets/ConnectionDialog.vala:301
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "Generuoti SSH raktą"
 
 #: src/Widgets/ConnectionDialog.vala:330
-#, fuzzy
 msgid "SSH Tunnel"
-msgstr "Prisijungti per Terminalą"
+msgstr "SSH tunelis"
 
 #: src/Widgets/ConnectionDialog.vala:377
 msgid "Close"
@@ -648,7 +642,7 @@ msgstr "Išbandyti ryšį"
 
 #: src/Widgets/ConnectionDialog.vala:568
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "Atidaromas SSH tunelis…"
 
 #: src/Widgets/ConnectionDialog.vala:598
 msgid "Testing Connection…"
