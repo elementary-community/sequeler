@@ -46,7 +46,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string edit_table_name (string old_table, string new_table) {
-        return "ALTER TABLE " + old_table + " RENAME TO " + new_table + ";";
+        return "ALTER TABLE \"" + old_table + "\" RENAME TO \"" + new_table + "\";";
     }
 
     public string show_table_structure (string table) {
@@ -54,7 +54,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string show_table_content (string table) {
-        return "SELECT * FROM " + table;
+        return "SELECT * FROM \"" + table + "\"";
     }
     
     public string show_table_relations (string table, string? database) {
