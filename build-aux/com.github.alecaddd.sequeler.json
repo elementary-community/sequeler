@@ -152,6 +152,37 @@
 			}]
 		},
 		{
+			"name": "libfiposix",
+			"sources": [{
+					"type": "archive",
+					"url": "https://github.com/sionescu/libfixposix/archive/v0.4.3.tar.gz",
+					"sha256": "78fe8bcebf496520ac29b5b65049f5ec1977c6bd956640bdc6d1da6ea04d8504"
+				}, {
+					"type": "script",
+					"dest-filename": "autogen.sh",
+					"commands": [
+						"autoreconf -vfi"
+					]
+			}]
+		},
+		{
+			"name": "libssh2",
+			"buildsystem": "cmake-ninja",
+			"config-opts": [
+				"-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+				"-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib",
+				"-DBUILD_SHARED_LIBS:BOOL=ON"
+			],
+			"cleanup": [
+				"/share/doc"
+			],
+			"sources": [{
+				"type": "git",
+				"url": "https://github.com/libssh2/libssh2.git",
+				"branch": "libssh2-1.8.0"
+			}]
+		},
+		{
 			"name": "sequeler",
 			"buildsystem": "meson",
 			"config-opts": ["--buildtype=release", "-Dprofile=development"],
