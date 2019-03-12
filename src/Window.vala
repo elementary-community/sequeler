@@ -70,12 +70,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 		);
 
 		set_titlebar (headerbar);
-
 		set_border_width (0);
 
-		delete_event.connect (e => {
-			return before_destroy ();
-		});
+		delete_event.connect (before_destroy);
 
 		add (main);
 	}
