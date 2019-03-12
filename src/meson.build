@@ -57,13 +57,12 @@ executable(
         dependency('gobject-2.0'),
         dependency('libxml-2.0'),
         dependency('libgda-5.0'),
-        dependency('libfixposix'),
         dependency('libssh2'),
         dependency('libsecret-1'),
         dependency('gtksourceview-3.0'),
         m_dep,
         linux_dep
     ],
-		vala_args: vala_args,
+        vala_args: vala_args + ['--pkg', 'libfixposix'],
     install: true
 )
