@@ -104,8 +104,15 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		store.append (out iter);
 
 		for (int i = 0; i < tot_columns; i++) {
+			var placeholder_type = data.describe_column (i).get_g_type ();
+
 			try {
-				store.set_value (iter, i, _iter.get_value_at_e (i));
+				var sanitized_value = sanitize_value (_iter.get_value_at_e (i));
+				if (sanitized_value == "") {
+					store.set_value (iter, i, GLib.Value (placeholder_type));
+				} else {
+					store.set_value (iter, i, _iter.get_value_at_e (i));
+				}
 			} catch (Error e) {
 				error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
 			}
@@ -124,6 +131,21 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		}
 	}
 
+	private string? sanitize_value (Value raw_value) {
+		Gda.DataHandler handler = Gda.DataHandler.get_default (raw_value.type ());
+		if (! (handler is Gda.DataHandler)) {
+			return "";
+		}
+
+		string? column_data = handler.get_str_from_value (raw_value);
+
+		if (column_data == null) {
+			column_data = "";
+		}
+
+		return column_data;
+	}
+
 	private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
 		if (path == null || column == null) {
 			return;
@@ -135,7 +157,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		Gdk.Display display = Gdk.Display.get_default ();
 		Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
 		model.get_iter (out iter, path);
-		model.get_value (iter, column.get_sort_column_id(), out val);
+		model.get_value (iter, column.get_sort_column_id (), out val);
 
 		Gda.DataHandler handler = Gda.DataHandler.get_default (val.type ());
 		string? column_data = handler.get_str_from_value (val);
