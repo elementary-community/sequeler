@@ -108,7 +108,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 
 			try {
 				var raw_value = _iter.get_value_at_e (i);
-				var sanitized_value = raw_value.strdup_contents  () != "NULL" ?
+				var sanitized_value = raw_value.strdup_contents () != "NULL" ?
 									  raw_value : GLib.Value (placeholder_type);
 
 				store.set_value (iter, i, sanitized_value);
