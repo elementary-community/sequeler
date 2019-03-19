@@ -46,18 +46,18 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 	}
 
 	public string edit_table_name (string old_table, string new_table) {
-		return "RENAME TABLE " + old_table + " TO " + new_table + ";";
+		return "RENAME TABLE %s TO %s".printf (old_table, new_table);
 	}
 
 	public string show_table_structure (string table) {
-		return "DESCRIBE " + table + ";";
+		return "DESCRIBE %s".printf (table);
 	}
 
 	public string show_table_content (string table) {
-		return "SELECT * FROM " + table;
+		return "SELECT * FROM %s".printf (table);
 	}
 
 	public string show_table_relations (string table, string? database) {
-		return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '" + table + "' AND TABLE_SCHEMA = '" + database + "'";
+		return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
 	}
 }
