@@ -260,33 +260,16 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public async Gda.DataModel? get_schema () throws Error {
-		SourceFunc callback = get_schema.callback;
+		Gda.DataModel? result = null;
 		var query = (window.main.connection_manager.db_type as DataBaseType).show_schema ();
 
-		Gda.DataModel? result = null;
-		var error = "";
+		result = yield window.main.connection_manager.init_select_query (query);
 
-		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			ThreadFunc<bool> run = () => {
-				try {
-					result = window.main.connection_manager.init_select_query.end (res);
-				} catch (ThreadError e) {
-					error = e.message;
-					result = null;
-				}
-				Idle.add((owned) callback);
-				return true;
-			};
-			new Thread<bool>("get-schema", run);
-		});
-
-		yield;
-		
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-			return null;
+		if (result == null) {
+			reloading = false;
+			reset_schema_combo ();
 		}
-		
+
 		return result;
 	}
 
@@ -362,30 +345,9 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public async void get_schema_table (string table) {
-		var error = "";
-		SourceFunc callback = get_schema_table.callback;
 		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_list (table);
 
-		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			ThreadFunc<bool> run = () => {
-				try {
-					schema_table = window.main.connection_manager.init_select_query.end (res);
-				} catch (ThreadError e) {
-					error = e.message;
-					schema_table = null;
-				}
-				Idle.add((owned) callback);
-				return true;
-			};
-			new Thread<bool> ("get-schema-table", run);
-		});
-
-		yield;
-
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-			return;
-		}
+		schema_table = yield window.main.connection_manager.init_select_query (query);
 	}
 
 	private void update_connection () {

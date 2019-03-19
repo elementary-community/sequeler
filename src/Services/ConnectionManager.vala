@@ -454,7 +454,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return output;
 	}
 
-	public async Gda.DataModel? init_select_query (string query) throws ThreadError {
+	public async Gda.DataModel? init_select_query (string query) {
 		Gda.DataModel? result = null;
 		SourceFunc callback = init_select_query.callback;
 		var error = "";

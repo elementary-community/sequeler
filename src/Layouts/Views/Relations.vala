@@ -196,30 +196,13 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 	}
 
 	private async Gda.DataModel? get_table_relations (string query) {
-		SourceFunc callback = get_table_relations.callback;
 		Gda.DataModel? result = null;
-		var error = "";
 
-		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			ThreadFunc<bool> run = () => {
-				try {
-					result = window.main.connection_manager.init_select_query.end (res);
-				} catch (ThreadError e) {
-					error = e.message;
-					result = null;
-				}
-				Idle.add((owned) callback);
-				return true;
-			};
-			new Thread<bool> ("get-table-relations", run);
-		});
+		result = yield window.main.connection_manager.init_select_query (query);
 
-		yield;
-
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-			result_message.label = error;
-			return null;
+		if (result == null) {
+			reloading = false;
+			yield reset ();
 		}
 
 		return result;
