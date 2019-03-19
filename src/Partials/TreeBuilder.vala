@@ -107,8 +107,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			var placeholder_type = data.describe_column (i).get_g_type ();
 
 			try {
-				var sanitized_value = sanitize_value (_iter.get_value_at_e (i));
-				if (sanitized_value == "") {
+				if (_iter.get_value_at_e (i).strdup_contents  () == "NULL") {
 					store.set_value (iter, i, GLib.Value (placeholder_type));
 				} else {
 					store.set_value (iter, i, _iter.get_value_at_e (i));
@@ -129,21 +128,6 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			store.set_value (iter, tot_columns, background);
 			i++;
 		}
-	}
-
-	private string? sanitize_value (Value raw_value) {
-		Gda.DataHandler handler = Gda.DataHandler.get_default (raw_value.type ());
-		if (! (handler is Gda.DataHandler)) {
-			return "";
-		}
-
-		string? column_data = handler.get_str_from_value (raw_value);
-
-		if (column_data == null) {
-			column_data = "";
-		}
-
-		return column_data;
 	}
 
 	private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
