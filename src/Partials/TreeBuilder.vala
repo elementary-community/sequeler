@@ -107,11 +107,11 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			var placeholder_type = data.describe_column (i).get_g_type ();
 
 			try {
-				if (_iter.get_value_at_e (i).strdup_contents  () == "NULL") {
-					store.set_value (iter, i, GLib.Value (placeholder_type));
-				} else {
-					store.set_value (iter, i, _iter.get_value_at_e (i));
-				}
+				var raw_value = _iter.get_value_at_e (i);
+				var sanitized_value = raw_value.strdup_contents  () != "NULL" ?
+									  raw_value : GLib.Value (placeholder_type);
+
+				store.set_value (iter, i, sanitized_value);
 			} catch (Error e) {
 				error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
 			}
