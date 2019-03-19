@@ -40,18 +40,18 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	}
 
 	public string edit_table_name (string old_table, string new_table) {
-		return "ALTER TABLE " + old_table + " RENAME TO " + new_table + ";";
+		return "ALTER TABLE %s RENAME TO %s".printf (old_table, new_table);
 	}
 
 	public string show_table_structure (string table) {
-		return "PRAGMA table_info('" + table + "')";
+		return "PRAGMA table_info('%s')".printf (table);
 	}
 
 	public string show_table_content (string table) {
-		return "SELECT * FROM " + table;
+		return "SELECT * FROM %s".printf (table);
 	}
 
 	public string show_table_relations (string table, string? database) {
-		return "PRAGMA foreign_key_list('" + table + "')";
+		return "PRAGMA foreign_key_list('%s')".printf (table);
 	}
 }
