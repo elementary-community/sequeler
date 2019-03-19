@@ -448,6 +448,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 						window.main.connection_manager.query_warning (error);
 						return false;
 					}
+					reload_schema.begin ();
 					return false;
 				});
 
