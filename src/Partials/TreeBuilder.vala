@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -104,8 +104,14 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		store.append (out iter);
 
 		for (int i = 0; i < tot_columns; i++) {
+			var placeholder_type = data.describe_column (i).get_g_type ();
+
 			try {
-				store.set_value (iter, i, _iter.get_value_at_e (i));
+				var raw_value = _iter.get_value_at_e (i);
+				var sanitized_value = raw_value.strdup_contents () != "NULL" ?
+									  raw_value : GLib.Value (placeholder_type);
+
+				store.set_value (iter, i, sanitized_value);
 			} catch (Error e) {
 				error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
 			}
@@ -135,7 +141,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		Gdk.Display display = Gdk.Display.get_default ();
 		Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
 		model.get_iter (out iter, path);
-		model.get_value (iter, column.get_sort_column_id(), out val);
+		model.get_value (iter, column.get_sort_column_id (), out val);
 
 		Gda.DataHandler handler = Gda.DataHandler.get_default (val.type ());
 		string? column_data = handler.get_str_from_value (val);

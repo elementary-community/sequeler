@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -454,7 +454,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return output;
 	}
 
-	public async Gda.DataModel? init_select_query (string query) throws ThreadError {
+	public async Gda.DataModel? init_select_query (string query) {
 		Gda.DataModel? result = null;
 		SourceFunc callback = init_select_query.callback;
 		var error = "";

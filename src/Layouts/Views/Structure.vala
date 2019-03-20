@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -197,30 +197,13 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 	}
 
 	private async Gda.DataModel? get_table_schema (string query) {
-		SourceFunc callback = get_table_schema.callback;
 		Gda.DataModel? result = null;
-		var error = "";
 
-		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			ThreadFunc<bool> run = () => {
-				try {
-					result = window.main.connection_manager.init_select_query.end (res);
-				} catch (ThreadError e) {
-					error = e.message;
-					result = null;
-				}
-				Idle.add((owned) callback);
-				return true;
-			};
-			new Thread<bool> ("get-table-schema", run);
-		});
+		result = yield window.main.connection_manager.init_select_query (query);
 
-		yield;
-
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-			result_message.label = error;
-			return null;
+		if (result == null) {
+			reloading = false;
+			yield reset ();
 		}
 
 		return result;

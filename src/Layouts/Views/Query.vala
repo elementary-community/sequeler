@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -285,30 +285,16 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		var explain_pos = query.down ().index_of ("explain", 0);
 
 		if (select_pos == 0 || show_pos == 0 || pragma_pos == 0 || explain_pos == 0) {
-			handle_select_response (select_statement (query));
+			select_statement.begin (query, (obj, res) => {
+				handle_select_response (select_statement.end (res));
+			});
 		} else {
 			handle_query_response (non_select_statement (query));
 		}
 	}
 
-	public Gda.DataModel? select_statement (string query) {
-		Gda.DataModel? result = null;
-		var error = "";
-
-		var loop = new MainLoop ();
-		window.main.connection_manager.init_select_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection_manager.init_select_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = null;
-			}
-			loop.quit ();
-		});
-
-		loop.run ();
-
-		return result;
+	private async Gda.DataModel? select_statement (string query) {
+		return yield window.main.connection_manager.init_select_query (query);
 	}
 
 	public int? non_select_statement (string query) {
