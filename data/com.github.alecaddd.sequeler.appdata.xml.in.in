@@ -11,8 +11,17 @@
 			Easily connect to your local or remote database
 		</p>
 		<p>
-			Store your Database Connections in the built-in library, type and execute SQL commands directly in the App, and do everything you need to do without the necessity of opening the terminal.
+			Store your Database Connections in the library, connect over SSH tunnel, type and execute SQL commands directly in the app, and do everything you need to do without the necessity of opening the terminal.
 		</p>
+		<p>
+			Supported Databases:
+		</p>
+		<ul>
+			<li>SQLite</li>
+			<li>MySQL</li>
+			<li>MariaDB</li>
+			<li>PostgreSQL</li>
+		</ul>
 		<p>
 			Features Include:
 		</p>
@@ -21,13 +30,24 @@
 			<li>View Table structure, content, and relations</li>
 			<li>Write multiple custom SQL Queries</li>
 			<li>Switch between light and dark mode</li>
-			<li>Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift+n), multiple instances (ctrl+n)</li>
+			<li>Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift+n), open a new window (ctrl+n)</li>
 		</ul>
 	</description>
 	<provides>
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.6.8" date="2019-03-19">
+			<description>
+				<p>Bug fixes and improvements</p>
+				<ul>
+					<li>Properly handle EXPLAIN SQL statement.</li>
+					<li>Properly handle querying capitlized PostgreSQL tables.</li>
+					<li>Improved async methods for internal views.</li>
+					<li>Updated translations.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.6.7" date="2019-01-02">
 			<description>
 				<p>Critical bug fix!</p>
