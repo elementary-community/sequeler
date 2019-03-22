@@ -92,7 +92,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		build_content ();
 		toggle_ssh_fields (false);
 		build_actions ();
-		populate_data ();
+		populate_data.begin ();
 		change_sensitivity ();
 
 		response.connect (on_response);
@@ -387,26 +387,19 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		add_action_widget (connect_button, Action.CONNECT);
 	}
 
-	private void populate_data () {
+	private async void populate_data () {
 		if (window.data_manager.data == null || window.data_manager.data.size == 0) {
 			return;
 		}
 
 		var update_data = window.data_manager.data;
-
 		string? old_password = "";
 
-		var loop = new MainLoop ();
-		password_mngr.get_password_async.begin (update_data["id"], (obj, res) => {
-			try {
-				old_password = password_mngr.get_password_async.end (res);
-			} catch (Error e) {
-				debug ("Unable to get the password from libsecret");
-			}
-			loop.quit ();
-		});
-
-		loop.run ();
+		try {
+			old_password = yield password_mngr.get_password_async (update_data["id"]);
+		} catch (Error e) {
+			debug ("Unable to get the password from libsecret");
+		}
 
 		connection_id.text = update_data["id"];
 		title_entry.text = update_data["title"];
@@ -447,17 +440,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		if (update_data["has_ssh"] == "true") {
 			string? old_ssh_password = "";
 
-			var ssh_loop = new MainLoop ();
-			password_mngr.get_password_async.begin (update_data["id"] + "9999", (obj, res) => {
-				try {
-					old_ssh_password = password_mngr.get_password_async.end (res);
-				} catch (Error e) {
-					debug ("Unable to get the SSH password from libsecret");
-				}
-				ssh_loop.quit ();
-			});
-
-			ssh_loop.run ();
+			try {
+				old_ssh_password = yield password_mngr.get_password_async (update_data["id"] + "9999");
+			} catch (Error e) {
+				debug ("Unable to get the password from libsecret");
+			}
 
 			ssh_switch.active = bool.parse (update_data["has_ssh"]);
 			
