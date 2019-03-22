@@ -342,7 +342,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			switch (response_id) {
 				case Gtk.ResponseType.ACCEPT:
 					file = save_dialog.get_file ();
-					save_to_file ();
+					save_to_file.begin ();
 					break;
 				default:
 					break;
@@ -353,41 +353,27 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		save_dialog.run ();
 	}
 
-	private void save_to_file () {
+	private async void save_to_file () {
 		var buffer_content = "";
 		var library = settings.saved_connections;
 
 		foreach (var lib in library) {
 			var array = settings.arraify_data (lib);
 
-			array["password"] = "";
-
-			var loop = new MainLoop ();
-			password_mngr.get_password_async.begin (array["id"], (obj, res) => {
-				try {
-					array["password"] = password_mngr.get_password_async.end (res);
-				} catch (Error e) {
-					debug ("Unable to get the password from libsecret");
-				}
-				loop.quit ();
-			});
-
-			loop.run ();
+			try {
+				array["password"] = yield password_mngr.get_password_async (array["id"]);
+				debug ("PSWD: " + array["password"]);
+			} catch (Error e) {
+				debug ("Unable to get the password from libsecret");
+			}
 
 			if (array["has_ssh"] == "true") {
-				array["ssh_password"] = "";
-
-				var ssh_loop = new MainLoop ();
-				password_mngr.get_password_async.begin (array["id"] + "9999", (obj, res) => {
-					try {
-						array["ssh_password"] = password_mngr.get_password_async.end (res);
-					} catch (Error e) {
-						debug ("Unable to get the SSH password from libsecret");
-					}
-					ssh_loop.quit ();
-				});
-
-				ssh_loop.run ();
+				try {
+					array["ssh_password"] = yield password_mngr.get_password_async (array["id"] + "9999");
+					debug ("SSH: " + array["ssh_password"]);
+				} catch {
+					debug ("Unable to get the SSH password from libsecret");
+				}
 			}
 
 			buffer_content += settings.stringify_data (array) + "---\n";
