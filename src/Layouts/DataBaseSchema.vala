@@ -265,7 +265,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
 			window.data_manager.data["name"] = database;
-			update_connection ();
+			yield update_connection ();
 			return;
 		}
 
@@ -297,7 +297,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			item.icon = new GLib.ThemedIcon ("drive-harddisk");
 			item.edited.connect ((new_name) => {
 				if (new_name != item.name) {
-					edit_table_name (item.name, new_name);
+					edit_table_name.begin (item.name, new_name);
 				}
 			});
 			tables_category.add (item);
@@ -337,7 +337,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		schema_table = yield window.main.connection_manager.init_select_query (query);
 	}
 
-	private void update_connection () {
+	private async void update_connection () {
 		if (window.data_manager.data["type"] == "PostgreSQL") {
 			return;
 		}
@@ -354,56 +354,38 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		var result = new Gee.HashMap<string, string> ();
+		try {
+			result = yield window.main.connection_manager.init_connection ();
+		} catch (ThreadError e) {
+			window.main.connection_manager.query_warning (e.message);
+		}
 
-		window.main.connection_manager.init_connection.begin ((obj, res) => {
-			new Thread<void*> (null, () => {
-				try {
-					result = window.main.connection_manager.init_connection.end (res);
-				} catch (ThreadError e) {
-					window.main.connection_manager.query_warning (e.message);
-				}
-
-				Idle.add (() => {
-					if (result["status"] == "true") {
-						reload_schema.begin ();
-					} else {
-						window.main.connection_manager.query_warning (result["msg"]);
-					}
-					return false;
-				});
-
-				return null;
-			});
-		});
+		if (result["status"] == "true") {
+			reload_schema.begin ();
+		} else {
+			window.main.connection_manager.query_warning (result["msg"]);
+		}
 	}
 
-	private void edit_table_name (string old_name, string new_name) {
+	private async void edit_table_name (string old_name, string new_name) {
 		var query = (window.main.connection_manager.db_type as DataBaseType).edit_table_name (old_name, new_name);
 
 		int result = 0;
 		var error = "";
 
-		window.main.connection_manager.init_query.begin (query, (obj, res) => {
-			new Thread<void*> (null, () => {
-				try {
-					result = window.main.connection_manager.init_query.end (res);
-				} catch (ThreadError e) {
-					error = e.message;
-					result = 0;
-				}
+		try {
+			result = yield window.main.connection_manager.init_query (query);
+		} catch (ThreadError e) {
+			error = e.message;
+			result = 0;
+		}
 
-				Idle.add (() => {
-					if (error != "") {
-						window.main.connection_manager.query_warning (error);
-						return false;
-					}
-					reload_schema.begin ();
-					return false;
-				});
+		if (error != "") {
+			window.main.connection_manager.query_warning (error);
+			return;
+		}
 
-				return null;
-			});
-		});
+		yield reload_schema ();
 	}
 
 	public void toggle_search_tables () {
