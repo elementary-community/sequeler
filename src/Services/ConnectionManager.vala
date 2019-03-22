@@ -417,7 +417,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		forwardsock = -1;
 	}
 
-	public int run_query (string query) throws Error requires (connection.is_opened ()) {
+	public async int run_query (string query) throws Error requires (connection.is_opened ()) {
 		return connection.execute_non_select_command (query);
 	}
 
@@ -480,32 +480,23 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return result;
 	}
 
-	public async int init_query (string query) throws ThreadError {
-		int output_query = 0;
-		SourceFunc callback = init_query.callback;
+	public async int init_query (string query) {
+		int result = 0;
 		var error = "";
 
-		new Thread <void*> (null, () => {
-			int result = 0;
-			try {
-				result = run_query (query);
-			} catch (Error e) {
-				error = e.message;
-				result = 0;
-			}
-			Idle.add((owned) callback);
-			output_query = result;
-			return null;
-		});
-
-		yield;
+		try {
+			result = yield run_query (query);
+		} catch (Error e) {
+			error = e.message;
+			result = 0;
+		}
 
 		if (error != "") {
 			query_warning (error);
 			return 0;
 		}
 
-		return output_query;
+		return result;
 	}
 
 	public void query_warning (string message) {

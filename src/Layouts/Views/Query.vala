@@ -289,7 +289,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 				handle_select_response (select_statement.end (res));
 			});
 		} else {
-			handle_query_response (non_select_statement (query));
+			non_select_statement.begin (query, (obj, res) => {
+				handle_query_response (non_select_statement.end (res));
+			});
 		}
 	}
 
@@ -297,26 +299,11 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return yield window.main.connection_manager.init_select_query (query);
 	}
 
-	public int? non_select_statement (string query) {
+	public async int? non_select_statement (string query) {
 		int result = 0;
 		var error = "";
 
-		var loop = new MainLoop ();
-		window.main.connection_manager.init_query.begin (query, (obj, res) => {
-			try {
-				result = window.main.connection_manager.init_query.end (res);
-			} catch (ThreadError e) {
-				error = e.message;
-				result = 0;
-			}
-			loop.quit ();
-		});
-
-		loop.run ();
-
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-		}
+		result = yield window.main.connection_manager.init_query (query);
 
 		if (result == 0 || result == -1) {
 			toggle_loading_msg (false);

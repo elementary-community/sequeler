@@ -370,20 +370,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	private async void edit_table_name (string old_name, string new_name) {
 		var query = (window.main.connection_manager.db_type as DataBaseType).edit_table_name (old_name, new_name);
 
-		int result = 0;
-		var error = "";
-
-		try {
-			result = yield window.main.connection_manager.init_query (query);
-		} catch (ThreadError e) {
-			error = e.message;
-			result = 0;
-		}
-
-		if (error != "") {
-			window.main.connection_manager.query_warning (error);
-			return;
-		}
+		yield window.main.connection_manager.init_query (query);
 
 		yield reload_schema ();
 	}
