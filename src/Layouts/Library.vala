@@ -168,35 +168,16 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		message_dialog.destroy ();
 	}
 
-	public void reload_library_sync () {
+	public async void reload_library () {
 		item_box.@foreach ((item) => item_box.remove (item));
+			
 		foreach (var new_conn in settings.saved_connections) {
 			var array = settings.arraify_data (new_conn);
 			add_item (array);
 		}
 		item_box.show_all ();
+
 		delete_all.sensitive = (settings.saved_connections.length > 0);
-	}
-
-	public async void reload_library () {
-		new Thread<void*> ("reload-library", () => {
-			item_box.@foreach ((item) => item_box.remove (item));
-			
-			Idle.add (() => {
-				foreach (var new_conn in settings.saved_connections) {
-					var array = settings.arraify_data (new_conn);
-					add_item (array);
-				}
-				item_box.show_all ();
-
-				return false;
-			});
-
-			delete_all.sensitive = (settings.saved_connections.length > 0);
-			return null;
-		});
-
-		yield;
 	}
 
 	public async void check_add_item (Gee.HashMap<string, string> data) {
@@ -233,8 +214,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			var check = settings.arraify_data (conn);
 			if (check["file_path"] == path) {
 				settings.edit_connection (check, conn);
-				reload_library_sync ();
-				item_box.get_child_at_index (0).activate ();
+				reload_library.begin ((obj, res) => {
+					item_box.get_child_at_index (0).activate ();
+				});
 				return;
 			}
 		}
@@ -255,8 +237,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		settings.add_connection (data);
 		add_item (data);
 
-		reload_library_sync ();
-		item_box.get_child_at_index (0).activate ();
+		reload_library.begin ((obj, res) => {
+			item_box.get_child_at_index (0).activate ();
+		});
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {

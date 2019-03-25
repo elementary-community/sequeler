@@ -568,10 +568,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		new Thread <void*> (null, () => {
 			try {
 				connection_manager.ssh_tunnel_init (is_real);
-			}
-			catch (Error e) {
+			} catch (Error e) {
 				write_response (e.message);
 			}
+
 			Idle.add ((owned) callback);
 			toggle_spinner (false);
 			return null;
@@ -595,10 +595,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 				connection_manager.test ();
 				write_response (_("Successfully Connected!"));
 				connection_manager = null;
-			}
-			catch (Error e) {
+			} catch (Error e) {
 				write_response (e.message);
 			}
+
 			Idle.add ((owned) callback);
 			toggle_spinner (false);
 			return null;
@@ -630,36 +630,26 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 		}
 
-		connection_manager.init_connection.begin ((obj, res) => {
-			new Thread<void*> (null, () => {
-				try {
-					result = connection_manager.init_connection.end (res);
-				} catch (ThreadError e) {
-					write_response (e.message);
-					toggle_spinner (false);
-				}
+		try {
+			result = yield connection_manager.init_connection ();
+		} catch (ThreadError e) {
+			write_response (e.message);
+			toggle_spinner (false);
+		}
 
-				Idle.add (() => {
-					if (result["status"] == "true") {
-						if (settings.save_quick) {
-							window.main.library.check_add_item.begin (data);
-						}
+		if (result["status"] == "true") {
+			if (settings.save_quick) {
+				window.main.library.check_add_item.begin (data);
+			}
 
-						window.data_manager.data = data;
-						window.main.connection_opened.begin (connection_manager);
+			window.data_manager.data = data;
+			window.main.connection_opened.begin (connection_manager);
 
-						destroy ();
-					} else {
-						write_response (result["msg"]);
-						toggle_spinner (false);
-					}
-					return false;
-				});
-				return null;
-			});
-		});
-
-		yield;
+			destroy ();
+		} else {
+			write_response (result["msg"]);
+			toggle_spinner (false);
+		}
 	}
 
 	private Gee.HashMap<string, string> package_data () {

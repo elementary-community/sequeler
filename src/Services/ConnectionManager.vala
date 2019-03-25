@@ -107,6 +107,10 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	public void test () throws Error {
+		if (data["password"] == null) {
+			fetch_password ();
+		}
+
 		var connection_string = (db_type as DataBaseType).connection_string (data);
 		debug ("connection string %s", connection_string);
 
@@ -412,7 +416,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	private void direct_shutdown () {
-		session.blocking = true;
+		//  session.blocking = true;
 		Posix.close (forwardsock);
 		forwardsock = -1;
 	}
