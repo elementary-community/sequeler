@@ -47,7 +47,7 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 		return "PRAGMA table_info('%s')".printf (table);
 	}
 
-	public string show_table_content (string table) {
+	public string show_table_content (string table, int? count) {
 		return "SELECT * FROM %s".printf (table);
 	}
 

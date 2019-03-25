@@ -42,7 +42,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 	}
 
 	public string show_table_list (string name) {
-		return "SHOW TABLES;";
+		return "SELECT table_name, table_rows FROM information_schema.TABLES WHERE TABLE_SCHEMA = '%s'".printf (name);
 	}
 
 	public string edit_table_name (string old_table, string new_table) {
@@ -53,7 +53,11 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 		return "DESCRIBE %s".printf (table);
 	}
 
-	public string show_table_content (string table) {
+	public string show_table_content (string table, int? count) {
+		if (count != null && count > settings.limit_results) {
+			return "SELECT * FROM %s LIMIT %i".printf (table, settings.limit_results);
+		}
+
 		return "SELECT * FROM %s".printf (table);
 	}
 

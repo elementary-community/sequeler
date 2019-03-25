@@ -50,6 +50,8 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		set { _database = value; }
 	}
 
+	public int table_count = 0;
+
 	public Content (Sequeler.Window main_window) {
 		Object (
 			orientation: Gtk.Orientation.VERTICAL,
@@ -193,7 +195,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		placeholder ();
 	}
 
-	public void fill (string? table, string? db_name = null) {
+	public void fill (string? table, string? db_name = null, string? count = null) {
 		if (table == null) {
 			return;
 		}
@@ -204,6 +206,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 		table_name = table;
 		database = db_name;
+		table_count = count != null ? int.parse (count) : 0;
 
 		tot_pages = 0;
 		current_page = 1;
@@ -226,7 +229,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		start_spinner ();
-		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_content (table_name);
+		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_content (table_name, table_count);
 		reloading = true;
 
 		table_content = yield get_table_content (query);
