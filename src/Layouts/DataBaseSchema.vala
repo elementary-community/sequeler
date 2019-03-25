@@ -81,7 +81,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				return;
 			}
 			start_spinner ();
-			init_populate_schema (null);
+			init_populate_schema.begin (null);
 		});
 
 		var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
@@ -159,7 +159,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		stack.visible_child_name = "list";
 	}
 
-	private void reset_schema_combo () {
+	private async void reset_schema_combo () {
 		schema_list_combo.disconnect (handler_id);
 
 		schema_list.clear ();
@@ -173,14 +173,14 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				return;
 			}
 			start_spinner ();
-			init_populate_schema (null);
+			init_populate_schema.begin (null);
 		});
 	}
 
-	public void init_populate_schema (Gda.DataModel? schema) {
+	public async void init_populate_schema (Gda.DataModel? schema) {
 		var database = window.data_manager.data["type"] == "SQLite" ? null : schemas[schema_list_combo.get_active ()];
 
-		populate_schema.begin (database, schema);
+		yield populate_schema (database, schema);
 	}
 
 	public async void reload_schema () {
@@ -193,73 +193,60 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		Gda.DataModelIter? _iter = null;
 		reloading = true;
 
-		get_schema.begin ((obj, res) => {
-			new Thread<void*> ("reload-schema", () => {
-				try {
-					schema = get_schema.end (res);
-				} catch (Error e) {
-					reloading = false;
-					return null;
+		schema = yield get_schema ();
+
+		if (schema == null) {
+			reloading = false;
+			return;
+		}
+
+		yield reset_schema_combo ();
+
+		if (window.data_manager.data["type"] == "SQLite") {
+			yield init_populate_schema (schema);
+			reloading = false;
+			return;
+		}
+
+		_iter = schema.create_iter ();
+
+		if (_iter == null) {
+			debug ("not a valid iter");
+			return;
+		}
+
+		schemas = new Gee.HashMap<int, string> ();
+		int i = 1;
+		while (_iter.move_next ()) {
+			schema_list.append (out iter);
+			schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
+			schemas.set (i,_iter.get_value_at (0).get_string ());
+			i++;
+		}
+		if (window.data_manager.data["type"] != "PostgreSQL") {
+			schema_list_combo.sensitive = true;
+		}
+
+		if (window.data_manager.data["type"] == "PostgreSQL") {
+			foreach (var entry in schemas.entries) {
+				if ("public" == entry.value) {
+					schema_list_combo.set_active (entry.key);
 				}
-				
-				Idle.add (() => {
-					reset_schema_combo ();
-					
-					if (schema == null) {
-						reloading = false;
-						return false;
-					}
+			}
+			reloading = false;
+			return;
+		}
 
-					if (window.data_manager.data["type"] == "SQLite") {
-						init_populate_schema (schema);
-						reloading = false;
-						return false;
-					}
-			
-					_iter = schema.create_iter ();
+		foreach (var entry in schemas.entries) {
+			if (window.data_manager.data["name"] == entry.value) {
+				schema_list_combo.set_active (entry.key);
+			}
+		}
 
-					if (_iter == null) {
-						debug ("not a valid iter");
-						return true;
-					}
-
-					schemas = new Gee.HashMap<int, string> ();
-					int i = 1;
-					while (_iter.move_next ()) {
-						schema_list.append (out iter);
-						schema_list.set (iter, Column.SCHEMAS, _iter.get_value_at (0).get_string ());
-						schemas.set (i,_iter.get_value_at (0).get_string ());
-						i++;
-					}
-					if (window.data_manager.data["type"] != "PostgreSQL") {
-						schema_list_combo.sensitive = true;
-					}
-			
-					if (window.data_manager.data["type"] == "PostgreSQL") {
-						foreach (var entry in schemas.entries) {
-							if ("public" == entry.value) {
-								schema_list_combo.set_active (entry.key);
-							}
-						}
-						reloading = false;
-						return false;
-					}
-			
-					foreach (var entry in schemas.entries) {
-						if (window.data_manager.data["name"] == entry.value) {
-							schema_list_combo.set_active (entry.key);
-						}
-					}
-
-					reloading = false;
-					return false;
-				});
-				return null;
-			});
-		});
+		reloading = false;
 	}
 
-	public async Gda.DataModel? get_schema () throws Error {
+	public async Gda.DataModel? get_schema () {
 		Gda.DataModel? result = null;
 		var query = (window.main.connection_manager.db_type as DataBaseType).show_schema ();
 
@@ -267,7 +254,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		if (result == null) {
 			reloading = false;
-			reset_schema_combo ();
+			yield reset_schema_combo ();
 		}
 
 		return result;
@@ -278,7 +265,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		if (database != null && window.data_manager.data["name"] != database && window.data_manager.data["type"] != "PostgreSQL") {
 			window.data_manager.data["name"] = database;
-			update_connection ();
+			yield update_connection ();
 			return;
 		}
 
@@ -310,7 +297,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			item.icon = new GLib.ThemedIcon ("drive-harddisk");
 			item.edited.connect ((new_name) => {
 				if (new_name != item.name) {
-					edit_table_name (item.name, new_name);
+					edit_table_name.begin (item.name, new_name);
 				}
 			});
 			tables_category.add (item);
@@ -350,7 +337,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		schema_table = yield window.main.connection_manager.init_select_query (query);
 	}
 
-	private void update_connection () {
+	private async void update_connection () {
 		if (window.data_manager.data["type"] == "PostgreSQL") {
 			return;
 		}
@@ -367,56 +354,25 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		}
 
 		var result = new Gee.HashMap<string, string> ();
+		try {
+			result = yield window.main.connection_manager.init_connection ();
+		} catch (ThreadError e) {
+			window.main.connection_manager.query_warning (e.message);
+		}
 
-		window.main.connection_manager.init_connection.begin ((obj, res) => {
-			new Thread<void*> (null, () => {
-				try {
-					result = window.main.connection_manager.init_connection.end (res);
-				} catch (ThreadError e) {
-					window.main.connection_manager.query_warning (e.message);
-				}
-
-				Idle.add (() => {
-					if (result["status"] == "true") {
-						reload_schema.begin ();
-					} else {
-						window.main.connection_manager.query_warning (result["msg"]);
-					}
-					return false;
-				});
-
-				return null;
-			});
-		});
+		if (result["status"] == "true") {
+			reload_schema.begin ();
+		} else {
+			window.main.connection_manager.query_warning (result["msg"]);
+		}
 	}
 
-	private void edit_table_name (string old_name, string new_name) {
+	private async void edit_table_name (string old_name, string new_name) {
 		var query = (window.main.connection_manager.db_type as DataBaseType).edit_table_name (old_name, new_name);
 
-		int result = 0;
-		var error = "";
+		yield window.main.connection_manager.init_query (query);
 
-		window.main.connection_manager.init_query.begin (query, (obj, res) => {
-			new Thread<void*> (null, () => {
-				try {
-					result = window.main.connection_manager.init_query.end (res);
-				} catch (ThreadError e) {
-					error = e.message;
-					result = 0;
-				}
-
-				Idle.add (() => {
-					if (error != "") {
-						window.main.connection_manager.query_warning (error);
-						return false;
-					}
-					reload_schema.begin ();
-					return false;
-				});
-
-				return null;
-			});
-		});
+		yield reload_schema ();
 	}
 
 	public void toggle_search_tables () {

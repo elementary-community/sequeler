@@ -80,16 +80,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 	public bool before_destroy () {
 		update_status ();
 		app.get_active_window ().destroy ();
-		on_destroy ();
 		return true;
-	}
-
-	public void on_destroy () {
-		uint length = app.windows.length ();
-
-		if (length == 0) {
-			Gtk.main_quit ();
-		}
 	}
 
 	private void update_status () {

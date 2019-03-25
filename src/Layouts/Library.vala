@@ -168,35 +168,16 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		message_dialog.destroy ();
 	}
 
-	public void reload_library_sync () {
+	public async void reload_library () {
 		item_box.@foreach ((item) => item_box.remove (item));
+			
 		foreach (var new_conn in settings.saved_connections) {
 			var array = settings.arraify_data (new_conn);
 			add_item (array);
 		}
 		item_box.show_all ();
+
 		delete_all.sensitive = (settings.saved_connections.length > 0);
-	}
-
-	public async void reload_library () {
-		new Thread<void*> ("reload-library", () => {
-			item_box.@foreach ((item) => item_box.remove (item));
-			
-			Idle.add (() => {
-				foreach (var new_conn in settings.saved_connections) {
-					var array = settings.arraify_data (new_conn);
-					add_item (array);
-				}
-				item_box.show_all ();
-
-				return false;
-			});
-
-			delete_all.sensitive = (settings.saved_connections.length > 0);
-			return null;
-		});
-
-		yield;
 	}
 
 	public async void check_add_item (Gee.HashMap<string, string> data) {
@@ -233,8 +214,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			var check = settings.arraify_data (conn);
 			if (check["file_path"] == path) {
 				settings.edit_connection (check, conn);
-				reload_library_sync ();
-				item_box.get_child_at_index (0).activate ();
+				reload_library.begin ((obj, res) => {
+					item_box.get_child_at_index (0).activate ();
+				});
 				return;
 			}
 		}
@@ -255,8 +237,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		settings.add_connection (data);
 		add_item (data);
 
-		reload_library_sync ();
-		item_box.get_child_at_index (0).activate ();
+		reload_library.begin ((obj, res) => {
+			item_box.get_child_at_index (0).activate ();
+		});
 	}
 
 	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
@@ -342,7 +325,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			switch (response_id) {
 				case Gtk.ResponseType.ACCEPT:
 					file = save_dialog.get_file ();
-					save_to_file ();
+					save_to_file.begin ();
 					break;
 				default:
 					break;
@@ -353,41 +336,27 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		save_dialog.run ();
 	}
 
-	private void save_to_file () {
+	private async void save_to_file () {
 		var buffer_content = "";
 		var library = settings.saved_connections;
 
 		foreach (var lib in library) {
 			var array = settings.arraify_data (lib);
 
-			array["password"] = "";
-
-			var loop = new MainLoop ();
-			password_mngr.get_password_async.begin (array["id"], (obj, res) => {
-				try {
-					array["password"] = password_mngr.get_password_async.end (res);
-				} catch (Error e) {
-					debug ("Unable to get the password from libsecret");
-				}
-				loop.quit ();
-			});
-
-			loop.run ();
+			try {
+				array["password"] = yield password_mngr.get_password_async (array["id"]);
+				debug ("PSWD: " + array["password"]);
+			} catch (Error e) {
+				debug ("Unable to get the password from libsecret");
+			}
 
 			if (array["has_ssh"] == "true") {
-				array["ssh_password"] = "";
-
-				var ssh_loop = new MainLoop ();
-				password_mngr.get_password_async.begin (array["id"] + "9999", (obj, res) => {
-					try {
-						array["ssh_password"] = password_mngr.get_password_async.end (res);
-					} catch (Error e) {
-						debug ("Unable to get the SSH password from libsecret");
-					}
-					ssh_loop.quit ();
-				});
-
-				ssh_loop.run ();
+				try {
+					array["ssh_password"] = yield password_mngr.get_password_async (array["id"] + "9999");
+					debug ("SSH: " + array["ssh_password"]);
+				} catch {
+					debug ("Unable to get the SSH password from libsecret");
+				}
 			}
 
 			buffer_content += settings.stringify_data (array) + "---\n";

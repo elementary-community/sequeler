@@ -66,25 +66,18 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 	}
 
 	public async void connection_opened (Sequeler.Services.ConnectionManager? cnn_manager) {
-		new Thread<void*> (null, () => {
-			connection_manager = cnn_manager;
-			var host = cnn_manager.data["host"] != "" ? cnn_manager.data["host"] : "127.0.0.1";
+		debug ("connection opened");
+		connection_manager = cnn_manager;
+		var host = cnn_manager.data["host"] != "" ? cnn_manager.data["host"] : "127.0.0.1";
 
-			Idle.add (() => {
-				window.headerbar.toggle_logout.begin ();
-				sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
-				main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.SLIDE_LEFT);
+		window.headerbar.toggle_logout.begin ();
+		sidebar_stack.set_visible_child_full ("database_schema", Gtk.StackTransitionType.CROSSFADE);
+		main_stack.set_visible_child_full ("database_view", Gtk.StackTransitionType.SLIDE_LEFT);
 
-				window.headerbar.title = _("Connected to %s").printf (cnn_manager.data["title"]);
-				window.headerbar.subtitle = cnn_manager.data["username"] + "@" + host;
+		window.headerbar.title = _("Connected to %s").printf (cnn_manager.data["title"]);
+		window.headerbar.subtitle = cnn_manager.data["username"] + "@" + host;
 
-				database_schema.reload_schema.begin ();
-				return false;
-			});
-			return null;
-		});
-		
-		yield;
+		database_schema.reload_schema.begin ();
 	}
 
 	public void connection_closed () {
