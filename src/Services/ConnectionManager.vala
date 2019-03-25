@@ -340,7 +340,9 @@ public class Sequeler.Services.ConnectionManager : Object {
 					} else if (0 == len) {
 						debug ("The client at %s:%d disconnected!", local_listenip, local_listenport);
 						debug ("connection manager %p", this);
-						direct_shutdown ();
+						if (is_real) {
+							direct_shutdown ();
+						}
 						break;
 					}
 					ssize_t wr = 0;
@@ -416,7 +418,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	}
 
 	private void direct_shutdown () {
-		//  session.blocking = true;
+		session.blocking = true;
 		Posix.close (forwardsock);
 		forwardsock = -1;
 	}
