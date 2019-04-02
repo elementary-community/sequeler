@@ -138,14 +138,13 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	private void update_pagination (Gda.DataModel? results) {
 		page_prev_btn.sensitive = false;
 		page_next_btn.sensitive = false;
-		var tot_results = results.get_n_rows ();
 
-		if (tot_results <= settings.limit_results) {
+		if (table_count <= settings.limit_results) {
 			pages_label.set_text (_("1 Page"));
 			return;
 		}
 
-		tot_pages = (int) Math.ceilf (((float) tot_results) / settings.limit_results);
+		tot_pages = (int) Math.ceilf (((float) table_count) / settings.limit_results);
 		pages_label.set_text (_("%d of %d Pages").printf(current_page, tot_pages));
 		page_next_btn.sensitive = true;
 	}
@@ -229,7 +228,8 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		start_spinner ();
-		var query = (window.main.connection_manager.db_type as DataBaseType).show_table_content (table_name, table_count);
+		var query = (window.main.connection_manager.db_type as DataBaseType)
+					.show_table_content (table_name, table_count, current_page);
 		reloading = true;
 
 		table_content = yield get_table_content (query);
@@ -239,7 +239,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		}
 
 		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
-		result_message.label = _("%d Entries").printf (table_content.get_n_rows ());
+		result_message.label = _("%d Entries").printf (table_count);
 
 		yield clear ();
 		update_pagination (table_content);
@@ -272,7 +272,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			page_prev_btn.sensitive = false;
 		}
 
-		change_page.begin ();
+		get_content_and_fill.begin ();
 	}
 
 	public void go_next_page () {
@@ -283,16 +283,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			page_next_btn.sensitive = false;
 		}
 
-		change_page.begin ();
-	}
-
-	private async void change_page () {
-		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
-
-		yield clear ();
-		pages_label.set_text (_("%d of %d Pages").printf(current_page, tot_pages));
-
-		scroll.add (result_data);
-		scroll.show_all ();
+		get_content_and_fill.begin ();
 	}
 }
