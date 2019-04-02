@@ -293,7 +293,11 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 		int top = 0;
 		while (_iter.move_next ()) {
 			var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
-			item.badge = _iter.get_value_at (1).get_long ().to_string ();
+			if (window.data_manager.data["type"] == "SQLite") {
+				item.badge = _iter.get_value_at (1).get_int ().to_string ();
+			} else {
+				item.badge = _iter.get_value_at (1).get_long ().to_string ();
+			}
 			item.editable = true;
 			item.icon = new GLib.ThemedIcon ("drive-harddisk");
 			item.edited.connect ((new_name) => {

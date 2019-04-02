@@ -42,7 +42,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string show_table_list (string name) {
-        return "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'information_schema' AND schemaname != 'pg_catalog' ORDER BY tablename DESC";
+        return "SELECT relname, reltuples FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema') AND relkind='r' ORDER BY relname DESC;";
     }
 
     public string edit_table_name (string old_table, string new_table) {
@@ -54,7 +54,17 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string show_table_content (string table, int? count, int? page = null) {
-        return "SELECT * FROM \"%s\"".printf (table);
+        var output = "SELECT * FROM  \"%s\"".printf (table);
+
+		if (count != null && count > settings.limit_results) {
+			output += " LIMIT %i".printf (settings.limit_results);
+		}
+
+		if (page != null && page > 1) {
+			output += " OFFSET %i".printf (settings.limit_results * (page - 1));
+		}
+
+		return output;
     }
     
     public string show_table_relations (string table, string? database) {
