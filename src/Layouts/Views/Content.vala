@@ -135,18 +135,17 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		return page_grid;
 	}
 
-	private void update_pagination (Gda.DataModel? results) {
-		page_prev_btn.sensitive = false;
-		page_next_btn.sensitive = false;
-
+	private void update_pagination () {
 		if (table_count <= settings.limit_results) {
 			pages_label.set_text (_("1 Page"));
 			return;
 		}
 
 		tot_pages = (int) Math.ceilf (((float) table_count) / settings.limit_results);
-		pages_label.set_text (_("%d of %d Pages").printf(current_page, tot_pages));
-		page_next_btn.sensitive = true;
+		pages_label.set_text (_("%d of %d Pages").printf (current_page, tot_pages));
+
+		page_prev_btn.sensitive = (current_page > 1);
+		page_next_btn.sensitive = (current_page < tot_pages);
 	}
 
 	public Gtk.Label build_results_msg () {
@@ -242,7 +241,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 		result_message.label = _("%d Entries").printf (table_count);
 
 		yield clear ();
-		update_pagination (table_content);
+		update_pagination ();
 
 		scroll.add (result_data);
 		scroll.show_all ();
@@ -266,23 +265,11 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 	public void go_prev_page () {
 		current_page--;
-		page_next_btn.sensitive = true;
-
-		if (current_page == 1) {
-			page_prev_btn.sensitive = false;
-		}
-
 		get_content_and_fill.begin ();
 	}
 
 	public void go_next_page () {
 		current_page++;
-		page_prev_btn.sensitive = true;
-
-		if (current_page == tot_pages) {
-			page_next_btn.sensitive = false;
-		}
-
 		get_content_and_fill.begin ();
 	}
 }

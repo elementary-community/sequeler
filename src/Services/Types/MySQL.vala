@@ -64,8 +64,6 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 			output += " OFFSET %i".printf (settings.limit_results * (page - 1));
 		}
 
-		debug (output);
-
 		return output;
 	}
 
