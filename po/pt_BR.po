@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-02 09:48-0400\n"
+"POT-Creation-Date: 2019-04-02 18:46-0700\n"
 "PO-Revision-Date: 2018-09-16 23:20-0300\n"
 "Last-Translator: Everson Santos Araujo <everson@everson.com.br>\n"
 "Language-Team: \n"
@@ -34,526 +34,580 @@ msgstr "Conecte-se a qualquer banco de dados local ou remoto."
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:13
 msgid ""
-"Store your Database Connections in the built-in library, type and execute "
-"SQL commands directly in the App, and do everything you need to do without "
-"the necessity of opening the terminal."
+"Store your Database Connections in the library, connect over SSH tunnel, "
+"type and execute SQL commands directly in the app, and do everything you "
+"need to do without the necessity of opening the terminal."
 msgstr ""
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:16
-msgid "Features Include:"
+msgid "Supported Databases:"
 msgstr ""
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:20
+msgid "SQLite"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:21
+msgid "MySQL"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:22
+msgid "MariaDB"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:23
+msgid "PostgreSQL"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:25
+msgid "Features Include:"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:29
 #, fuzzy
 msgid "Test Connections before saving them"
 msgstr "Testar Conexão"
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:21
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:30
 msgid "View Table structure, content, and relations"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:22
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:31
 msgid "Write multiple custom SQL Queries"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:23
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:32
 msgid "Switch between light and dark mode"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:24
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:33
 msgid ""
 "Handy keyboard shortcuts to quit (ctrl+q), create new connection (ctrl+shift"
-"+n), multiple instances (ctrl+n)"
-msgstr ""
-
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:33
-msgid "Critical bug fix!"
-msgstr ""
-
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:35
-msgid "CRITICAL: Fixes missing GSettings Schema, restore lost connections."
-msgstr ""
-
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:36
-msgid "Other small bug fixes and improvements."
+"+n), open a new window (ctrl+n)"
 msgstr ""
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:42
-msgid "Implemented SSH tunneling"
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:53
+msgid "Bug fixes and improvements"
 msgstr ""
 
 #: data/com.github.alecaddd.sequeler.appdata.xml.in.in:44
+msgid "Rewritten pagination to use LIMIT and OFFSET."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:45
+msgid "Faster pagination and content viewing for big data."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:46
+msgid "Show records count in table's list."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:47
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:80
+msgid "Bug fixes and other improvements."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:55
+msgid "Properly handle EXPLAIN SQL statement."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:56
+msgid "Properly handle querying capitlized PostgreSQL tables."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:57
+msgid "Improved async methods for internal views."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:58
+msgid "Updated translations."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:64
+msgid "Critical bug fix!"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:66
+msgid "CRITICAL: Fixes missing GSettings Schema, restore lost connections."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:67
+msgid "Other small bug fixes and improvements."
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:73
+msgid "Implemented SSH tunneling"
+msgstr ""
+
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:75
 msgid ""
 "WARNING: This release packs many updates and something could break. Please, "
 "backup your connections."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:45
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:76
 #, fuzzy
 msgid "Connect via SSH to a remote Database."
 msgstr "Conecte-se a qualquer banco de dados local ou remoto."
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:46
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:77
 msgid "Major code refactor to handle UI updates via async methods."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:47
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:78
 msgid ""
 "Use Stack container to show a loading Spinner during fetch or data "
 "processing methods."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:48
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:79
 msgid ""
 "Major performance improvements to the table search and dropdown schema "
 "switcher."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:49
-msgid "Bug fixes and other improvements."
-msgstr ""
-
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:55
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:86
 msgid "Fancy New Icon!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:57
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:88
 msgid "New fancy Icon."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:58
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:89
 msgid "Use GtkNativeDialog."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:59
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:69
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:90
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:100
 msgid "Bug fixes and Improvements."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:65
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:96
 msgid "Open SQLite files"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:67
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:98
 msgid "Open SQLite files directly in Sequeler."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:68
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:99
 msgid "Right click to copy data inside a column."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:75
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:106
 msgid "UI Fixes and Performance Improvements"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:77
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:108
 msgid "UI fix for logout button."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:78
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:109
 msgid "View shortcuts on preferences dropdown."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:79
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:110
 msgid "Performance Improvements."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:80
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:148
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:111
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:179
 msgid "Italian translation."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:86
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:117
 #, fuzzy
 msgid "Export all the things!"
 msgstr "Exportar como Texto"
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:88
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:119
 msgid "Export results from Query Tab."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:89
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:120
 msgid "Export in CSV or Plain Text format."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:90
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:121
 msgid "Sort Columns order everywhere."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:91
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:122
 msgid "Brazilian translation."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:97
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:128
 msgid "Here comes the power of Pagination!!!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:99
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:130
 msgid "Paginate results in the Content tab."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:100
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:131
 msgid "Query messages UI improvements."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:101
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:132
 msgid "Relations table bug fixes."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:107
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:138
 msgid "We got Multi SQL Query support."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:109
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:140
 msgid "Ability to handle multiple SQL queries."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:110
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:141
 msgid "Execute the currently highlighted query."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:111
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:142
 msgid "Improved Library Popover UI."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:112
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:143
 msgid "Use native GTK+ CSS attributes for better Light/Dark mode."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:113
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:144
 msgid "Random UI improvements."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:119
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:150
 msgid "Urgent! Fixed broken Tabs for translated version."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:124
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:155
 msgid "Light and Dark Mode Switch!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:126
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:157
 msgid "Better Dark/Light mode switch in header bar."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:127
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:158
 msgid "Add Russian translation."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:128
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:159
 msgid "Updated Welcome screen with New Window command."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:129
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:160
 msgid "Code cleanup."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:135
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:166
 msgid "Official Juno release!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:137
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:168
 msgid "Missing filter name on SQLite File Dialog."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:143
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:174
 msgid "We got Search!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:145
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:176
 msgid "Search table names in sidebar."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:146
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:177
 msgid "Fixes issue in connecting directly on a non saved connection."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:147
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:178
 msgid "Updated Lithuanian translation."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:154
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:185
 msgid "Improved Password Security."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:156
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:187
 msgid "Safely store passwords in LibSecret."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:157
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:188
 msgid "Auto upgrade on startup to remove passwords from GSettings."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:158
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:189
 msgid ""
 "Fixes issues with identical table names from other database in the same "
 "connection."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:159
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:190
 msgid "Alphabetically ordered tables."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:160
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:191
 msgid "Improvements in showing MySql/MariaDB Table Structure."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:161
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:192
 msgid "Many more bugs for you to discover."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:167
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:198
 #, fuzzy
 msgid "New Icon and Import/Export Library."
 msgstr "Não é Possível Importar a Biblioteca "
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:169
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:200
 msgid "Fancy new icon."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:170
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:201
 #, fuzzy
 msgid "Import and Export connections library."
 msgstr "Importar Conexões"
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:171
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:202
 msgid "Fixed random crash when opening and closing multiple connections."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:172
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:178
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:190
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:213
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:203
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:209
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:221
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:244
 msgid "Bug fixes and improvements."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:180
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:211
 msgid "Fixed PostgreSQL Schema show options."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:181
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:212
 msgid ""
 "Fixed crash on new connection dialog when opening the connection before "
 "saving."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:187
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:218
 msgid "Little side dish update."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:189
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:220
 msgid "Fixed save window state on close."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:196
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:227
 msgid "Alternate coloured rows!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:198
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:229
 msgid "Manually reload Content, Structure, and Relations."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:199
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:210
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:230
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:241
 msgid "Show Table schema, content, and constraint relationships."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:200
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:231
 msgid "Properly handle compound queries."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:201
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:232
 msgid "Fix PostgreSQL table switch."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:207
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:238
 msgid "Complete rewrite of the entire code base!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:209
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:240
 msgid "Handle multiple Windows/Instances and multiple open connections."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:211
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:223
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:235
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:242
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:254
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:266
 msgid "Quicker response on big select queries"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:212
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:243
 msgid "Better error handling."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:219
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:231
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:250
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:262
 msgid "Better error handling, less crashes!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:221
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:233
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:252
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:264
 msgid "The app doesn't crash when dealing with big values"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:222
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:234
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:253
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:265
 msgid "Handling errors related to columns"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:224
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:236
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:255
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:267
 msgid "Some small clean up"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:225
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:256
 msgid "Fixes issue with SQL Lite encrypted path"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:242
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:273
 msgid "New Icon, Better error messages!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:244
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:275
 msgid "New shiny icon"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:245
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:276
 msgid "View SQL error message on error"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:246
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:277
 msgid "FIX: Show proper PostgreSql Schema Table in Sidebar"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:247
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:278
 msgid "Snappiest query execution ever for local databases"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:248
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:279
 msgid "The usual bundle of bugs for you to discover"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:254
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:285
 msgid "Summoning the power of async methods!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:256
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:287
 msgid "All DataBase queries are now async methods, super fast."
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:257
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:288
 msgid "The UI doesn't freeze anymore during a long process"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:258
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:289
 msgid "Granite SourceList to display list of tables"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:259
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:290
 msgid "Tabs to switch between the Query Builder and the Table Structure"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:260
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:291
 msgid "ComboBox to select table schemas from the open connection"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:261
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:292
 msgid "Many more bugs and issues for you to have fun with"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:267
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:298
 msgid "Bug Fixes and Improvements"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:269
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:300
 msgid "Display Table lists for SQLite and PostgreSQL"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:270
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:301
 msgid "Refresh Table List view if tables change"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:271
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:302
 msgid "Removed unused GSettings"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:277
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:308
 msgid ""
 "This is so good you won't believe it. New Library UI, Schema Table, Custom "
 "Port, and more"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:279
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:310
 msgid ""
 "A brand new Library View directly in your home screen, super tight and "
 "organized"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:280
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:311
 msgid "Custom Port field for those snazzy geeks who don't just use 3306"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:281
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:312
 msgid "A shiny new Sidebar View to list all your DataBase Tables"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:282
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:313
 msgid "Code cleanup and speed improvements"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:283
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:314
 msgid "Usual abundance of bugs and issues for you to have fun with!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:289
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:320
 msgid "Major Update: Releasing a sweet table to view Query Results!"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:291
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:322
 msgid "Did I say we got a sweet table to view query results?"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:292
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:323
 msgid "New shortcut (ctrl+enter) to execute query"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:293
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:324
 msgid "Solved bug while connecting to DB directly from the Connection Dialog"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:294
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:325
 msgid "UI Improvements to Connection Dialog"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:295
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:326
 msgid "Added Spanish and Lithuanian translations"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:301
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:332
 msgid "UI fixes"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:303
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:334
 msgid "Visual improvements to the library view"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:309
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:340
 msgid "Initial Release"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:311
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:342
 msgid "Store your Database connections"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:312
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:343
 #, fuzzy
 msgid "Quickly connect to a Local or Remote Database"
 msgstr "Conecte-se a qualquer banco de dados local ou remoto."
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:313
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:344
 msgid "Write SQL queries in the built-in code editor"
 msgstr ""
 
-#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:332
+#: data/com.github.alecaddd.sequeler.appdata.xml.in.in:363
 msgid "Alessandro Castellani"
 msgstr ""
 
@@ -672,12 +726,12 @@ msgstr "Sair"
 
 #: src/Layouts/HeaderBar.vala:56
 #, fuzzy
-msgid "Light Mode"
-msgstr "Fundo claro"
+msgid "Light background"
+msgstr "Fundo escuro"
 
 #: src/Layouts/HeaderBar.vala:57
-msgid "Dark Mode"
-msgstr ""
+msgid "Dark background"
+msgstr "Fundo escuro"
 
 #: src/Layouts/HeaderBar.vala:70 src/Layouts/Welcome.vala:39
 msgid "New Window"
@@ -696,7 +750,7 @@ msgstr "Sair"
 msgid "Menu"
 msgstr ""
 
-#: src/Layouts/Main.vala:78
+#: src/Layouts/Main.vala:77
 #, c-format
 msgid "Connected to %s"
 msgstr "Conectado a %s"
@@ -737,25 +791,25 @@ msgstr "Todos os dados serão apagados e você não será capaz de recuperá-los
 msgid "Yes, Delete All!"
 msgstr "Sim, Apague Tudo!"
 
-#: src/Layouts/Library.vala:333 src/Layouts/Views/Query.vala:422
+#: src/Layouts/Library.vala:316 src/Layouts/Views/Query.vala:396
 msgid "Pick a file"
 msgstr "Escolha um arquivo"
 
-#: src/Layouts/Library.vala:336 src/Layouts/Views/Query.vala:425
+#: src/Layouts/Library.vala:319 src/Layouts/Views/Query.vala:399
 msgid "_Save"
 msgstr "_Salvar"
 
-#: src/Layouts/Library.vala:337 src/Layouts/Welcome.vala:62
-#: src/Layouts/Views/Query.vala:426
+#: src/Layouts/Library.vala:320 src/Layouts/Welcome.vala:62
+#: src/Layouts/Views/Query.vala:400
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: src/Layouts/Library.vala:412
+#: src/Layouts/Library.vala:381
 #, c-format
 msgid "Unable to Connect to %s"
 msgstr "Não é possível conectar-se a %s"
 
-#: src/Layouts/Library.vala:425
+#: src/Layouts/Library.vala:394
 msgid "Unable to Export Library "
 msgstr "Não é Possível Exportar a Biblioteca "
 
@@ -820,7 +874,7 @@ msgstr "Recarregar as Tabelas"
 msgid "Add Table"
 msgstr "Adicionar Tabela"
 
-#: src/Layouts/DataBaseSchema.vala:319
+#: src/Layouts/DataBaseSchema.vala:289
 msgid "TABLES"
 msgstr "TABELAS"
 
@@ -840,12 +894,12 @@ msgstr "Relacionamentos"
 msgid "Query"
 msgstr "Consultar"
 
-#: src/Layouts/Views/Structure.vala:76 src/Layouts/Views/Content.vala:84
+#: src/Layouts/Views/Structure.vala:76 src/Layouts/Views/Content.vala:86
 #: src/Layouts/Views/Relations.vala:75
 msgid "Select Table"
 msgstr "Selecionar Tabela"
 
-#: src/Layouts/Views/Structure.vala:76 src/Layouts/Views/Content.vala:84
+#: src/Layouts/Views/Structure.vala:76 src/Layouts/Views/Content.vala:86
 #: src/Layouts/Views/Relations.vala:75
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
@@ -867,29 +921,29 @@ msgstr "Recarregar Resultados"
 msgid " Fields"
 msgstr " Campos"
 
-#: src/Layouts/Views/Content.vala:114
+#: src/Layouts/Views/Content.vala:116
 msgid "Previous Page"
 msgstr "Página Anterior"
 
-#: src/Layouts/Views/Content.vala:119
+#: src/Layouts/Views/Content.vala:121
 msgid "Next Page"
 msgstr "Próxima Página"
 
-#: src/Layouts/Views/Content.vala:124
+#: src/Layouts/Views/Content.vala:126
 #, fuzzy, c-format
 msgid "%d Pages"
 msgstr " Páginas"
 
-#: src/Layouts/Views/Content.vala:142
+#: src/Layouts/Views/Content.vala:140
 msgid "1 Page"
 msgstr "1 Página"
 
-#: src/Layouts/Views/Content.vala:147 src/Layouts/Views/Content.vala:307
+#: src/Layouts/Views/Content.vala:145
 #, fuzzy, c-format
 msgid "%d of %d Pages"
 msgstr " Páginas"
 
-#: src/Layouts/Views/Content.vala:239
+#: src/Layouts/Views/Content.vala:241
 #, c-format
 msgid "%d Entries"
 msgstr "%d Entradas"
@@ -918,21 +972,21 @@ msgstr "Exportar como CSV"
 msgid "Export as Text"
 msgstr "Exportar como Texto"
 
-#: src/Layouts/Views/Query.vala:354 src/Layouts/Views/Query.vala:394
+#: src/Layouts/Views/Query.vala:328 src/Layouts/Views/Query.vala:368
 msgid "Unable to process Query!"
 msgstr "Não é possível processar a consulta!"
 
-#: src/Layouts/Views/Query.vala:371
+#: src/Layouts/Views/Query.vala:345
 #, c-format
 msgid "%d Total Results"
 msgstr "Total de %d Resultados"
 
-#: src/Layouts/Views/Query.vala:400
+#: src/Layouts/Views/Query.vala:374
 #, fuzzy, c-format
 msgid "Query Successfully Executed! Rows Affected: %d"
 msgstr "Consulta Executada com Sucesso! Linhas Afetadas: "
 
-#: src/Layouts/Views/Query.vala:403
+#: src/Layouts/Views/Query.vala:377
 msgid "Query Executed!"
 msgstr "Consulta Executada!"
 
@@ -952,73 +1006,73 @@ msgstr "Remover Conexão"
 msgid "Options"
 msgstr "Opções"
 
-#: src/Partials/TreeBuilder.vala:110
+#: src/Partials/TreeBuilder.vala:116
 msgid "Error"
 msgstr "Erro"
 
-#: src/Partials/TreeBuilder.vala:110
+#: src/Partials/TreeBuilder.vala:116
 msgid "on Column"
 msgstr "na Coluna"
 
-#: src/Partials/TreeBuilder.vala:152
+#: src/Partials/TreeBuilder.vala:158
 #, c-format
 msgid "Copy %s"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:180
+#: src/Services/ConnectionManager.vala:184
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:187
+#: src/Services/ConnectionManager.vala:191
 msgid "Failed to open socket"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:196
+#: src/Services/ConnectionManager.vala:200
 #, fuzzy
 msgid "Failed to connect!"
 msgstr "Não é possível conectar-se a %s"
 
-#: src/Services/ConnectionManager.vala:208
+#: src/Services/ConnectionManager.vala:212
 #, c-format
 msgid "Error when starting up SSH session: %d"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:227
+#: src/Services/ConnectionManager.vala:231
 msgid "Authentication by password failed!"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:237
+#: src/Services/ConnectionManager.vala:241
 msgid "Authentication by public key failed!"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:244
+#: src/Services/ConnectionManager.vala:248
 msgid "No supported authentication methods found!"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:251
+#: src/Services/ConnectionManager.vala:255
 msgid "Failed to open listen socket"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:266
+#: src/Services/ConnectionManager.vala:270
 msgid "Failed to bind. Your Database Port may be wrong!"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:272
+#: src/Services/ConnectionManager.vala:276
 msgid "Failed to listen!"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:299
+#: src/Services/ConnectionManager.vala:303
 msgid "Failed to accept remote connection!"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:308
+#: src/Services/ConnectionManager.vala:312
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
 
-#: src/Services/ConnectionManager.vala:512
+#: src/Services/ConnectionManager.vala:509
 msgid "Error!"
 msgstr "Erro!"
 
@@ -1121,32 +1175,33 @@ msgstr "Salvar Conexão"
 msgid "Test Connection"
 msgstr "Testar Conexão"
 
-#: src/Widgets/ConnectionDialog.vala:568
+#: src/Widgets/ConnectionDialog.vala:555
 msgid "Opening SSH Tunnel…"
 msgstr ""
 
-#: src/Widgets/ConnectionDialog.vala:598
+#: src/Widgets/ConnectionDialog.vala:585
 msgid "Testing Connection…"
 msgstr "Testando Conexão…"
 
-#: src/Widgets/ConnectionDialog.vala:609
+#: src/Widgets/ConnectionDialog.vala:596
 msgid "Successfully Connected!"
 msgstr "Conectado com Sucesso!"
 
-#: src/Widgets/ConnectionDialog.vala:627
+#: src/Widgets/ConnectionDialog.vala:614
 msgid "Saving Connection…"
 msgstr "Salvando Conexão…"
 
-#: src/Widgets/ConnectionDialog.vala:632
+#: src/Widgets/ConnectionDialog.vala:619
 msgid "Connection Saved!"
 msgstr "Conexão Salva!"
 
-#: src/Widgets/ConnectionDialog.vala:640
+#: src/Widgets/ConnectionDialog.vala:627
 msgid "Connecting…"
 msgstr "Conectando…"
 
-#~ msgid "Dark background"
-#~ msgstr "Fundo escuro"
+#, fuzzy
+#~ msgid "Light Mode"
+#~ msgstr "Fundo claro"
 
 #~ msgid " of "
 #~ msgstr " de "
