@@ -37,6 +37,17 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.6.9" date="2019-04-02">
+			<description>
+				<p>Bug fixes and improvements</p>
+				<ul>
+					<li>Rewritten pagination to use LIMIT and OFFSET.</li>
+					<li>Faster pagination and content viewing for big data.</li>
+					<li>Show records count in table's list.</li>
+					<li>Bug fixes and other improvements.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.6.8" date="2019-03-19">
 			<description>
 				<p>Bug fixes and improvements</p>
