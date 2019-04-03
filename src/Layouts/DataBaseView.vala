@@ -68,7 +68,7 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 			}
 
 			if (tab.name == "Content") {
-				window.main.database_view.content.fill (item_selected.name, window.main.database_view.content.database);
+				window.main.database_view.content.fill (item_selected.name, window.main.database_view.content.database, item_selected.badge);
 			}
 
 			if (tab.name == "Relations") {

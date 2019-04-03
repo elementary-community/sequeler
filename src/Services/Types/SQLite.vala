@@ -32,11 +32,11 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	}
 
 	public string show_schema () {
-		return "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
+		return "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
 	}
 
 	public string show_table_list (string name) {
-		return "SELECT name, sql FROM sqlite_master WHERE type='table' ORDER BY name;";
+		return "SELECT COUNT(*) FROM %s".printf (name);
 	}
 
 	public string edit_table_name (string old_table, string new_table) {
@@ -47,8 +47,18 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 		return "PRAGMA table_info('%s')".printf (table);
 	}
 
-	public string show_table_content (string table) {
-		return "SELECT * FROM %s".printf (table);
+	public string show_table_content (string table, int? count, int? page = null) {
+		var output = "SELECT * FROM %s".printf (table);
+
+		if (count != null && count > settings.limit_results) {
+			output += " LIMIT %i".printf (settings.limit_results);
+		}
+
+		if (page != null && page > 1) {
+			output += " OFFSET %i".printf (settings.limit_results * (page - 1));
+		}
+
+		return output;
 	}
 
 	public string show_table_relations (string table, string? database) {
