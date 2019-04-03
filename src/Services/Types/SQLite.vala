@@ -32,13 +32,11 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
 	}
 
 	public string show_schema () {
-		return "SELECT name, count(*) AS rows FROM sqlite_master
-				WHERE type='table' GROUP BY name ORDER BY name;";
+		return "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
 	}
 
 	public string show_table_list (string name) {
-		return "SELECT name, count(*) AS rows FROM sqlite_master
-				WHERE type='table' GROUP BY name ORDER BY name;";
+		return "SELECT COUNT(*) FROM %s".printf (name);
 	}
 
 	public string edit_table_name (string old_table, string new_table) {
