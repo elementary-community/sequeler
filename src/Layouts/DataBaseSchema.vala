@@ -297,11 +297,10 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			// Get the table rows coutn with an extra query for SQLite
 			if (window.data_manager.data["type"] == "SQLite") {
 				var table_count = yield get_table_count (item.name);
-				debug (table_count.dump_as_string ());
 				Gda.DataModelIter count_iter = table_count.create_iter ();
-
+				
 				while (count_iter.move_next ()) {
-					item.badge = count_iter.get_value_at (0).get_long ().to_string ();
+					item.badge = count_iter.get_value_at (0).get_int ().to_string ();
 				}
 			} else {
 				item.badge = _iter.get_value_at (1).get_long ().to_string ();
