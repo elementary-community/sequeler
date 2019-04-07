@@ -5,7 +5,7 @@ project('com.github.alecaddd.sequeler', 'vala', 'c',
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required: true)
 
-vala_args = []
+vala_args = ['--pkg', 'posix']
 
 add_project_arguments(
     ['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
