@@ -63,6 +63,6 @@ executable(
         m_dep,
         linux_dep
     ],
-        vala_args: vala_args + ['--pkg', 'libfixposix'],
+        vala_args: vala_args,
     install: true
 )
