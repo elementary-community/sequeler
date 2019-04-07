@@ -264,11 +264,13 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 	}
 
 	public void go_prev_page () {
+		page_prev_btn.sensitive = false;
 		current_page--;
 		get_content_and_fill.begin ();
 	}
 
 	public void go_next_page () {
+		page_next_btn.sensitive = false;
 		current_page++;
 		get_content_and_fill.begin ();
 	}
