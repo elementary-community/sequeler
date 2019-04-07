@@ -37,6 +37,15 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.7.0" date="2019-04-07">
+			<description>
+				<p>Bite-Size fixes</p>
+				<ul>
+					<li>Removed unused libfixposix.</li>
+					<li>Fixed pagination issue when clicking too fast while fetching big data.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.6.9" date="2019-04-02">
 			<description>
 				<p>Bug fixes and improvements</p>
