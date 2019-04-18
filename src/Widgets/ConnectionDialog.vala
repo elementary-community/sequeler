@@ -594,12 +594,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			try {
 				connection_manager.test ();
 				write_response (_("Successfully Connected!"));
-				connection_manager = null;
 			} catch (Error e) {
 				write_response (e.message);
 			}
 
 			Idle.add ((owned) callback);
+			connection_manager = null;
 			toggle_spinner (false);
 			return null;
 		});
@@ -633,6 +633,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		try {
 			result = yield connection_manager.init_connection ();
 		} catch (ThreadError e) {
+			connection_manager = null;
 			write_response (e.message);
 			toggle_spinner (false);
 		}
@@ -647,6 +648,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 			destroy ();
 		} else {
+			connection_manager = null;
 			write_response (result["msg"]);
 			toggle_spinner (false);
 		}
