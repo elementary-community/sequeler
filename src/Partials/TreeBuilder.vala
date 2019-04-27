@@ -57,7 +57,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 			column.clickable = true;
 			column.resizable = true;
 			column.expand = true;
-			column.sort_column_id = col;
+
 			if (col > 0) {
 				column.sizing = Gtk.TreeViewColumnSizing.FIXED;
 				column.fixed_width = 150;
@@ -119,7 +119,9 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 		store.set_value (iter, tot_columns, background);
 	}
 
-	public void redraw () {
+	public void redraw (Gtk.TreeViewColumn column) {
+		debug (column.title);
+		column.sort_indicator = true;
 		Gtk.TreeIter iter;
 		var i = 0;
 
