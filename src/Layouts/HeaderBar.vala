@@ -60,22 +60,19 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		mode_switch.notify.connect (() => {
 			Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
 		});
-		
+
 		if (settings.dark_theme) {
 			mode_switch.active = true;
 		}
 
-		var new_window_item = new Gtk.ModelButton ();
+        var new_window_item = new_menuitem (_("New Window"), {"<Ctrl>n"});
 		new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
-		set_button_grid (new_window_item, _("New Window"), "Ctrl+N");
 
-		var new_connection_item = new Gtk.ModelButton ();
+		var new_connection_item = new_menuitem (_("New Connection"), {"<Ctrl><Shift>n"});
 		new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
-		set_button_grid (new_connection_item, _("New Connection"), "Ctrl+Shift+N");
 
-		var quit_item = new Gtk.ModelButton ();
+		var quit_item = new_menuitem (_("Quit"), {"<Ctrl>q"});
 		quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
-		set_button_grid (quit_item, _("Quit"), "Ctrl+Q");
 
 		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
 		menu_separator.margin_top = 6;
@@ -83,8 +80,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
 		var menu_grid = new Gtk.Grid ();
 		menu_grid.expand = true;
-		menu_grid.margin_top = 3;
-		menu_grid.margin_bottom = 3;
+		menu_grid.margin_top = menu_grid.margin_bottom = 6;
 		menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
 		menu_grid.attach (new_window_item, 0, 1, 1, 1);
@@ -92,16 +88,15 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		menu_grid.attach (menu_separator, 0, 3, 1, 1);
 		menu_grid.attach (quit_item, 0, 4, 1, 1);
 		menu_grid.show_all ();
-		
+
 		var open_menu = new Gtk.MenuButton ();
-		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.BUTTON));
+		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
 		open_menu.tooltip_text = _("Menu");
 
-		menu_popover = new Gtk.Popover (null);
+		menu_popover = new Gtk.Popover (open_menu);
 		menu_popover.add (menu_grid);
 
 		open_menu.popover = menu_popover;
-		open_menu.relief = Gtk.ReliefStyle.NONE;
 		open_menu.valign = Gtk.Align.CENTER;
 
 		pack_start (logout_button);
@@ -114,23 +109,29 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		pack_end (mode_switch);
 	}
 
-	public void set_button_grid (Gtk.ModelButton button, string text, string accelerator) {
-		var button_grid = new Gtk.Grid ();
+	private Gtk.Button new_menuitem (string label, string[] accels) {
+		var item_label = new Gtk.Label (label);
+        item_label.halign = Gtk.Align.START;
+        item_label.hexpand = true;
+		item_label.margin_start = 6;
 
-		var label = new Gtk.Label (text);
-		label.expand = true;
-		label.halign = Gtk.Align.START;
-		label.margin_end = 10;
+		var item_accel_label = new Gtk.Label (Granite.markup_accel_tooltip (accels));
+        item_accel_label.halign = Gtk.Align.END;
+        item_accel_label.margin_end = item_accel_label.margin_start = 6;
+        item_accel_label.use_markup = true;
 
-		var accel = new Gtk.Label (accelerator);
-		accel.halign = Gtk.Align.END;
-		accel.get_style_context ().add_class (Gtk.STYLE_CLASS_ACCELERATOR);
+        var item_grid = new Gtk.Grid ();
+        item_grid.add (item_label);
+        item_grid.add (item_accel_label);
 
-		button_grid.attach (label, 0, 0, 1, 1);
-		button_grid.attach (accel, 1, 0, 1, 1);
+        var item = new Gtk.Button ();
+        item.add (item_grid);
+		item.get_style_context ().add_class (Gtk.STYLE_CLASS_MENUITEM);
+		item.clicked.connect (() => {
+			menu_popover.hide ();
+		});
 
-		button.remove (button.get_child ());
-		button.add (button_grid);
+		return item;
 	}
 
 	public async void toggle_logout () {
