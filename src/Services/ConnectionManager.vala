@@ -52,7 +52,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 			data: data
 		);
 	}
-	
+
 	construct {
 		switch (data["type"]) {
 			case "MySQL":
@@ -154,7 +154,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		debug ("Opening tunnel %p", Thread.self<bool> ());
 
 		ssh_tunnel_alive = true;
-		
+
 		Quark q = Quark.from_string ("ssh-error-str");
 		var home_dir = Environment.get_home_dir ();
 		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
@@ -176,7 +176,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		// Default vars for TCPIP Tunnelling
 		var remote_desthost = "127.0.0.1";
-		var remote_destport = 3306;
+		var remote_destport = data["port"] != "" ? int.parse (data["port"]) : 3306;
 
 		var rc = SSH2.init (0);
 		if (rc != SSH2.Error.NONE) {
@@ -263,7 +263,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		sin.sin_port = Posix.htons (local_listenport);
 
 		var sockopt = 1;
-		Posix.setsockopt (listensock, Linux.Socket.SOL_SOCKET, Linux.Socket.SO_REUSEADDR, &sockopt, (Posix.socklen_t) sizeof (int)); 
+		Posix.setsockopt (listensock, Linux.Socket.SOL_SOCKET, Linux.Socket.SO_REUSEADDR, &sockopt, (Posix.socklen_t) sizeof (int));
 		if (Posix.bind (listensock, &sin, sizeof (Posix.SockAddrIn)) == -1) {
 			debug ("Failed to bind!");
 			ssh_tunnel_close (Log.FILE + ":" + Log.LINE.to_string ());
