@@ -64,3 +64,8 @@ infobar.inline revealer > box {
     border-width: 1px;
     border-radius: 4px;
 }
+
+/* to-do used these colors for alternate row background
+ * "rgba(255,255,255,0.05)"
+ * "rgba(0,0,0,0.05)"
+ */

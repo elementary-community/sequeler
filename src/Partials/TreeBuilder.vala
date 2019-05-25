@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
+public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 	public Gda.DataModel data { get; construct; }
 	public int per_page { get; construct; }
@@ -28,9 +28,6 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	public string? error_message { get; set; default = null; }
 	public string background;
 	public int tot_columns;
-
-	private string bg_light = "rgba(255,255,255,0.05)";
-	private string bg_dark = "rgba(0,0,0,0.05)";
 
 	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window, int per_page = 0, int current_page = 0) {
 		Object (
@@ -42,144 +39,156 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
 	}
 
 	construct {
-		Gtk.TreeViewColumn column;
-		var renderer = new Gtk.CellRendererText ();
-		renderer.single_paragraph_mode = true;
-
+		expand = true;
 		tot_columns = data.get_n_columns ();
 
-		var theTypes = new GLib.Type[tot_columns+1];
+		var header = new Gtk.Grid ();
+		header.hexpand = true;
+
 		for (int col = 0; col < tot_columns; col++) {
-			theTypes[col] = data.describe_column (col).get_g_type ();
-
 			var title = data.get_column_title (col).replace ("_", "__");
-			column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", col, "background", tot_columns, null);
-			column.clickable = true;
-			column.resizable = true;
-			column.expand = true;
-			column.sort_column_id = col;
-			if (col > 0) {
-				column.sizing = Gtk.TreeViewColumnSizing.FIXED;
-				column.fixed_width = 150;
-			}
-
-			column.clicked.connect (redraw);
-			append_column (column);
+			header.attach (new Gtk.Label (title), col, 1, 1, 1);
 		}
 
-		theTypes[tot_columns] = typeof (string);
+		attach (header, 0, 0, 1, 1);
+		//  Gtk.TreeViewColumn column;
+		//  var renderer = new Gtk.CellRendererText ();
+		//  renderer.single_paragraph_mode = true;
 
-		store = new Gtk.ListStore.newv (theTypes);
-		Gda.DataModelIter _iter = data.create_iter ();
-		Gtk.TreeIter iter;
+		//  tot_columns = data.get_n_columns ();
 
-		if (per_page != 0 && data.get_n_rows () > per_page) {
-			int counter = 1;
-			int offset = (per_page * (current_page - 1));
+		//  var theTypes = new GLib.Type[tot_columns+1];
+		//  for (int col = 0; col < tot_columns; col++) {
+		//  	theTypes[col] = data.describe_column (col).get_g_type ();
 
-			if (current_page != 0 && offset != 0) {
-				_iter.move_to_row ((offset - 1));
-			}
+		//  	var title = data.get_column_title (col).replace ("_", "__");
+		//  	column = new Gtk.TreeViewColumn.with_attributes (title, renderer, "text", col, "background", tot_columns, null);
+		//  	column.clickable = true;
+		//  	column.resizable = true;
+		//  	column.expand = true;
+		//  	column.sort_column_id = col;
+		//  	if (col > 0) {
+		//  		column.sizing = Gtk.TreeViewColumnSizing.FIXED;
+		//  		column.fixed_width = 150;
+		//  	}
 
-			while (counter <= per_page && _iter.move_next ()) {
-				append_value (_iter, iter);
-				counter++;
-			}
-		} else {
-			while (_iter.move_next ()) {
-				append_value (_iter, iter);
-			}
-		}
+		//  	column.clicked.connect (redraw);
+		//  	append_column (column);
+		//  }
 
-		if (error_message != null) {
-			window.main.connection_manager.query_warning (error_message);
-			error_message = null;
-		}
+		//  theTypes[tot_columns] = typeof (string);
 
-		set_model (store);
+		//  store = new Gtk.ListStore.newv (theTypes);
+		//  Gda.DataModelIter _iter = data.create_iter ();
+		//  Gtk.TreeIter iter;
+
+		//  if (per_page != 0 && data.get_n_rows () > per_page) {
+		//  	int counter = 1;
+		//  	int offset = (per_page * (current_page - 1));
+
+		//  	if (current_page != 0 && offset != 0) {
+		//  		_iter.move_to_row ((offset - 1));
+		//  	}
+
+		//  	while (counter <= per_page && _iter.move_next ()) {
+		//  		append_value (_iter, iter);
+		//  		counter++;
+		//  	}
+		//  } else {
+		//  	while (_iter.move_next ()) {
+		//  		append_value (_iter, iter);
+		//  	}
+		//  }
+
+		//  if (error_message != null) {
+		//  	window.main.connection_manager.query_warning (error_message);
+		//  	error_message = null;
+		//  }
+
+		//  set_model (store);
 	}
 
-	private void append_value (Gda.DataModelIter _iter, Gtk.TreeIter iter) {
-		background = _iter.get_row () % 2 == 0 ? bg_light : bg_dark;
-		store.append (out iter);
+	//  private void append_value (Gda.DataModelIter _iter, Gtk.TreeIter iter) {
+	//  	background = _iter.get_row () % 2 == 0 ? bg_light : bg_dark;
+	//  	store.append (out iter);
 
-		for (int i = 0; i < tot_columns; i++) {
-			var placeholder_type = data.describe_column (i).get_g_type ();
+	//  	for (int i = 0; i < tot_columns; i++) {
+	//  		var placeholder_type = data.describe_column (i).get_g_type ();
 
-			try {
-				var raw_value = _iter.get_value_at_e (i);
-				var sanitized_value = raw_value.strdup_contents () != "NULL" ?
-									  raw_value : GLib.Value (placeholder_type);
+	//  		try {
+	//  			var raw_value = _iter.get_value_at_e (i);
+	//  			var sanitized_value = raw_value.strdup_contents () != "NULL" ?
+	//  								  raw_value : GLib.Value (placeholder_type);
 
-				store.set_value (iter, i, sanitized_value);
-			} catch (Error e) {
-				error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
-			}
-		}
-		store.set_value (iter, tot_columns, background);
-	}
+	//  			store.set_value (iter, i, sanitized_value);
+	//  		} catch (Error e) {
+	//  			error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
+	//  		}
+	//  	}
+	//  	store.set_value (iter, tot_columns, background);
+	//  }
 
-	public void redraw () {
-		Gtk.TreeIter iter;
-		var i = 0;
+	//  public void redraw () {
+	//  	Gtk.TreeIter iter;
+	//  	var i = 0;
 
-		for (bool next = store.get_iter_first (out iter); next; next = store.iter_next (ref iter)) {
-			background = i % 2 == 0 ? bg_light : bg_dark;
-			store.set_value (iter, tot_columns, background);
-			i++;
-		}
-	}
+	//  	for (bool next = store.get_iter_first (out iter); next; next = store.iter_next (ref iter)) {
+	//  		background = i % 2 == 0 ? bg_light : bg_dark;
+	//  		store.set_value (iter, tot_columns, background);
+	//  		i++;
+	//  	}
+	//  }
 
-	private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
-		if (path == null || column == null) {
-			return;
-		}
+	//  private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
+	//  	if (path == null || column == null) {
+	//  		return;
+	//  	}
 
-		Value val;
-		Gtk.TreeIter iter;
+	//  	Value val;
+	//  	Gtk.TreeIter iter;
 
-		Gdk.Display display = Gdk.Display.get_default ();
-		Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
-		model.get_iter (out iter, path);
-		model.get_value (iter, column.get_sort_column_id (), out val);
+	//  	Gdk.Display display = Gdk.Display.get_default ();
+	//  	Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
+	//  	model.get_iter (out iter, path);
+	//  	model.get_value (iter, column.get_sort_column_id (), out val);
 
-		Gda.DataHandler handler = Gda.DataHandler.get_default (val.type ());
-		string? column_data = handler.get_str_from_value (val);
+	//  	Gda.DataHandler handler = Gda.DataHandler.get_default (val.type ());
+	//  	string? column_data = handler.get_str_from_value (val);
 
-		if (column_data == null) {
-			column_data = "";
-		}
+	//  	if (column_data == null) {
+	//  		column_data = "";
+	//  	}
 
-		clipboard.set_text (column_data, -1);
-	}
+	//  	clipboard.set_text (column_data, -1);
+	//  }
 
-	private Gtk.Menu create_context_menu (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
-		Gtk.Menu menu = new Gtk.Menu ();
-		Gtk.MenuItem item = new Gtk.MenuItem.with_label (_("Copy %s").printf (column.get_title ()));
-		item.activate.connect (() => { copy_column_data (event, path, column); });
-		item.show ();
-		menu.append (item);
+	//  private Gtk.Menu create_context_menu (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {
+	//  	Gtk.Menu menu = new Gtk.Menu ();
+	//  	Gtk.MenuItem item = new Gtk.MenuItem.with_label (_("Copy %s").printf (column.get_title ()));
+	//  	item.activate.connect (() => { copy_column_data (event, path, column); });
+	//  	item.show ();
+	//  	menu.append (item);
 
-		/* Wayland complains if not set */
-		menu.realize.connect (() => {
-			Gdk.Window child = menu.get_window ();
-			child.set_type_hint (Gdk.WindowTypeHint.POPUP_MENU);
-		});
+	//  	/* Wayland complains if not set */
+	//  	menu.realize.connect (() => {
+	//  		Gdk.Window child = menu.get_window ();
+	//  		child.set_type_hint (Gdk.WindowTypeHint.POPUP_MENU);
+	//  	});
 
-		return menu;
-	}
+	//  	return menu;
+	//  }
 
-	public override bool button_press_event (Gdk.EventButton event) {
-		if (event.triggers_context_menu () && event.type == Gdk.EventType.BUTTON_PRESS) {
-			Gtk.TreePath path;
-			Gtk.TreeViewColumn column;
-			get_path_at_pos ((int) event.x, (int) event.y, out path, out column, null, null);
-			var menu = create_context_menu (event, path, column);
-			menu.popup_at_pointer (event);
+	//  public override bool button_press_event (Gdk.EventButton event) {
+	//  	if (event.triggers_context_menu () && event.type == Gdk.EventType.BUTTON_PRESS) {
+	//  		Gtk.TreePath path;
+	//  		Gtk.TreeViewColumn column;
+	//  		get_path_at_pos ((int) event.x, (int) event.y, out path, out column, null, null);
+	//  		var menu = create_context_menu (event, path, column);
+	//  		menu.popup_at_pointer (event);
 
-			return true;
-		}
+	//  		return true;
+	//  	}
 
-		return base.button_press_event (event);
-	}
+	//  	return base.button_press_event (event);
+	//  }
 }
