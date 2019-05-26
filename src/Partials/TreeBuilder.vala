@@ -48,17 +48,17 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 
 		for (int col = 0; col < tot_columns; col++) {
 			var title = data.get_column_title (col).replace ("_", "__");
-			header.attach (tree_header (title), col, 1, 1, 1);
+			header.attach (tree_header (title, col), col, 1, 1, 1);
 		}
 
 		attach (header, 0, 0, 1, 1);
 	}
 
-	private Gtk.Grid tree_header (string label) {
+	private Gtk.Grid tree_header (string label, int col) {
 		var button = new Gtk.Button ();
+		button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 		button.can_focus = false;
 		button.hexpand = true;
-		button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
 		var icon = new Gtk.Image.from_icon_name ("pan-down-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
 		icon.valign = Gtk.Align.CENTER;
@@ -69,6 +69,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 		title.hexpand = true;
 
 		var button_grid = new Gtk.Grid ();
+		button_grid.width_request = (col > 0) ? 250 : 100;
 		button_grid.column_spacing = 5;
 		button_grid.add (title);
 		button_grid.add (icon);
