@@ -44,13 +44,66 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 
 		var header = new Gtk.Grid ();
 		header.hexpand = true;
+		header.get_style_context ().add_class ("data-headerbar");
 
 		for (int col = 0; col < tot_columns; col++) {
 			var title = data.get_column_title (col).replace ("_", "__");
-			header.attach (new Gtk.Label (title), col, 1, 1, 1);
+			header.attach (tree_header (title), col, 1, 1, 1);
 		}
 
 		attach (header, 0, 0, 1, 1);
+	}
+
+	private Gtk.Grid tree_header (string label) {
+		var button = new Gtk.Button ();
+		button.can_focus = false;
+		button.hexpand = true;
+		button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+
+		var icon = new Gtk.Image.from_icon_name ("pan-down-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+		icon.valign = Gtk.Align.CENTER;
+
+		var title = new Gtk.Label (label);
+		title.halign = Gtk.Align.START;
+		title.ellipsize = Pango.EllipsizeMode.END;
+		title.hexpand = true;
+
+		var button_grid = new Gtk.Grid ();
+		button_grid.column_spacing = 5;
+		button_grid.add (title);
+		button_grid.add (icon);
+
+		button.add (button_grid);
+		button.clicked.connect (() => {
+			// to-do
+		});
+
+		var resizer = new Gtk.Button ();
+		resizer.can_focus = false;
+		resizer.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+		resizer.add (new Gtk.Separator (Gtk.Orientation.VERTICAL));
+
+		resizer.enter_notify_event.connect (event => {
+			set_cursor (Gdk.CursorType.RIGHT_SIDE);
+			return false;
+		});
+
+		resizer.leave_notify_event.connect (event => {
+			set_cursor (Gdk.CursorType.ARROW);
+			return false;
+		});
+
+		var grid = new Gtk.Grid ();
+		grid.add (button);
+		grid.add (resizer);
+
+		return grid;
+	}
+
+	private void set_cursor (Gdk.CursorType cursor_type) {
+        var cursor = new Gdk.Cursor.for_display (Gdk.Display.get_default (), cursor_type);
+        get_window ().set_cursor (cursor);
+	}
 		//  Gtk.TreeViewColumn column;
 		//  var renderer = new Gtk.CellRendererText ();
 		//  renderer.single_paragraph_mode = true;
@@ -106,7 +159,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 		//  }
 
 		//  set_model (store);
-	}
+	//  }
 
 	//  private void append_value (Gda.DataModelIter _iter, Gtk.TreeIter iter) {
 	//  	background = _iter.get_row () % 2 == 0 ? bg_light : bg_dark;

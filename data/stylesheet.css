@@ -65,6 +65,11 @@ infobar.inline revealer > box {
     border-radius: 4px;
 }
 
+.data-headerbar {
+	background: linear-gradient(alpha(@bg_color, 0.1), alpha(@fg_color, 0.1));
+	border-bottom: 1px solid alpha (#000, 0.2);
+}
+
 /* to-do used these colors for alternate row background
  * "rgba(255,255,255,0.05)"
  * "rgba(0,0,0,0.05)"
