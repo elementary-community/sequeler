@@ -47,13 +47,8 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 		header.get_style_context ().add_class ("data-headerbar");
 
 		var body = new Gtk.Grid ();
-		body.hexpand = true;
+		body.expand = true;
 		body.get_style_context ().add_class ("data-body");
-
-		var scroll = new Gtk.ScrolledWindow (null, null);
-		scroll.hscrollbar_policy = Gtk.PolicyType.NEVER;
-		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-		scroll.expand = true;
 
 		Gda.DataModelIter _iter = data.create_iter ();
 		Gtk.TreeIter iter;
@@ -72,9 +67,8 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 			}
 		}
 
-		scroll.add (body);
 		attach (header, 0, 0, 1, 1);
-		attach (scroll, 0, 1, 1, 1);
+		attach (body, 0, 1, 1, 1);
 
 		if (error_message != null) {
 			window.main.connection_manager.query_warning (error_message);
