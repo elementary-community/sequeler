@@ -46,12 +46,40 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 		header.hexpand = true;
 		header.get_style_context ().add_class ("data-headerbar");
 
-		for (int col = 0; col < tot_columns; col++) {
-			var title = data.get_column_title (col).replace ("_", "__");
-			header.attach (tree_header (title, col), col, 1, 1, 1);
+		var body = new Gtk.Grid ();
+		body.hexpand = true;
+		body.get_style_context ().add_class ("data-body");
+
+		var scroll = new Gtk.ScrolledWindow (null, null);
+		scroll.hscrollbar_policy = Gtk.PolicyType.NEVER;
+		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+		scroll.expand = true;
+
+		Gda.DataModelIter _iter = data.create_iter ();
+		Gtk.TreeIter iter;
+
+		for (int i = 0; i < tot_columns; i++) {
+			var title = data.get_column_title (i).replace ("_", "__");
+			header.attach (tree_header (title, i), i, 0);
+
+			while (_iter.move_next ()) {
+				try {
+					var raw_value = _iter.get_value_at_e (i);
+					body.attach (new Gtk.Label (raw_value.dup_string ()), i, _iter.get_row ());
+				} catch (Error e) {
+					error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
+				}
+			}
 		}
 
+		scroll.add (body);
 		attach (header, 0, 0, 1, 1);
+		attach (scroll, 0, 1, 1, 1);
+
+		if (error_message != null) {
+			window.main.connection_manager.query_warning (error_message);
+			error_message = null;
+		}
 	}
 
 	private Gtk.Grid tree_header (string label, int col) {
