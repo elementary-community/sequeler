@@ -19,7 +19,7 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
+public class Sequeler.Partials.DataGrid : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 	public Gda.DataModel data { get; construct; }
 	public int per_page { get; construct; }
@@ -29,7 +29,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 	public string background;
 	public int tot_columns;
 
-	public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window, int per_page = 0, int current_page = 0) {
+	public DataGrid (Gda.DataModel response, Sequeler.Window main_window, int per_page = 0, int current_page = 0) {
 		Object (
 			window: main_window,
 			data: response,
@@ -47,20 +47,30 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 		header.get_style_context ().add_class ("data-headerbar");
 
 		var body = new Gtk.Grid ();
-		body.expand = true;
-		body.get_style_context ().add_class ("data-body");
+		body.hexpand = true;
 
 		Gda.DataModelIter _iter = data.create_iter ();
 		Gtk.TreeIter iter;
 
 		for (int i = 0; i < tot_columns; i++) {
+			// Set model for colum
+			var size = i > 0 ? 250 : 100;
+			var model = new Sequeler.Models.DataColumn (i, size);
+
+			// Set header row
 			var title = data.get_column_title (i).replace ("_", "__");
-			header.attach (tree_header (title, i), i, 0);
+			header.attach (new DataGridHeader (title, model), i, 0);
 
 			while (_iter.move_next ()) {
 				try {
+					// Set body row
+					var body_row = new Gtk.Grid ();
+					body_row.get_style_context ().add_class ("data-bodyrow");
+
 					var raw_value = _iter.get_value_at_e (i);
-					body.attach (new Gtk.Label (raw_value.dup_string ()), i, _iter.get_row ());
+					body_row.attach (new Gtk.Label (raw_value.dup_string ()), i, _iter.get_row ());
+
+					body.attach (body_row, i, _iter.get_row ());
 				} catch (Error e) {
 					error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
 				}
@@ -76,57 +86,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.Grid {
 		}
 	}
 
-	private Gtk.Grid tree_header (string label, int col) {
-		var button = new Gtk.Button ();
-		button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-		button.can_focus = false;
-		button.hexpand = true;
-
-		var icon = new Gtk.Image.from_icon_name ("pan-down-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-		icon.valign = Gtk.Align.CENTER;
-
-		var title = new Gtk.Label (label);
-		title.halign = Gtk.Align.START;
-		title.ellipsize = Pango.EllipsizeMode.END;
-		title.hexpand = true;
-
-		var button_grid = new Gtk.Grid ();
-		button_grid.width_request = (col > 0) ? 250 : 100;
-		button_grid.column_spacing = 5;
-		button_grid.add (title);
-		button_grid.add (icon);
-
-		button.add (button_grid);
-		button.clicked.connect (() => {
-			// to-do
-		});
-
-		var resizer = new Gtk.Button ();
-		resizer.can_focus = false;
-		resizer.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-		resizer.add (new Gtk.Separator (Gtk.Orientation.VERTICAL));
-
-		resizer.enter_notify_event.connect (event => {
-			set_cursor (Gdk.CursorType.RIGHT_SIDE);
-			return false;
-		});
-
-		resizer.leave_notify_event.connect (event => {
-			set_cursor (Gdk.CursorType.ARROW);
-			return false;
-		});
-
-		var grid = new Gtk.Grid ();
-		grid.add (button);
-		grid.add (resizer);
-
-		return grid;
-	}
-
-	private void set_cursor (Gdk.CursorType cursor_type) {
-        var cursor = new Gdk.Cursor.for_display (Gdk.Display.get_default (), cursor_type);
-        get_window ().set_cursor (cursor);
-	}
+	//  construct {
 		//  Gtk.TreeViewColumn column;
 		//  var renderer = new Gtk.CellRendererText ();
 		//  renderer.single_paragraph_mode = true;

@@ -183,7 +183,7 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
 			return;
 		}
 
-		var result_data = new Sequeler.Partials.TreeBuilder (table_relations, window);
+		var result_data = new Sequeler.Partials.DataGrid (table_relations, window);
 		result_message.label = table_relations.get_n_rows ().to_string () + _(" Constraints");
 
 		yield clear ();

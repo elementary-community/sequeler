@@ -184,7 +184,7 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
 			return;
 		}
 
-		var result_data = new Sequeler.Partials.TreeBuilder (table_schema, window);
+		var result_data = new Sequeler.Partials.DataGrid (table_schema, window);
 		result_message.label = table_schema.get_n_rows ().to_string () + _(" Fields");
 
 		yield clear ();

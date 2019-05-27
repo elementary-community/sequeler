@@ -29,10 +29,13 @@ executable(
     'Layouts/Views/Relations.vala',
     'Layouts/Views/Query.vala',
 
+		'Models/DataColumn.vala',
+
     'Partials/ButtonType.vala',
     'Partials/Helpers.vala',
     'Partials/LibraryItem.vala',
-    'Partials/TreeBuilder.vala',
+    'Partials/DataGrid.vala',
+    'Partials/DataGridHeader.vala',
 
     'Services/Settings.vala',
     'Services/ActionManager.vala',

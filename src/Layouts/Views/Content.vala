@@ -97,7 +97,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
 		placeholder ();
 	}
-	
+
 	public void placeholder () {
 		stack.visible_child_name = "welcome";
 	}
@@ -237,7 +237,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 			return;
 		}
 
-		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
+		var result_data = new Sequeler.Partials.DataGrid (table_content, window, settings.limit_results, current_page);
 		result_message.label = _("%d Entries").printf (table_count);
 
 		yield clear ();

@@ -35,7 +35,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	GLib.File? file;
 	Gda.DataModel? response_data;
 
-	public Sequeler.Partials.TreeBuilder result_data;
+	public Sequeler.Partials.DataGrid result_data;
 
 	public Query (Sequeler.Window main_window) {
 		Object (
@@ -337,7 +337,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			result_data = null;
 		}
 
-		result_data = new Sequeler.Partials.TreeBuilder (response, window);
+		result_data = new Sequeler.Partials.DataGrid (response, window);
 
 		toggle_loading_msg (false);
 		spinner.stop ();

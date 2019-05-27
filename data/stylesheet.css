@@ -70,7 +70,14 @@ infobar.inline revealer > box {
 	border-bottom: 1px solid alpha (#000, 0.2);
 }
 
-/* to-do used these colors for alternate row background
- * "rgba(255,255,255,0.05)"
- * "rgba(0,0,0,0.05)"
- */
+.data-bodyrow {
+	padding: 5px 12px;
+}
+
+.data-bodyrow:nth-child(even) {
+	background-color: alpha(#FFF, 0.05);
+}
+
+.data-bodyrow:nth-child(odd) {
+	background-color: alpha(#000, 0.05);
+}
