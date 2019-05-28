@@ -78,6 +78,7 @@ public class Sequeler.Partials.DataGridHeader : Gtk.Grid {
 		var resizer = new Gtk.Button ();
 		resizer.can_focus = false;
 		resizer.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+		resizer.get_style_context ().add_class ("column-resizer");
 		resizer.add (new Gtk.Separator (Gtk.Orientation.VERTICAL));
 
 		resizer.enter_notify_event.connect (event => {

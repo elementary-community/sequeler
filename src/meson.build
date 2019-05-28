@@ -9,7 +9,6 @@ config_header = configure_file(
     configuration: conf_data
 )
 
-
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     application_id,
@@ -29,13 +28,14 @@ executable(
     'Layouts/Views/Relations.vala',
     'Layouts/Views/Query.vala',
 
-		'Models/DataColumn.vala',
+    'Models/DataColumn.vala',
 
     'Partials/ButtonType.vala',
     'Partials/Helpers.vala',
     'Partials/LibraryItem.vala',
     'Partials/DataGrid.vala',
     'Partials/DataGridHeader.vala',
+    'Partials/DataGridCell.vala',
 
     'Services/Settings.vala',
     'Services/ActionManager.vala',

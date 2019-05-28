@@ -63,14 +63,8 @@ public class Sequeler.Partials.DataGrid : Gtk.Grid {
 
 			while (_iter.move_next ()) {
 				try {
-					// Set body row
-					var body_row = new Gtk.Grid ();
-					body_row.get_style_context ().add_class ("data-bodyrow");
-
 					var raw_value = _iter.get_value_at_e (i);
-					body_row.attach (new Gtk.Label (raw_value.dup_string ()), i, _iter.get_row ());
-
-					body.attach (body_row, i, _iter.get_row ());
+					body.attach (new DataGridCell (raw_value, _iter.get_row (), model), i, _iter.get_row ());
 				} catch (Error e) {
 					error_message = "%s %s %s %s: %s".printf (_("Error"), e.code.to_string (), _("on Column"), data.get_column_title (i), e.message.to_string ());
 				}

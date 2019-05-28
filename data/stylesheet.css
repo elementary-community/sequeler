@@ -70,14 +70,14 @@ infobar.inline revealer > box {
 	border-bottom: 1px solid alpha (#000, 0.2);
 }
 
-.data-bodyrow {
-	padding: 5px 12px;
+.column-resizer {
+    padding-right: 0px;
 }
 
-.data-bodyrow:nth-child(even) {
+.bg-light {
 	background-color: alpha(#FFF, 0.05);
 }
 
-.data-bodyrow:nth-child(odd) {
+.bg-dark {
 	background-color: alpha(#000, 0.05);
 }
