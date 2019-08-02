@@ -68,6 +68,6 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
     
     public string show_table_relations (string table, string? database) {
-        return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
+        return "SELECT ccu.column_name as \"COLUMN_NAME\", tc.constraint_name as \"CONSTRAINT_NAME\", kcu.column_name as \"REFERENCED_COLUMN_NAME\", tc.table_name as \"REFERENCED_TABLE\" FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_name='%s' AND ccu.table_schema = '%s'".printf (table, database);
     }
 }
