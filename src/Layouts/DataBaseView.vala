@@ -78,6 +78,95 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
 		toolbar.attach (tabs, 0, 0, 1, 1);
 
+		var view_options = new Gtk.Grid ();
+		view_options.hexpand = true;
+		view_options.halign = Gtk.Align.END;
+		view_options.valign = Gtk.Align.CENTER;
+
+		// Query View buttons
+		var zoom_out_button = new Gtk.Button.from_icon_name ("zoom-out-symbolic", Gtk.IconSize.MENU);
+		//  zoom_out_button.action_name = MainWindow.ACTION_PREFIX + MainWindow.ACTION_ZOOM_OUT;
+		//  zoom_out_button.tooltip_markup = Granite.markup_accel_tooltip (
+		//  	Scratch.Application.instance.get_accels_for_action (zoom_out_button.action_name),
+		//  	_("Zoom Out")
+		//  );
+
+		var zoom_default_button = new Gtk.Button.with_label ("100%");
+		//  zoom_default_button.action_name = MainWindow.ACTION_PREFIX + MainWindow.ACTION_ZOOM_DEFAULT;
+		//  zoom_default_button.tooltip_markup = Granite.markup_accel_tooltip (
+		//  	Scratch.Application.instance.get_accels_for_action (zoom_default_button.action_name),
+		//  	_("Zoom 1:1")
+		//  );
+
+		var zoom_in_button = new Gtk.Button.from_icon_name ("zoom-in-symbolic", Gtk.IconSize.MENU);
+		//  zoom_in_button.action_name = MainWindow.ACTION_PREFIX + MainWindow.ACTION_ZOOM_IN;
+		//  zoom_in_button.tooltip_markup = Granite.markup_accel_tooltip (
+		//  	Scratch.Application.instance.get_accels_for_action (zoom_in_button.action_name),
+		//  	_("Zoom In")
+		//  );
+
+		var font_size_grid = new Gtk.Grid ();
+		font_size_grid.column_homogeneous = true;
+		font_size_grid.hexpand = true;
+		font_size_grid.margin = 12;
+		font_size_grid.get_style_context ().add_class (Gtk.STYLE_CLASS_LINKED);
+		font_size_grid.add (zoom_out_button);
+		font_size_grid.add (zoom_default_button);
+		font_size_grid.add (zoom_in_button);
+
+		var color_button_white = new Gtk.RadioButton (null);
+		color_button_white.halign = Gtk.Align.CENTER;
+		color_button_white.tooltip_text = _("High Contrast");
+
+		var color_button_white_context = color_button_white.get_style_context ();
+		color_button_white_context.add_class ("color-button");
+		color_button_white_context.add_class ("color-white");
+
+		var color_button_light = new Gtk.RadioButton.from_widget (color_button_white);
+		color_button_light.halign = Gtk.Align.CENTER;
+		color_button_light.tooltip_text = _("Solarized Light");
+
+		var color_button_light_context = color_button_light.get_style_context ();
+		color_button_light_context.add_class ("color-button");
+		color_button_light_context.add_class ("color-light");
+
+		var color_button_dark = new Gtk.RadioButton.from_widget (color_button_white);
+		color_button_dark.halign = Gtk.Align.CENTER;
+		color_button_dark.tooltip_text = _("Solarized Dark");
+
+		var color_button_dark_context = color_button_dark.get_style_context ();
+		color_button_dark_context.add_class ("color-button");
+		color_button_dark_context.add_class ("color-dark");
+
+		var menu_grid = new Gtk.Grid ();
+		menu_grid.margin_bottom = 3;
+		menu_grid.orientation = Gtk.Orientation.VERTICAL;
+		menu_grid.width_request = 200;
+		menu_grid.attach (font_size_grid, 0, 0, 3, 1);
+		menu_grid.attach (color_button_white, 0, 1, 1, 1);
+		menu_grid.attach (color_button_light, 1, 1, 1, 1);
+		menu_grid.attach (color_button_dark, 2, 1, 1, 1);
+		menu_grid.show_all ();
+
+		var menu = new Gtk.Popover (null);
+		menu.add (menu_grid);
+
+		var font_style = new Gtk.MenuButton ();
+		font_style.margin_end = 10;
+		font_style.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+		font_style.set_image (new Gtk.Image.from_icon_name ("applications-fonts", Gtk.IconSize.SMALL_TOOLBAR));
+		font_style.tooltip_text = _("Change Text Style");
+		font_style.popover = menu;
+		font_style.can_focus = false;
+
+		view_options.add (font_style);
+
+		// Content View buttons
+		// Structure View buttons
+		// Relations View buttons
+
+		toolbar.attach (view_options, 1, 0, 1, 1);
+
 		stack = new Gtk.Stack ();
 		structure = new Sequeler.Layouts.Views.Structure (window);
 		content = new Sequeler.Layouts.Views.Content (window);
