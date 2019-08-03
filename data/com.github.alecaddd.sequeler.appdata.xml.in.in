@@ -37,6 +37,15 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.7.1" date="2019-08-02">
+			<description>
+				<p>PostgreSQL Fixes</p>
+				<ul>
+					<li>Fixed PostgreSQL relationship table.</li>
+					<li>Fixed wrong response message when handling non select queries.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.7.0" date="2019-04-07">
 			<description>
 				<p>Bite-Size fixes</p>
