@@ -90,7 +90,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		menu_grid.show_all ();
 
 		var open_menu = new Gtk.MenuButton ();
-		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+		open_menu.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR));
 		open_menu.tooltip_text = _("Menu");
 
 		menu_popover = new Gtk.Popover (open_menu);

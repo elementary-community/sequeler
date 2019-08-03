@@ -56,7 +56,8 @@
 }
 
 .headerbar-separator {
-    margin-left: 0;
+    margin-right: 3px;
+    margin-left: 3px;
 }
 
 infobar.inline revealer > box {
