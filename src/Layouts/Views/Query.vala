@@ -300,22 +300,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	public async int? non_select_statement (string query) {
-		int result = 0;
-		var error = "";
-
-		result = yield window.main.connection_manager.init_query (query);
-
-		if (result == 0 || result == -1) {
-			toggle_loading_msg (false);
-			spinner.stop ();
-
-			result_message.label = error;
-			show_result_icon (false);
-
-			return null;
-		}
-
-		return result;
+		return yield window.main.connection_manager.init_query (query);
 	}
 
 	public void handle_select_response (Gda.DataModel? response) {

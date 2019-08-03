@@ -486,7 +486,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 		return result;
 	}
 
-	public async int init_query (string query) {
+	public async int? init_query (string query) {
 		int result = 0;
 		var error = "";
 
@@ -494,12 +494,11 @@ public class Sequeler.Services.ConnectionManager : Object {
 			result = yield run_query (query);
 		} catch (Error e) {
 			error = e.message;
-			result = 0;
 		}
 
 		if (error != "") {
 			query_warning (error);
-			return 0;
+			return null;
 		}
 
 		return result;
