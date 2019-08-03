@@ -50,7 +50,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 		logout_button.set_image (eject_image);
 		logout_button.can_focus = false;
 		logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
-		logout_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Ctrl>Escape"}, _("Logout"));
+		logout_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Escape"}, _("Logout"));
 
 		mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
 		mode_switch.primary_icon_tooltip_text = _("Light background");
@@ -65,13 +65,13 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 			mode_switch.active = true;
 		}
 
-        var new_window_item = new_menuitem (_("New Window"), {"<Ctrl>n"});
+        var new_window_item = new_menuitem (_("New Window"), {"<Control>n"});
 		new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 
-		var new_connection_item = new_menuitem (_("New Connection"), {"<Ctrl><Shift>n"});
+		var new_connection_item = new_menuitem (_("New Connection"), {"<Control><Shift>n"});
 		new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
 
-		var quit_item = new_menuitem (_("Quit"), {"<Ctrl>q"});
+		var quit_item = new_menuitem (_("Quit"), {"<Control>q"});
 		quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
 
 		var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);

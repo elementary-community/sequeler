@@ -1,23 +1,23 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public
-* License as published by the Free Software Foundation; either
-* version 2 of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* General Public License for more details.
-*
-* You should have received a copy of the GNU General Public
-* License along with this program; if not, write to the
-* Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-* Boston, MA 02110-1301 USA
-*
-* Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
-*/
+ * Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301 USA
+ *
+ * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
+ */
 
 public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
@@ -31,6 +31,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.Image icon_fail;
 	public Gtk.Button run_button;
 	public Gtk.MenuButton export_button;
+	public string default_font { get; set; }
 
 	GLib.File? file;
 	Gda.DataModel? response_data;
@@ -62,6 +63,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.SourceView query_builder () {
 		var manager = Gtk.SourceLanguageManager.get_default ();
 		var style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
+		default_font = new GLib.Settings ("org.gnome.desktop.interface")
+							   .get_string ("monospace-font-name");
 
 		buffer = new Gtk.SourceBuffer (null);
 		buffer.highlight_syntax = true;

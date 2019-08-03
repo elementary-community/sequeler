@@ -85,25 +85,16 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
 		// Query View buttons
 		var zoom_out_button = new Gtk.Button.from_icon_name ("zoom-out-symbolic", Gtk.IconSize.MENU);
-		//  zoom_out_button.action_name = MainWindow.ACTION_PREFIX + MainWindow.ACTION_ZOOM_OUT;
-		//  zoom_out_button.tooltip_markup = Granite.markup_accel_tooltip (
-		//  	Scratch.Application.instance.get_accels_for_action (zoom_out_button.action_name),
-		//  	_("Zoom Out")
-		//  );
+		zoom_out_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_ZOOM_OUT;
+		zoom_out_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>minus"}, _("Zoom Out"));
 
 		var zoom_default_button = new Gtk.Button.with_label ("100%");
-		//  zoom_default_button.action_name = MainWindow.ACTION_PREFIX + MainWindow.ACTION_ZOOM_DEFAULT;
-		//  zoom_default_button.tooltip_markup = Granite.markup_accel_tooltip (
-		//  	Scratch.Application.instance.get_accels_for_action (zoom_default_button.action_name),
-		//  	_("Zoom 1:1")
-		//  );
+		zoom_default_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_ZOOM_DEFAULT;
+		zoom_default_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>0"}, _("Zoom 1:1"));
 
 		var zoom_in_button = new Gtk.Button.from_icon_name ("zoom-in-symbolic", Gtk.IconSize.MENU);
-		//  zoom_in_button.action_name = MainWindow.ACTION_PREFIX + MainWindow.ACTION_ZOOM_IN;
-		//  zoom_in_button.tooltip_markup = Granite.markup_accel_tooltip (
-		//  	Scratch.Application.instance.get_accels_for_action (zoom_in_button.action_name),
-		//  	_("Zoom In")
-		//  );
+		zoom_in_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_ZOOM_IN;
+		zoom_in_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>plus"}, _("Zoom In"));
 
 		var font_size_grid = new Gtk.Grid ();
 		font_size_grid.column_homogeneous = true;
@@ -139,7 +130,7 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 		color_button_dark_context.add_class ("color-dark");
 
 		var menu_grid = new Gtk.Grid ();
-		menu_grid.margin_bottom = 3;
+		menu_grid.margin_bottom = 12;
 		menu_grid.orientation = Gtk.Orientation.VERTICAL;
 		menu_grid.width_request = 200;
 		menu_grid.attach (font_size_grid, 0, 0, 3, 1);

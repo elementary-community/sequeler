@@ -30,6 +30,9 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	public bool dark_theme { get; set; }
 	public bool save_quick { get; set; }
 	public string version { get; set; }
+	public bool use_system_font { get; set; }
+	public string font { get; set; }
+	public string style_scheme { get; set; }
 
 	public Settings () {
 		base (Constants.PROJECT_NAME);
