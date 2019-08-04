@@ -25,6 +25,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.SourceView query_builder;
 	public Gtk.SourceBuffer buffer;
 	public Gtk.SourceStyleSchemeManager style_scheme_manager;
+	public Gtk.CssProvider style_provider;
 	public Gtk.ScrolledWindow scroll_results;
 	public Gtk.Spinner spinner;
 	public Gtk.Label loading_msg;
@@ -41,8 +42,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 	public Sequeler.Partials.TreeBuilder result_data;
 
-	public signal void style_changed (Gtk.SourceStyleScheme style);
-
 	public Query (Sequeler.Window main_window) {
 		Object (
 			orientation: Gtk.Orientation.VERTICAL,
@@ -51,8 +50,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	construct {
-		default_font = new GLib.Settings ("org.gnome.desktop.interface")
-							   .get_string ("monospace-font-name");
+		default_font = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
 
 		var panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
 		panels.position = 150;
@@ -79,23 +77,13 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 	public void build_query_builder () {
 		var manager = Gtk.SourceLanguageManager.get_default ();
+		style_provider = new Gtk.CssProvider ();
 		style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
 
 		buffer = new Gtk.SourceBuffer (null);
 		buffer.highlight_syntax = true;
 		buffer.highlight_matching_brackets = true;
 		buffer.language = manager.get_language ("sql");
-
-		// Create common tags
-		var warning_tag = new Gtk.TextTag ("warning_bg");
-		warning_tag.underline = Pango.Underline.ERROR;
-		warning_tag.underline_rgba = Gdk.RGBA () { red = 0.13, green = 0.55, blue = 0.13, alpha = 1.0 };
-
-		var error_tag = new Gtk.TextTag ("error_bg");
-		error_tag.underline = Pango.Underline.ERROR;
-
-		buffer.tag_table.add (error_tag);
-		buffer.tag_table.add (warning_tag);
 
 		query_builder = new Gtk.SourceView.with_buffer (buffer);
 		query_builder.show_line_numbers = true;
@@ -115,22 +103,20 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		use_default_font (Sequeler.settings.use_system_font);
 
 		try {
-			var style = new Gtk.CssProvider ();
-			style.load_from_data ("* {font-family: '%s';}".printf (font), -1);
+			style_provider.load_from_data ("* {font-family: '%s';}".printf (font), -1);
 			query_builder.get_style_context ().add_provider (
-				style,
+				style_provider,
 				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 			);
-			debug (font);
 		} catch (Error e) {
 			debug ("Internal error loading session chooser style: %s", e.message);
 		}
-		style_changed (buffer.style_scheme);
+
+		query_builder.override_font (Pango.FontDescription.from_string (font));
 	}
 
 	public void update_color_style () {
 		buffer.style_scheme = style_scheme_manager.get_scheme (Sequeler.settings.style_scheme);
-		style_changed (buffer.style_scheme);
 	}
 
 	/**
@@ -224,8 +210,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		run_button.can_focus = false;
 		run_button.margin = 10;
 		run_button.sensitive = false;
-		run_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Ctrl>Return"}, _("Run Query"));
-
+		run_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Return"}, _("Run Query"));
 		run_button.action_name = Services.ActionManager.ACTION_PREFIX + Services.ActionManager.ACTION_RUN_QUERY;
 
 		return run_button;
