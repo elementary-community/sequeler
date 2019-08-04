@@ -67,7 +67,7 @@
 		</key>
 
 		<key name="font" type="s">
-			<default>'Droid Sans Mono 11'</default>
+			<default>'Droid Sans Mono 12'</default>
 			<summary>Preferred Font</summary>
 			<description>Set the preferred font.</description>
 		</key>

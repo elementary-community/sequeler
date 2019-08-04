@@ -98,12 +98,26 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		update_color_style ();
 	}
 
+	private string get_current_font_family () {
+		return font.substring (0, font.last_index_of (" "));
+	}
+
+	private double get_current_font_size () {
+		return double.parse (font.substring (font.last_index_of (" ") + 1));
+	}
+
 	public void update_font_style () {
 		font = Sequeler.settings.font;
 		use_default_font (Sequeler.settings.use_system_font);
+		var font_family = get_current_font_family ();
+		var font_size = get_current_font_size ().to_string ();
 
 		try {
-			style_provider.load_from_data ("* {font-family: '%s';}".printf (font), -1);
+			style_provider.load_from_data ("
+				* {
+					font-family: '%s';
+					font-size: %spx;
+				}".printf (font_family, font_size), -1);
 			query_builder.get_style_context ().add_provider (
 				style_provider,
 				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -111,8 +125,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		} catch (Error e) {
 			debug ("Internal error loading session chooser style: %s", e.message);
 		}
-
-		query_builder.override_font (Pango.FontDescription.from_string (font));
 	}
 
 	public void update_color_style () {
