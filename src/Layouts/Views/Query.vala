@@ -22,7 +22,9 @@
 public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.SourceView query_builder;
 	public Gtk.SourceBuffer buffer;
+	public Gtk.SourceStyleSchemeManager style_scheme_manager;
 	public Gtk.ScrolledWindow scroll_results;
 	public Gtk.Spinner spinner;
 	public Gtk.Label loading_msg;
@@ -31,12 +33,15 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.Image icon_fail;
 	public Gtk.Button run_button;
 	public Gtk.MenuButton export_button;
+	private string font;
 	public string default_font { get; set; }
 
 	GLib.File? file;
 	Gda.DataModel? response_data;
 
 	public Sequeler.Partials.TreeBuilder result_data;
+
+	public signal void style_changed (Gtk.SourceStyleScheme style);
 
 	public Query (Sequeler.Window main_window) {
 		Object (
@@ -46,6 +51,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	construct {
+		default_font = new GLib.Settings ("org.gnome.desktop.interface")
+							   .get_string ("monospace-font-name");
+
 		var panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
 		panels.position = 150;
 		panels.expand = true;
@@ -54,25 +62,42 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		var scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-		scroll.add (query_builder ());
+		build_query_builder ();
+		scroll.add (query_builder);
 
 		panels.pack1 (scroll, false, false);
 		panels.pack2 (results_view (), true, false);
 	}
 
-	public Gtk.SourceView query_builder () {
+	public void use_default_font (bool value) {
+		if (!value) {
+			return;
+		}
+
+		font = default_font;
+	}
+
+	public void build_query_builder () {
 		var manager = Gtk.SourceLanguageManager.get_default ();
-		var style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
-		default_font = new GLib.Settings ("org.gnome.desktop.interface")
-							   .get_string ("monospace-font-name");
+		style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
 
 		buffer = new Gtk.SourceBuffer (null);
 		buffer.highlight_syntax = true;
 		buffer.highlight_matching_brackets = true;
-		buffer.style_scheme = style_scheme_manager.get_scheme ("oblivion");
 		buffer.language = manager.get_language ("sql");
 
-		var query_builder = new Gtk.SourceView.with_buffer (buffer);
+		// Create common tags
+		var warning_tag = new Gtk.TextTag ("warning_bg");
+		warning_tag.underline = Pango.Underline.ERROR;
+		warning_tag.underline_rgba = Gdk.RGBA () { red = 0.13, green = 0.55, blue = 0.13, alpha = 1.0 };
+
+		var error_tag = new Gtk.TextTag ("error_bg");
+		error_tag.underline = Pango.Underline.ERROR;
+
+		buffer.tag_table.add (error_tag);
+		buffer.tag_table.add (warning_tag);
+
+		query_builder = new Gtk.SourceView.with_buffer (buffer);
 		query_builder.show_line_numbers = true;
 		query_builder.highlight_current_line = true;
 		query_builder.show_right_margin = false;
@@ -81,16 +106,31 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		Gtk.drag_dest_add_uri_targets (query_builder);
 
+		update_font_style ();
+		update_color_style ();
+	}
+
+	public void update_font_style () {
+		font = Sequeler.settings.font;
+		use_default_font (Sequeler.settings.use_system_font);
+
 		try {
 			var style = new Gtk.CssProvider ();
-			var font_name = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
-			style.load_from_data ("* {font-family: '%s';}".printf (font_name), -1);
-			query_builder.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+			style.load_from_data ("* {font-family: '%s';}".printf (font), -1);
+			query_builder.get_style_context ().add_provider (
+				style,
+				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+			);
+			debug (font);
 		} catch (Error e) {
 			debug ("Internal error loading session chooser style: %s", e.message);
 		}
+		style_changed (buffer.style_scheme);
+	}
 
-		return query_builder;
+	public void update_color_style () {
+		buffer.style_scheme = style_scheme_manager.get_scheme (Sequeler.settings.style_scheme);
+		style_changed (buffer.style_scheme);
 	}
 
 	/**

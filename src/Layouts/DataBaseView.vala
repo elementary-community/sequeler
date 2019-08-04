@@ -172,5 +172,36 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
 		attach (toolbar, 0, 0, 1, 1);
 		attach (stack, 0, 1, 1, 1);
+
+		settings.changed.connect (() => {
+			zoom_default_button.label = "%.0f%%".printf (window.action_manager.get_current_font_size () * 10);
+		});
+
+		switch (Sequeler.settings.style_scheme) {
+			case "high-contrast":
+				color_button_white.active = true;
+				break;
+			case "solarized-light":
+				color_button_light.active = true;
+				break;
+			case "solarized-dark":
+				color_button_dark.active = true;
+				break;
+		}
+
+		color_button_dark.clicked.connect (() => {
+			Sequeler.settings.style_scheme = "solarized-dark";
+			query.update_color_style ();
+		});
+
+		color_button_light.clicked.connect (() => {
+			Sequeler.settings.style_scheme = "solarized-light";
+			query.update_color_style ();
+		});
+
+		color_button_white.clicked.connect (() => {
+			Sequeler.settings.style_scheme = "classic";
+			query.update_color_style ();
+		});
 	}
 }

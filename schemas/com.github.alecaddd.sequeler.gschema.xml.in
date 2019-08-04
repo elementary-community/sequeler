@@ -63,11 +63,11 @@
 		<key name="use-system-font" type="b">
 			<default>true</default>
 			<summary>Use system font</summary>
-			<description>Whether Scratch should use the default system font</description>
+			<description>Whether Sequeler should use the default system font</description>
 		</key>
 
 		<key name="font" type="s">
-			<default>'Droid Sans Mono 10'</default>
+			<default>'Droid Sans Mono 11'</default>
 			<summary>Preferred Font</summary>
 			<description>Set the preferred font.</description>
 		</key>

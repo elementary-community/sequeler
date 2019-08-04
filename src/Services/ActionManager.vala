@@ -68,7 +68,7 @@ public class Sequeler.Services.ActionManager : Object {
 		action_accelerators.set (ACTION_ZOOM_DEFAULT, "<Control>KP_0");
 		action_accelerators.set (ACTION_ZOOM_IN, "<Control>plus");
 		action_accelerators.set (ACTION_ZOOM_IN, "<Control>equal");
-		//  action_accelerators.set (ACTION_ZOOM_IN, "<Control>KP_Add");
+		action_accelerators.set (ACTION_ZOOM_IN, "<Control>KP_Add");
 		action_accelerators.set (ACTION_ZOOM_OUT, "<Control>minus");
 		action_accelerators.set (ACTION_ZOOM_OUT, "<Control>KP_Subtract");
 	}
@@ -79,7 +79,10 @@ public class Sequeler.Services.ActionManager : Object {
 		window.insert_action_group ("win", actions);
 
 		foreach (var action in action_accelerators.get_keys ()) {
-			app.set_accels_for_action (ACTION_PREFIX + action, action_accelerators[action].to_array ());
+			var accels_array = action_accelerators[action].to_array ();
+			accels_array += null;
+
+			app.set_accels_for_action (ACTION_PREFIX + action, accels_array);
 		}
 	}
 
@@ -155,6 +158,7 @@ public class Sequeler.Services.ActionManager : Object {
 
 	public void set_default_zoom () {
 		Sequeler.settings.font = get_current_font () + " " + get_default_font_size ().to_string ();
+		window.main.database_view.query.update_font_style ();
 	}
 
 	// Ctrl + scroll
@@ -190,6 +194,7 @@ public class Sequeler.Services.ActionManager : Object {
 
 		string new_font = font + " " + font_size.to_string ();
 		Sequeler.settings.font = new_font;
+		window.main.database_view.query.update_font_style ();
 	}
 
 	public string get_current_font () {
