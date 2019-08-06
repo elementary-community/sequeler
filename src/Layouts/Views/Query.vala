@@ -1,28 +1,31 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public
-* License as published by the Free Software Foundation; either
-* version 2 of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* General Public License for more details.
-*
-* You should have received a copy of the GNU General Public
-* License along with this program; if not, write to the
-* Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-* Boston, MA 02110-1301 USA
-*
-* Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
-*/
+ * Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301 USA
+ *
+ * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
+ */
 
 public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public weak Sequeler.Window window { get; construct; }
 
+	public Gtk.SourceView query_builder;
 	public Gtk.SourceBuffer buffer;
+	public Gtk.SourceStyleSchemeManager style_scheme_manager;
+	public Gtk.CssProvider style_provider;
 	public Gtk.ScrolledWindow scroll_results;
 	public Gtk.Spinner spinner;
 	public Gtk.Label loading_msg;
@@ -31,10 +34,13 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	public Gtk.Image icon_fail;
 	public Gtk.Button run_button;
 	public Gtk.MenuButton export_button;
+	private string font;
+	public string default_font { get; set; }
 
 	GLib.File? file;
 	Gda.DataModel? response_data;
 
+	public Gtk.Paned panels;
 	public Sequeler.Partials.TreeBuilder result_data;
 
 	public Query (Sequeler.Window main_window) {
@@ -45,31 +51,42 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	}
 
 	construct {
-		var panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
-		panels.position = 150;
+		default_font = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
+
+		panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
+		panels.position = settings.query_area;
 		panels.expand = true;
 
 		attach (panels, 0, 0, 1, 1);
 
 		var scroll = new Gtk.ScrolledWindow (null, null);
 		scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-		scroll.add (query_builder ());
+		build_query_builder ();
+		scroll.add (query_builder);
 
 		panels.pack1 (scroll, false, false);
 		panels.pack2 (results_view (), true, false);
 	}
 
-	public Gtk.SourceView query_builder () {
+	public void use_default_font (bool value) {
+		if (!value) {
+			return;
+		}
+
+		font = default_font;
+	}
+
+	public void build_query_builder () {
 		var manager = Gtk.SourceLanguageManager.get_default ();
-		var style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
+		style_provider = new Gtk.CssProvider ();
+		style_scheme_manager = new Gtk.SourceStyleSchemeManager ();
 
 		buffer = new Gtk.SourceBuffer (null);
 		buffer.highlight_syntax = true;
 		buffer.highlight_matching_brackets = true;
-		buffer.style_scheme = style_scheme_manager.get_scheme ("oblivion");
 		buffer.language = manager.get_language ("sql");
 
-		var query_builder = new Gtk.SourceView.with_buffer (buffer);
+		query_builder = new Gtk.SourceView.with_buffer (buffer);
 		query_builder.show_line_numbers = true;
 		query_builder.highlight_current_line = true;
 		query_builder.show_right_margin = false;
@@ -78,16 +95,41 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
 		Gtk.drag_dest_add_uri_targets (query_builder);
 
+		update_font_style ();
+		update_color_style ();
+	}
+
+	private string get_current_font_family () {
+		return font.substring (0, font.last_index_of (" "));
+	}
+
+	private double get_current_font_size () {
+		return double.parse (font.substring (font.last_index_of (" ") + 1));
+	}
+
+	public void update_font_style () {
+		font = Sequeler.settings.font;
+		use_default_font (Sequeler.settings.use_system_font);
+		var font_family = get_current_font_family ();
+		var font_size = get_current_font_size ().to_string ();
+
 		try {
-			var style = new Gtk.CssProvider ();
-			var font_name = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
-			style.load_from_data ("* {font-family: '%s';}".printf (font_name), -1);
-			query_builder.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+			style_provider.load_from_data ("
+				* {
+					font-family: '%s';
+					font-size: %spx;
+				}".printf (font_family, font_size), -1);
+			query_builder.get_style_context ().add_provider (
+				style_provider,
+				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+			);
 		} catch (Error e) {
 			debug ("Internal error loading session chooser style: %s", e.message);
 		}
+	}
 
-		return query_builder;
+	public void update_color_style () {
+		buffer.style_scheme = style_scheme_manager.get_scheme (Sequeler.settings.style_scheme);
 	}
 
 	/**
@@ -181,8 +223,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		run_button.can_focus = false;
 		run_button.margin = 10;
 		run_button.sensitive = false;
-		run_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Ctrl>Return"}, _("Run Query"));
-
+		run_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Return"}, _("Run Query"));
 		run_button.action_name = Services.ActionManager.ACTION_PREFIX + Services.ActionManager.ACTION_RUN_QUERY;
 
 		return run_button;

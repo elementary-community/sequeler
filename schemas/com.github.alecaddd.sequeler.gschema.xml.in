@@ -59,5 +59,29 @@
 			<summary>Current Version</summary>
 			<description>Check current App version for upgrades on startup.</description>
 		</key>
+
+		<key name="use-system-font" type="b">
+			<default>true</default>
+			<summary>Use system font</summary>
+			<description>Whether Sequeler should use the default system font</description>
+		</key>
+
+		<key name="font" type="s">
+			<default>'Droid Sans Mono 12'</default>
+			<summary>Preferred Font</summary>
+			<description>Set the preferred font.</description>
+		</key>
+
+		<key name="style-scheme" type="s">
+			<default>'solarized-light'</default>
+			<summary>Preferred Style Scheme</summary>
+			<description>Set the preferred style scheme.</description>
+		</key>
+
+		<key name="query-area" type="i">
+			<default>200</default>
+			<summary>Query tab height.</summary>
+			<description>Controls the height of the Query tab.</description>
+		</key>
 	</schema>
 </schemalist>
