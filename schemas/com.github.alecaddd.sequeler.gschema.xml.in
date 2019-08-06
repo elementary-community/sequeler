@@ -77,5 +77,11 @@
 			<summary>Preferred Style Scheme</summary>
 			<description>Set the preferred style scheme.</description>
 		</key>
+
+		<key name="query-area" type="i">
+			<default>200</default>
+			<summary>Query tab height.</summary>
+			<description>Controls the height of the Query tab.</description>
+		</key>
 	</schema>
 </schemalist>

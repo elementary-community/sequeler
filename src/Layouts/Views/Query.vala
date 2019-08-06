@@ -40,6 +40,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	GLib.File? file;
 	Gda.DataModel? response_data;
 
+	public Gtk.Paned panels;
 	public Sequeler.Partials.TreeBuilder result_data;
 
 	public Query (Sequeler.Window main_window) {
@@ -52,8 +53,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	construct {
 		default_font = new GLib.Settings ("org.gnome.desktop.interface").get_string ("monospace-font-name");
 
-		var panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
-		panels.position = 150;
+		panels = new Gtk.Paned (Gtk.Orientation.VERTICAL);
+		panels.position = settings.query_area;
 		panels.expand = true;
 
 		attach (panels, 0, 0, 1, 1);

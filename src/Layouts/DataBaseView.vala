@@ -29,6 +29,8 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 	public Sequeler.Layouts.Views.Relations relations;
 	public Sequeler.Layouts.Views.Query query;
 
+	public Gtk.MenuButton font_style;
+
 	public DataBaseView (Sequeler.Window main_window) {
 		Object (
 			orientation: Gtk.Orientation.VERTICAL,
@@ -52,6 +54,14 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
 		tabs.mode_changed.connect ((tab) => {
 			stack.set_visible_child_name (tab.name);
+
+			if (tab.name == "Query") {
+				font_style.visible = true;
+				font_style.no_show_all = false;
+			} else {
+				font_style.visible = false;
+				font_style.no_show_all = true;
+			}
 
 			if (window.main.database_schema.source_list == null) {
 				return;
@@ -142,13 +152,15 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 		var menu = new Gtk.Popover (null);
 		menu.add (menu_grid);
 
-		var font_style = new Gtk.MenuButton ();
+		font_style = new Gtk.MenuButton ();
 		font_style.margin_end = 10;
 		font_style.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-		font_style.set_image (new Gtk.Image.from_icon_name ("applications-fonts", Gtk.IconSize.SMALL_TOOLBAR));
+		font_style.set_image (new Gtk.Image.from_icon_name ("font-select-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 		font_style.tooltip_text = _("Change Text Style");
 		font_style.popover = menu;
 		font_style.can_focus = false;
+		font_style.visible = false;
+		font_style.no_show_all = true;
 
 		view_options.add (font_style);
 

@@ -33,6 +33,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	public bool use_system_font { get; set; }
 	public string font { get; set; }
 	public string style_scheme { get; set; }
+	public int query_area { get; set; }
 
 	public Settings () {
 		base (Constants.PROJECT_NAME);
