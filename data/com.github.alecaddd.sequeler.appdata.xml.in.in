@@ -37,6 +37,16 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.7.2" date="2019-08-05">
+			<description>
+				<p>Sweet Query Tab Improvements</p>
+				<ul>
+					<li>Edit font size of the Query Tab.</li>
+					<li>Edit background style of the Query Tab.</li>
+					<li>Save and remember the Query Tab size.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.7.1" date="2019-08-02">
 			<description>
 				<p>PostgreSQL Fixes</p>

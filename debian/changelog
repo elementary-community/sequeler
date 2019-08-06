@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.7.2) xenial; urgency=medium
+
+  * Edit font size of the Query Tab.
+  * Edit background style of the Query Tab.
+	* Save and remember the Query Tab size.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 5 Aug 2019 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.1) xenial; urgency=medium
 
   * Fixed PostgreSQL relationship table.
