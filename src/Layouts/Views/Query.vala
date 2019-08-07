@@ -144,6 +144,29 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			return buffer.get_text (start, end, true).strip ();
 		}
 
+		// If there's a line comment, strip the current line
+		if (buffer.text.contains ("//")) {
+			buffer.get_selection_bounds (out start, out end);
+			start.set_line_offset (0);
+			if (! start.starts_line ()) {
+				start.forward_char ();
+			}
+
+			if (end.starts_line ()) {
+				end.backward_char ();
+			} else if (!end.ends_line ()) {
+				end.forward_to_line_end ();
+			}
+
+			debug (buffer.get_text (start, end, true).strip ());
+			return "";
+		}
+
+		// If there's a block comment, strip the block
+		if (buffer.text.contains ("/*")) {
+			debug ("Block comment");
+		}
+
 		// If there's a semicolon, return the currently highlighted line
 		if (buffer.text.contains (";")) {
 			buffer.get_selection_bounds (out start, out end);
