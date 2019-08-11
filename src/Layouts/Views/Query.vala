@@ -195,18 +195,24 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         } catch (RegexError e) {
             critical ("Error while building regex to replace trailing whitespace: %s", e.message);
             return;
-        }
+		}
 
+		// Find comments line by line
         for (int line_no = 0; line_no < lines.length; line_no++) {
             if (comments.match (lines[line_no], 0, out info)) {
                 buffer_copy.get_iter_at_line (out start_delete, line_no);
                 start_delete.forward_to_line_end ();
                 end_delete = start_delete;
-                end_delete.backward_chars (info.fetch (0).length);
+				end_delete.backward_chars (info.fetch (0).length);
 
                 buffer_copy.@delete (ref start_delete, ref end_delete);
             }
-        }
+		}
+
+		// Find leftover comment blocks
+		if (comments.match (text, 0, out info)) {
+			debug ("matches");
+		}
     }
 
 	public Gtk.Grid results_view () {
