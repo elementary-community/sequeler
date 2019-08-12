@@ -171,11 +171,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 		return buffer_copy.text.strip ();
 	}
 
-	/*
+	/**
      * Remove inline comments (//) and block comments (/*)
      */
-    public void strip_comments ()
-    {
+    public void strip_comments () {
         var text = buffer.text;
 		buffer_copy = new Gtk.SourceBuffer (null);
 		buffer_copy.set_text (text);
@@ -209,9 +208,16 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
             }
 		}
 
+		int start_pos, end_pos;
+
 		// Find leftover comment blocks
 		if (comments.match (text, 0, out info)) {
-			debug ("matches");
+			info.fetch_pos (0, out start_pos, out end_pos);
+			buffer_copy.get_iter_at_offset (out start_delete, start_pos);
+			end_delete = start_delete;
+			end_delete.forward_chars (info.fetch (0).length);
+
+			buffer_copy.@delete (ref start_delete, ref end_delete);
 		}
     }
 
