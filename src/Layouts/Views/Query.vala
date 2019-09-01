@@ -137,15 +137,15 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	 * Get the text buffer based on user cursor, selection, and semicolon
 	 */
 	public string get_text () {
-		strip_comments ();
-
 		Gtk.TextIter start, end;
 
 		// If a portion of text is selected
-		if (buffer_copy.get_selection_bounds (out start, out end)) {
-			debug (buffer_copy.get_text (start, end, true).strip ());
-			return buffer_copy.get_text (start, end, true).strip ();
+		if (buffer.get_selection_bounds (out start, out end)) {
+			strip_comments (buffer.get_text (start, end, true).strip ());
+			return buffer_copy.text.strip ();
 		}
+
+		strip_comments ();
 
 		// If there's a semicolon, return the currently highlighted line
 		if (buffer_copy.text.contains (";")) {
@@ -156,9 +156,11 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 				start.forward_char ();
 			}
 
-			if (end.starts_line ()) {
+			while (end.starts_line ()) {
 				end.backward_char ();
-			} else if (!end.ends_line ()) {
+			}
+
+			if (!end.ends_line ()) {
 				end.forward_to_line_end ();
 			}
 
@@ -174,8 +176,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 	/**
      * Remove inline comments (//) and block comments (/*)
      */
-    public void strip_comments () {
-        var text = buffer.text;
+    public void strip_comments (string? source_text = null) {
+        var text = source_text != null ? source_text : buffer.text;
 		buffer_copy = new Gtk.SourceBuffer (null);
 		buffer_copy.set_text (text);
 
