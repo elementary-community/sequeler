@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.7.3) xenial; urgency=medium
+
+  * Strip comments from SQL raw queries.
+	* Better handle complex queries on multiple lines.
+	* Speed up query rendering.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 1 Sept 2019 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.2) xenial; urgency=medium
 
   * Edit font size of the Query Tab.

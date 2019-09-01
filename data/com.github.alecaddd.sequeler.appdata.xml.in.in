@@ -37,6 +37,16 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.7.3" date="2019-09-01">
+			<description>
+				<p>Raw Query Improvements</p>
+				<ul>
+					<li>Strip comments from SQL raw queries.</li>
+					<li>Better handle complex queries on multiple lines.</li>
+					<li>Speed up query rendering.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.7.2" date="2019-08-05">
 			<description>
 				<p>Sweet Query Tab Improvements</p>
