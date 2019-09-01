@@ -145,18 +145,16 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 			return buffer_copy.text.strip ();
 		}
 
-		strip_comments ();
-
 		// If there's a semicolon, return the currently highlighted line
-		if (buffer_copy.text.contains (";")) {
-			buffer_copy.get_selection_bounds (out start, out end);
+		if (buffer.text.contains (";")) {
+			buffer.get_selection_bounds (out start, out end);
 			start.set_line_offset (0);
 			start.backward_find_char (is_semicolon, null);
 			if (! start.starts_line ()) {
 				start.forward_char ();
 			}
 
-			while (end.starts_line ()) {
+			if (end.starts_line ()) {
 				end.backward_char ();
 			}
 
@@ -164,11 +162,15 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 				end.forward_to_line_end ();
 			}
 
-			debug (buffer_copy.get_text (start, end, true).strip ());
-			return buffer_copy.get_text (start, end, true).strip ();
+			end.forward_find_char (is_semicolon, null);
+
+			debug (buffer.get_text (start, end, true).strip ());
+			strip_comments (buffer.get_text (start, end, true).strip ());
+			return buffer_copy.text.strip ();
 		}
 
 		// Return full text
+		strip_comments ();
 		debug (buffer_copy.text.strip ());
 		return buffer_copy.text.strip ();
 	}
@@ -183,7 +185,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
         string[] lines = Regex.split_simple ("""[\r\n]""", text);
         if (lines.length != buffer_copy.get_line_count ()) {
-            critical ("Mismatch between line counts when stripping trailing spaces, not continuing");
+            warning ("Mismatch between line counts when stripping trailing spaces, not continuing");
             return;
         }
 
