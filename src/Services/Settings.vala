@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -24,6 +24,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	public int pos_y { get; set; }
 	public int window_width { get; set; }
 	public int window_height { get; set; }
+	public int sidebar_width { get; set; }
 	public string[] saved_connections { get; set; }
 	public int tot_connections { get; set; }
 	public int limit_results { get; set; }

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -25,7 +25,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	GLib.File? file;
 	Gtk.TextBuffer buffer;
 
-	public Gtk.FlowBox item_box;
+	public Gtk.ListBox item_box;
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
 
@@ -40,7 +40,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		Object(
 			orientation: Gtk.Orientation.VERTICAL,
 			window: main_window,
-			width_request: 240,
+			width_request: 260,
 			column_homogeneous: true
 		);
 	}
@@ -74,7 +74,8 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 
-		item_box = new Gtk.FlowBox ();
+		item_box = new Gtk.ListBox ();
+		item_box.get_style_context ().add_class ("library-box");
 		item_box.set_activate_on_single_click (false);
 		item_box.valign = Gtk.Align.START;
 		item_box.expand = false;
@@ -89,8 +90,8 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			delete_all.sensitive = true;
 		}
 
-		item_box.child_activated.connect ((child) => {
-			var item = child as Sequeler.Partials.LibraryItem;
+		item_box.row_activated.connect ((row) => {
+			var item = row as Sequeler.Partials.LibraryItem;
 			item.spinner.start ();
 			item.connect_button.sensitive = false;
 			window.data_manager.data = item.data;
@@ -132,7 +133,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 	}
 
-	public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
+	public void confirm_delete (Gtk.ListBoxRow item, Gee.HashMap<string, string> data) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("By deleting this connection you won’t be able to recover this data."), "dialog-warning", Gtk.ButtonsType.CANCEL);
 		message_dialog.transient_for = window;
 
@@ -170,7 +171,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 	public async void reload_library () {
 		item_box.@foreach ((item) => item_box.remove (item));
-			
+
 		foreach (var new_conn in settings.saved_connections) {
 			var array = settings.arraify_data (new_conn);
 			add_item (array);
@@ -194,10 +195,10 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 					return null;
 				}
 			}
-			
+
 			settings.add_connection (data);
 			add_item (data);
-			
+
 			Idle.add (() => {
 				reload_library.begin ();
 				return false;
@@ -215,12 +216,12 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			if (check["file_path"] == path) {
 				settings.edit_connection (check, conn);
 				reload_library.begin ((obj, res) => {
-					item_box.get_child_at_index (0).activate ();
+					item_box.get_row_at_index (0).activate ();
 				});
 				return;
 			}
 		}
-		
+
 		var data = new Gee.HashMap<string, string> ();
 
 		data.set ("id", settings.tot_connections.to_string ());
@@ -238,7 +239,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		add_item (data);
 
 		reload_library.begin ((obj, res) => {
-			item_box.get_child_at_index (0).activate ();
+			item_box.get_row_at_index (0).activate ();
 		});
 	}
 
