@@ -12,8 +12,8 @@
    width="16"
    height="16"
    id="svg3138"
-   sodipodi:docname="table3.svg"
-   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+   sodipodi:docname="table.svg"
+   inkscape:version="0.92.4 (unknown)">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -23,49 +23,22 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="711"
+     inkscape:window-width="3840"
+     inkscape:window-height="2095"
      id="namedview97"
-     showgrid="false"
+     showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="45.254834"
-     inkscape:cx="8.9071755"
-     inkscape:cy="6.3294352"
+     inkscape:zoom="64"
+     inkscape:cx="7.6542715"
+     inkscape:cy="7.2620335"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g4547">
-    <sodipodi:guide
-       position="-0.38351554,1.0067283"
-       orientation="0,1"
-       id="guide925"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="1.0067283,4.7460048"
-       orientation="1,0"
-       id="guide927"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="15.005046,3.3317913"
-       orientation="1,0"
-       id="guide929"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="9.6949153,15.016949"
-       orientation="0,1"
-       id="guide953"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="5.828125,10.09375"
-       orientation="1,0"
-       id="guide903"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="10.171875,9.46875"
-       orientation="1,0"
-       id="guide905"
-       inkscape:locked="false" />
+     inkscape:current-layer="svg3138">
+    <inkscape:grid
+       type="xygrid"
+       id="grid912" />
   </sodipodi:namedview>
   <defs
      id="defs3140">
@@ -512,24 +485,28 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     transform="matrix(1.7499861,0,0,1.2858894,-5.9998893,0.85638667)"
-     id="g4547">
-    <path
-       inkscape:connector-curvature="0"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#0d52bf;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.57802123;marker:none;enable-background:accumulate"
-       id="path3897"
-       d="M 4.0411288,2.2738255 H 11.96885 V 3.6224442 4.9710637 H 4.0411288 Z" />
-    <path
-       inkscape:connector-curvature="0"
-       id="rect3580-7"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.6;fill:#fafafa;stroke:#3689e6;stroke-width:0.57802123;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate;fill-opacity:1"
-       d="M 4.2888704,2.6109802 H 11.721109 V 10.702695 H 4.2888704 Z M 11.653543,4.6339088 H 4.4014799" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path3069"
-       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.8;fill:none;stroke:#7e8087;stroke-width:0.57802123;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
-       d="M 11.473367,6.6568379 H 4.5366113 M 11.473367,8.6797662 H 4.5366113 m 2.2223077,-3.7510424 0.00655,5.4367722 m 2.4756132,-5.4123813 0.00343,5.4124693"
-       sodipodi:nodetypes="cccccccc" />
-  </g>
+  <path
+     style="opacity:1;vector-effect:none;fill:#3589e6;fill-opacity:0.6;fill-rule:nonzero;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     d="M 1,3 V 15 H 15 V 3 Z M 2,4 H 14 V 14 H 2 Z"
+     id="rect908"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cccccccccc" />
+  <rect
+     style="opacity:1;vector-effect:none;fill:#3589e6;fill-opacity:0.6;fill-rule:nonzero;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     id="rect917"
+     width="12"
+     height="1"
+     x="2"
+     y="6" />
+  <path
+     style="opacity:1;vector-effect:none;fill:#a1a1a1;fill-opacity:0.60000002;fill-rule:nonzero;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     d="M 3 7 L 3 8 L 2 8 L 2 9 L 3 9 L 3 10 L 2 10 L 2 11 L 3 11 L 3 12 L 2 12 L 2 13 L 3 13 L 3 14 L 4 14 L 4 13 L 6 13 L 6 14 L 7 14 L 7 13 L 9 13 L 9 14 L 10 14 L 10 13 L 12 13 L 12 14 L 13 14 L 13 13 L 14 13 L 14 12 L 13 12 L 13 11 L 14 11 L 14 10 L 13 10 L 13 9 L 14 9 L 14 8 L 13 8 L 13 7 L 12 7 L 12 8 L 10 8 L 10 7 L 9 7 L 9 8 L 7 8 L 7 7 L 6 7 L 6 8 L 4 8 L 4 7 L 3 7 z M 4 9 L 6 9 L 6 10 L 4 10 L 4 9 z M 7 9 L 9 9 L 9 10 L 7 10 L 7 9 z M 10 9 L 12 9 L 12 10 L 10 10 L 10 9 z M 4 11 L 6 11 L 6 12 L 4 12 L 4 11 z M 7 11 L 9 11 L 9 12 L 7 12 L 7 11 z M 10 11 L 12 11 L 12 12 L 10 12 L 10 11 z "
+     id="rect919" />
+  <rect
+     style="opacity:1;vector-effect:none;fill:#3489e6;fill-opacity:0.70588237;fill-rule:nonzero;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     id="rect937"
+     width="12"
+     height="2"
+     x="2"
+     y="4" />
 </svg>

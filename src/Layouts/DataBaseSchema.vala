@@ -291,6 +291,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
 		Gda.DataModelIter _iter = schema_table.create_iter ();
 		int top = 0;
+		int count = 0;
 		while (_iter.move_next ()) {
 			var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
 
@@ -300,15 +301,17 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 				Gda.DataModelIter count_iter = table_count.create_iter ();
 
 				while (count_iter.move_next ()) {
-					item.badge = count_iter.get_value_at (0).get_int ().to_string ();
+					count = count_iter.get_value_at (0).get_int ();
+					item.badge = count.to_string ();
 				}
 			} else {
-				item.badge = _iter.get_value_at (1).get_long ().to_string ();
+				count = (int) _iter.get_value_at (1).get_long ();
+				item.badge = count.to_string ();
 			}
 
+			var icon_name = count == 0 ? "table-empty" : "table";
 			item.editable = true;
-			// TODO: If no records in table to use "table-empty" icon
-			item.icon = new GLib.ThemedIcon ("table");
+			item.icon = new GLib.ThemedIcon (icon_name);
 			item.edited.connect ((new_name) => {
 				if (new_name != item.name) {
 					edit_table_name.begin (item.name, new_name);

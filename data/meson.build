@@ -21,6 +21,16 @@ install_data(
 		rename: '@0@.svg'.format(application_id)
 )
 
+install_data(
+		join_paths('assets', 'icons', 'status', 'table.svg'),
+		install_dir: join_paths(icons_dir , '16x16', 'status'),
+)
+
+install_data(
+		join_paths('assets', 'icons', 'status', 'table-empty.svg'),
+		install_dir: join_paths(icons_dir , '16x16', 'status'),
+)
+
 # Install the Desktop file
 desktop_conf = configuration_data()
 desktop_conf.set('icon', application_id)
