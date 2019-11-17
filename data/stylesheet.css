@@ -6,6 +6,14 @@
     background-color: transparent;
 }
 
+.library-box:selected .library-btn {
+	background-color: transparent;
+}
+
+.library-box:selected .library-btn image {
+	color: @fg_color;
+}
+
 .library-inner-box {
     background: transparent;
     transition: background 320ms ease;
