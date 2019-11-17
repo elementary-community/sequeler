@@ -93,6 +93,7 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 		settings.pos_y = y;
 		settings.window_width = width;
 		settings.window_height = height;
+		settings.sidebar_width = main.get_position ();
 		settings.query_area = main.database_view.query.panels.get_position ();
 	}
 
