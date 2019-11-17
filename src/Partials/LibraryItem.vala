@@ -61,6 +61,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 		title = new Gtk.Label (data["title"]);
 		title.get_style_context ().add_class ("text-bold");
 		title.halign = Gtk.Align.START;
+		title.ellipsize = Pango.EllipsizeMode.END;
 		title.margin_end = 10;
 		title.set_line_wrap (true);
 		title.hexpand = true;
