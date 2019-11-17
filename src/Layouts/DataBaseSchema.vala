@@ -298,7 +298,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			if (window.data_manager.data["type"] == "SQLite") {
 				var table_count = yield get_table_count (item.name);
 				Gda.DataModelIter count_iter = table_count.create_iter ();
-				
+
 				while (count_iter.move_next ()) {
 					item.badge = count_iter.get_value_at (0).get_int ().to_string ();
 				}
@@ -307,7 +307,8 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 			}
 
 			item.editable = true;
-			item.icon = new GLib.ThemedIcon ("drive-harddisk");
+			// TODO: If no records in table to use "table-empty" icon
+			item.icon = new GLib.ThemedIcon ("table");
 			item.edited.connect ((new_name) => {
 				if (new_name != item.name) {
 					edit_table_name.begin (item.name, new_name);
@@ -424,6 +425,6 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 	}
 
 	public void add_table () {
-		
+
 	}
 }
