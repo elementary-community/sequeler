@@ -95,7 +95,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			item.spinner.start ();
 			item.connect_button.sensitive = false;
 			window.data_manager.data = item.data;
-			init_connection_begin (item.data, item.spinner, item.connect_button);
+			init_connection_begin (item.data, item.spinner, item.connect_button, false);
 		});
 
 		attach (titlebar, 0, 0, 1, 1);
@@ -243,14 +243,16 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 	}
 
-	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
+	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button, bool update = true) {
 		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
 		if (data["has_ssh"] == "true") {
 			real_data = data;
 			real_spinner = spinner;
 			real_button = button;
-			connection_manager.ssh_tunnel_ready.connect (() => init_real_connection_begin (real_data, real_spinner, real_button));
+			connection_manager.ssh_tunnel_ready.connect (() =>
+				init_real_connection_begin (real_data, real_spinner, real_button, update)
+			);
 
 			new Thread<void*> (null, () => {
 				var result = new Gee.HashMap<string, string> ();
@@ -273,11 +275,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 				return null;
 			});
 		} else {
-			init_real_connection_begin (data, spinner, button);
+			init_real_connection_begin (data, spinner, button, update);
 		}
 	}
 
-	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
+	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button, bool update) {
 		var result = new Gee.HashMap<string, string> ();
 
 		connection_manager.init_connection.begin ((obj, res) => {
@@ -295,7 +297,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 					button.sensitive = true;
 
 					if (result["status"] == "true") {
-						if (settings.save_quick) {
+						if (settings.save_quick && update) {
 							window.main.library.check_add_item.begin (data);
 						}
 

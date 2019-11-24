@@ -418,7 +418,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_host_entry.text = update_data["host"];
 		db_name_entry.text = update_data["name"];
 		db_username_entry.text = update_data["username"];
-		db_password_entry.text = old_password;
+		db_password_entry.text = old_password != null ? old_password : "";
 
 		if (update_data["file_path"] != null) {
 			db_file_entry.set_uri (update_data["file_path"]);
