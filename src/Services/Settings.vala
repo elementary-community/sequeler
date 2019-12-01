@@ -41,10 +41,8 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	}
 
 	public void add_connection (Gee.HashMap<string, string> data) {
-		var current_connections = saved_connections;
-
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+		existing_connections.add_all_array (saved_connections);
 
 		if (data["type"] != "SQLite") {
 			update_password.begin (data);
@@ -52,18 +50,19 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 			data.unset ("ssh_password");
 		}
 
-		existing_connections.insert (0, stringify_data (data));
+		var position = existing_connections.size;
+		existing_connections.insert (position, stringify_data (data));
 		saved_connections = existing_connections.to_array ();
 		tot_connections = tot_connections + 1;
 	}
 
 	public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {
-		var current_connections = saved_connections;
-
+		var position = 0;
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+		existing_connections.add_all_array (saved_connections);
 
-		if (old_data in current_connections) {
+		if (existing_connections.contains (old_data)) {
+			position = existing_connections.index_of (old_data);
 			existing_connections.remove (old_data);
 		}
 
@@ -77,16 +76,13 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 			}
 		}
 
-		existing_connections.insert (0, stringify_data (new_data));
-
+		existing_connections.insert (position, stringify_data (new_data));
 		saved_connections = existing_connections.to_array ();
 	}
 
 	public void delete_connection (Gee.HashMap<string, string> data) {
-		var current_connections = saved_connections;
-
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+		existing_connections.add_all_array (saved_connections);
 
 		if (data["type"] != "SQLite") {
 			delete_password.begin (data);
