@@ -40,6 +40,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	int forwardsock;
 	bool ssh_tunnel_alive = false;
 
+    [Flags]
 	enum Auth {
 		NONE,
 		PASSWORD,
