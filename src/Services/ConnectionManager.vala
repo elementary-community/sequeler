@@ -349,7 +349,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 					ssize_t wr = 0;
 					ssize_t i = 0;
 					do {
-						i = channel.write (buf[0:len]);
+						i = channel.write (buf[wr:len]);
 						if (i < 0) {
 							debug ("Error writing on the SSH channel: %s", i.to_string ());
 							ssh_tunnel_close (Log.FILE + ":" + Log.LINE.to_string ());
