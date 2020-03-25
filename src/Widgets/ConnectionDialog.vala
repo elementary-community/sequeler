@@ -61,6 +61,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Sequeler.Partials.Entry ssh_password_entry;
 	private Sequeler.Partials.LabelForm ssh_port_label;
 	private Sequeler.Partials.Entry ssh_port_entry;
+	private Sequeler.Partials.LabelForm ssh_identity_file_label;
+	private Gtk.FileChooserButton ssh_identity_file_entry;
 
 	private Gtk.Spinner spinner;
 	private Sequeler.Partials.ResponseMessage response_msg;
@@ -290,6 +292,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_grid.attach (ssh_port_label, 0, 5, 1, 1);
 		ssh_grid.attach (ssh_port_entry, 1, 5, 1, 1);
 
+		ssh_identity_file_label = new Sequeler.Partials.LabelForm(_("SSH Identity"));
+		ssh_identity_file_entry = new Gtk.FileChooserButton (_("Select Your Identity File\u2026"), Gtk.FileChooserAction.OPEN);
+		ssh_grid.attach(ssh_identity_file_label, 0, 6, 1, 1);
+		ssh_grid.attach(ssh_identity_file_entry, 1, 6, 1, 1);
+
 		var info_label = new Gtk.Label (_("Missing SSH Key file!"));
 		info_label.show ();
 
@@ -369,6 +376,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_port_label.no_show_all = !toggle;
 		ssh_port_entry.visible = toggle;
 		ssh_port_entry.no_show_all = !toggle;
+
+		ssh_identity_file_label.visible = toggle;
+		ssh_identity_file_label.no_show_all = !toggle;
+		ssh_identity_file_entry.visible = toggle;
+		ssh_identity_file_entry.no_show_all = !toggle;
 
 		infobar.revealed = false;
 	}
@@ -452,6 +464,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			ssh_username_entry.text = (update_data["ssh_username"] != null) ? update_data["ssh_username"] : "";
 			ssh_password_entry.text = (old_ssh_password != null) ? old_ssh_password : "";
 			ssh_port_entry.text = (update_data["ssh_port"] != null) ? update_data["ssh_port"] : "";
+			if (update_data["ssh_identity_file"] != null) {
+				ssh_identity_file_entry.set_uri (update_data["ssh_identity_file"]);
+			}
 		}
 	}
 
@@ -673,6 +688,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		packaged_data.set ("ssh_username", ssh_switch.active ? ssh_username_entry.text : "");
 		packaged_data.set ("ssh_password", ssh_switch.active ? ssh_password_entry.text : "");
 		packaged_data.set ("ssh_port", ssh_switch.active ? ssh_port_entry.text : "");
+		packaged_data.set ("ssh_identity_file", ssh_identity_file_entry.get_uri () ?? "");
 
 		return packaged_data;
 	}

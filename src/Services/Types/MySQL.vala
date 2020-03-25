@@ -27,11 +27,12 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 		var username = Gda.rfc1738_encode (data["username"]);
 		var password = Gda.rfc1738_encode (data["password"]);
 		var name = Gda.rfc1738_encode (data["name"]);
-		host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
 		if (data["has_ssh"] == "true") {
 			port = "9000";
+			host = "127.0.0.1";
 		} else {
 			port = data["port"] != "" ? data["port"] : port;
+			port = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
 		}
 
 		return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
