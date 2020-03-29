@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -28,13 +28,50 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 	public Gtk.Spinner spinner;
 
 	public signal void edit_dialog (Gee.HashMap data);
-	public signal void confirm_delete (Gtk.ListBoxRow item, Gee.HashMap data);
-	public signal void connect_to (Gee.HashMap data, Gtk.Spinner spinner, Gtk.ModelButton button);
+	public signal void confirm_delete (
+		Gtk.ListBoxRow item,
+		Gee.HashMap data
+	);
+	public signal void connect_to (
+		Gee.HashMap data,
+		Gtk.Spinner spinner,
+		Gtk.ModelButton button
+	);
+
+	// Datatype restrictions on DnD (Gtk.TargetFlags).
+	const Gtk.TargetEntry[] target_list = {
+		{ "LIBRARYITEM", Gtk.TargetFlags.SAME_APP, 0 }
+	};
 
 	public LibraryItem (Gee.HashMap<string, string> data) {
 		Object (
 			data: data
 		);
+
+		// Make this a draggable widget
+		Gtk.drag_source_set (
+			this,
+			Gdk.ModifierType.BUTTON1_MASK,
+			target_list,
+			Gdk.DragAction.MOVE
+		);
+
+		// Make this widget a DnD destination.
+        Gtk.drag_dest_set (
+			this,
+			Gtk.DestDefaults.MOTION
+			| Gtk.DestDefaults.HIGHLIGHT,
+			target_list,
+			Gdk.DragAction.MOVE
+		);
+
+		drag_begin.connect (on_drag_begin);
+
+        // All possible destination signals
+        //  this.drag_motion.connect(this.on_drag_motion);
+        //  this.drag_leave.connect(this.on_drag_leave);
+        //  this.drag_drop.connect(this.on_drag_drop);
+        //  this.drag_data_received.connect(this.on_drag_data_received);
 
 		get_style_context ().add_class ("library-box");
 		expand = true;
@@ -52,10 +89,19 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 		color.parse (data["color"]);
 		try {
 			var style = new Gtk.CssProvider ();
-			style.load_from_data ("* {background-color: %s;}".printf (color.to_string ()), -1);
-			color_box.get_style_context ().add_provider (style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+			style.load_from_data (
+				"* {background-color: %s;}".printf (color.to_string ()),
+				-1
+			);
+			color_box.get_style_context ().add_provider (
+				style,
+				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+			);
 		} catch (Error e) {
-			debug ("Internal error loading session chooser style: %s", e.message);
+			debug (
+				"Internal error loading session chooser style: %s",
+				e.message
+			);
 		}
 
 		title = new Gtk.Label (data["title"]);
@@ -79,7 +125,12 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 		delete_button.text = _("Delete Connection");
 
 		var open_menu = new Gtk.MenuButton ();
-		open_menu.set_image (new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+		open_menu.set_image (
+			new Gtk.Image.from_icon_name (
+				"view-more-symbolic",
+				Gtk.IconSize.SMALL_TOOLBAR
+			)
+		);
 		open_menu.get_style_context ().add_class ("library-btn");
 		open_menu.tooltip_text = _("Options");
 

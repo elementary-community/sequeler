@@ -106,6 +106,24 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		delete_all_passwords.begin ();
 	}
 
+	public void reorder_connection (Gee.HashMap<string, string> grabbed, string target) {
+		var position = 0;
+		var new_data = stringify_data (grabbed);
+		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+		existing_connections.add_all_array (saved_connections);
+
+		if (existing_connections.contains (target)) {
+			position = existing_connections.index_of (target);
+		}
+
+		if (existing_connections.contains (new_data)) {
+			existing_connections.remove (new_data);
+		}
+
+		existing_connections.insert (position, new_data);
+		saved_connections = existing_connections.to_array ();
+	}
+
 	public string stringify_data (Gee.HashMap<string, string> data) {
 		string result = "";
 
