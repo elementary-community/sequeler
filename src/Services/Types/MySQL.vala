@@ -32,7 +32,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 			host = "127.0.0.1";
 		} else {
 			port = data["port"] != "" ? data["port"] : port;
-			port = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
+			host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
 		}
 
 		return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
