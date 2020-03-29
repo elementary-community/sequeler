@@ -29,6 +29,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 	private Gtk.Label header_title;
 	private Gtk.ColorButton color_picker;
 	private Gtk.InfoBar infobar;
+	private Gtk.Label infobar_label;
+	private string infobar_label_missing_private_key = _("Missing SSH Key file!");
+	private string infobar_label_missing_public_key = _("Missing SSH public key!");
 
 	private Sequeler.Partials.LabelForm db_file_label;
 	private Sequeler.Partials.LabelForm db_host_label;
@@ -294,16 +297,18 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
 		ssh_identity_file_label = new Sequeler.Partials.LabelForm(_("SSH Identity"));
 		ssh_identity_file_entry = new Gtk.FileChooserButton (_("Select Your Identity File\u2026"), Gtk.FileChooserAction.OPEN);
+		ssh_identity_file_entry.set_filename (this.get_default_ssh_identity_filename ());
+		ssh_identity_file_entry.file_set.connect (this.verify_ssh_file_entry);
 		ssh_grid.attach(ssh_identity_file_label, 0, 6, 1, 1);
 		ssh_grid.attach(ssh_identity_file_entry, 1, 6, 1, 1);
 
-		var info_label = new Gtk.Label (_("Missing SSH Key file!"));
-		info_label.show ();
+		infobar_label = new Gtk.Label (infobar_label_missing_private_key);
+		infobar_label.show ();
 
 		infobar = new Gtk.InfoBar ();
 		infobar.message_type = Gtk.MessageType.WARNING;
 		infobar.get_style_context ().add_class ("inline");
-		infobar.get_content_area ().add (info_label);
+		infobar.get_content_area ().add (infobar_label);
 		infobar.show_close_button = false;
 		infobar.add_button (_("Generate SSH Key"), 0);
 		infobar.revealed = false;
@@ -318,8 +323,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 }
 			}
 		});
+		ssh_grid.attach (infobar, 0, 7, 2, 1);
 
-		ssh_grid.attach (infobar, 0, 6, 2, 1);
 
 		var stack_grid = new Gtk.Grid ();
 		stack_grid.expand = true;
@@ -346,15 +351,35 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		body.add (response_msg);
 	}
 
+	private string get_default_ssh_identity_filename () {
+		var home_dir = Environment.get_home_dir ();
+		return home_dir + "/.ssh/id_rsa";
+	}
+
+	private void verify_ssh_file_entry (Gtk.FileChooserButton file_entry) {
+		keyfile2 = file_entry.get_filename ();
+		keyfile1 = keyfile2 + ".pub";
+
+		var public_key_exists = File.new_for_path (keyfile1).query_exists ();
+		var private_key_exists = File.new_for_path (keyfile2).query_exists ();
+
+		infobar.revealed = ! private_key_exists || ! public_key_exists;
+
+		// missing_public_key message is more specific
+		if (! public_key_exists && private_key_exists) {
+			infobar_label.set_text (infobar_label_missing_public_key);
+		}
+		else if (! private_key_exists) {
+			infobar_label.set_text (infobar_label_missing_private_key);
+		}
+	}
+
 	private void toggle_ssh_fields (bool toggle) {
 		if (toggle) {
-			var home_dir = Environment.get_home_dir ();
-			keyfile1 = home_dir + "/.ssh/id_rsa.pub";
-			keyfile2 = home_dir + "/.ssh/id_rsa";
-			if (! File.new_for_path (keyfile1).query_exists () || ! File.new_for_path (keyfile2).query_exists ()) {
-				infobar.revealed = true;
-				return;
-			}
+			this.verify_ssh_file_entry (ssh_identity_file_entry);
+		}
+		else {
+			infobar.revealed = false;
 		}
 
 		ssh_host_label.visible = toggle;
@@ -381,8 +406,6 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_identity_file_label.no_show_all = !toggle;
 		ssh_identity_file_entry.visible = toggle;
 		ssh_identity_file_entry.no_show_all = !toggle;
-
-		infobar.revealed = false;
 	}
 
 	private void build_actions () {
@@ -465,7 +488,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			ssh_password_entry.text = (old_ssh_password != null) ? old_ssh_password : "";
 			ssh_port_entry.text = (update_data["ssh_port"] != null) ? update_data["ssh_port"] : "";
 			if (update_data["ssh_identity_file"] != null) {
-				ssh_identity_file_entry.set_uri (update_data["ssh_identity_file"]);
+				ssh_identity_file_entry.set_filename (update_data["ssh_identity_file"]);
 			}
 		}
 	}
@@ -688,7 +711,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		packaged_data.set ("ssh_username", ssh_switch.active ? ssh_username_entry.text : "");
 		packaged_data.set ("ssh_password", ssh_switch.active ? ssh_password_entry.text : "");
 		packaged_data.set ("ssh_port", ssh_switch.active ? ssh_port_entry.text : "");
-		packaged_data.set ("ssh_identity_file", ssh_identity_file_entry.get_uri () ?? "");
+		packaged_data.set ("ssh_identity_file", ssh_identity_file_entry.get_filename () ?? "");
 
 		return packaged_data;
 	}
