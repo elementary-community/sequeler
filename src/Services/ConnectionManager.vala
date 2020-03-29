@@ -156,9 +156,10 @@ public class Sequeler.Services.ConnectionManager : Object {
 		ssh_tunnel_alive = true;
 
 		Quark q = Quark.from_string ("ssh-error-str");
+		var home_dir = Environment.get_home_dir ();
 
 		// private key file
-		var keyfile2 = data["ssh_identity_file"];
+		var keyfile2 = data["ssh_identity_file"] != "" ? data["ssh_identity_file"] : home_dir + "/.ssh/id_rsa";
 
 		// public key file
 		var keyfile1 = keyfile2 + ".pub";
