@@ -40,6 +40,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 	int forwardsock;
 	bool ssh_tunnel_alive = false;
 
+    [Flags]
 	enum Auth {
 		NONE,
 		PASSWORD,
@@ -157,8 +158,16 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		Quark q = Quark.from_string ("ssh-error-str");
 		var home_dir = Environment.get_home_dir ();
-		var keyfile1 = home_dir + "/.ssh/id_rsa.pub";
+
+		// private key file
 		var keyfile2 = home_dir + "/.ssh/id_rsa";
+		if (data.has_key("ssh_identity_file") && data["ssh_identity_file"] != "") {
+			keyfile2 = data["ssh_identity_file"];
+		}
+
+		// public key file
+		var keyfile1 = keyfile2 + ".pub";
+
 
 		// SSH credentials if password authentication is required
 		var username = data["ssh_username"];
@@ -166,16 +175,16 @@ public class Sequeler.Services.ConnectionManager : Object {
 
 		// SSH HOST address and Port
 		var server_ip = data["ssh_host"];
-		var server_port = data["ssh_port"] != "" ? (uint16) (data["ssh_port"]).hash () : 22;
+		var server_port = data["ssh_port"] != "" ? (uint16) int.parse (data["ssh_port"]) : 22;
 
 		// The IP address where the DB is available on your SSH
-		var local_listenip = data["host"] != "" ? data["host"] : "127.0.0.1";
+		var local_listenip = "127.0.0.1";
 
 		// The Port used by the DB on your SSH host
 		uint16 local_listenport = 9000;
 
 		// Default vars for TCPIP Tunnelling
-		var remote_desthost = "127.0.0.1";
+		var remote_desthost = data["host"] != "" ? data["host"] : "127.0.0.1";
 		var remote_destport = data["port"] != "" ? int.parse (data["port"]) : 3306;
 
 		var rc = SSH2.init (0);
@@ -183,6 +192,8 @@ public class Sequeler.Services.ConnectionManager : Object {
 			debug ("libssh2 initialization failed (%d)", rc);
 			throw new Error.literal (q, 1, _("Libssh2 initialization failed (%d)").printf (rc));
 		}
+
+		debug ("Socket params: %s %d", server_ip, server_port);
 
 		/* Connect to SSH server */
 		sock = Posix.socket (Posix.AF_INET, Posix.SOCK_STREAM, Posix.IPProto.TCP);
@@ -348,7 +359,7 @@ public class Sequeler.Services.ConnectionManager : Object {
 					ssize_t wr = 0;
 					ssize_t i = 0;
 					do {
-						i = channel.write (buf[0:len]);
+						i = channel.write (buf[wr:len]);
 						if (i < 0) {
 							debug ("Error writing on the SSH channel: %s", i.to_string ());
 							ssh_tunnel_close (Log.FILE + ":" + Log.LINE.to_string ());
