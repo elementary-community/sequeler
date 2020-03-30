@@ -159,7 +159,10 @@ public class Sequeler.Services.ConnectionManager : Object {
 		var home_dir = Environment.get_home_dir ();
 
 		// private key file
-		var keyfile2 = data["ssh_identity_file"] != "" ? data["ssh_identity_file"] : home_dir + "/.ssh/id_rsa";
+		var keyfile2 = home_dir + "/.ssh/id_rsa";
+		if (data.has_key("ssh_identity_file") && data["ssh_identity_file"] != "") {
+			keyfile2 = data["ssh_identity_file"];
+		}
 
 		// public key file
 		var keyfile1 = keyfile2 + ".pub";
