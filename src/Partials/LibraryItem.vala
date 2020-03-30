@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -24,8 +24,20 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 	public Gtk.Label title;
 	public Gdk.RGBA color;
 
+	public Gtk.Revealer main_revealer;
+	private Gtk.Revealer motion_revealer;
 	public Gtk.ModelButton connect_button;
 	public Gtk.Spinner spinner;
+
+	public Gtk.ScrolledWindow scrolled { get; set; }
+	private bool scroll_up = false;
+    private bool scrolling = false;
+    private bool should_scroll = false;
+	public Gtk.Adjustment vadjustment;
+
+	private const int SCROLL_STEP_SIZE = 5;
+    private const int SCROLL_DISTANCE = 30;
+    private const int SCROLL_DELAY = 50;
 
 	public signal void edit_dialog (Gee.HashMap data);
 	public signal void confirm_delete (
@@ -39,7 +51,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 	);
 
 	// Datatype restrictions on DnD (Gtk.TargetFlags).
-	const Gtk.TargetEntry[] target_list = {
+	const Gtk.TargetEntry[] TARGET_ENTRIES_LABEL = {
 		{ "LIBRARYITEM", Gtk.TargetFlags.SAME_APP, 0 }
 	};
 
@@ -48,42 +60,17 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 			data: data
 		);
 
-		// Make this a draggable widget
-		Gtk.drag_source_set (
-			this,
-			Gdk.ModifierType.BUTTON1_MASK,
-			target_list,
-			Gdk.DragAction.MOVE
-		);
-
-		// Make this widget a DnD destination.
-        Gtk.drag_dest_set (
-			this,
-			Gtk.DestDefaults.MOTION
-			| Gtk.DestDefaults.HIGHLIGHT,
-			target_list,
-			Gdk.DragAction.MOVE
-		);
-
-		drag_begin.connect (on_drag_begin);
-
-        // All possible destination signals
-        //  this.drag_motion.connect(this.on_drag_motion);
-        //  this.drag_leave.connect(this.on_drag_leave);
-        //  this.drag_drop.connect(this.on_drag_drop);
-        //  this.drag_data_received.connect(this.on_drag_data_received);
-
 		get_style_context ().add_class ("library-box");
 		expand = true;
 
 		var box = new Gtk.Grid ();
 		box.get_style_context ().add_class ("library-inner-box");
-		box.margin = 4;
+		box.margin = 3;
 
 		var color_box = new Gtk.Grid ();
 		color_box.get_style_context ().add_class ("library-colorbox");
 		color_box.set_size_request (12, 12);
-		color_box.margin = 10;
+		color_box.margin = 9;
 
 		color = Gdk.RGBA ();
 		color.parse (data["color"]);
@@ -108,7 +95,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 		title.get_style_context ().add_class ("text-bold");
 		title.halign = Gtk.Align.START;
 		title.ellipsize = Pango.EllipsizeMode.END;
-		title.margin_end = 10;
+		title.margin_end = 9;
 		title.set_line_wrap (true);
 		title.hexpand = true;
 
@@ -162,9 +149,26 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 		box.attach (spinner, 2, 0, 1, 1);
 		box.attach (open_menu, 3, 0, 1, 1);
 
+		var motion_grid = new Gtk.Grid ();
+        motion_grid.margin = 6;
+        motion_grid.get_style_context ().add_class ("grid-motion");
+        motion_grid.height_request = 18;
+
+        motion_revealer = new Gtk.Revealer ();
+        motion_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
+		motion_revealer.add (motion_grid);
+
+		box.attach (motion_revealer, 0, 2, 4, 1);
+
 		var event_box = new Gtk.EventBox ();
 		event_box.add (box);
-		add (event_box);
+
+		main_revealer = new Gtk.Revealer ();
+        main_revealer.reveal_child = true;
+        main_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
+        main_revealer.add (event_box);
+
+        add (main_revealer);
 
 		delete_button.clicked.connect (() => {
 			confirm_delete (this, data);
@@ -199,5 +203,134 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 		menu_popover.closed.connect (event => {
 			box.set_state_flags (Gtk.StateFlags.NORMAL, true);
 		});
+
+		build_drag_and_drop ();
 	}
+
+	private void build_drag_and_drop () {
+		// Make this a draggable widget
+		Gtk.drag_source_set (
+			this,
+			Gdk.ModifierType.BUTTON1_MASK,
+			TARGET_ENTRIES_LABEL,
+			Gdk.DragAction.MOVE
+		);
+
+		drag_begin.connect (on_drag_begin);
+		drag_data_get.connect (on_drag_data_get);
+
+		// Make this widget a DnD destination.
+        Gtk.drag_dest_set (
+			this,
+			Gtk.DestDefaults.MOTION,
+			TARGET_ENTRIES_LABEL,
+			Gdk.DragAction.MOVE
+		);
+
+		drag_motion.connect (on_drag_motion);
+        drag_leave.connect (on_drag_leave);
+        drag_end.connect (clear_indicator);
+	}
+
+	private void on_drag_begin (Gtk.Widget widget, Gdk.DragContext context) {
+        var row = (Partials.LibraryItem) widget;
+
+        Gtk.Allocation alloc;
+        row.get_allocation (out alloc);
+
+        var surface = new Cairo.ImageSurface (Cairo.Format.ARGB32, alloc.width, alloc.height);
+        var cr = new Cairo.Context (surface);
+        cr.set_source_rgba (0, 0, 0, 0.3);
+        cr.set_line_width (1);
+
+        cr.move_to (0, 0);
+        cr.line_to (alloc.width, 0);
+        cr.line_to (alloc.width, alloc.height);
+        cr.line_to (0, alloc.height);
+        cr.line_to (0, 0);
+        cr.stroke ();
+
+        cr.set_source_rgba (255, 255, 255, 0.5);
+        cr.rectangle (0, 0, alloc.width, alloc.height);
+        cr.fill ();
+
+        row.draw (cr);
+        Gtk.drag_set_icon_surface (context, surface);
+        main_revealer.reveal_child = false;
+	}
+
+	private void on_drag_data_get (Gtk.Widget widget, Gdk.DragContext context,
+        Gtk.SelectionData selection_data, uint target_type, uint time) {
+        uchar[] data = new uchar[(sizeof (Partials.LibraryItem))];
+        ((Gtk.Widget[])data)[0] = widget;
+
+        selection_data.set (
+            Gdk.Atom.intern_static_string ("LIBRARYITEM"), 32, data
+        );
+	}
+
+	public void clear_indicator (Gdk.DragContext context) {
+        main_revealer.reveal_child = true;
+	}
+
+	public bool on_drag_motion (Gdk.DragContext context, int x, int y, uint time) {
+		debug ("here");
+        motion_revealer.reveal_child = true;
+
+        int index = get_index ();
+        Gtk.Allocation alloc;
+        get_allocation (out alloc);
+
+        int real_y = (index * alloc.height) - alloc.height + y;
+        check_scroll (real_y);
+
+        if (should_scroll && !scrolling) {
+            scrolling = true;
+            Timeout.add (SCROLL_DELAY, scroll);
+        }
+
+        return true;
+    }
+
+    private void check_scroll (int y) {
+        vadjustment = scrolled.vadjustment;
+
+        if (vadjustment == null) {
+            return;
+        }
+
+        double vadjustment_min = vadjustment.value;
+        double vadjustment_max = vadjustment.page_size + vadjustment_min;
+        double show_min = double.max (0, y - SCROLL_DISTANCE);
+        double show_max = double.min (vadjustment.upper, y + SCROLL_DISTANCE);
+
+        if (vadjustment_min > show_min) {
+            should_scroll = true;
+            scroll_up = true;
+        } else if (vadjustment_max < show_max) {
+            should_scroll = true;
+            scroll_up = false;
+        } else {
+            should_scroll = false;
+        }
+    }
+
+    private bool scroll () {
+        if (should_scroll) {
+            if (scroll_up) {
+                vadjustment.value -= SCROLL_STEP_SIZE;
+            } else {
+                vadjustment.value += SCROLL_STEP_SIZE;
+            }
+        } else {
+            scrolling = false;
+        }
+
+        return should_scroll;
+    }
+
+    public void on_drag_leave (Gdk.DragContext context, uint time) {
+        motion_revealer.reveal_child = false;
+        should_scroll = false;
+    }
 }
