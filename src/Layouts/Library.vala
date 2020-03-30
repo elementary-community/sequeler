@@ -82,8 +82,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		item_box = new Gtk.ListBox ();
 		item_box.get_style_context ().add_class ("library-box");
 		item_box.set_activate_on_single_click (false);
-		item_box.valign = Gtk.Align.START;
-		item_box.expand = false;
+		item_box.selection_mode = Gtk.SelectionMode.SINGLE;
+		item_box.valign = Gtk.Align.FILL;
+		item_box.expand = true;
 
 		scroll.add (item_box);
 
@@ -114,22 +115,22 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	private void build_drag_and_drop () {
 		Gtk.drag_dest_set (item_box, Gtk.DestDefaults.ALL, TARGET_ENTRIES_LABEL, Gdk.DragAction.MOVE);
 
-        drag_data_received.connect ((context, x, y, selection_data, target_type, time) => {
-            Partials.LibraryItem target;
-            Partials.LibraryItem source;
-            Gtk.Allocation alloc;
-
-            target = (Partials.LibraryItem) item_box.get_row_at_y (y);
-            target.get_allocation (out alloc);
+        item_box.drag_data_received.connect ((context, x, y, selection_data, target_type, time) => {
+			int new_pos;
+            var target = (Partials.LibraryItem) item_box.get_row_at_y (y);
 
             var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
-            source = (Partials.LibraryItem) row;
+			var source = (Partials.LibraryItem) row;
 
-			if (target == source) {
-				return;
+			int last_index = (int) item_box.get_children ().length ();
+
+            if (target == null) {
+                new_pos = last_index - 1;
+            } else {
+                new_pos = target.get_index ();
 			}
 
-            settings.reorder_connection (source.data, target.data);
+            settings.reorder_connection (source.data, new_pos);
 			reload_library.begin ();
         });
 	}

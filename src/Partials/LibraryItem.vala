@@ -274,7 +274,6 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 	}
 
 	public bool on_drag_motion (Gdk.DragContext context, int x, int y, uint time) {
-		debug ("here");
         motion_revealer.reveal_child = true;
 
         int index = get_index ();
