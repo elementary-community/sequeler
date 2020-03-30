@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (https://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -35,6 +35,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	public Sequeler.Services.ConnectionManager connection_manager;
 
 	public signal void edit_dialog (Gee.HashMap data);
+
+	// Datatype restrictions on DnD (Gtk.TargetFlags).
+	public const Gtk.TargetEntry[] TARGET_ENTRIES_LABEL = {
+		{ "LIBRARYITEM", Gtk.TargetFlags.SAME_APP, 0 }
+	};
 
 	public Library (Sequeler.Window main_window) {
 		Object(
@@ -102,10 +107,36 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		scroll.expand = true;
 		attach (scroll, 0, 1, 1, 2);
 		attach (toolbar, 0, 3, 1, 1);
+
+		build_drag_and_drop ();
+	}
+
+	private void build_drag_and_drop () {
+		Gtk.drag_dest_set (item_box, Gtk.DestDefaults.ALL, TARGET_ENTRIES_LABEL, Gdk.DragAction.MOVE);
+
+        drag_data_received.connect ((context, x, y, selection_data, target_type, time) => {
+            Partials.LibraryItem target;
+            Partials.LibraryItem source;
+            Gtk.Allocation alloc;
+
+            target = (Partials.LibraryItem) item_box.get_row_at_y (y);
+            target.get_allocation (out alloc);
+
+            var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+            source = (Partials.LibraryItem) row;
+
+			if (target == source) {
+				return;
+			}
+
+            settings.reorder_connection (source.data, target.data);
+			reload_library.begin ();
+        });
 	}
 
 	public void add_item (Gee.HashMap<string, string> data) {
 		var item = new Sequeler.Partials.LibraryItem (data);
+		item.scrolled = scroll;
 		item_box.add (item);
 
 		item.confirm_delete.connect ((item, data) => {
