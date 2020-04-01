@@ -10,7 +10,7 @@ jobs:
     container:
       image: elementary/docker:unstable
 
-		steps:
+	steps:
     - uses: actions/checkout@v1
     - name: Install Dependencies
       run: |
