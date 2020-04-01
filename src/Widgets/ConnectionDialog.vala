@@ -130,6 +130,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		header_title = new Gtk.Label (_("New Connection"));
 		header_title.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
 		header_title.halign = Gtk.Align.START;
+		header_title.ellipsize = Pango.EllipsizeMode.END;
 		header_title.margin_end = 10;
 		header_title.set_line_wrap (true);
 		header_title.hexpand = true;
@@ -267,7 +268,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		ssh_host_entry = new Sequeler.Partials.Entry ("", null);
 		ssh_grid.attach (ssh_host_label, 0, 2, 1, 1);
 		ssh_grid.attach (ssh_host_entry, 1, 2, 1, 1);
-		
+
 		ssh_username_label = new Sequeler.Partials.LabelForm (_("SSH Username:"));;
 		ssh_username_entry = new Sequeler.Partials.Entry ("", null);
 		ssh_grid.attach (ssh_username_label, 0, 3, 1, 1);
@@ -289,7 +290,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		});
 		ssh_grid.attach (ssh_password_label, 0, 4, 1, 1);
 		ssh_grid.attach (ssh_password_entry, 1, 4, 1, 1);
-		
+
 		ssh_port_label = new Sequeler.Partials.LabelForm (_("SSH Port:"));;
 		ssh_port_entry = new Sequeler.Partials.Entry (_("Optional"), null);
 		ssh_grid.attach (ssh_port_label, 0, 5, 1, 1);
@@ -333,15 +334,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		var stackswitcher = new Gtk.StackSwitcher ();
 		stackswitcher.halign = Gtk.Align.CENTER;
 		stack_grid.attach (stackswitcher, 0, 0, 1, 1);
-		
+
 		var stack = new Gtk.Stack ();
 		stack.expand = true;
 		stackswitcher.stack = stack;
-		
+
 		stack.add_titled (form_grid, "connection", _("Connection"));
 		stack.add_titled (ssh_grid, "ssh", _("SSH Tunnel"));
 		stack_grid.attach (stack, 0, 1, 1, 1);
-		
+
 		body.add (stack_grid);
 
 		spinner = new Gtk.Spinner ();
@@ -452,7 +453,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		db_host_entry.text = update_data["host"];
 		db_name_entry.text = update_data["name"];
 		db_username_entry.text = update_data["username"];
-		db_password_entry.text = old_password;
+		db_password_entry.text = old_password != null ? old_password : "";
 
 		if (update_data["file_path"] != null) {
 			db_file_entry.set_uri (update_data["file_path"]);
@@ -482,7 +483,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 			}
 
 			ssh_switch.active = bool.parse (update_data["has_ssh"]);
-			
+
 			ssh_host_entry.text = (update_data["ssh_host"] != null) ? update_data["ssh_host"] : "";
 			ssh_username_entry.text = (update_data["ssh_username"] != null) ? update_data["ssh_username"] : "";
 			ssh_password_entry.text = (old_ssh_password != null) ? old_ssh_password : "";
@@ -602,7 +603,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 		}
 
 		SourceFunc callback = open_ssh_connection.callback;
-		
+
 		new Thread <void*> (null, () => {
 			try {
 				connection_manager.ssh_tunnel_init (is_real);

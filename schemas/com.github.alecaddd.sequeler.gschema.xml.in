@@ -24,6 +24,12 @@
 			<description>The saved height of the window. Must be greater than 500, or it will not take effect.</description>
 		</key>
 
+		<key name="sidebar-width" type="i">
+			<default>260</default>
+			<summary>The saved width of the sidebar pane.</summary>
+			<description>The saved width of the sidebar pane containing the connections library and database schema.</description>
+		</key>
+
 		<key name="tot-connections" type="i">
 			<default>0</default>
 			<summary>Total amount of saved connections.</summary>

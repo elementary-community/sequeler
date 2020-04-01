@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -25,7 +25,9 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	GLib.File? file;
 	Gtk.TextBuffer buffer;
 
-	public Gtk.FlowBox item_box;
+	private Gtk.Grid title;
+	private Gtk.Revealer motion_revealer;
+	public Gtk.ListBox item_box;
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
 
@@ -36,17 +38,35 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 	public signal void edit_dialog (Gee.HashMap data);
 
+	// Datatype restrictions on DnD (Gtk.TargetFlags).
+	public const Gtk.TargetEntry[] TARGET_ENTRIES_LABEL = {
+		{ "LIBRARYITEM", Gtk.TargetFlags.SAME_APP, 0 }
+	};
+
 	public Library (Sequeler.Window main_window) {
 		Object(
 			orientation: Gtk.Orientation.VERTICAL,
 			window: main_window,
-			width_request: 240,
+			width_request: 260,
 			column_homogeneous: true
 		);
 	}
 
 	construct {
+		var motion_grid = new Gtk.Grid ();
+        motion_grid.margin = 6;
+        motion_grid.get_style_context ().add_class ("grid-motion");
+        motion_grid.height_request = 18;
+
+        motion_revealer = new Gtk.Revealer ();
+        motion_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
+		motion_revealer.add (motion_grid);
+
 		var titlebar = new Sequeler.Partials.TitleBar (_("SAVED CONNECTIONS"));
+
+		title = new Gtk.Grid ();
+		title.attach (titlebar, 0, 0);
+		title.attach (motion_revealer, 0, 1);
 
 		var toolbar = new Gtk.Grid ();
 		toolbar.get_style_context ().add_class ("library-toolbar");
@@ -74,10 +94,12 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 
-		item_box = new Gtk.FlowBox ();
+		item_box = new Gtk.ListBox ();
+		item_box.get_style_context ().add_class ("library-box");
 		item_box.set_activate_on_single_click (false);
-		item_box.valign = Gtk.Align.START;
-		item_box.expand = false;
+		item_box.selection_mode = Gtk.SelectionMode.SINGLE;
+		item_box.valign = Gtk.Align.FILL;
+		item_box.expand = true;
 
 		scroll.add (item_box);
 
@@ -89,22 +111,75 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			delete_all.sensitive = true;
 		}
 
-		item_box.child_activated.connect ((child) => {
-			var item = child as Sequeler.Partials.LibraryItem;
+		item_box.row_activated.connect ((row) => {
+			var item = row as Sequeler.Partials.LibraryItem;
 			item.spinner.start ();
 			item.connect_button.sensitive = false;
 			window.data_manager.data = item.data;
-			init_connection_begin (item.data, item.spinner, item.connect_button);
+			init_connection_begin (item.data, item.spinner, item.connect_button, false);
 		});
 
-		attach (titlebar, 0, 0, 1, 1);
+		attach (title, 0, 0, 1, 1);
 		scroll.expand = true;
 		attach (scroll, 0, 1, 1, 2);
 		attach (toolbar, 0, 3, 1, 1);
+
+		build_drag_and_drop ();
 	}
+
+	private void build_drag_and_drop () {
+		Gtk.drag_dest_set (item_box, Gtk.DestDefaults.ALL, TARGET_ENTRIES_LABEL, Gdk.DragAction.MOVE);
+        item_box.drag_data_received.connect (on_drag_data_received);
+
+		Gtk.drag_dest_set (title, Gtk.DestDefaults.ALL, TARGET_ENTRIES_LABEL, Gdk.DragAction.MOVE);
+        title.drag_data_received.connect (on_drag_item_received);
+        title.drag_motion.connect (on_drag_motion);
+        title.drag_leave.connect (on_drag_leave);
+	}
+
+	private void on_drag_data_received (Gdk.DragContext context, int x, int y,
+        Gtk.SelectionData selection_data, uint target_type, uint time) {
+        int new_pos;
+		var target = (Partials.LibraryItem) item_box.get_row_at_y (y);
+
+		var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+		var source = (Partials.LibraryItem) row;
+
+		int last_index = (int) item_box.get_children ().length ();
+
+		if (target == null) {
+			new_pos = last_index - 1;
+		} else {
+			new_pos = source.get_index () < target.get_index ()
+				? target.get_index ()
+				: target.get_index () + 1;
+		}
+
+		settings.reorder_connection (source.data, new_pos);
+		reload_library.begin ();
+	}
+
+	private void on_drag_item_received (Gdk.DragContext context, int x, int y,
+        Gtk.SelectionData selection_data, uint target_type, uint time) {
+        var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+        var source = (Partials.LibraryItem) row;
+
+        settings.reorder_connection (source.data, 0);
+		reload_library.begin ();
+    }
+
+	public bool on_drag_motion (Gdk.DragContext context, int x, int y, uint time) {
+        motion_revealer.reveal_child = true;
+        return true;
+    }
+
+    public void on_drag_leave (Gdk.DragContext context, uint time) {
+        motion_revealer.reveal_child = false;
+    }
 
 	public void add_item (Gee.HashMap<string, string> data) {
 		var item = new Sequeler.Partials.LibraryItem (data);
+		item.scrolled = scroll;
 		item_box.add (item);
 
 		item.confirm_delete.connect ((item, data) => {
@@ -132,7 +207,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		});
 	}
 
-	public void confirm_delete (Gtk.FlowBoxChild item, Gee.HashMap<string, string> data) {
+	public void confirm_delete (Gtk.ListBoxRow item, Gee.HashMap<string, string> data) {
 		var message_dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to proceed?"), _("By deleting this connection you won’t be able to recover this data."), "dialog-warning", Gtk.ButtonsType.CANCEL);
 		message_dialog.transient_for = window;
 
@@ -170,7 +245,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 	public async void reload_library () {
 		item_box.@foreach ((item) => item_box.remove (item));
-			
+
 		foreach (var new_conn in settings.saved_connections) {
 			var array = settings.arraify_data (new_conn);
 			add_item (array);
@@ -194,10 +269,10 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 					return null;
 				}
 			}
-			
+
 			settings.add_connection (data);
 			add_item (data);
-			
+
 			Idle.add (() => {
 				reload_library.begin ();
 				return false;
@@ -215,12 +290,12 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			if (check["file_path"] == path) {
 				settings.edit_connection (check, conn);
 				reload_library.begin ((obj, res) => {
-					item_box.get_child_at_index (0).activate ();
+					item_box.get_row_at_index (0).activate ();
 				});
 				return;
 			}
 		}
-		
+
 		var data = new Gee.HashMap<string, string> ();
 
 		data.set ("id", settings.tot_connections.to_string ());
@@ -238,18 +313,20 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 		add_item (data);
 
 		reload_library.begin ((obj, res) => {
-			item_box.get_child_at_index (0).activate ();
+			item_box.get_row_at_index (0).activate ();
 		});
 	}
 
-	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
+	private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button, bool update = true) {
 		connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
 		if (data["has_ssh"] == "true") {
 			real_data = data;
 			real_spinner = spinner;
 			real_button = button;
-			connection_manager.ssh_tunnel_ready.connect (() => init_real_connection_begin (real_data, real_spinner, real_button));
+			connection_manager.ssh_tunnel_ready.connect (() =>
+				init_real_connection_begin (real_data, real_spinner, real_button, update)
+			);
 
 			new Thread<void*> (null, () => {
 				var result = new Gee.HashMap<string, string> ();
@@ -272,11 +349,11 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 				return null;
 			});
 		} else {
-			init_real_connection_begin (data, spinner, button);
+			init_real_connection_begin (data, spinner, button, update);
 		}
 	}
 
-	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button) {
+	private void init_real_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button, bool update) {
 		var result = new Gee.HashMap<string, string> ();
 
 		connection_manager.init_connection.begin ((obj, res) => {
@@ -294,7 +371,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 					button.sensitive = true;
 
 					if (result["status"] == "true") {
-						if (settings.save_quick) {
+						if (settings.save_quick && update) {
 							window.main.library.check_add_item.begin (data);
 						}
 

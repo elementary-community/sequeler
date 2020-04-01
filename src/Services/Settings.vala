@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2011-2019 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -24,6 +24,7 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	public int pos_y { get; set; }
 	public int window_width { get; set; }
 	public int window_height { get; set; }
+	public int sidebar_width { get; set; }
 	public string[] saved_connections { get; set; }
 	public int tot_connections { get; set; }
 	public int limit_results { get; set; }
@@ -40,10 +41,8 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 	}
 
 	public void add_connection (Gee.HashMap<string, string> data) {
-		var current_connections = saved_connections;
-
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+		existing_connections.add_all_array (saved_connections);
 
 		if (data["type"] != "SQLite") {
 			update_password.begin (data);
@@ -51,18 +50,19 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 			data.unset ("ssh_password");
 		}
 
-		existing_connections.insert (0, stringify_data (data));
+		var position = existing_connections.size;
+		existing_connections.insert (position, stringify_data (data));
 		saved_connections = existing_connections.to_array ();
 		tot_connections = tot_connections + 1;
 	}
 
 	public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {
-		var current_connections = saved_connections;
-
+		var position = 0;
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+		existing_connections.add_all_array (saved_connections);
 
-		if (old_data in current_connections) {
+		if (existing_connections.contains (old_data)) {
+			position = existing_connections.index_of (old_data);
 			existing_connections.remove (old_data);
 		}
 
@@ -76,16 +76,13 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 			}
 		}
 
-		existing_connections.insert (0, stringify_data (new_data));
-
+		existing_connections.insert (position, stringify_data (new_data));
 		saved_connections = existing_connections.to_array ();
 	}
 
 	public void delete_connection (Gee.HashMap<string, string> data) {
-		var current_connections = saved_connections;
-
 		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+		existing_connections.add_all_array (saved_connections);
 
 		if (data["type"] != "SQLite") {
 			delete_password.begin (data);
@@ -107,6 +104,22 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
 		tot_connections = 0;
 
 		delete_all_passwords.begin ();
+	}
+
+	public void reorder_connection (Gee.HashMap<string, string> source, int position) {
+		var data = stringify_data (source);
+		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+		existing_connections.add_all_array (saved_connections);
+
+		foreach (var conn in saved_connections) {
+			var check = arraify_data (conn);
+			if (check["id"] == source["id"]) {
+				existing_connections.remove (conn);
+			}
+		}
+
+		existing_connections.insert (position, data);
+		saved_connections = existing_connections.to_array ();
 	}
 
 	public string stringify_data (Gee.HashMap<string, string> data) {

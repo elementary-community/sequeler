@@ -39,7 +39,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
 	}
 
 	construct {
-		position = 240;
+		position = settings.sidebar_width;
 
 		sidebar_stack = new Gtk.Stack ();
 		library = new Sequeler.Layouts.Library (window);
