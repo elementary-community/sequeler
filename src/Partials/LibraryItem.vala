@@ -158,7 +158,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
         motion_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
 		motion_revealer.add (motion_grid);
 
-		box.attach (motion_revealer, 0, 2, 4, 1);
+		box.attach (motion_revealer, 0, 1, 4, 1);
 
 		var event_box = new Gtk.EventBox ();
 		event_box.add (box);

@@ -25,6 +25,8 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	GLib.File? file;
 	Gtk.TextBuffer buffer;
 
+	private Gtk.Grid title;
+	private Gtk.Revealer motion_revealer;
 	public Gtk.ListBox item_box;
 	public Gtk.ScrolledWindow scroll;
 	public Sequeler.Partials.HeaderBarButton delete_all;
@@ -51,7 +53,20 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 	}
 
 	construct {
+		var motion_grid = new Gtk.Grid ();
+        motion_grid.margin = 6;
+        motion_grid.get_style_context ().add_class ("grid-motion");
+        motion_grid.height_request = 18;
+
+        motion_revealer = new Gtk.Revealer ();
+        motion_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
+		motion_revealer.add (motion_grid);
+
 		var titlebar = new Sequeler.Partials.TitleBar (_("SAVED CONNECTIONS"));
+
+		title = new Gtk.Grid ();
+		title.attach (titlebar, 0, 0);
+		title.attach (motion_revealer, 0, 1);
 
 		var toolbar = new Gtk.Grid ();
 		toolbar.get_style_context ().add_class ("library-toolbar");
@@ -104,7 +119,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 			init_connection_begin (item.data, item.spinner, item.connect_button, false);
 		});
 
-		attach (titlebar, 0, 0, 1, 1);
+		attach (title, 0, 0, 1, 1);
 		scroll.expand = true;
 		attach (scroll, 0, 1, 1, 2);
 		attach (toolbar, 0, 3, 1, 1);
@@ -114,26 +129,53 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
 	private void build_drag_and_drop () {
 		Gtk.drag_dest_set (item_box, Gtk.DestDefaults.ALL, TARGET_ENTRIES_LABEL, Gdk.DragAction.MOVE);
+        item_box.drag_data_received.connect (on_drag_data_received);
 
-        item_box.drag_data_received.connect ((context, x, y, selection_data, target_type, time) => {
-			int new_pos;
-            var target = (Partials.LibraryItem) item_box.get_row_at_y (y);
-
-            var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
-			var source = (Partials.LibraryItem) row;
-
-			int last_index = (int) item_box.get_children ().length ();
-
-            if (target == null) {
-                new_pos = last_index - 1;
-            } else {
-                new_pos = target.get_index ();
-			}
-
-            settings.reorder_connection (source.data, new_pos);
-			reload_library.begin ();
-        });
+		Gtk.drag_dest_set (title, Gtk.DestDefaults.ALL, TARGET_ENTRIES_LABEL, Gdk.DragAction.MOVE);
+        title.drag_data_received.connect (on_drag_item_received);
+        title.drag_motion.connect (on_drag_motion);
+        title.drag_leave.connect (on_drag_leave);
 	}
+
+	private void on_drag_data_received (Gdk.DragContext context, int x, int y,
+        Gtk.SelectionData selection_data, uint target_type, uint time) {
+        int new_pos;
+		var target = (Partials.LibraryItem) item_box.get_row_at_y (y);
+
+		var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+		var source = (Partials.LibraryItem) row;
+
+		int last_index = (int) item_box.get_children ().length ();
+
+		if (target == null) {
+			new_pos = last_index - 1;
+		} else {
+			new_pos = source.get_index () < target.get_index ()
+				? target.get_index ()
+				: target.get_index () + 1;
+		}
+
+		settings.reorder_connection (source.data, new_pos);
+		reload_library.begin ();
+	}
+
+	private void on_drag_item_received (Gdk.DragContext context, int x, int y,
+        Gtk.SelectionData selection_data, uint target_type, uint time) {
+        var row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+        var source = (Partials.LibraryItem) row;
+
+        settings.reorder_connection (source.data, 0);
+		reload_library.begin ();
+    }
+
+	public bool on_drag_motion (Gdk.DragContext context, int x, int y, uint time) {
+        motion_revealer.reveal_child = true;
+        return true;
+    }
+
+    public void on_drag_leave (Gdk.DragContext context, uint time) {
+        motion_revealer.reveal_child = false;
+    }
 
 	public void add_item (Gee.HashMap<string, string> data) {
 		var item = new Sequeler.Partials.LibraryItem (data);
