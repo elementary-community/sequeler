@@ -20,86 +20,86 @@
 */
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
-	public weak Sequeler.Application app { get; construct; }
+    public weak Sequeler.Application app { get; construct; }
 
-	public Sequeler.Layouts.Main main;
-	public Sequeler.Layouts.HeaderBar headerbar;
-	public Sequeler.Services.ActionManager action_manager;
-	public Sequeler.Services.DataManager data_manager;
-	public Sequeler.Widgets.ConnectionDialog? connection_dialog = null;
+    public Sequeler.Layouts.Main main;
+    public Sequeler.Layouts.HeaderBar headerbar;
+    public Sequeler.Services.ActionManager action_manager;
+    public Sequeler.Services.DataManager data_manager;
+    public Sequeler.Widgets.ConnectionDialog? connection_dialog = null;
 
-	public Gtk.AccelGroup accel_group { get; construct; }
+    public Gtk.AccelGroup accel_group { get; construct; }
 
-	public Window (Sequeler.Application sequeler_app) {
-		Object (
-			application: sequeler_app,
-			app: sequeler_app,
-			icon_name: Constants.PROJECT_NAME
-		);
-	}
+    public Window (Sequeler.Application sequeler_app) {
+        Object (
+            application: sequeler_app,
+            app: sequeler_app,
+            icon_name: Constants.PROJECT_NAME
+        );
+    }
 
-	construct {
-		accel_group = new Gtk.AccelGroup ();
-		add_accel_group (accel_group);
+    construct {
+        accel_group = new Gtk.AccelGroup ();
+        add_accel_group (accel_group);
 
-		main = new Sequeler.Layouts.Main (this);
-		headerbar = new Sequeler.Layouts.HeaderBar (this);
-		action_manager = new Sequeler.Services.ActionManager (app, this);
-		data_manager = new Sequeler.Services.DataManager ();
+        main = new Sequeler.Layouts.Main (this);
+        headerbar = new Sequeler.Layouts.HeaderBar (this);
+        action_manager = new Sequeler.Services.ActionManager (app, this);
+        data_manager = new Sequeler.Services.DataManager ();
 
-		build_ui ();
+        build_ui ();
 
-		move (settings.pos_x, settings.pos_y);
-		resize (settings.window_width, settings.window_height);
+        move (settings.pos_x, settings.pos_y);
+        resize (settings.window_width, settings.window_height);
 
-		show_app ();
-	}
+        show_app ();
+    }
 
-	public Sequeler.Window get_instance () {
-		return this;
-	}
+    public Sequeler.Window get_instance () {
+        return this;
+    }
 
-	private void build_ui () {
-		Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
+    private void build_ui () {
+        Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
 
-		var css_provider = new Gtk.CssProvider ();
-		css_provider.load_from_resource ("/com/github/alecaddd/sequeler/stylesheet.css");
+        var css_provider = new Gtk.CssProvider ();
+        css_provider.load_from_resource ("/com/github/alecaddd/sequeler/stylesheet.css");
 
-		Gtk.StyleContext.add_provider_for_screen (
-			Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-		);
+        Gtk.StyleContext.add_provider_for_screen (
+            Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        );
 
-		set_titlebar (headerbar);
-		set_border_width (0);
+        set_titlebar (headerbar);
+        set_border_width (0);
 
-		delete_event.connect (before_destroy);
+        delete_event.connect (before_destroy);
 
-		add (main);
-	}
+        add (main);
+    }
 
-	public bool before_destroy () {
-		update_status ();
-		app.get_active_window ().destroy ();
-		return true;
-	}
+    public bool before_destroy () {
+        update_status ();
+        app.get_active_window ().destroy ();
+        return true;
+    }
 
-	private void update_status () {
-		int width, height, x, y;
+    private void update_status () {
+        int width, height, x, y;
 
-		get_size (out width, out height);
-		get_position (out x, out y);
+        get_size (out width, out height);
+        get_position (out x, out y);
 
-		settings.pos_x = x;
-		settings.pos_y = y;
-		settings.window_width = width;
-		settings.window_height = height;
-		settings.sidebar_width = main.get_position ();
-		settings.query_area = main.database_view.query.panels.get_position ();
-	}
+        settings.pos_x = x;
+        settings.pos_y = y;
+        settings.window_width = width;
+        settings.window_height = height;
+        settings.sidebar_width = main.get_position ();
+        settings.query_area = main.database_view.query.panels.get_position ();
+    }
 
-	public void show_app () {
-		show_all ();
-		show ();
-		present ();
-	}
+    public void show_app () {
+        show_all ();
+        show ();
+        present ();
+    }
 }
