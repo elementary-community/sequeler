@@ -1,3 +1,11 @@
+com.github.alecaddd.sequeler (0.7.4) xenial; urgency=medium
+
+  * Manually reorder saved connection.
+  * Allow selecting a custom SSH public key.
+  * Fix SSH tunnel crashes.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 31 Mar 2020 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.3) xenial; urgency=medium
 
   * Strip comments from SQL raw queries.
