@@ -20,44 +20,44 @@
 */
 
 namespace Sequeler.Partials {
-	public class HeaderBarButton : Gtk.Button {
-		public HeaderBarButton (string icon_name, string tooltip) {
-			can_focus = false;
+    public class HeaderBarButton : Gtk.Button {
+        public HeaderBarButton (string icon_name, string tooltip) {
+            can_focus = false;
 
-			Gtk.Image image;
+            Gtk.Image image;
 
-			if (icon_name.contains ("/")) {
-				image = new Gtk.Image.from_resource (icon_name);
-			} else {
-				image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
-			}
+            if (icon_name.contains ("/")) {
+                image = new Gtk.Image.from_resource (icon_name);
+            } else {
+                image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
+            }
 
-			image.margin = 3;
+            image.margin = 3;
 
-			get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-			set_tooltip_text (tooltip);
-			add (image);
-		}
-	}
+            get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            set_tooltip_text (tooltip);
+            add (image);
+        }
+    }
 
-	public class ToolBarButton : Gtk.Grid {
-		public ToolBarButton (string icon_name, string tooltip, string label) {
-			name = tooltip;
-			halign = Gtk.Align.CENTER;
+    public class ToolBarButton : Gtk.Grid {
+        public ToolBarButton (string icon_name, string tooltip, string label) {
+            name = tooltip;
+            halign = Gtk.Align.CENTER;
 
-			Gtk.Image icon;
-			var title = new Gtk.Label (label);
+            Gtk.Image icon;
+            var title = new Gtk.Label (label);
 
-			if (icon_name.contains ("/")) {
-				icon = new Gtk.Image.from_resource (icon_name);
-			} else {
-				icon = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
-			}
+            if (icon_name.contains ("/")) {
+                icon = new Gtk.Image.from_resource (icon_name);
+            } else {
+                icon = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.BUTTON);
+            }
 
-			icon.margin = 2;
-			
-			attach (icon, 0, 0, 1, 1);
-			attach (title, 1, 0, 1, 1);
-		}
-	}
+            icon.margin = 2;
+
+            attach (icon, 0, 0, 1, 1);
+            attach (title, 1, 0, 1, 1);
+        }
+    }
 }

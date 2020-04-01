@@ -19,75 +19,75 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-namespace Sequeler.Partials { 
-	public class TitleBar : Gtk.Grid {
-		public TitleBar (string text) {
-			get_style_context ().add_class ("library-titlebar");
+namespace Sequeler.Partials {
+    public class TitleBar : Gtk.Grid {
+        public TitleBar (string text) {
+            get_style_context ().add_class ("library-titlebar");
 
-			var title = new Gtk.Label (text);
-			title.get_style_context ().add_class ("h4");
-			title.halign = Gtk.Align.CENTER;
-			title.margin = 4;
-			title.hexpand = true;
+            var title = new Gtk.Label (text);
+            title.get_style_context ().add_class ("h4");
+            title.halign = Gtk.Align.CENTER;
+            title.margin = 4;
+            title.hexpand = true;
 
-			this.add (title);
-		}
-	}
+            this.add (title);
+        }
+    }
 
-	public class ResponseMessage : Gtk.Label {
-		public ResponseMessage () {
-			get_style_context ().add_class ("h4");
-			halign = Gtk.Align.CENTER;
-			valign = Gtk.Align.CENTER;
-			justify = Gtk.Justification.CENTER;
-			set_line_wrap (true);
-			margin_bottom = 10;
-		}
-	}
+    public class ResponseMessage : Gtk.Label {
+        public ResponseMessage () {
+            get_style_context ().add_class ("h4");
+            halign = Gtk.Align.CENTER;
+            valign = Gtk.Align.CENTER;
+            justify = Gtk.Justification.CENTER;
+            set_line_wrap (true);
+            margin_bottom = 10;
+        }
+    }
 
-	public class Entry : Gtk.Entry {
-		public Entry (string? placeholder, string? val) {
-			hexpand = true;
+    public class Entry : Gtk.Entry {
+        public Entry (string? placeholder, string? val) {
+            hexpand = true;
 
-			if (placeholder != null) {
-				placeholder_text = placeholder;
-			}
+            if (placeholder != null) {
+                placeholder_text = placeholder;
+            }
 
-			if (val != null) {
-				text = val;
-			}
-		}
-	}
+            if (val != null) {
+                text = val;
+            }
+        }
+    }
 
-	public class ButtonClass : Gtk.Button {
-		public ButtonClass (string text, string* class) {
-			label = text;
+    public class ButtonClass : Gtk.Button {
+        public ButtonClass (string text, string* class) {
+            label = text;
 
-			if (class != null) {
-				var style_context = this.get_style_context ();
-				style_context.add_class (class);
-			}   
-		}
-	}
+            if (class != null) {
+                var style_context = this.get_style_context ();
+                style_context.add_class (class);
+            }
+        }
+    }
 
-	public class TableRow : Gtk.Grid {
-		public TableRow (string text, int type) {
-			if (type % 2 == 0) {
-				get_style_context ().add_class ("row-odd");
-			} else {
-				get_style_context ().add_class ("row-even");
-			}
+    public class TableRow : Gtk.Grid {
+        public TableRow (string text, int type) {
+            if (type % 2 == 0) {
+                get_style_context ().add_class ("row-odd");
+            } else {
+                get_style_context ().add_class ("row-even");
+            }
 
-			var title = new Gtk.Label (text);
-			title.get_style_context ().add_class ("h4");
-			title.halign = Gtk.Align.START;
-			title.margin_start = 6;
-			title.margin_end = 6;
-			title.hexpand = true;
+            var title = new Gtk.Label (text);
+            title.get_style_context ().add_class ("h4");
+            title.halign = Gtk.Align.START;
+            title.margin_start = 6;
+            title.margin_end = 6;
+            title.hexpand = true;
 
-			this.add (title);
-		}
-	}
+            this.add (title);
+        }
+    }
 
     public class LabelForm : Gtk.Label {
         public LabelForm (string text) {
