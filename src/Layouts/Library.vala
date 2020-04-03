@@ -201,6 +201,10 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
             window.connection_dialog.present ();
         });
 
+        item.duplicate_connection.connect ((data) => {
+            duplicate_connection.begin (data);
+        });
+
         item.connect_to.connect ((data, spinner, connect_button) => {
             window.data_manager.data = data;
             init_connection_begin (data, spinner, connect_button);
@@ -422,7 +426,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
             try {
                 array["password"] = yield password_mngr.get_password_async (array["id"]);
-                debug ("PSWD: " + array["password"]);
             } catch (Error e) {
                 debug ("Unable to get the password from libsecret");
             }
@@ -430,7 +433,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
             if (array["has_ssh"] == "true") {
                 try {
                     array["ssh_password"] = yield password_mngr.get_password_async (array["id"] + "9999");
-                    debug ("SSH: " + array["ssh_password"]);
                 } catch {
                     debug ("Unable to get the SSH password from libsecret");
                 }
@@ -478,5 +480,26 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         if (message_dialog.run () == Gtk.ResponseType.ACCEPT) {}
 
         message_dialog.destroy ();
+    }
+
+    private async void duplicate_connection (Gee.HashMap<string, string> data) {
+        if (data["type"] != "SQLite") {
+            try {
+                data["password"] = yield password_mngr.get_password_async (data["id"]);
+            } catch (Error e) {
+                debug ("Unable to get the password from libsecret");
+            }
+        }
+
+        if (data["has_ssh"] == "true") {
+            try {
+                data["ssh_password"] = yield password_mngr.get_password_async (data["id"] + "9999");
+            } catch {
+                debug ("Unable to get the SSH password from libsecret");
+            }
+        }
+
+        yield settings.duplicate_connection (data);
+        yield reload_library ();
     }
 }

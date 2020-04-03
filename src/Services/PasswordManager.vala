@@ -22,7 +22,7 @@
 public class Sequeler.Services.PasswordManager : Object {
 
     // Store Password Async
-    public virtual async void store_password_async (string id, string password) throws Error {
+    public async void store_password_async (string id, string password) throws Error {
         var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
         attributes["id"] = id;
         attributes["schema"] = Constants.PROJECT_NAME;
@@ -37,7 +37,7 @@ public class Sequeler.Services.PasswordManager : Object {
     }
 
     // Get Password Async
-    public virtual async string? get_password_async (string id) throws Error {
+    public async string? get_password_async (string id) throws Error {
         var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
         attributes["id"] = id;
         attributes["schema"] = Constants.PROJECT_NAME;
@@ -54,7 +54,7 @@ public class Sequeler.Services.PasswordManager : Object {
     }
 
     // Delete Password Async
-    public virtual async void clear_password_async (string id) throws Error {
+    public async void clear_password_async (string id) throws Error {
         var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
         attributes["id"] = id;
         attributes["schema"] = Constants.PROJECT_NAME;
@@ -69,7 +69,7 @@ public class Sequeler.Services.PasswordManager : Object {
     }
 
     // Delete All Passwords
-    public virtual async void clear_all_passwords_async () throws Error {
+    public async void clear_all_passwords_async () throws Error {
         var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
         attributes["schema"] = Constants.PROJECT_NAME;
 

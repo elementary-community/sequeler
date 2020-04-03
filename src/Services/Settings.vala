@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (https://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -54,6 +54,12 @@ public class Sequeler.Services.Settings : Granite.Services.Settings {
         existing_connections.insert (position, stringify_data (data));
         saved_connections = existing_connections.to_array ();
         tot_connections = tot_connections + 1;
+    }
+
+    public async void duplicate_connection (Gee.HashMap<string, string> data) {
+        data["id"] = tot_connections.to_string ();
+        data["title"] = _("%s (copy)").printf (data["title"]);
+        add_connection (data);
     }
 
     public void edit_connection (Gee.HashMap<string, string> new_data, string old_data) {

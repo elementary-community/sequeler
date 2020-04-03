@@ -1,3 +1,9 @@
+com.github.alecaddd.sequeler (0.7.5) xenial; urgency=medium
+
+  * You can now duplicate connections.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 02 Apr 2020 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.4) xenial; urgency=medium
 
   * Manually reorder saved connection.
