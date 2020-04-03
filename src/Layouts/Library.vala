@@ -324,6 +324,13 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
     private void init_connection_begin (Gee.HashMap<string, string> data, Gtk.Spinner spinner, Gtk.ModelButton button, bool update = true) {
         connection_manager = new Sequeler.Services.ConnectionManager (window, data);
 
+        if (data["username"] == "" || data["name"] == "") {
+            spinner.stop ();
+            button.sensitive = true;
+            connection_warning (_("A username and a database name are required in order to connect!"), data["name"]);
+            return;
+        }
+
         if (data["has_ssh"] == "true") {
             real_data = data;
             real_spinner = spinner;

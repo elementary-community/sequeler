@@ -168,7 +168,6 @@ public class Sequeler.Services.ConnectionManager : Object {
         // public key file
         var keyfile1 = keyfile2 + ".pub";
 
-
         // SSH credentials if password authentication is required
         var username = data["ssh_username"];
         var password = data["ssh_password"];

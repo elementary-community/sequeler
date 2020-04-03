@@ -567,6 +567,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case Action.TEST:
+                if (db_username_entry.text == "" || db_name_entry.text == "") {
+                    write_response (_("A username and a database name are required in order to connect!"));
+                    return;
+                }
+
                 if (ssh_switch.active) {
                     open_ssh_connection.begin (false);
                 } else {
@@ -583,6 +588,11 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 destroy ();
                 break;
             case Action.CONNECT:
+                if (db_username_entry.text == "" || db_name_entry.text == "") {
+                    write_response (_("A username and a database name are required in order to connect!"));
+                    return;
+                }
+
                 debug ("init connection");
                 if (ssh_switch.active) {
                     open_ssh_connection.begin (true);
