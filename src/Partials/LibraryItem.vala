@@ -40,6 +40,7 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
     private const int SCROLL_DELAY = 50;
 
     public signal void edit_dialog (Gee.HashMap data);
+    public signal void duplicate_connection (Gee.HashMap data);
     public signal void confirm_delete (
         Gtk.ListBoxRow item,
         Gee.HashMap data
@@ -108,6 +109,9 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
         var edit_button = new Gtk.ModelButton ();
         edit_button.text = _("Edit Connection");
 
+        var duplicate_button = new Gtk.ModelButton ();
+        duplicate_button.text = _("Duplicate Connection");
+
         var delete_button = new Gtk.ModelButton ();
         delete_button.text = _("Delete Connection");
 
@@ -133,8 +137,9 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 
         menu_grid.attach (connect_button, 0, 1, 1, 1);
         menu_grid.attach (edit_button, 0, 2, 1, 1);
-        menu_grid.attach (menu_separator, 0, 3, 1, 1);
-        menu_grid.attach (delete_button, 0, 4, 1, 1);
+        menu_grid.attach (duplicate_button, 0, 3, 1, 1);
+        menu_grid.attach (menu_separator, 0, 4, 1, 1);
+        menu_grid.attach (delete_button, 0, 5, 1, 1);
         menu_grid.show_all ();
 
         var menu_popover = new Gtk.Popover (null);
@@ -176,6 +181,10 @@ public class Sequeler.Partials.LibraryItem : Gtk.ListBoxRow {
 
         edit_button.clicked.connect (() => {
             edit_dialog (data);
+        });
+
+        duplicate_button.clicked.connect (() => {
+            duplicate_connection (data);
         });
 
         connect_button.clicked.connect (() => {
