@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -43,6 +43,9 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
         get { return _database; }
         set { _database = value; }
     }
+
+    private string? sortby = null;
+    private string sort = "ASC";
 
     public Relations (Sequeler.Window main_window) {
         Object (
@@ -153,6 +156,10 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
             return;
         }
 
+        // Reset sorting attributes.
+        sortby = null;
+        sort = "ASC";
+
         table_name = table;
         database = db_name;
 
@@ -174,7 +181,8 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
         }
 
         start_spinner ();
-        var query = (window.main.connection_manager.db_type as DataBaseType).show_table_relations (table_name, database);
+        var query = (window.main.connection_manager.db_type as DataBaseType)
+                    .show_table_relations (table_name, database, sortby, sort);
         reloading = true;
 
         var table_relations = yield get_table_relations (query);
@@ -183,7 +191,9 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
             return;
         }
 
-        var result_data = new Sequeler.Partials.TreeBuilder (table_relations, window);
+        var result_data = new Sequeler.Partials.TreeBuilder (
+            table_relations, window, 0, 0, sortby, sort);
+        build_signals (result_data);
         result_message.label = table_relations.get_n_rows ().to_string () + _(" Constraints");
 
         yield clear ();
@@ -206,5 +216,13 @@ public class Sequeler.Layouts.Views.Relations : Gtk.Grid {
         }
 
         return result;
+    }
+
+    private void build_signals (Sequeler.Partials.TreeBuilder tree) {
+        tree.sortby_column.connect ((column, direction) => {
+            sortby = column;
+            sort = direction;
+            reload_results ();
+        });
     }
 }

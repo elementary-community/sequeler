@@ -68,7 +68,10 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
         return output;
     }
 
-    public string show_table_relations (string table, string? database) {
+    public string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    ) {
         return "PRAGMA foreign_key_list('%s')".printf (table);
     }
 }
