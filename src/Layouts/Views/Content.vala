@@ -244,8 +244,8 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
             return;
         }
 
-        var result_data =
-            new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results,current_page);
+        var result_data = new Sequeler.Partials.TreeBuilder (
+            table_content, window, settings.limit_results, current_page, sortby, sort);
         build_signals (result_data);
         result_message.label = _("%d Entries").printf (table_count);
 
@@ -274,6 +274,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
     private void build_signals (Sequeler.Partials.TreeBuilder tree) {
         tree.sortby_column.connect ((column, direction) => {
+            debug ("%s %s", column, direction);
             sortby = column;
             sort = direction;
             reload_results ();
