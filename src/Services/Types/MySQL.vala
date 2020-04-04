@@ -60,16 +60,16 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
     ) {
         var output = "SELECT * FROM %s".printf (table);
 
+        if (sortby != null) {
+            output += " ORDER BY `%s` %s".printf (sortby, sort);
+        }
+
         if (count != null && count > settings.limit_results) {
             output += " LIMIT %i".printf (settings.limit_results);
         }
 
         if (page != null && page > 1) {
             output += " OFFSET %i".printf (settings.limit_results * (page - 1));
-        }
-
-        if (sortby != null) {
-            output += " ORDER BY %s %s".printf (sortby, sort);
         }
 
         return output;

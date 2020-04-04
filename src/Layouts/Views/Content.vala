@@ -274,7 +274,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
     private void build_signals (Sequeler.Partials.TreeBuilder tree) {
         tree.sortby_column.connect ((column, direction) => {
-            debug ("%s %s", column, direction);
             sortby = column;
             sort = direction;
             reload_results ();
