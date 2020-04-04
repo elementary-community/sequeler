@@ -2,6 +2,7 @@ com.github.alecaddd.sequeler (0.7.5) xenial; urgency=medium
 
   * You can now duplicate connections.
   * Sorting columns now works as expected by actually running the ORDER BY query.
+  * Quickly jump to a specific result page with the handy dandy pagination popover.
   * Show Comment Column inside table structure view.
 
  -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 04 Apr 2020 11:00:00 -0700

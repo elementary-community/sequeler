@@ -43,6 +43,7 @@
 				<ul>
 					<li>You can now duplicate connections.</li>
 					<li>Sorting columns now works as expected by actually running the ORDER BY query.</li>
+					<li>Quickly jump to a specific result page with the handy dandy pagination popover.</li>
 					<li>Show Comment Column inside table structure view.</li>
 				</ul>
 			</description>
