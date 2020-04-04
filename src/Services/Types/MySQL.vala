@@ -85,7 +85,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
         string table, string? database,
         string? sortby = null, string sort = "ASC"
     ) {
-        var output =  "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
+        var output = "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
 
         if (sortby != null) {
             output += " ORDER BY %s %s".printf (sortby, sort);
