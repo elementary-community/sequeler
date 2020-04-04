@@ -29,9 +29,10 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
     public Gtk.Label result_message;
     private Gtk.Spinner spinner;
 
+    private Gtk.Button pages_button;
+    private Gtk.SpinButton pages_entry;
     private Sequeler.Partials.HeaderBarButton page_prev_btn;
     private Sequeler.Partials.HeaderBarButton page_next_btn;
-    private Gtk.Label pages_label;
     private int tot_pages { get; set; default = 0; }
     private int current_page { get; set; default = 1; }
     private bool reloading { get; set; default = false; }
@@ -115,6 +116,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
     public Gtk.Grid build_pagination () {
         var page_grid = new Gtk.Grid ();
+        page_grid.valign = Gtk.Align.CENTER;
 
         page_prev_btn = new Sequeler.Partials.HeaderBarButton ("go-previous-symbolic", _("Previous Page"));
         page_prev_btn.clicked.connect (go_prev_page);
@@ -126,12 +128,32 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
         page_next_btn.halign = Gtk.Align.END;
         page_next_btn.sensitive = false;
 
-        pages_label = new Gtk.Label (_("%d Pages").printf (tot_pages));
-        pages_label.margin = 7;
+        pages_button = new Gtk.Button.with_label (_("%d Pages").printf (tot_pages));
+        pages_button.can_focus = false;
+        pages_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+        pages_button.set_tooltip_text (_("Jump to page…"));
+
+        pages_entry = new Gtk.SpinButton.with_range (0, 0, 1);
+        pages_entry.margin = 3;
+        pages_entry.value_changed.connect (() => {
+            if (pages_entry.get_value_as_int () > tot_pages) {
+                return;
+            }
+            current_page = pages_entry.get_value_as_int ();
+            reload_results ();
+        });
+
+        var pages_popover = new Gtk.Popover (pages_button);
+        pages_popover.add (pages_entry);
+
+        pages_button.clicked.connect (() => {
+            pages_popover.popup ();
+            pages_popover.show_all ();
+        });
 
         page_grid.attach (page_prev_btn, 0, 0, 1, 1);
         page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
-        page_grid.attach (pages_label, 2, 0, 1, 1);
+        page_grid.attach (pages_button, 2, 0, 1, 1);
         page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 3, 0, 1, 1);
         page_grid.attach (page_next_btn, 4, 0, 1, 1);
 
@@ -140,22 +162,25 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
     private void update_pagination () {
         if (table_count <= settings.limit_results) {
-            pages_label.set_text (_("1 Page"));
+            pages_button.label = _("1 Page");
+            pages_entry.set_range (1, 1);
             return;
         }
 
         tot_pages = (int) Math.ceilf (((float) table_count) / settings.limit_results);
-        pages_label.set_text (_("%d of %d Pages").printf (current_page, tot_pages));
+        pages_button.label = _("%d of %d Pages").printf (current_page, tot_pages);
 
         page_prev_btn.sensitive = (current_page > 1);
         page_next_btn.sensitive = (current_page < tot_pages);
+        pages_entry.set_range (1, tot_pages);
     }
 
     public Gtk.Label build_results_msg () {
         result_message = new Gtk.Label (_("No Results Available"));
         result_message.halign = Gtk.Align.START;
-        result_message.margin = 7;
-        result_message.margin_top = 6;
+        result_message.margin_top = result_message.margin_bottom = 3;
+        result_message.margin_start = result_message.margin_end = 9;
+        result_message.ellipsize = Pango.EllipsizeMode.END;
         result_message.hexpand = true;
         result_message.wrap = true;
 
