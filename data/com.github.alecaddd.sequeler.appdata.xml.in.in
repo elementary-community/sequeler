@@ -37,11 +37,13 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
-		<release version="0.7.5" date="2020-04-02">
+		<release version="0.7.5" date="2020-04-04">
 			<description>
 				<p>New features and improvements</p>
 				<ul>
 					<li>You can now duplicate connections.</li>
+					<li>Sorting columns now works as expected by actually running the ORDER BY query.</li>
+					<li>Show Comment Column inside table structure view.</li>
 				</ul>
 			</description>
 		</release>
