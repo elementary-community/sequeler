@@ -54,7 +54,10 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
         return "DESCRIBE %s".printf (table);
     }
 
-    public string show_table_content (string table, int? count = null, int? page = null) {
+    public string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    ) {
         var output = "SELECT * FROM %s".printf (table);
 
         if (count != null && count > settings.limit_results) {
@@ -63,6 +66,10 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 
         if (page != null && page > 1) {
             output += " OFFSET %i".printf (settings.limit_results * (page - 1));
+        }
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
         }
 
         return output;

@@ -48,7 +48,10 @@ public interface DataBaseType : Object {
     /*
      * Show table content
      */
-    public abstract string show_table_content (string table, int? count, int? page = null);
+    public abstract string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    );
 
     /*
      * Show table relations

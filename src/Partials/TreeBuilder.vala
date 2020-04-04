@@ -28,9 +28,12 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
     public string? error_message { get; set; default = null; }
     public string background;
     public int tot_columns;
+    private string sort = "ASC";
 
     private string bg_light = "rgba(255,255,255,0.05)";
     private string bg_dark = "rgba(0,0,0,0.05)";
+
+    public signal void sortby_column (string column, string direction);
 
     public TreeBuilder (Gda.DataModel response, Sequeler.Window main_window, int per_page = 0, int current_page = 0) {
         Object (
@@ -57,13 +60,13 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
             column.clickable = true;
             column.resizable = true;
             column.expand = true;
-            column.sort_column_id = col;
+
             if (col > 0) {
                 column.sizing = Gtk.TreeViewColumnSizing.FIXED;
                 column.fixed_width = 150;
             }
 
-            column.clicked.connect (redraw);
+            column.clicked.connect (sortby);
             append_column (column);
         }
 
@@ -119,15 +122,35 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
         store.set_value (iter, tot_columns, background);
     }
 
-    public void redraw () {
-        Gtk.TreeIter iter;
-        var i = 0;
-
-        for (bool next = store.get_iter_first (out iter); next; next = store.iter_next (ref iter)) {
-            background = i % 2 == 0 ? bg_light : bg_dark;
-            store.set_value (iter, tot_columns, background);
-            i++;
+    public void sortby (Gtk.TreeViewColumn column) {
+        // Detect sort order.
+        if (column.sort_order == Gtk.SortType.ASCENDING) {
+            sort = "DESC";
+            column.sort_order = Gtk.SortType.DESCENDING;
+        } else {
+            sort = "ASC";
+            column.sort_order = Gtk.SortType.ASCENDING;
         }
+
+        // Run sort query.
+        sortby_column (column.title.replace ("__", "_"), sort);
+
+        // Clear previous sort indicators.
+        //  foreach (var _column in this.get_columns ()) {
+        //      _column.sort_indicator = false;
+        //  }
+
+        //  // Update column UI.
+        //  column.sort_indicator = true;
+
+        //  Gtk.TreeIter iter;
+        //  var i = 0;
+
+        //  for (bool next = store.get_iter_first (out iter); next; next = store.iter_next (ref iter)) {
+        //      background = i % 2 == 0 ? bg_light : bg_dark;
+        //      store.set_value (iter, tot_columns, background);
+        //      i++;
+        //  }
     }
 
     private void copy_column_data (Gdk.EventButton event, Gtk.TreePath path, Gtk.TreeViewColumn column) {

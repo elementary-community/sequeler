@@ -47,7 +47,10 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
         return "PRAGMA table_info('%s')".printf (table);
     }
 
-    public string show_table_content (string table, int? count, int? page = null) {
+    public string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    ) {
         var output = "SELECT * FROM %s".printf (table);
 
         if (count != null && count > settings.limit_results) {
