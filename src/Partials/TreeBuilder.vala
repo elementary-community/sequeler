@@ -120,8 +120,6 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
     }
 
     public void redraw () {
-        debug (column.title);
-		column.sort_indicator = true;
         Gtk.TreeIter iter;
         var i = 0;
 
