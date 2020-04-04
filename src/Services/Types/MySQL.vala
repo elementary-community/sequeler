@@ -50,12 +50,25 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
         return "RENAME TABLE %s TO %s".printf (old_table, new_table);
     }
 
-    public string show_table_structure (string table) {
-        return "DESCRIBE %s".printf (table);
+    public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
+        var output = "SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, DATA_TYPE, COLUMN_DEFAULT, COLUMN_KEY, EXTRA, COLUMN_COMMENT FROM information_schema.COLUMNS WHERE table_name = '%s'".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
+
+        return output;
     }
 
-    public string show_table_content (string table, int? count = null, int? page = null) {
+    public string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    ) {
         var output = "SELECT * FROM %s".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
 
         if (count != null && count > settings.limit_results) {
             output += " LIMIT %i".printf (settings.limit_results);
@@ -68,7 +81,16 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
         return output;
     }
 
-    public string show_table_relations (string table, string? database) {
-        return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
+    public string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    ) {
+        var output = "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
+
+        return output;
     }
 }

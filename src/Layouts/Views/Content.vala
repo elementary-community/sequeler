@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -51,6 +51,9 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
     }
 
     public int table_count = 0;
+
+    private string? sortby = null;
+    private string sort = "ASC";
 
     public Content (Sequeler.Window main_window) {
         Object (
@@ -202,6 +205,10 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
             return;
         }
 
+        // Reset sorting attributes.
+        sortby = null;
+        sort = "ASC";
+
         table_name = table;
         database = db_name;
         table_count = count != null ? int.parse (count) : 0;
@@ -228,7 +235,7 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
 
         start_spinner ();
         var query = (window.main.connection_manager.db_type as DataBaseType)
-                    .show_table_content (table_name, table_count, current_page);
+                    .show_table_content (table_name, table_count, current_page, sortby, sort);
         reloading = true;
 
         table_content = yield get_table_content (query);
@@ -237,7 +244,9 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
             return;
         }
 
-        var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
+        var result_data = new Sequeler.Partials.TreeBuilder (
+            table_content, window, settings.limit_results, current_page, sortby, sort);
+        build_signals (result_data);
         result_message.label = _("%d Entries").printf (table_count);
 
         yield clear ();
@@ -261,6 +270,14 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
         }
 
         return result;
+    }
+
+    private void build_signals (Sequeler.Partials.TreeBuilder tree) {
+        tree.sortby_column.connect ((column, direction) => {
+            sortby = column;
+            sort = direction;
+            reload_results ();
+        });
     }
 
     public void go_prev_page () {

@@ -43,15 +43,21 @@ public interface DataBaseType : Object {
     /*
      * Show table structure
      */
-    public abstract string show_table_structure (string table);
+    public abstract string show_table_structure (string table, string? sortby = null, string sort = "ASC");
 
     /*
      * Show table content
      */
-    public abstract string show_table_content (string table, int? count, int? page = null);
+    public abstract string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    );
 
     /*
      * Show table relations
      */
-    public abstract string show_table_relations (string table, string? database);
+    public abstract string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    );
 }

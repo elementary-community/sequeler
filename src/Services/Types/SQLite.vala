@@ -43,12 +43,19 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
         return "ALTER TABLE %s RENAME TO %s".printf (old_table, new_table);
     }
 
-    public string show_table_structure (string table) {
+    public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
         return "PRAGMA table_info('%s')".printf (table);
     }
 
-    public string show_table_content (string table, int? count, int? page = null) {
+    public string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    ) {
         var output = "SELECT * FROM %s".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY `%s` %s".printf (sortby, sort);
+        }
 
         if (count != null && count > settings.limit_results) {
             output += " LIMIT %i".printf (settings.limit_results);
@@ -61,7 +68,10 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
         return output;
     }
 
-    public string show_table_relations (string table, string? database) {
+    public string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    ) {
         return "PRAGMA foreign_key_list('%s')".printf (table);
     }
 }

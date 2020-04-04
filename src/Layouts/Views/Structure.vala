@@ -44,6 +44,9 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
         set { _database = value; }
     }
 
+    private string? sortby = null;
+    private string sort = "ASC";
+
     public Structure (Sequeler.Window main_window) {
         Object (
             orientation: Gtk.Orientation.VERTICAL,
@@ -154,6 +157,10 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
             return;
         }
 
+        // Reset sorting attributes.
+        sortby = null;
+        sort = "ASC";
+
         table_name = table;
         database = db_name;
 
@@ -175,7 +182,8 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
         }
 
         start_spinner ();
-        var query = (window.main.connection_manager.db_type as DataBaseType).show_table_structure (table_name);
+        var query = (window.main.connection_manager.db_type as DataBaseType)
+                    .show_table_structure (table_name, sortby, sort);
         reloading = true;
 
         var table_schema = yield get_table_schema (query);
@@ -184,7 +192,8 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
             return;
         }
 
-        var result_data = new Sequeler.Partials.TreeBuilder (table_schema, window);
+        var result_data = new Sequeler.Partials.TreeBuilder (table_schema, window, 0, 0, sortby, sort);
+        build_signals (result_data);
         result_message.label = table_schema.get_n_rows ().to_string () + _(" Fields");
 
         yield clear ();
@@ -207,5 +216,13 @@ public class Sequeler.Layouts.Views.Structure : Gtk.Grid {
         }
 
         return result;
+    }
+
+    private void build_signals (Sequeler.Partials.TreeBuilder tree) {
+        tree.sortby_column.connect ((column, direction) => {
+            sortby = column;
+            sort = direction;
+            reload_results ();
+        });
     }
 }

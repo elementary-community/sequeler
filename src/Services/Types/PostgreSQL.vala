@@ -49,12 +49,25 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         return "ALTER TABLE \"%s\" RENAME TO \"%s\"".printf (old_table, new_table);
     }
 
-    public string show_table_structure (string table) {
-        return "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
+    public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
+        var output = "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
+
+        return output;
     }
 
-    public string show_table_content (string table, int? count, int? page = null) {
+    public string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    ) {
         var output = "SELECT * FROM  \"%s\"".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY \"%s\" %s".printf (sortby, sort);
+        }
 
         if (count != null && count > settings.limit_results) {
             output += " LIMIT %i".printf (settings.limit_results);
@@ -67,7 +80,16 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         return output;
     }
 
-    public string show_table_relations (string table, string? database) {
-        return "SELECT ccu.column_name as \"COLUMN_NAME\", tc.constraint_name as \"CONSTRAINT_NAME\", kcu.column_name as \"REFERENCED_COLUMN_NAME\", tc.table_name as \"REFERENCED_TABLE\" FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_name='%s' AND ccu.table_schema = '%s'".printf (table, database);
+    public string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    ) {
+        var output = "SELECT ccu.column_name as \"COLUMN_NAME\", tc.constraint_name as \"CONSTRAINT_NAME\", kcu.column_name as \"REFERENCED_COLUMN_NAME\", tc.table_name as \"REFERENCED_TABLE\" FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_name='%s' AND ccu.table_schema = '%s'".printf (table, database);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
+
+        return output;
     }
 }
