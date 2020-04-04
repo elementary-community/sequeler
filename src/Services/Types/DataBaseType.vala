@@ -43,7 +43,7 @@ public interface DataBaseType : Object {
     /*
      * Show table structure
      */
-    public abstract string show_table_structure (string table);
+    public abstract string show_table_structure (string table, string? sortby = null, string sort = "ASC");
 
     /*
      * Show table content

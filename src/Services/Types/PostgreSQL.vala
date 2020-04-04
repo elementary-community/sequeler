@@ -49,8 +49,14 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         return "ALTER TABLE \"%s\" RENAME TO \"%s\"".printf (old_table, new_table);
     }
 
-    public string show_table_structure (string table) {
-        return "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
+    public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
+        var output = "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
+
+        return output;
     }
 
     public string show_table_content (
@@ -58,6 +64,10 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         string? sortby = null, string sort = "ASC"
     ) {
         var output = "SELECT * FROM  \"%s\"".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY \"%s\" %s".printf (sortby, sort);
+        }
 
         if (count != null && count > settings.limit_results) {
             output += " LIMIT %i".printf (settings.limit_results);
