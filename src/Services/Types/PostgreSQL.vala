@@ -56,18 +56,18 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     public string show_table_content (string table, int? count, int? page = null) {
         var output = "SELECT * FROM  \"%s\"".printf (table);
 
-		if (count != null && count > settings.limit_results) {
-			output += " LIMIT %i".printf (settings.limit_results);
-		}
+        if (count != null && count > settings.limit_results) {
+            output += " LIMIT %i".printf (settings.limit_results);
+        }
 
-		if (page != null && page > 1) {
-			output += " OFFSET %i".printf (settings.limit_results * (page - 1));
-		}
+        if (page != null && page > 1) {
+            output += " OFFSET %i".printf (settings.limit_results * (page - 1));
+        }
 
-		return output;
+        return output;
     }
-    
+
     public string show_table_relations (string table, string? database) {
-        return "SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = '%s' AND TABLE_SCHEMA = '%s'".printf (table, database);
+        return "SELECT ccu.column_name as \"COLUMN_NAME\", tc.constraint_name as \"CONSTRAINT_NAME\", kcu.column_name as \"REFERENCED_COLUMN_NAME\", tc.table_name as \"REFERENCED_TABLE\" FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_name='%s' AND ccu.table_schema = '%s'".printf (table, database);
     }
 }

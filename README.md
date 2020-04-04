@@ -30,7 +30,7 @@ If you like Sequeler and you want to support its development, consider donating 
 ## Install it from source
 You can install Sequeler by compiling from source, here's the list of dependencies required:
  - `gtk+-3.0>=3.22.29`
- - `granite>=0.5.1`
+ - `granite>=5.2`
  - `glib-2.0`
  - `gee-0.8`
  - `gobject-2.0`
@@ -41,7 +41,7 @@ You can install Sequeler by compiling from source, here's the list of dependenci
  - `libssh2`
  - `meson`
 
-## Building 
+## Building
 ```
 meson build --prefix=/usr
 sudo -C build ninja install

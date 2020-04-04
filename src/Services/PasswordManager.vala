@@ -21,58 +21,62 @@
 
 public class Sequeler.Services.PasswordManager : Object {
 
-	// Store Password Async
-	public virtual async void store_password_async (string id, string password) throws Error {
-		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["id"] = id;
-		attributes["schema"] = Constants.PROJECT_NAME;
+    // Store Password Async
+    public async void store_password_async (string id, string password) throws Error {
+        var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
+        attributes["id"] = id;
+        attributes["schema"] = Constants.PROJECT_NAME;
 
-		var key_name = Constants.PROJECT_NAME + "." + id;
+        var key_name = Constants.PROJECT_NAME + "." + id;
 
-		bool result = yield Secret.password_storev (schema, attributes, Secret.COLLECTION_DEFAULT, key_name, password, null);
+        bool result = yield Secret.password_storev (schema, attributes, Secret.COLLECTION_DEFAULT, key_name, password, null);
 
-		if (! result)
-			debug("Unable to store password for \"%s\" in libsecret keyring", key_name);
-	}
+        if (! result) {
+            debug ("Unable to store password for \"%s\" in libsecret keyring", key_name);
+        }
+    }
 
-	// Get Password Async
-	public virtual async string? get_password_async (string id) throws Error {
-		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["id"] = id;
-		attributes["schema"] = Constants.PROJECT_NAME;
+    // Get Password Async
+    public async string? get_password_async (string id) throws Error {
+        var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
+        attributes["id"] = id;
+        attributes["schema"] = Constants.PROJECT_NAME;
 
-		var key_name = Constants.PROJECT_NAME + "." + id;
+        var key_name = Constants.PROJECT_NAME + "." + id;
 
-		string? password = yield Secret.password_lookupv (schema, attributes, null);
+        string? password = yield Secret.password_lookupv (schema, attributes, null);
 
-		if (password == null)
-			debug("Unable to fetch password in libsecret keyring for %s", key_name);
+        if (password == null) {
+            debug ("Unable to fetch password in libsecret keyring for %s", key_name);
+        }
 
-		return password;
-	}
+        return password;
+    }
 
-	// Delete Password Async
-	public virtual async void clear_password_async (string id) throws Error {
-		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["id"] = id;
-		attributes["schema"] = Constants.PROJECT_NAME;
+    // Delete Password Async
+    public async void clear_password_async (string id) throws Error {
+        var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
+        attributes["id"] = id;
+        attributes["schema"] = Constants.PROJECT_NAME;
 
-		var key_name = Constants.PROJECT_NAME + "." + id;
+        var key_name = Constants.PROJECT_NAME + "." + id;
 
-		bool removed = yield Secret.password_clearv (schema, attributes, null);
+        bool removed = yield Secret.password_clearv (schema, attributes, null);
 
-		if (! removed)
-			debug("Unable to clear password in libsecret keyring for %s", key_name);
-	}
+        if (! removed) {
+            debug ("Unable to clear password in libsecret keyring for %s", key_name);
+        }
+    }
 
-	// Delete All Passwords
-	public virtual async void clear_all_passwords_async () throws Error {
-		var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
-		attributes["schema"] = Constants.PROJECT_NAME;
+    // Delete All Passwords
+    public async void clear_all_passwords_async () throws Error {
+        var attributes = new GLib.HashTable<string, string> (str_hash, str_equal);
+        attributes["schema"] = Constants.PROJECT_NAME;
 
-		bool removed = yield Secret.password_clearv (schema, attributes, null);
+        bool removed = yield Secret.password_clearv (schema, attributes, null);
 
-		if (! removed)
-			debug("Unable to clear all passwords in libsecret");
-	}
+        if (! removed) {
+            debug ("Unable to clear all passwords in libsecret");
+        }
+    }
 }

@@ -6,6 +6,14 @@
     background-color: transparent;
 }
 
+.library-box:selected .library-btn {
+	background-color: transparent;
+}
+
+.library-box:selected .library-btn image {
+	color: @fg_color;
+}
+
 .library-inner-box {
     background: transparent;
     transition: background 320ms ease;
@@ -27,6 +35,11 @@
 .library-btn:active,
 .library-btn:focus {
     background-color: transparent;
+}
+
+.grid-motion {
+	background-color: alpha (#3689e6, 0.25);
+    border-radius: 4px;
 }
 
 .library-titlebar {
@@ -56,11 +69,49 @@
 }
 
 .headerbar-separator {
-    margin-left: 0;
+    margin-right: 3px;
+    margin-left: 3px;
 }
 
 infobar.inline revealer > box {
     box-shadow: inset 0 -1px 0 0 alpha (#fff, 0.4);
     border-width: 1px;
     border-radius: 4px;
+}
+
+.color-button radio,
+.color-button radio:checked {
+    border-color: alpha (#000, 0.3);
+    box-shadow:
+        inset 0 1px 0 0 alpha (@inset_dark_color, 0.7),
+        inset 0 0 0 1px alpha (@inset_dark_color, 0.3),
+        0 1px 0 0 alpha (@bg_highlight_color, 0.3);
+    padding: 10px;
+    -gtk-icon-shadow: none;
+}
+
+.color-button radio:focus {
+    border-color: @colorAccent;
+    box-shadow:
+        inset 0 1px 0 0 alpha (@inset_dark_color, 0.7),
+        inset 0 0 0 1px alpha (@inset_dark_color, 0.3),
+        inset 0 0 0 1px alpha (@bg_highlight_color, 0.05),
+        0 1px 0 0 alpha (@bg_highlight_color, 0.3),
+        0 0 0 1px alpha (@colorAccent, 0.25);
+}
+
+.color-dark radio {
+    background: #252E32;
+    border-color: #151B1C;
+    color: #fff;
+}
+
+.color-light radio {
+    background: #fdf6e3;
+    color: #4d4d4d;
+}
+
+.color-white radio {
+    background: #fff;
+    color: #000;
 }

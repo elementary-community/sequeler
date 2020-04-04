@@ -1,3 +1,40 @@
+com.github.alecaddd.sequeler (0.7.5) xenial; urgency=medium
+
+  * You can now duplicate connections.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 02 Apr 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.4) xenial; urgency=medium
+
+  * Manually reorder saved connection.
+  * Allow selecting a custom SSH public key.
+  * Fix SSH tunnel crashes.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 31 Mar 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.3) xenial; urgency=medium
+
+  * Strip comments from SQL raw queries.
+	* Better handle complex queries on multiple lines.
+	* Speed up query rendering.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sun, 1 Sept 2019 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.2) xenial; urgency=medium
+
+  * Edit font size of the Query Tab.
+  * Edit background style of the Query Tab.
+	* Save and remember the Query Tab size.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 5 Aug 2019 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.1) xenial; urgency=medium
+
+  * Fixed PostgreSQL relationship table.
+  * Fixed wrong response message when handling non select queries.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Fri, 2 Aug 2019 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.0) xenial; urgency=medium
 
   * Removed unused libfixposix.

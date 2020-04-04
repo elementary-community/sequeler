@@ -20,10 +20,10 @@
 */
 
 namespace Sequeler {
-	public Sequeler.Services.Settings settings;
-	public Sequeler.Services.PasswordManager password_mngr;
-	public Sequeler.Services.UpgradeManager upgrade_mngr;
-	public Secret.Schema schema;
+    public Sequeler.Services.Settings settings;
+    public Sequeler.Services.PasswordManager password_mngr;
+    public Sequeler.Services.UpgradeManager upgrade_mngr;
+    public Secret.Schema schema;
 }
 
 public class Sequeler.Application : Gtk.Application {
@@ -74,11 +74,11 @@ public class Sequeler.Application : Gtk.Application {
                     var window = this.add_new_window ();
 
                     window.main.library.check_open_sqlite_file (file.get_uri (), file.get_basename ());
-		            break;
+                    break;
 
-		        default:
-		            error (_("Something completely unexpected happened"));
-		    }
+                default:
+                    error (_("Something completely unexpected happened"));
+            }
         }
     }
 
@@ -95,6 +95,6 @@ public class Sequeler.Application : Gtk.Application {
     }
 
     protected override void activate () {
-		this.add_new_window ();
+        this.add_new_window ();
     }
 }
