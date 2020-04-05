@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -65,13 +65,13 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
             mode_switch.active = true;
         }
 
-        var new_window_item = new_menuitem (_("New Window"), {"<Control>n"});
+        var new_window_item = new_menuitem (_("New Window"), "<Control>n");
         new_window_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_WINDOW;
 
-        var new_connection_item = new_menuitem (_("New Connection"), {"<Control><Shift>n"});
+        var new_connection_item = new_menuitem (_("New Connection"), "<Control><Shift>n");
         new_connection_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_NEW_CONNECTION;
 
-        var quit_item = new_menuitem (_("Quit"), {"<Control>q"});
+        var quit_item = new_menuitem (_("Quit"), "<Control>q");
         quit_item.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_QUIT;
 
         var menu_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
@@ -109,29 +109,12 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         pack_end (mode_switch);
     }
 
-    private Gtk.Button new_menuitem (string label, string[] accels) {
-        var item_label = new Gtk.Label (label);
-        item_label.halign = Gtk.Align.START;
-        item_label.hexpand = true;
-        item_label.margin_start = 6;
+    private Gtk.ModelButton new_menuitem (string label, string accels) {
+        var button = new Gtk.ModelButton ();
+        button.get_child ().destroy ();
+        button.add (new Granite.AccelLabel (label, accels));
 
-        var item_accel_label = new Gtk.Label (Granite.markup_accel_tooltip (accels));
-        item_accel_label.halign = Gtk.Align.END;
-        item_accel_label.margin_end = item_accel_label.margin_start = 6;
-        item_accel_label.use_markup = true;
-
-        var item_grid = new Gtk.Grid ();
-        item_grid.add (item_label);
-        item_grid.add (item_accel_label);
-
-        var item = new Gtk.Button ();
-        item.add (item_grid);
-        item.get_style_context ().add_class (Gtk.STYLE_CLASS_MENUITEM);
-        item.clicked.connect (() => {
-            menu_popover.hide ();
-        });
-
-        return item;
+        return button;
     }
 
     public async void toggle_logout () {
