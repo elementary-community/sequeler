@@ -222,6 +222,7 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         notebook.add_button_tooltip = _("Create a new Query Tab");
         notebook.expand = true;
         notebook.allow_restoring = true;
+        notebook.max_restorable_tabs = 1;
 
         var first_page = new Sequeler.Layouts.Views.Query (window);
         var first_tab = new Granite.Widgets.Tab (
