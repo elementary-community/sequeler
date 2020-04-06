@@ -98,7 +98,9 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         zoom_out_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_ZOOM_OUT;
         zoom_out_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>minus"}, _("Zoom Out"));
 
-        var zoom_default_button = new Gtk.Button.with_label ("100%");
+        var zoom_default_button = new Gtk.Button.with_label (
+            "%.0f%%".printf (window.action_manager.get_current_font_size () * 10)
+        );
         zoom_default_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_ZOOM_DEFAULT;
         zoom_default_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>0"}, _("Zoom 1:1"));
 
@@ -163,10 +165,6 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         font_style.no_show_all = true;
 
         view_options.add (font_style);
-
-        // Content View buttons
-        // Structure View buttons
-        // Relations View buttons
 
         toolbar.attach (view_options, 1, 0, 1, 1);
 
