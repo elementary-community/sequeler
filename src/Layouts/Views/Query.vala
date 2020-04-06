@@ -272,11 +272,12 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     public Gtk.Button build_run_button () {
-        var run_image = new Gtk.Image.from_icon_name ("media-playback-start-symbolic", Gtk.IconSize.BUTTON);
         run_button = new Gtk.Button.with_label (_("Run Query"));
         run_button.get_style_context ().add_class ("suggested-action");
+        run_button.get_style_context ().add_class ("notebook-temp-fix");
         run_button.always_show_image = true;
-        run_button.set_image (run_image);
+        run_button.image = new Gtk.Image.from_icon_name ("media-playback-start-symbolic", Gtk.IconSize.BUTTON);
+        run_button.image.valign = Gtk.Align.CENTER;
         run_button.can_focus = false;
         run_button.margin = 10;
         run_button.sensitive = false;

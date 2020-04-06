@@ -115,3 +115,7 @@ infobar.inline revealer > box {
     background: #fff;
     color: #000;
 }
+
+button.notebook-temp-fix image {
+    color: @selected_fg_color;
+}
