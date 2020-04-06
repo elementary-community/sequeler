@@ -27,7 +27,9 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
     public Sequeler.Layouts.Views.Structure structure;
     public Sequeler.Layouts.Views.Content content;
     public Sequeler.Layouts.Views.Relations relations;
-    public Sequeler.Layouts.Views.Query query;
+    public Granite.Widgets.DynamicNotebook query;
+
+    private Sequeler.Layouts.Views.Query tab_to_restore;
 
     public Gtk.MenuButton font_style;
 
@@ -172,7 +174,7 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         structure = new Sequeler.Layouts.Views.Structure (window);
         content = new Sequeler.Layouts.Views.Content (window);
         relations = new Sequeler.Layouts.Views.Relations (window);
-        query = new Sequeler.Layouts.Views.Query (window);
+        query = get_query_notebook ();
 
         stack.add_named (structure, "Structure");
         stack.add_named (content, "Content");
@@ -201,17 +203,58 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
         color_button_dark.clicked.connect (() => {
             Sequeler.settings.style_scheme = "solarized-dark";
-            query.update_color_style ();
+            (query.current.page as Layouts.Views.Query).update_color_style ();
         });
 
         color_button_light.clicked.connect (() => {
             Sequeler.settings.style_scheme = "solarized-light";
-            query.update_color_style ();
+            (query.current.page as Layouts.Views.Query).update_color_style ();
         });
 
         color_button_white.clicked.connect (() => {
             Sequeler.settings.style_scheme = "classic";
-            query.update_color_style ();
+            (query.current.page as Layouts.Views.Query).update_color_style ();
         });
+    }
+
+    private Granite.Widgets.DynamicNotebook get_query_notebook () {
+        var notebook = new Granite.Widgets.DynamicNotebook ();
+        notebook.add_button_tooltip = _("Create a new Query Tab");
+        notebook.expand = true;
+        notebook.allow_restoring = true;
+
+        var first_page = new Sequeler.Layouts.Views.Query (window);
+        var first_tab = new Granite.Widgets.Tab (
+            _("Query"), new ThemedIcon ("user-offline"), first_page
+        );
+        notebook.insert_tab (first_tab, 0);
+
+        notebook.new_tab_requested.connect (() => {
+            var new_page = new Sequeler.Layouts.Views.Query (window);
+            var new_tab = new Granite.Widgets.Tab (
+                _("Query %i").printf (notebook.n_tabs), new ThemedIcon ("user-offline"), new_page
+            );
+            notebook.insert_tab (new_tab, notebook.n_tabs - 1);
+        });
+
+        notebook.close_tab_requested.connect ((tab) => {
+            if (notebook.n_tabs == 1) {
+                var new_page = new Sequeler.Layouts.Views.Query (window);
+                var new_tab = new Granite.Widgets.Tab (
+                    _("Query"), new ThemedIcon ("user-offline"), new_page
+                );
+                notebook.insert_tab (new_tab, notebook.n_tabs - 1);
+            }
+            tab_to_restore = tab.page as Sequeler.Layouts.Views.Query;
+            tab.restore_data = tab.label;
+            return true;
+        });
+
+        notebook.tab_restored.connect ((label, data, icon) => {
+            var tab = new Granite.Widgets.Tab (label, icon, tab_to_restore);
+            notebook.insert_tab (tab, notebook.n_tabs - 1);
+        });
+
+        return notebook;
     }
 }

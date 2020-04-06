@@ -94,7 +94,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         settings.window_width = width;
         settings.window_height = height;
         settings.sidebar_width = main.get_position ();
-        settings.query_area = main.database_view.query.panels.get_position ();
+        if (main.database_view.query.n_tabs > 0) {
+            settings.query_area =
+                (main.database_view.query.current.page as Layouts.Views.Query)
+                .panels.get_position ();
+        }
     }
 
     public void show_app () {
