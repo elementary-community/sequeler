@@ -19,25 +19,70 @@
 * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
 */
 
-public class Sequeler.Services.Settings : Granite.Services.Settings {
-    public int pos_x { get; set; }
-    public int pos_y { get; set; }
-    public int window_width { get; set; }
-    public int window_height { get; set; }
-    public int sidebar_width { get; set; }
-    public string[] saved_connections { get; set; }
-    public int tot_connections { get; set; }
-    public int limit_results { get; set; }
-    public bool dark_theme { get; set; }
-    public bool save_quick { get; set; }
-    public string version { get; set; }
-    public bool use_system_font { get; set; }
-    public string font { get; set; }
-    public string style_scheme { get; set; }
-    public int query_area { get; set; }
+public class Sequeler.Services.Settings : GLib.Settings {
+        public int pos_x {
+        get { return get_int ("pos-x"); }
+        set { set_int ("pos-x", value); }
+    }
+    public int pos_y {
+        get { return get_int ("pos-y"); }
+        set { set_int ("pos-y", value); }
+    }
+    public int window_width {
+        get { return get_int ("window-width"); }
+        set { set_int ("window-width", value); }
+    }
+    public int window_height {
+        get { return get_int ("window-height"); }
+        set { set_int ("window-height", value); }
+    }
+    public int sidebar_width {
+        get { return get_int ("sidebar-width"); }
+        set { set_int ("sidebar-width", value); }
+    }
+    public string[] saved_connections {
+        owned get { return get_strv ("saved-connections"); }
+        set { set_strv ("saved-connections", value); }
+    }
+    public int tot_connections {
+        get { return get_int ("tot-connections"); }
+        set { set_int ("tot-connections", value); }
+    }
+    public int limit_results {
+        get { return get_int ("limit-results"); }
+        set { set_int ("limit-results", value); }
+    }
+    public bool dark_theme {
+        get { return get_boolean ("dark-theme"); }
+        set { set_boolean ("dark-theme", value); }
+    }
+    public bool save_quick {
+        get { return get_boolean ("save-quick"); }
+        set { set_boolean ("save-quick", value); }
+    }
+    public string version {
+        owned get { return get_string ("version"); }
+        set { set_string ("version", value); }
+    }
+    public bool use_system_font {
+        get { return get_boolean ("use-system-font"); }
+        set { set_boolean ("use-system-font", value); }
+    }
+    public string font {
+        owned get { return get_string ("font"); }
+        set { set_string ("font", value); }
+    }
+    public string style_scheme {
+        owned get { return get_string ("style-scheme"); }
+        set { set_string ("style-scheme", value); }
+    }
+    public int query_area {
+        get { return get_int ("query-area"); }
+        set { set_int ("query-area", value); }
+    }
 
     public Settings () {
-        base (Constants.PROJECT_NAME);
+        Object (schema_id: Constants.PROJECT_NAME);
     }
 
     public void add_connection (Gee.HashMap<string, string> data) {
