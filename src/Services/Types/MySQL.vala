@@ -51,7 +51,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
     }
 
     public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
-        var output = "SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, DATA_TYPE, COLUMN_DEFAULT, COLUMN_KEY, EXTRA, COLUMN_COMMENT FROM information_schema.COLUMNS WHERE table_name = '%s'".printf (table);
+        var output = "SELECT COLUMN_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, COLUMN_COMMENT FROM information_schema.COLUMNS WHERE table_name = '%s' AND table_schema = DATABASE()".printf (table);
 
         if (sortby != null) {
             output += " ORDER BY %s %s".printf (sortby, sort);
