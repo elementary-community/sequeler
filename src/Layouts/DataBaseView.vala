@@ -228,6 +228,10 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         var first_tab = new Granite.Widgets.Tab (
             _("Query"), new ThemedIcon ("user-offline"), first_page
         );
+        first_page.update_tab_indicator.connect ((status) => {
+            var icon = status ? new ThemedIcon ("user-available") : new ThemedIcon ("dialog-error");
+            first_tab.icon = icon;
+        });
         notebook.insert_tab (first_tab, 0);
 
         notebook.new_tab_requested.connect (() => {

@@ -44,6 +44,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     public Gtk.Paned panels;
     public Sequeler.Partials.TreeBuilder result_data;
 
+    public signal void update_tab_indicator (bool status);
+
     public Query (Sequeler.Window main_window) {
         Object (
             orientation: Gtk.Orientation.VERTICAL,
@@ -315,6 +317,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     public void show_result_icon (bool status) {
+        update_tab_indicator (status);
         if (status) {
             icon_success.visible = true;
             icon_success.no_show_all = false;
