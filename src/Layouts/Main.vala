@@ -93,9 +93,9 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
             connection_manager.connection = null;
         }
 
+        window.unbind_manager ();
         connection_manager = null;
         sidebar_stack.set_visible_child_full ("library", Gtk.StackTransitionType.CROSSFADE);
         main_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.UNDER_RIGHT);
-        window.unbind_manager ();
     }
 }

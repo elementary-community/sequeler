@@ -27,6 +27,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     public Gtk.SourceBuffer buffer_copy;
     public Gtk.SourceStyleSchemeManager style_scheme_manager;
     public Gtk.CssProvider style_provider;
+    private Gtk.Revealer error_revealer;
+    private Gtk.Label error_message;
     public Gtk.ScrolledWindow scroll_results;
     public Gtk.Spinner spinner;
     public Gtk.Label loading_msg;
@@ -248,14 +250,30 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         scroll_results.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
         scroll_results.expand = true;
 
+        error_revealer = new Gtk.Revealer ();
+
+        var error_grid = new Gtk.Grid ();
+        error_grid.get_style_context ().add_class ("query-error");
+        error_grid.hexpand = true;
+        error_grid.margin = 6;
+
+        error_message = new Gtk.Label ("");
+        error_message.wrap = true;
+        error_message.margin = 6;
+        error_grid.add (error_message);
+
+        error_revealer.add (error_grid);
+        error_revealer.reveal_child = false;
+
         var info_bar = new Gtk.Grid ();
         info_bar.get_style_context ().add_class ("library-toolbar");
         info_bar.attach (build_results_msg (), 0, 0, 1, 1);
         info_bar.attach (build_export_btn (), 1, 0, 1, 1);
 
         results_view.attach (action_bar, 0, 0, 1, 1);
-        results_view.attach (scroll_results, 0, 1, 1, 1);
-        results_view.attach (info_bar, 0, 2, 1, 1);
+        results_view.attach (error_revealer, 0, 1, 1, 1);
+        results_view.attach (scroll_results, 0, 2, 1, 1);
+        results_view.attach (info_bar, 0, 3, 1, 1);
 
         return results_view;
     }
@@ -285,8 +303,13 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     private void on_query_error (string error) {
-        scroll_results.remove (result_data);
-        result_data = null;
+        if (result_data != null) {
+            scroll_results.remove (result_data);
+            result_data = null;
+        }
+
+        error_message.label = error;
+        error_revealer.reveal_child = true;
     }
 
     public Gtk.Button build_run_button () {
@@ -309,18 +332,18 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         var result_box = new Gtk.Grid ();
 
         icon_success = new Gtk.Image.from_icon_name ("process-completed-symbolic", Gtk.IconSize.BUTTON);
-        icon_success.margin_start = 7;
+        icon_success.margin_start = 6;
         icon_success.visible = false;
         icon_success.no_show_all = true;
 
         icon_fail = new Gtk.Image.from_icon_name ("dialog-error-symbolic", Gtk.IconSize.BUTTON);
-        icon_fail.margin_start = 7;
+        icon_fail.margin_start = 6;
         icon_fail.visible = false;
         icon_fail.no_show_all = true;
 
         result_message = new Gtk.Label (_("No Results Available"));
         result_message.halign = Gtk.Align.START;
-        result_message.margin = 7;
+        result_message.margin = 6;
         result_message.margin_top = 6;
         result_message.hexpand = true;
         result_message.wrap = true;
@@ -435,6 +458,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
             return;
         }
 
+        if (error_revealer.get_reveal_child ()) {
+            error_revealer.reveal_child = false;
+        }
+
         if (result_data != null) {
             scroll_results.remove (result_data);
             result_data = null;
@@ -467,6 +494,10 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
             result_message.label = _("Unable to process Query!");
             show_result_icon (false);
             return;
+        }
+
+        if (error_revealer.get_reveal_child ()) {
+            error_revealer.reveal_child = false;
         }
 
         if (response > 0) {
