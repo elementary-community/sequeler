@@ -25,6 +25,7 @@ public class Sequeler.Services.ConnectionManager : Object {
     private Object _db_type;
 
     public signal void ssh_tunnel_ready ();
+    public signal void query_error (string error);
 
     public Object db_type {
         get { return _db_type; }
@@ -470,7 +471,7 @@ public class Sequeler.Services.ConnectionManager : Object {
         return output;
     }
 
-    public async Gda.DataModel? init_select_query (string query) {
+    public async Gda.DataModel? init_select_query (string query, bool silent = false) {
         Gda.DataModel? result = null;
         SourceFunc callback = init_select_query.callback;
         var error = "";
@@ -489,14 +490,18 @@ public class Sequeler.Services.ConnectionManager : Object {
         yield;
 
         if (error != "") {
-            query_warning (error);
+            if (!silent) {
+                query_warning (error);
+            } else {
+                query_error (error);
+            }
             return null;
         }
 
         return result;
     }
 
-    public async int? init_query (string query) {
+    public async int? init_query (string query, bool silent = false) {
         int result = 0;
         var error = "";
 
@@ -507,7 +512,11 @@ public class Sequeler.Services.ConnectionManager : Object {
         }
 
         if (error != "") {
-            query_warning (error);
+            if (!silent) {
+                query_warning (error);
+            } else {
+                query_error (error);
+            }
             return null;
         }
 

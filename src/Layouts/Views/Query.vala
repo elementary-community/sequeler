@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+ * Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public
@@ -69,6 +69,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
         panels.pack1 (scroll, false, false);
         panels.pack2 (results_view (), true, false);
+
+        window.bind_manager.connect (on_bind_manager);
+        window.unbind_manager.connect (on_unbind_manager);
     }
 
     public void use_default_font (bool value) {
@@ -273,6 +276,19 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         loading_msg.no_show_all = !toggle;
     }
 
+    private void on_bind_manager () {
+        window.main.connection_manager.query_error.connect (on_query_error);
+    }
+
+    private void on_unbind_manager () {
+        window.main.connection_manager.query_error.disconnect (on_query_error);
+    }
+
+    private void on_query_error (string error) {
+        scroll_results.remove (result_data);
+        result_data = null;
+    }
+
     public Gtk.Button build_run_button () {
         run_button = new Gtk.Button.with_label (_("Run Query"));
         run_button.get_style_context ().add_class ("suggested-action");
@@ -398,11 +414,11 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     private async Gda.DataModel? select_statement (string query) {
-        return yield window.main.connection_manager.init_select_query (query);
+        return yield window.main.connection_manager.init_select_query (query, true);
     }
 
     public async int? non_select_statement (string query) {
-        return yield window.main.connection_manager.init_query (query);
+        return yield window.main.connection_manager.init_query (query, true);
     }
 
     public void handle_select_response (Gda.DataModel? response) {

@@ -78,6 +78,7 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
         window.headerbar.subtitle = cnn_manager.data["username"] + "@" + host;
 
         database_schema.reload_schema.begin ();
+        window.bind_manager ();
     }
 
     public void connection_closed () {
@@ -95,5 +96,6 @@ public class Sequeler.Layouts.Main : Gtk.Paned {
         connection_manager = null;
         sidebar_stack.set_visible_child_full ("library", Gtk.StackTransitionType.CROSSFADE);
         main_stack.set_visible_child_full ("welcome", Gtk.StackTransitionType.UNDER_RIGHT);
+        window.unbind_manager ();
     }
 }
