@@ -30,9 +30,6 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     public Gtk.AccelGroup accel_group { get; construct; }
 
-    public signal void bind_manager ();
-    public signal void unbind_manager ();
-
     public Window (Sequeler.Application sequeler_app) {
         Object (
             application: sequeler_app,

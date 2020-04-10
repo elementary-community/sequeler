@@ -239,6 +239,10 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
             var new_tab = new Granite.Widgets.Tab (
                 _("Query %i").printf (notebook.n_tabs), new ThemedIcon ("user-offline"), new_page
             );
+            new_page.update_tab_indicator.connect ((status) => {
+                var icon = status ? new ThemedIcon ("user-available") : new ThemedIcon ("dialog-error");
+                new_tab.icon = icon;
+            });
             notebook.insert_tab (new_tab, notebook.n_tabs - 1);
         });
 
@@ -257,6 +261,10 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
 
         notebook.tab_restored.connect ((label, data, icon) => {
             var tab = new Granite.Widgets.Tab (label, icon, tab_to_restore);
+            tab_to_restore.update_tab_indicator.connect ((status) => {
+                var update_icon = status ? new ThemedIcon ("user-available") : new ThemedIcon ("dialog-error");
+                tab.icon = update_icon;
+            });
             notebook.insert_tab (tab, notebook.n_tabs - 1);
         });
 

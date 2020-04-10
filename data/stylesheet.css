@@ -117,15 +117,9 @@ infobar.inline revealer > box {
 }
 
 .query-error {
-    background-image:
-        linear-gradient(
-            to bottom,
-            @STRAWBERRY_300,
-            @STRAWBERRY_500
-        );
-    border-radius: 6px;
-    color: #fff;
-    text-shadow: 0 1px 2px alpha (#000, 0.5);;
+    background-color: alpha (@STRAWBERRY_300, 0.2);
+    border: 1px solid @STRAWBERRY_500;
+    border-radius: 4px;
 }
 
 button.notebook-temp-fix image {

@@ -71,9 +71,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
         panels.pack1 (scroll, false, false);
         panels.pack2 (results_view (), true, false);
-
-        window.bind_manager.connect (on_bind_manager);
-        window.unbind_manager.connect (on_unbind_manager);
     }
 
     public void use_default_font (bool value) {
@@ -294,24 +291,6 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         loading_msg.no_show_all = !toggle;
     }
 
-    private void on_bind_manager () {
-        window.main.connection_manager.query_error.connect (on_query_error);
-    }
-
-    private void on_unbind_manager () {
-        window.main.connection_manager.query_error.disconnect (on_query_error);
-    }
-
-    private void on_query_error (string error) {
-        if (result_data != null) {
-            scroll_results.remove (result_data);
-            result_data = null;
-        }
-
-        error_message.label = error;
-        error_revealer.reveal_child = true;
-    }
-
     public Gtk.Button build_run_button () {
         run_button = new Gtk.Button.with_label (_("Run Query"));
         run_button.get_style_context ().add_class ("suggested-action");
@@ -436,18 +415,21 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         }
     }
 
-    private async Gda.DataModel? select_statement (string query) {
-        return yield window.main.connection_manager.init_select_query (query, true);
+    private async Gee.HashMap<Gda.DataModel?, string> select_statement (string query) {
+        return yield window.main.connection_manager.init_silent_select_query (query);
     }
 
-    public async int? non_select_statement (string query) {
-        return yield window.main.connection_manager.init_query (query, true);
+    public async Gee.HashMap<string?, string> non_select_statement (string query) {
+        return yield window.main.connection_manager.init_silent_query (query);
     }
 
-    public void handle_select_response (Gda.DataModel? response) {
-        response_data = response;
+    public void handle_select_response (Gee.HashMap<Gda.DataModel?, string> response) {
+        foreach (var entry in response.entries) {
+            response_data = entry.key;
+            on_query_error (entry.value);
+        }
 
-        if (response == null) {
+        if (response_data == null) {
             toggle_loading_msg (false);
             spinner.stop ();
 
@@ -467,21 +449,27 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
             result_data = null;
         }
 
-        result_data = new Sequeler.Partials.TreeBuilder (response, window);
+        result_data = new Sequeler.Partials.TreeBuilder (response_data, window);
 
         toggle_loading_msg (false);
         spinner.stop ();
 
-        result_message.label = _("%d Total Results").printf (response.get_n_rows ());
+        result_message.label = _("%d Total Results").printf (response_data.get_n_rows ());
         show_result_icon (true);
 
         scroll_results.add (result_data);
         scroll_results.show_all ();
 
-        export_button.sensitive = response.get_n_rows () == 0 ? false : true;
+        export_button.sensitive = response_data.get_n_rows () == 0 ? false : true;
     }
 
-    public void handle_query_response (int? response) {
+    public void handle_query_response (Gee.HashMap<string?, string> data) {
+        string? response = null;
+        foreach (var entry in data.entries) {
+            response = entry.key;
+            on_query_error (entry.value);
+        }
+
         toggle_loading_msg (false);
         spinner.stop ();
 
@@ -500,8 +488,8 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
             error_revealer.reveal_child = false;
         }
 
-        if (response > 0) {
-            result_message.label = _("Query Successfully Executed! Rows Affected: %d").printf (response);
+        if (int.parse (response) > 0) {
+            result_message.label = _("Query Successfully Executed! Rows Affected: %s").printf (response);
             show_result_icon (true);
         } else {
             result_message.label = _("Query Executed!");
@@ -514,6 +502,20 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         window.main.database_view.content.reset.begin ();
         window.main.database_view.relations.reset.begin ();
         window.main.database_view.structure.reset.begin ();
+    }
+
+    private void on_query_error (string error) {
+        if (error == "") {
+            return;
+        }
+
+        if (result_data != null) {
+            scroll_results.remove (result_data);
+            result_data = null;
+        }
+
+        error_message.label = error;
+        error_revealer.reveal_child = true;
     }
 
     private bool is_semicolon (unichar semicolon) {
