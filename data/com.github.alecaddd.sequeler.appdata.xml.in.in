@@ -37,6 +37,18 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+		<release version="0.7.6" date="2020-04-09">
+			<description>
+				<p>Query Tab Bonanza!</p>
+				<ul>
+					<li>Fix ORDER BY in PostgreSQL Relationship view.</li>
+					<li>Improve MySQL structure view.</li>
+					<li>Drop Granite.Settings in favor of GLib.Settings.</li>
+					<li>Implement Granite.Notebook on the Query tab.</li>
+					<li>Show query error messages inline.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.7.5" date="2020-04-04">
 			<description>
 				<p>New features and improvements</p>
