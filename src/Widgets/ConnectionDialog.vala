@@ -138,7 +138,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         color_picker = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
         color_picker.get_style_context ().add_class ("color-picker");
         color_picker.can_focus = false;
-        color_picker.set_tooltip_text(_("Select connection color"));
+        color_picker.set_tooltip_text (_("Select connection color"));
 
         header_grid.attach (image, 0, 0, 1, 2);
         header_grid.attach (header_title, 1, 0, 1, 2);
