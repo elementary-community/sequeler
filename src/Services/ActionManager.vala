@@ -99,8 +99,10 @@ public class Sequeler.Services.ActionManager : Object {
             window.main.database_schema.scroll.remove (window.main.database_schema.scroll.get_child ());
         }
 
-        window.main.database_view.query.buffer.text = "";
-        window.main.database_view.query.export_button.sensitive = false;
+        if (window.main.database_view.query.n_tabs > 0) {
+            (window.main.database_view.query.current.page as Layouts.Views.Query).buffer.text = "";
+            (window.main.database_view.query.current.page as Layouts.Views.Query).export_button.sensitive = false;
+        }
 
         window.main.database_view.structure.reset.begin ();
         window.main.database_view.structure.table_name = "";
@@ -143,13 +145,13 @@ public class Sequeler.Services.ActionManager : Object {
             return;
         }
 
-        var query = window.main.database_view.query.get_text ().strip ();
+        var query = (window.main.database_view.query.current.page as Layouts.Views.Query).get_text ().strip ();
 
         if (query == "") {
             return;
         }
 
-        window.main.database_view.query.run_query (query);
+        (window.main.database_view.query.current.page as Layouts.Views.Query).run_query (query);
     }
 
     public static void action_from_group (string action_name, ActionGroup? action_group) {
@@ -158,7 +160,7 @@ public class Sequeler.Services.ActionManager : Object {
 
     public void set_default_zoom () {
         Sequeler.settings.font = get_current_font () + " " + get_default_font_size ().to_string ();
-        window.main.database_view.query.update_font_style ();
+        (window.main.database_view.query.current.page as Layouts.Views.Query).update_font_style ();
     }
 
     // Ctrl + scroll
@@ -194,7 +196,7 @@ public class Sequeler.Services.ActionManager : Object {
 
         string new_font = font + " " + font_size.to_string ();
         Sequeler.settings.font = new_font;
-        window.main.database_view.query.update_font_style ();
+        (window.main.database_view.query.current.page as Layouts.Views.Query).update_font_style ();
     }
 
     public string get_current_font () {
@@ -210,13 +212,13 @@ public class Sequeler.Services.ActionManager : Object {
     }
 
     public string get_default_font () {
-        string font = window.main.database_view.query.default_font;
+        string font = (window.main.database_view.query.current.page as Layouts.Views.Query).default_font;
         string font_family = font.substring (0, font.last_index_of (" "));
         return font_family;
     }
 
     public double get_default_font_size () {
-        string font = window.main.database_view.query.default_font;
+        string font = (window.main.database_view.query.current.page as Layouts.Views.Query).default_font;
         string font_size = font.substring (font.last_index_of (" ") + 1);
         return double.parse (font_size);
     }

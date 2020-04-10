@@ -115,3 +115,13 @@ infobar.inline revealer > box {
     background: #fff;
     color: #000;
 }
+
+.query-error {
+    background-color: alpha (@STRAWBERRY_300, 0.2);
+    border: 1px solid @STRAWBERRY_500;
+    border-radius: 4px;
+}
+
+button.notebook-temp-fix image {
+    color: @selected_fg_color;
+}

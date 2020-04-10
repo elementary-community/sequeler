@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2018 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -42,9 +42,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         accel_group = new Gtk.AccelGroup ();
         add_accel_group (accel_group);
 
+        action_manager = new Sequeler.Services.ActionManager (app, this);
         main = new Sequeler.Layouts.Main (this);
         headerbar = new Sequeler.Layouts.HeaderBar (this);
-        action_manager = new Sequeler.Services.ActionManager (app, this);
         data_manager = new Sequeler.Services.DataManager ();
 
         build_ui ();
@@ -94,7 +94,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         settings.window_width = width;
         settings.window_height = height;
         settings.sidebar_width = main.get_position ();
-        settings.query_area = main.database_view.query.panels.get_position ();
+        if (main.database_view.query.n_tabs > 0) {
+            settings.query_area =
+                (main.database_view.query.current.page as Layouts.Views.Query)
+                .panels.get_position ();
+        }
     }
 
     public void show_app () {

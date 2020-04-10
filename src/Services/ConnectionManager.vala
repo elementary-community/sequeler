@@ -25,6 +25,7 @@ public class Sequeler.Services.ConnectionManager : Object {
     private Object _db_type;
 
     public signal void ssh_tunnel_ready ();
+    public signal void query_error (string error);
 
     public Object db_type {
         get { return _db_type; }
@@ -437,6 +438,11 @@ public class Sequeler.Services.ConnectionManager : Object {
         return connection.execute_non_select_command (query);
     }
 
+    public async string run_silent_query (string query) throws Error requires (connection.is_opened ()) {
+        var result = connection.execute_non_select_command (query);
+        return result.to_string ();
+    }
+
     public Gda.DataModel? run_select (string query) throws Error {
         return connection.execute_select_command (query);
     }
@@ -496,6 +502,29 @@ public class Sequeler.Services.ConnectionManager : Object {
         return result;
     }
 
+    public async Gee.HashMap<Gda.DataModel?, string> init_silent_select_query (string query) {
+        var result = new Gee.HashMap<Gda.DataModel?, string> ();
+        Gda.DataModel? data = null;
+        SourceFunc callback = init_silent_select_query.callback;
+        var error = "";
+
+        new Thread <void*> (null, () => {
+            try {
+                data = run_select (query);
+            } catch (Error e) {
+                error = e.message;
+                data = null;
+            }
+            Idle.add ((owned) callback);
+            return null;
+        });
+
+        yield;
+
+        result.@set (data, error);
+        return result;
+    }
+
     public async int? init_query (string query) {
         int result = 0;
         var error = "";
@@ -511,6 +540,25 @@ public class Sequeler.Services.ConnectionManager : Object {
             return null;
         }
 
+        return result;
+    }
+
+    public async Gee.HashMap<string?, string> init_silent_query (string query) {
+        var result = new Gee.HashMap<string?, string> ();
+        string? data = null;
+        var error = "";
+
+        try {
+            data = yield run_silent_query (query);
+        } catch (Error e) {
+            error = e.message;
+        }
+
+        if (error != "") {
+            data = null;
+        }
+
+        result.@set (data, error);
         return result;
     }
 

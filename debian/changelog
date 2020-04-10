@@ -1,3 +1,13 @@
+com.github.alecaddd.sequeler (0.7.6) xenial; urgency=medium
+
+  * Fix ORDER BY in PostgreSQL Relationship view.
+  * Improve MySQL structure view.
+  * Drop Granite.Settings in favor of GLib.Settings.
+  * Implement Granite.Notebook on the Query tab.
+  * Show query error messages inline.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 09 Apr 2020 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.5) xenial; urgency=medium
 
   * You can now duplicate connections.
@@ -5,7 +15,7 @@ com.github.alecaddd.sequeler (0.7.5) xenial; urgency=medium
   * Quickly jump to a specific result page with the handy dandy pagination popover.
   * Show Comment Column inside table structure view.
 
- -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 04 Apr 2020 11:00:00 -0700
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sat, 04 Apr 2020 11:00:00 -0700
 
 com.github.alecaddd.sequeler (0.7.4) xenial; urgency=medium
 
