@@ -715,20 +715,21 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             return;
         }
 
-        if (result["status"] == "true") {
-            if (settings.save_quick) {
-                yield window.main.library.check_add_item (data);
-            }
-
-            window.data_manager.data = data;
-            yield window.main.connection_opened (connection_manager);
-
-            destroy ();
-        } else {
+        if (result["status"] != "true") {
+            yield toggle_spinner (false);
             connection_manager = null;
             write_response (result["msg"]);
-            yield toggle_spinner (false);
+            return;
         }
+
+        if (settings.save_quick) {
+            yield window.main.library.check_add_item (data);
+        }
+
+        window.data_manager.data = data;
+        yield window.main.connection_opened (connection_manager);
+
+        destroy ();
     }
 
     private Gee.HashMap<string, string> package_data () {

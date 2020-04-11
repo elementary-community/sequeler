@@ -260,31 +260,38 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
     }
 
     public async void check_add_item (Gee.HashMap<string, string> data) {
+        bool result = false;
+
+        SourceFunc callback = check_add_item.callback;
         new Thread<void*> ("check-add-item", () => {
-            foreach (var conn in settings.saved_connections) {
-                var check = settings.arraify_data (conn);
-                if (check["id"] == data["id"]) {
-                    settings.edit_connection (data, conn);
+            result = update_existing_connection (data);
 
-                    Idle.add (() => {
-                        reload_library.begin ();
-                        return false;
-                    });
-                    return null;
-                }
-            }
-
-            settings.add_connection (data);
-
-            Idle.add (() => {
-                reload_library.begin ();
-                return false;
-            });
+            Idle.add ((owned) callback);
+            Thread.exit (null);
 
             return null;
         });
 
         yield;
+
+        if (!result) {
+            settings.add_connection (data);
+        }
+
+        yield reload_library ();
+    }
+
+    private bool update_existing_connection (Gee.HashMap<string, string> data) {
+        foreach (var conn in settings.saved_connections) {
+            var check = settings.arraify_data (conn);
+
+            if (check["id"] == data["id"]) {
+                settings.edit_connection (data, conn);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void check_open_sqlite_file (string path, string name) {

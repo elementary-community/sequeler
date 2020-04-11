@@ -452,12 +452,12 @@ public class Sequeler.Services.ConnectionManager : Object {
         output["status"] = "false";
         bool result = true;
         string msg = "";
-        SourceFunc callback = init_connection.callback;
 
+        SourceFunc callback = init_connection.callback;
         new Thread<void*> (null, () => {
             try {
-                open ();
                 debug ("pass init connection");
+                open ();
             } catch (Error e) {
                 result = false;
                 msg = e.message;
