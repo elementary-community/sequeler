@@ -141,7 +141,20 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
             entries.add (entry);
         }
 
-        content.add (form_grid);
+        var scrolled_window = new Gtk.ScrolledWindow (null, null);
+        scrolled_window.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+        scrolled_window.add (form_grid);
+
+        int main_window_width, main_window_height;
+        parent_view.window.get_size (out main_window_width, out main_window_height);
+
+        // prevent the scrolled window from growing bigger than the main window itself
+        scrolled_window.set_max_content_height (main_window_height / 2);
+        scrolled_window.set_max_content_width (main_window_width);
+        scrolled_window.set_propagate_natural_width (true);
+        scrolled_window.set_propagate_natural_height (true);
+
+        content.pack_start (scrolled_window, true, true, 0);
 
         var cancel_button = build_cancel_button ();
         add_action_widget (cancel_button, Action.CANCEL);
