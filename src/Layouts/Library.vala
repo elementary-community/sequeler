@@ -260,32 +260,38 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
     }
 
     public async void check_add_item (Gee.HashMap<string, string> data) {
+        bool result = false;
+
+        SourceFunc callback = check_add_item.callback;
         new Thread<void*> ("check-add-item", () => {
-            foreach (var conn in settings.saved_connections) {
-                var check = settings.arraify_data (conn);
-                if (check["id"] == data["id"]) {
-                    settings.edit_connection (data, conn);
+            result = update_existing_connection (data);
 
-                    Idle.add (() => {
-                        reload_library.begin ();
-                        return false;
-                    });
-                    return null;
-                }
-            }
-
-            settings.add_connection (data);
-            add_item (data);
-
-            Idle.add (() => {
-                reload_library.begin ();
-                return false;
-            });
+            Idle.add ((owned) callback);
+            Thread.exit (null);
 
             return null;
         });
 
         yield;
+
+        if (!result) {
+            settings.add_connection (data);
+        }
+
+        yield reload_library ();
+    }
+
+    private bool update_existing_connection (Gee.HashMap<string, string> data) {
+        foreach (var conn in settings.saved_connections) {
+            var check = settings.arraify_data (conn);
+
+            if (check["id"] == data["id"]) {
+                settings.edit_connection (data, conn);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void check_open_sqlite_file (string path, string name) {
@@ -314,7 +320,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         data.set ("port", "");
 
         settings.add_connection (data);
-        add_item (data);
 
         reload_library.begin ((obj, res) => {
             item_box.get_row_at_index (0).activate ();
@@ -383,7 +388,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
                     if (result["status"] == "true") {
                         if (settings.save_quick && update) {
-                            window.main.library.check_add_item.begin (data);
+                            check_add_item.begin (data);
                         }
 
                         window.main.connection_opened.begin (connection_manager);

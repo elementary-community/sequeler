@@ -86,18 +86,15 @@ public class Sequeler.Services.Settings : GLib.Settings {
     }
 
     public void add_connection (Gee.HashMap<string, string> data) {
-        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (saved_connections);
-
         if (data["type"] != "SQLite") {
             update_password.begin (data);
             data.unset ("password");
             data.unset ("ssh_password");
         }
 
-        var position = existing_connections.size;
-        existing_connections.insert (position, stringify_data (data));
-        saved_connections = existing_connections.to_array ();
+        var conns = get_strv ("saved-connections");
+        conns += stringify_data (data);
+        set_strv ("saved-connections", conns);
         tot_connections = tot_connections + 1;
     }
 
@@ -128,38 +125,44 @@ public class Sequeler.Services.Settings : GLib.Settings {
         }
 
         existing_connections.insert (position, stringify_data (new_data));
-        saved_connections = existing_connections.to_array ();
+
+        string[] new_conns = {};
+        foreach (var conn in existing_connections.to_array ()) {
+            new_conns += conn;
+        }
+
+        set_strv ("saved-connections", new_conns);
     }
 
     public void delete_connection (Gee.HashMap<string, string> data) {
-        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-        existing_connections.add_all_array (saved_connections);
+        string[] new_conns = {};
+        var conns = get_strv ("saved-connections");
 
         if (data["type"] != "SQLite") {
             delete_password.begin (data);
         }
 
-        foreach (var conn in saved_connections) {
+        foreach (var conn in conns) {
             var check = arraify_data (conn);
             if (check["id"] == data["id"]) {
-                existing_connections.remove (conn);
+                continue;
             }
+            new_conns += conn;
         }
 
-        saved_connections = existing_connections.to_array ();
+        set_strv ("saved-connections", new_conns);
     }
 
     public void clear_connections () {
-        Gee.List<string> empty_connection = new Gee.ArrayList<string> ();
-        saved_connections = empty_connection.to_array ();
+        string[] empty = {};
+        set_strv ("saved-connections", empty);
         tot_connections = 0;
 
         delete_all_passwords.begin ();
     }
 
     public void reorder_connection (Gee.HashMap<string, string> source, int position) {
-        var data = stringify_data (source);
-        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        Gee.ArrayList<string> existing_connections = new Gee.ArrayList<string> ();
         existing_connections.add_all_array (saved_connections);
 
         foreach (var conn in saved_connections) {
@@ -169,8 +172,14 @@ public class Sequeler.Services.Settings : GLib.Settings {
             }
         }
 
-        existing_connections.insert (position, data);
-        saved_connections = existing_connections.to_array ();
+        existing_connections.insert (position, stringify_data (source));
+
+        string[] new_conns = {};
+        foreach (var conn in existing_connections.to_array ()) {
+            new_conns += conn;
+        }
+
+        set_strv ("saved-connections", new_conns);
     }
 
     public string stringify_data (Gee.HashMap<string, string> data) {

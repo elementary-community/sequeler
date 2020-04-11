@@ -453,28 +453,29 @@ public class Sequeler.Services.ConnectionManager : Object {
     public async Gee.HashMap<string, string> init_connection () throws ThreadError {
         var output = new Gee.HashMap<string, string> ();
         output["status"] = "false";
+        bool result = true;
+        string msg = "";
+
         SourceFunc callback = init_connection.callback;
-
         new Thread<void*> (null, () => {
-            bool result = true;
-            string msg = "";
-
             try {
-                open ();
                 debug ("pass init connection");
+                open ();
             } catch (Error e) {
                 result = false;
                 msg = e.message;
             }
 
             Idle.add ((owned) callback);
-            output["msg"] = msg;
-            output["status"] = result.to_string ();
+            Thread.exit (null);
 
             return null;
         });
 
         yield;
+
+        output["msg"] = msg;
+        output["status"] = result.to_string ();
 
         return output;
     }
@@ -485,9 +486,9 @@ public class Sequeler.Services.ConnectionManager : Object {
 
     public async Gda.DataModel? init_select_query (string query) {
         Gda.DataModel? result = null;
-        SourceFunc callback = init_select_query.callback;
         var error = "";
 
+        SourceFunc callback = init_select_query.callback;
         new Thread <void*> (null, () => {
             try {
                 result = run_select (query);
@@ -496,6 +497,8 @@ public class Sequeler.Services.ConnectionManager : Object {
                 result = null;
             }
             Idle.add ((owned) callback);
+            Thread.exit (null);
+
             return null;
         });
 
@@ -512,9 +515,9 @@ public class Sequeler.Services.ConnectionManager : Object {
     public async Gee.HashMap<Gda.DataModel?, string> init_silent_select_statement (Gda.Statement statement, Gda.Set? params) {
         var result = new Gee.HashMap<Gda.DataModel?, string> ();
         Gda.DataModel? data = null;
-        SourceFunc callback = init_silent_select_statement.callback;
         var error = "";
 
+        SourceFunc callback = init_silent_select_statement.callback;
         new Thread <void*> (null, () => {
             try {
                 data = run_silent_select_statement (statement, params);
@@ -523,6 +526,8 @@ public class Sequeler.Services.ConnectionManager : Object {
                 data = null;
             }
             Idle.add ((owned) callback);
+            Thread.exit (null);
+
             return null;
         });
 
