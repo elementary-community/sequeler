@@ -275,7 +275,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
             }
 
             settings.add_connection (data);
-            add_item (data);
 
             Idle.add (() => {
                 reload_library.begin ();
@@ -314,7 +313,6 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
         data.set ("port", "");
 
         settings.add_connection (data);
-        add_item (data);
 
         reload_library.begin ((obj, res) => {
             item_box.get_row_at_index (0).activate ();
@@ -383,7 +381,7 @@ public class Sequeler.Layouts.Library : Gtk.Grid {
 
                     if (result["status"] == "true") {
                         if (settings.save_quick && update) {
-                            window.main.library.check_add_item.begin (data);
+                            check_add_item.begin (data);
                         }
 
                         window.main.connection_opened.begin (connection_manager);
