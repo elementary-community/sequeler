@@ -59,14 +59,18 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
 
     // takes the parse result and update the widgets style and the holder value
     private bool store_parsed_value (bool parse_result, GLib.Value parsed_value, Gda.Holder holder, Gtk.Entry entry) {
+        entry.get_style_context ().add_class ("error");
         if (parse_result) {
-            holder.set_value (parsed_value);
+            try {
+                holder.set_value (parsed_value);
+            }
+            catch (GLib.Error ex) {
+                return false;
+            }
             entry.get_style_context ().remove_class ("error");
-        }
-        else {
-            entry.get_style_context ().add_class ("error");
-        }
-        return parse_result;
+            return true;
+        }   
+        return false;
     }
 
     private bool set_value_for_holder (Gda.Holder holder, Gtk.Widget widget) {
@@ -76,7 +80,12 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
             if (switch == null) {
                 return false;
             }
-            holder.set_value ((widget as Gtk.Switch).get_active ());
+            try {
+                holder.set_value (switch.get_active ());
+            }
+            catch (GLib.Error ex) {
+                return false;
+            }
             return true;
         }
         else {

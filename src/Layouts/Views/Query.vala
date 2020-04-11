@@ -387,10 +387,18 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     public void run_query (string query) {
+        Gda.Statement statement;
         Gda.Set params;
-        Gda.Statement statement = window.main.connection_manager.parse_sql_string (query, out params);
+        try {
+            statement = window.main.connection_manager.parse_sql_string (query, out params);
+        }
+        catch (GLib.Error ex) {
+            // handle the error in run_query_statement ()
+            statement = null;
+            params = null;
+        }
 
-        if (params != null) {
+        if (statement != null && params != null) {
             for (int i = 0; ; i++) {
                 var holder = params.get_nth_holder (i);
                 if (holder == null) {
