@@ -292,16 +292,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     public Gtk.Button build_run_button () {
-        run_button = new Gtk.Button.with_label (_("Run Query"));
-        run_button.get_style_context ().add_class ("suggested-action");
-        run_button.get_style_context ().add_class ("notebook-temp-fix");
-        run_button.always_show_image = true;
-        run_button.image = new Gtk.Image.from_icon_name ("media-playback-start-symbolic", Gtk.IconSize.BUTTON);
-        run_button.image.valign = Gtk.Align.CENTER;
-        run_button.can_focus = false;
-        run_button.margin = 10;
-        run_button.sensitive = false;
-        run_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Return"}, _("Run Query"));
+        run_button = new Sequeler.Widgets.RunQueryButton ();
         run_button.action_name = Services.ActionManager.ACTION_PREFIX + Services.ActionManager.ACTION_RUN_QUERY;
 
         return run_button;
@@ -396,6 +387,33 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     public void run_query (string query) {
+        Gda.Statement statement;
+        Gda.Set params;
+        try {
+            statement = window.main.connection_manager.parse_sql_string (query, out params);
+        } catch (GLib.Error ex) {
+            on_query_error (ex.message);
+            return;
+        }
+
+        if (statement == null || params == null) {
+            run_query_statement (query, statement, null);
+            return;
+        }
+
+        for (int i = 0; ; i++) {
+            var holder = params.get_nth_holder (i);
+            if (holder == null) {
+                break;
+            }
+            debug ("holder #%d is %s type: %s", i, holder.get_id (), holder.get_g_type ().name ());
+        }
+        var params_dialog = new Sequeler.Widgets.QueryParamsDialog (window, this, query, statement, params);
+        params_dialog.set_modal (true);
+        params_dialog.show_all ();
+    }
+
+    public void run_query_statement (string query, Gda.Statement statement, Gda.Set? params) {
         toggle_loading_msg (true);
         spinner.start ();
 
@@ -405,22 +423,22 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         var explain_pos = query.down ().index_of ("explain", 0);
 
         if (select_pos == 0 || show_pos == 0 || pragma_pos == 0 || explain_pos == 0) {
-            select_statement.begin (query, (obj, res) => {
+            select_statement.begin (statement, params, (obj, res) => {
                 handle_select_response (select_statement.end (res));
             });
         } else {
-            non_select_statement.begin (query, (obj, res) => {
+            non_select_statement.begin (statement, params, (obj, res) => {
                 handle_query_response (non_select_statement.end (res));
             });
         }
     }
 
-    private async Gee.HashMap<Gda.DataModel?, string> select_statement (string query) {
-        return yield window.main.connection_manager.init_silent_select_query (query);
+    private async Gee.HashMap<Gda.DataModel?, string> select_statement (Gda.Statement statement, Gda.Set? params) {
+        return yield window.main.connection_manager.init_silent_select_statement (statement, params);
     }
 
-    public async Gee.HashMap<string?, string> non_select_statement (string query) {
-        return yield window.main.connection_manager.init_silent_query (query);
+    public async Gee.HashMap<string?, string> non_select_statement (Gda.Statement statement, Gda.Set? params) {
+        return yield window.main.connection_manager.init_silent_statement (statement, params);
     }
 
     public void handle_select_response (Gee.HashMap<Gda.DataModel?, string> response) {

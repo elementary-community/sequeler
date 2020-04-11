@@ -438,9 +438,12 @@ public class Sequeler.Services.ConnectionManager : Object {
         return connection.execute_non_select_command (query);
     }
 
-    public async string run_silent_query (string query) throws Error requires (connection.is_opened ()) {
-        var result = connection.execute_non_select_command (query);
+    public async string run_silent_statement (Gda.Statement statement, Gda.Set? params) throws Error requires (connection.is_opened ()) {
+        var result = connection.statement_execute_non_select (statement, params, null);
         return result.to_string ();
+    }
+    public Gda.DataModel? run_silent_select_statement (Gda.Statement statement, Gda.Set? params) throws Error requires (connection.is_opened ()) {
+        return connection.statement_execute_select (statement, params);
     }
 
     public Gda.DataModel? run_select (string query) throws Error {
@@ -477,6 +480,10 @@ public class Sequeler.Services.ConnectionManager : Object {
         return output;
     }
 
+    public Gda.Statement parse_sql_string (string sql, out Gda.Set @params) throws Error {
+        return connection.parse_sql_string (sql, out params);
+    }
+
     public async Gda.DataModel? init_select_query (string query) {
         Gda.DataModel? result = null;
         var error = "";
@@ -505,15 +512,15 @@ public class Sequeler.Services.ConnectionManager : Object {
         return result;
     }
 
-    public async Gee.HashMap<Gda.DataModel?, string> init_silent_select_query (string query) {
+    public async Gee.HashMap<Gda.DataModel?, string> init_silent_select_statement (Gda.Statement statement, Gda.Set? params) {
         var result = new Gee.HashMap<Gda.DataModel?, string> ();
         Gda.DataModel? data = null;
         var error = "";
 
-        SourceFunc callback = init_silent_select_query.callback;
+        SourceFunc callback = init_silent_select_statement.callback;
         new Thread <void*> (null, () => {
             try {
-                data = run_select (query);
+                data = run_silent_select_statement (statement, params);
             } catch (Error e) {
                 error = e.message;
                 data = null;
@@ -548,13 +555,13 @@ public class Sequeler.Services.ConnectionManager : Object {
         return result;
     }
 
-    public async Gee.HashMap<string?, string> init_silent_query (string query) {
+    public async Gee.HashMap<string?, string> init_silent_statement (Gda.Statement statement, Gda.Set? params) {
         var result = new Gee.HashMap<string?, string> ();
         string? data = null;
         var error = "";
 
         try {
-            data = yield run_silent_query (query);
+            data = yield run_silent_statement (statement, params);
         } catch (Error e) {
             error = e.message;
         }
