@@ -391,28 +391,26 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         Gda.Set params;
         try {
             statement = window.main.connection_manager.parse_sql_string (query, out params);
-        }
-        catch (GLib.Error ex) {
-            // handle the error in run_query_statement ()
-            statement = null;
-            params = null;
+        } catch (GLib.Error ex) {
+            on_query_error (ex.message);
+            return;
         }
 
-        if (statement != null && params != null) {
-            for (int i = 0; ; i++) {
-                var holder = params.get_nth_holder (i);
-                if (holder == null) {
-                    break;
-                }
-                debug ("holder #%d is %s type: %s", i, holder.get_id (), holder.get_g_type ().name ());
-            }
-            var params_dialog = new Sequeler.Widgets.QueryParamsDialog (window, this, query, statement, params);
-            params_dialog.set_modal (true);
-            params_dialog.show_all ();
-        }
-        else {
+        if (statement == null || params == null) {
             run_query_statement (query, statement, null);
+            return;
         }
+
+        for (int i = 0; ; i++) {
+            var holder = params.get_nth_holder (i);
+            if (holder == null) {
+                break;
+            }
+            debug ("holder #%d is %s type: %s", i, holder.get_id (), holder.get_g_type ().name ());
+        }
+        var params_dialog = new Sequeler.Widgets.QueryParamsDialog (window, this, query, statement, params);
+        params_dialog.set_modal (true);
+        params_dialog.show_all ();
     }
 
     public void run_query_statement (string query, Gda.Statement statement, Gda.Set? params) {

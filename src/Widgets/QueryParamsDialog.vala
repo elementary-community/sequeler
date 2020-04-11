@@ -1,3 +1,6 @@
+/**
+ * Dialog subclass used to prompt the user to provide the required query parameters
+ */
 public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
     public weak Sequeler.Window window { get; construct; }
 
@@ -37,22 +40,18 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
         GLib.Type holder_g_type = holder.get_g_type ();
         switch (holder_g_type) {
             case GLib.Type.BOOLEAN:
-                debug ("Detected bool param");
                 return new Gtk.Switch ();
             case GLib.Type.INT:
             case GLib.Type.UINT:
-                debug ("Detected int param");
                 var widget = new Gtk.Entry ();
                 widget.set_input_purpose (Gtk.InputPurpose.DIGITS);
                 return widget;
             case GLib.Type.FLOAT:
             case GLib.Type.DOUBLE:
-                debug ("Detected float param");
                 var widget = new Gtk.Entry ();
                 widget.set_input_purpose (Gtk.InputPurpose.NUMBER);
                 return widget;
             default:
-                debug ("Detected string param");
                 return new Gtk.Entry ();
         }
     }
@@ -69,7 +68,7 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
             }
             entry.get_style_context ().remove_class ("error");
             return true;
-        }   
+        }
         return false;
     }
 
@@ -92,14 +91,18 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
             Gtk.Entry entry = widget as Gtk.Entry;
             string text = entry.get_text ();
 
-            bool parse_result = false;
+            bool parse_result = true;
             GLib.Value parsed_value;
 
             if (holder_g_type == GLib.Type.INT) {
-                parse_result = int.try_parse (text, out parsed_value);
+                // TODO: replace this with the following once we upgrade to a newer valac
+                // parse_result = int.try_parse (text, out parsed_value);
+                parsed_value = int.parse (text);
             }
             else if (holder_g_type == GLib.Type.UINT) {
-                parse_result = uint.try_parse (text, out parsed_value);
+                // TODO: replace this with the following once we upgrade to a newer valac
+                // parse_result = uint.try_parse (text, out parsed_value);
+                parsed_value = int.parse (text);
             }
             else if (holder_g_type == GLib.Type.FLOAT) {
                 parse_result = float.try_parse (text, out parsed_value);
@@ -108,7 +111,6 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
                 parse_result = double.try_parse (text, out parsed_value);
             }
             else {
-                parse_result = true;
                 parsed_value = text;
             }
             return store_parsed_value (parse_result, parsed_value, holder, entry);
@@ -145,10 +147,20 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
         run_button.set_sensitive (true);
         add_action_widget (run_button, Action.RUN_QUERY);
 
-        // TODO: cancel_button should keep a consistent style
-        var cancel_button = new Sequeler.Widgets.CancelQueryButton ();
-        cancel_button.set_sensitive (true);
+        var cancel_button = build_cancel_button ();
         add_action_widget (cancel_button, Action.CANCEL);
+    }
+
+    private Gtk.Button build_cancel_button () {
+        var cancel_button = new Gtk.Button.with_label (_("Close"));
+        cancel_button.set_sensitive (true);
+        cancel_button.always_show_image = true;
+        cancel_button.image = new Gtk.Image.from_icon_name ("window-close", Gtk.IconSize.BUTTON);
+        cancel_button.image.valign = Gtk.Align.CENTER;
+        cancel_button.can_focus = false;
+        cancel_button.margin = 10;
+        cancel_button.sensitive = true;
+        return cancel_button;
     }
 
     private bool get_param_values () {
