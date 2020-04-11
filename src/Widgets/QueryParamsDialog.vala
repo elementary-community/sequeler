@@ -143,12 +143,12 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
 
         content.add (form_grid);
 
+        var cancel_button = build_cancel_button ();
+        add_action_widget (cancel_button, Action.CANCEL);
+
         var run_button = new Sequeler.Widgets.RunQueryButton ();
         run_button.set_sensitive (true);
         add_action_widget (run_button, Action.RUN_QUERY);
-
-        var cancel_button = build_cancel_button ();
-        add_action_widget (cancel_button, Action.CANCEL);
     }
 
     private Gtk.Button build_cancel_button () {
