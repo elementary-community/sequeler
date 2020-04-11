@@ -138,6 +138,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         color_picker = new Gtk.ColorButton.with_rgba ({ 222, 222, 222, 255 });
         color_picker.get_style_context ().add_class ("color-picker");
         color_picker.can_focus = false;
+        color_picker.set_tooltip_text (_("Select connection color"));
 
         header_grid.attach (image, 0, 0, 1, 2);
         header_grid.attach (header_title, 1, 0, 1, 2);
@@ -213,14 +214,17 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         db_password_entry = new Sequeler.Partials.Entry ("", null);
         db_password_entry.visibility = false;
         db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+        db_password_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Show password"));
         db_password_entry.icon_press.connect ((pos, event) => {
             if (pos == Gtk.EntryIconPosition.SECONDARY) {
                 db_password_entry.visibility = !db_password_entry.visibility;
             }
              if (db_password_entry.visibility) {
                 db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-allow-symbolic");
+                db_password_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Hide password"));
             } else {
                 db_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+                db_password_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Show password"));
             }
         });
 
@@ -278,17 +282,17 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         ssh_password_entry = new Sequeler.Partials.Entry ("", null);
         ssh_password_entry.visibility = false;
         ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+        ssh_password_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Show password"));
         ssh_password_entry.icon_press.connect ((pos, event) => {
             if (pos == Gtk.EntryIconPosition.SECONDARY) {
                 ssh_password_entry.visibility = !ssh_password_entry.visibility;
             }
             if (ssh_password_entry.visibility) {
                 ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-allow-symbolic");
+                ssh_password_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Hide password"));
             } else {
-                ssh_password_entry.set_icon_from_icon_name (
-                    Gtk.EntryIconPosition.SECONDARY,
-                    "changes-prevent-symbolic"
-                );
+                ssh_password_entry.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "changes-prevent-symbolic");
+                ssh_password_entry.set_icon_tooltip_text (Gtk.EntryIconPosition.SECONDARY, _("Show password"));
             }
         });
         ssh_grid.attach (ssh_password_label, 0, 4, 1, 1);
