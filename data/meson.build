@@ -43,7 +43,7 @@ desktop_file = i18n.merge_file(
 			configuration: desktop_conf
 		),
 		output:'@0@.desktop'.format(application_id),
-		po_dir: join_paths(meson.source_root(), 'po'),
+		po_dir: join_paths(meson.source_root(), 'po', 'extra'),
 		type: 'desktop',
 		install: true,
 		install_dir: join_paths(get_option('datadir'), 'applications')
