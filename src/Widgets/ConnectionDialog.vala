@@ -25,6 +25,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
     public Sequeler.Partials.ButtonClass test_button;
     public Sequeler.Partials.ButtonClass connect_button;
+    public Sequeler.Partials.ButtonClass cancel_button;
+    public Sequeler.Partials.ButtonClass save_button;
 
     private Gtk.Label header_title;
     private Gtk.ColorButton color_picker;
@@ -419,11 +421,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     private void build_actions () {
-        var cancel_button = new Sequeler.Partials.ButtonClass (_("Close"), null);
-        var save_button = new Sequeler.Partials.ButtonClass (_("Save Connection"), null);
-
+        cancel_button = new Sequeler.Partials.ButtonClass (_("Close"), null);
+        save_button = new Sequeler.Partials.ButtonClass (_("Save Connection"), null);
         test_button = new Sequeler.Partials.ButtonClass (_("Test Connection"), null);
-
         connect_button = new Sequeler.Partials.ButtonClass (_("Connect"), "suggested-action");
 
         add_action_widget (test_button, Action.TEST);
@@ -564,6 +564,13 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         connect_button.sensitive = false;
     }
 
+    private async void toggle_buttons (bool status) {
+        test_button.sensitive = status;
+        connect_button.sensitive = status;
+        cancel_button.sensitive = status;
+        save_button.sensitive = status;
+    }
+
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case Action.TEST:
@@ -579,7 +586,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 }
                 break;
             case Action.SAVE:
-                save_connection ();
+                save_connection.begin ();
                 break;
             case Action.CANCEL:
                 if (connection_manager != null) {
@@ -612,7 +619,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     }
 
     public async void open_ssh_connection (bool is_real) throws ThreadError {
-        toggle_spinner (true);
+        yield toggle_spinner (true);
         write_response (_("Opening SSH Tunnel\u2026"));
 
         var data = package_data ();
@@ -625,7 +632,6 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         }
 
         SourceFunc callback = open_ssh_connection.callback;
-
         new Thread <void*> (null, () => {
             try {
                 connection_manager.ssh_tunnel_init (is_real);
@@ -634,15 +640,22 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
             }
 
             Idle.add ((owned) callback);
-            toggle_spinner (false);
+            Thread.exit (null);
+
             return null;
         });
 
         yield;
+
+        toggle_spinner.begin (false);
     }
 
     private async void test_connection () throws ThreadError {
-        toggle_spinner (true);
+        if (Thread.supported () == false) {
+            error ("Threads are not supported!");
+        }
+
+        yield toggle_spinner (true);
         write_response (_("Testing Connection\u2026"));
 
         if (connection_manager == null) {
@@ -650,33 +663,35 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         }
 
         SourceFunc callback = test_connection.callback;
-
         new Thread <void*> (null, () => {
             try {
                 connection_manager.test ();
-                write_response (_("Successfully Connected!"));
             } catch (Error e) {
                 write_response (e.message);
             }
 
             Idle.add ((owned) callback);
-            connection_manager = null;
-            toggle_spinner (false);
+            Thread.exit (null);
+
             return null;
         });
 
         yield;
+
+        write_response (_("Successfully Connected!"));
+        connection_manager = null;
+        yield toggle_spinner (false);
     }
 
-    private void save_connection () {
+    private async void save_connection () {
         var data = package_data ();
 
-        toggle_spinner (true);
+        yield toggle_spinner (true);
         write_response (_("Saving Connection\u2026"));
 
-        window.main.library.check_add_item.begin (data);
+        yield window.main.library.check_add_item (data);
 
-        toggle_spinner (false);
+        yield toggle_spinner (false);
         write_response (_("Connection Saved!"));
     }
 
@@ -684,7 +699,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         var data = package_data ();
         var result = new Gee.HashMap<string, string> ();
 
-        toggle_spinner (true);
+        yield toggle_spinner (true);
         write_response (_("Connecting\u2026"));
 
         if (connection_manager == null) {
@@ -694,24 +709,25 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         try {
             result = yield connection_manager.init_connection ();
         } catch (ThreadError e) {
+            yield toggle_spinner (false);
             connection_manager = null;
             write_response (e.message);
-            toggle_spinner (false);
+            return;
         }
 
         if (result["status"] == "true") {
             if (settings.save_quick) {
-                window.main.library.check_add_item.begin (data);
+                yield window.main.library.check_add_item (data);
             }
 
             window.data_manager.data = data;
-            window.main.connection_opened.begin (connection_manager);
+            yield window.main.connection_opened (connection_manager);
 
             destroy ();
         } else {
             connection_manager = null;
             write_response (result["msg"]);
-            toggle_spinner (false);
+            yield toggle_spinner (false);
         }
     }
 
@@ -739,7 +755,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         return packaged_data;
     }
 
-    public void toggle_spinner (bool type) {
+    public async void toggle_spinner (bool type) {
+        yield toggle_buttons (!type);
+
         if (type == true) {
             spinner.start ();
             return;
