@@ -1,6 +1,6 @@
 public class Sequeler.Widgets.RunQueryButton : Gtk.Button {
-	public RunQueryButton () {
-		set_label(_("Run Query"));
+    public RunQueryButton () {
+        set_label (_("Run Query"));
         get_style_context ().add_class ("suggested-action");
         get_style_context ().add_class ("notebook-temp-fix");
         always_show_image = true;
@@ -10,5 +10,5 @@ public class Sequeler.Widgets.RunQueryButton : Gtk.Button {
         margin = 10;
         sensitive = false;
         tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Return"}, _("Run Query"));
-	}
+    }
 }

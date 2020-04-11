@@ -1,6 +1,6 @@
 public class Sequeler.Widgets.CancelQueryButton : Gtk.Button {
-	public CancelQueryButton () {
-		set_label(_("Close"));
+    public CancelQueryButton () {
+        set_label (_("Close"));
         //get_style_context ().add_class ("suggested-action");
         //get_style_context ().add_class ("notebook-temp-fix");
         always_show_image = true;
@@ -10,5 +10,5 @@ public class Sequeler.Widgets.CancelQueryButton : Gtk.Button {
         margin = 10;
         sensitive = false;
         tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Return"}, _("Run Query"));
-	}
+    }
 }

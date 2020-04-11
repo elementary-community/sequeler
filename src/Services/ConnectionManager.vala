@@ -442,9 +442,9 @@ public class Sequeler.Services.ConnectionManager : Object {
         var result = connection.statement_execute_non_select (statement, params, null);
         return result.to_string ();
     }
-	public Gda.DataModel? run_silent_select_statement (Gda.Statement statement, Gda.Set? params) throws Error requires (connection.is_opened()) {
-		return connection.statement_execute_select (statement, params);
-	}
+    public Gda.DataModel? run_silent_select_statement (Gda.Statement statement, Gda.Set? params) throws Error requires (connection.is_opened ()) {
+        return connection.statement_execute_select (statement, params);
+    }
 
     public Gda.DataModel? run_select (string query) throws Error {
         return connection.execute_select_command (query);
@@ -479,9 +479,9 @@ public class Sequeler.Services.ConnectionManager : Object {
         return output;
     }
 
-	public Gda.Statement parse_sql_string (string sql, out Gda.Set @params) throws Error {
-		return connection.parse_sql_string (sql, out params);
-	}
+    public Gda.Statement parse_sql_string (string sql, out Gda.Set @params) throws Error {
+        return connection.parse_sql_string (sql, out params);
+    }
 
     public async Gda.DataModel? init_select_query (string query) {
         Gda.DataModel? result = null;
