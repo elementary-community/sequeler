@@ -190,9 +190,13 @@ public class Sequeler.Widgets.QueryParamsDialog : Gtk.Dialog {
                 // parse_result = uint.try_parse (text, out parsed_value);
                 parsed_value = int.parse (text);
             } else if (holder_g_type == Type.FLOAT) {
-                parse_result = float.try_parse (text, out parsed_value);
+                // TODO: replace this with the following once we upgrade to a newer valac
+                //  parse_result = float.try_parse (text, out parsed_value);
+                parsed_value = float.parse (text);
             } else if (holder_g_type == Type.DOUBLE) {
-                parse_result = double.try_parse (text, out parsed_value);
+                // TODO: replace this with the following once we upgrade to a newer valac
+                //  parse_result = double.try_parse (text, out parsed_value);
+                parsed_value = double.parse (text);
             } else {
                 parsed_value = text;
             }

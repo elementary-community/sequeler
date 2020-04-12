@@ -294,6 +294,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
     public Gtk.Button build_run_button () {
         run_button = new Sequeler.Partials.RunQueryButton ();
+        run_button.margin = 10;
         run_button.action_name = Services.ActionManager.ACTION_PREFIX
             + Services.ActionManager.ACTION_RUN_QUERY;
 
