@@ -8,35 +8,36 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-11 12:12+0200\n"
-"Last-Translator: Luca Andrea Rossi <lucaandrea.rossi@hexation.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-04-12 17:29+0000\n"
+"Last-Translator: Alessandro <castellani.ale@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/sequeler/"
+"translations/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "Selezione di Cartelle non supportata"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "Non so cosa fare"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "Si é verificato un errore inaspettato"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
 msgstr "Disconnetti"
 
 #: src/Layouts/HeaderBar.vala:56
-#, fuzzy
 msgid "Light background"
-msgstr "Sfondo scuro"
+msgstr "Sfondo chiaro"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
@@ -104,7 +105,7 @@ msgstr "Sì, elimina tutto!"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "Nome utente necessario per eseguire una connessione!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -116,9 +117,8 @@ msgstr "_Salva"
 
 #: src/Layouts/Library.vala:408 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:532
-#, fuzzy
 msgid "_Cancel"
-msgstr "A_nnulla"
+msgstr "_Annulla"
 
 #: src/Layouts/Library.vala:467
 #, c-format
@@ -158,9 +158,8 @@ msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importa un file di connessioni di Sequeler precedentemente esportato"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
-msgstr "Seleziona tabella"
+msgstr "Seleziona un file"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -213,41 +212,40 @@ msgstr "Esegui query"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Riduci zoom"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Resetta zoom"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Aumenta zoom"
 
 #: src/Layouts/DataBaseView.vala:124
-#, fuzzy
 msgid "High Contrast"
-msgstr " vincoli"
+msgstr "Alto Contrasto"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "Chiaro Solarizzato"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "Scuro Solarizzato"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Cambia stile testo"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Aggiungi una nuova tab"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Esegui query"
+msgstr "Query %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -286,22 +284,22 @@ msgid "Next Page"
 msgstr "Pagina successiva"
 
 #: src/Layouts/Views/Content.vala:131
-#, fuzzy, c-format
+#, c-format
 msgid "%d Pages"
-msgstr " pagine"
+msgstr "%d pagine"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Vai alla pagina…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
 msgstr "1 pagina"
 
 #: src/Layouts/Views/Content.vala:171
-#, fuzzy, c-format
+#, c-format
 msgid "%d of %d Pages"
-msgstr " pagine"
+msgstr "%d di %d pagine"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
@@ -342,9 +340,9 @@ msgid "%d Total Results"
 msgstr "%d risultati totali"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Query eseguita correttamente! Righe alterate: "
+msgstr "Query eseguita correttamente! Righe alterate: %s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
@@ -359,9 +357,8 @@ msgid "Edit Connection"
 msgstr "Modifica connessione"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Cancella connessione"
+msgstr "Duplica connessione"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
@@ -382,65 +379,68 @@ msgstr "sulla colonna"
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "Copia %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (copia)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Impossibile inizializzare Libssh2 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "Impossibile aprire il Socket"
 
 #: src/Services/ConnectionManager.vala:211
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Impossibile connettersi a %s"
+msgstr "Impossibile connettersi!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "Errore durante il lancio della sessione SSH: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "Autenticazione con password fallita!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "Autenticazione con chiave publica fallita!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "Nessun metodo di autenticazione supportato!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "Impossibile aprire il socket"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
 msgstr ""
+"Collegamento fallito. La tua porta del database potrebbe essere sbagliata!"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "Impossibile collegarsi!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "Connessione remote fallita!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"Impossibile aprire un canale tcpip diretto! (Questo potrebbe essere un "
+"problema relativo alle impostazioni del tuo server! Controlla il tuo server "
+"log.)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
@@ -448,20 +448,19 @@ msgstr "Errore!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "Nessuna chiave SSH trovata!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "Nessuna chiave publica SSH trovata!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
 msgstr "Connessione"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Cancella connessione"
+msgstr "Seleziona il colore della connessione"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -493,14 +492,12 @@ msgstr "Password:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Password:"
+msgstr "Mostra password"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Password:"
+msgstr "Nascondi password"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
@@ -515,52 +512,44 @@ msgid "Select Your SQLite File…"
 msgstr "Selezionare il file SQLite…"
 
 #: src/Widgets/ConnectionDialog.vala:261
-#, fuzzy
 msgid "Connect via SSH Tunnel:"
-msgstr "Connessione via Terminale"
+msgstr "Connessione via tunnel SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Server:"
+msgstr "Server SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Nome utente:"
+msgstr "Nome utente SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Password:"
+msgstr "Password SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:301
-#, fuzzy
 msgid "SSH Port:"
-msgstr "Porta:"
+msgstr "Porta SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
-#, fuzzy
 msgid "Optional"
-msgstr "Opzioni"
+msgstr "Opzionale"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "Identità SSH"
 
 #: src/Widgets/ConnectionDialog.vala:308
-#, fuzzy
 msgid "Select Your Identity File…"
-msgstr "Selezionare il file SQLite…"
+msgstr "Seleziona il tuo file SSH…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "Come generare una chiave SSH"
 
 #: src/Widgets/ConnectionDialog.vala:356
-#, fuzzy
 msgid "SSH Tunnel"
-msgstr "Connessione via Terminale"
+msgstr "Connessione via tunnel SSH"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
@@ -576,7 +565,7 @@ msgstr "Prova connessione"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "Apertura tunnel SSH in corso…"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
