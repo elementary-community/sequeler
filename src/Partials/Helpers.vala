@@ -124,4 +124,30 @@ namespace Sequeler.Partials {
             });
         }
     }
+
+    public class RunQueryButton : Gtk.Button {
+        public RunQueryButton () {
+            set_label (_("Run Query"));
+            get_style_context ().add_class ("suggested-action");
+            get_style_context ().add_class ("notebook-temp-fix");
+            always_show_image = true;
+            image = new Gtk.Image.from_icon_name ("media-playback-start-symbolic", Gtk.IconSize.BUTTON);
+            image.valign = Gtk.Align.CENTER;
+            tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Return"}, _("Run Query"));
+        }
+    }
+
+    public class ParamEntry : Gtk.Entry {
+        public ParamEntry (Widgets.QueryParamsDialog dialog, Gtk.InputPurpose? purpose = null) {
+            hexpand = true;
+
+            if (purpose != null) {
+                set_input_purpose (purpose);
+            }
+
+            activate.connect (() => {
+                dialog.run_query ();
+            });
+        }
+    }
 }

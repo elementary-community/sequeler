@@ -45,6 +45,7 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
 
     public Gtk.Paned panels;
     public Sequeler.Partials.TreeBuilder result_data;
+    public Sequeler.Widgets.QueryParamsDialog? params_dialog { get; set; default = null; }
 
     public signal void update_tab_indicator (bool status);
 
@@ -292,8 +293,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
     }
 
     public Gtk.Button build_run_button () {
-        run_button = new Sequeler.Widgets.RunQueryButton ();
-        run_button.action_name = Services.ActionManager.ACTION_PREFIX + Services.ActionManager.ACTION_RUN_QUERY;
+        run_button = new Sequeler.Partials.RunQueryButton ();
+        run_button.action_name = Services.ActionManager.ACTION_PREFIX
+            + Services.ActionManager.ACTION_RUN_QUERY;
 
         return run_button;
     }
@@ -408,9 +410,14 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
             }
             debug ("holder #%d is %s type: %s", i, holder.get_id (), holder.get_g_type ().name ());
         }
-        var params_dialog = new Sequeler.Widgets.QueryParamsDialog (window, this, query, statement, params);
+
+        params_dialog = new Sequeler.Widgets.QueryParamsDialog (window, this, query, statement, params);
         params_dialog.set_modal (true);
         params_dialog.show_all ();
+
+        params_dialog.destroy.connect (() => {
+            params_dialog = null;
+        });
     }
 
     public void run_query_statement (string query, Gda.Statement statement, Gda.Set? params) {

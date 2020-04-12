@@ -48,7 +48,7 @@ executable(
 
     'Widgets/ConnectionDialog.vala',
     'Widgets/QueryParamsDialog.vala',
-    'Widgets/RunQueryButton.vala',
+
     asresources,
     config_header,
     dependencies: [
