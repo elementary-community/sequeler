@@ -39,17 +39,17 @@
 	<releases>
 		<release version="0.7.7" date="2020-04-11">
 			<description>
-				<p>Becase 0.7.6 never happened!</p>
+				<p>Because 0.7.6 never happened!</p>
 				<ul>
 					<li>Fix nasty GSettings bug causing the app to crash.</li>
-					<li>Implement Gda Placeholder statement.</li>
+					<li>Implement GDA Placeholder statement.</li>
 					<li>Improve Query Tab iconography.</li>
 				</ul>
                 <p>0.7.6 changelog</p>
 				<ul>
 					<li>Fix ORDER BY in PostgreSQL Relationship view.</li>
 					<li>Improve MySQL structure view.</li>
-					<li>Drop Granite.Settings in favor of GLib.Settings.</li>
+					<li>Drop Granite.Settings in favour of GLib.Settings.</li>
 					<li>Implement Granite.Notebook on the Query tab.</li>
 					<li>Show query error messages inline.</li>
 				</ul>
@@ -61,7 +61,7 @@
 				<ul>
 					<li>Fix ORDER BY in PostgreSQL Relationship view.</li>
 					<li>Improve MySQL structure view.</li>
-					<li>Drop Granite.Settings in favor of GLib.Settings.</li>
+					<li>Drop Granite.Settings in favour of GLib.Settings.</li>
 					<li>Implement Granite.Notebook on the Query tab.</li>
 					<li>Show query error messages inline.</li>
 				</ul>

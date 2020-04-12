@@ -1,14 +1,14 @@
 com.github.alecaddd.sequeler (0.7.7) xenial; urgency=high
 
   * Fix nasty GSettings bug causing the app to crash.
-  * Implement Gda Placeholder statement.
+  * Implement GDA Placeholder statement.
   * Improve Query Tab iconography.
 
 com.github.alecaddd.sequeler (0.7.6) xenial; urgency=medium
 
   * Fix ORDER BY in PostgreSQL Relationship view.
   * Improve MySQL structure view.
-  * Drop Granite.Settings in favor of GLib.Settings.
+  * Drop Granite.Settings in favour of GLib.Settings.
   * Implement Granite.Notebook on the Query tab.
   * Show query error messages inline.
 
