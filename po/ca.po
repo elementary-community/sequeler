@@ -8,34 +8,36 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-11 12:12+0200\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-04-12 17:08+0000\n"
+"Last-Translator: German Caselles Font <eclyptox@gmail.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/sequeler/"
+"translations/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "Les carpetes no estan suportades"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "No es sap que fer"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "Algo completament inesperat ha ocorregut"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
 msgstr "Finalitza la sessió"
 
 #: src/Layouts/HeaderBar.vala:56
-#, fuzzy
 msgid "Light background"
-msgstr "Fons fosc"
+msgstr "Fons clar"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
@@ -103,7 +105,7 @@ msgstr "Sí, suprimeix-ho tot"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "¡Un nom d'usuari es requerit per connectar!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -156,9 +158,8 @@ msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importa connexions del Sequeler prèviament exportades"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
-msgstr "Seleccioneu una taula"
+msgstr "Seleccioneu un fitxer"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -211,41 +212,40 @@ msgstr "Consulta"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Allunyar"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Ajustar 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Acostar"
 
 #: src/Layouts/DataBaseView.vala:124
-#, fuzzy
 msgid "High Contrast"
-msgstr " restriccions"
+msgstr "Alt contrast"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "Solarized clar"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "Solarized fosc"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Canviar estil de text"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Crear nova pestanya de consulta"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Consulta"
+msgstr "Consulta %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -284,22 +284,22 @@ msgid "Next Page"
 msgstr "Pàgina següent"
 
 #: src/Layouts/Views/Content.vala:131
-#, fuzzy, c-format
+#, c-format
 msgid "%d Pages"
-msgstr " pàgines"
+msgstr "%d pàgines"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Botar a la pàgina…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
 msgstr "1 pàgina"
 
 #: src/Layouts/Views/Content.vala:171
-#, fuzzy, c-format
+#, c-format
 msgid "%d of %d Pages"
-msgstr " pàgines"
+msgstr "%d de %d pàgines"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
@@ -340,9 +340,9 @@ msgid "%d Total Results"
 msgstr "%d resultats en total"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "S’ha executat la consulta correctament. Files afectades:"
+msgstr "S’ha executat la consulta correctament. Files afectades: %d"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
@@ -357,9 +357,8 @@ msgid "Edit Connection"
 msgstr "Edita la connexió"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Suprimeix la connexió"
+msgstr "Duplica la connexió"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
@@ -380,17 +379,17 @@ msgstr "a la columna"
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "Copiar %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (còpia)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Fallada inicialitzant libssh2 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
