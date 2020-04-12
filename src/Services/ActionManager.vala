@@ -145,13 +145,14 @@ public class Sequeler.Services.ActionManager : Object {
             return;
         }
 
-        var query = (window.main.database_view.query.current.page as Layouts.Views.Query).get_text ().strip ();
+        var page = (window.main.database_view.query.current.page as Layouts.Views.Query);
+        var query = page.get_text ().strip ();
 
         if (query == "") {
             return;
         }
 
-        (window.main.database_view.query.current.page as Layouts.Views.Query).run_query (query);
+        page.run_query (query);
     }
 
     public static void action_from_group (string action_name, ActionGroup? action_group) {

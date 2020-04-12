@@ -47,6 +47,8 @@ executable(
     'Services/Types/SQLite.vala',
 
     'Widgets/ConnectionDialog.vala',
+    'Widgets/QueryParamsDialog.vala',
+
     asresources,
     config_header,
     dependencies: [
