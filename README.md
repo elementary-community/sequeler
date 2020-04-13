@@ -45,14 +45,14 @@ You can install Sequeler by compiling from source, here's the list of dependenci
 ## Building
 ```
 meson build --prefix=/usr
-sudo -C build ninja install
+sudo ninja -C build install
 ```
 
 ## Building development version
 The development version allows you to keep the stable version perfectly working while hacking on Sequeler.
 ```
 meson build --prefix=/usr -Dprofile=development
-sudo -C build ninja install
+sudo ninja -C build install
 ```
 
 You can run the application from terminal using
