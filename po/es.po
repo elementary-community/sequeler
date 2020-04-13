@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-12 17:08+0000\n"
-"Last-Translator: German Caselles Font <eclyptox@gmail.com>\n"
+"PO-Revision-Date: 2020-04-13 19:51+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
 "Language: es\n"
@@ -442,7 +442,7 @@ msgstr "Error"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "Falta el fichero de clave SSH"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
