@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
 "PO-Revision-Date: 2020-04-13 19:51+0000\n"
-"Last-Translator: anonymous <noreply@weblate.org>\n"
+"Last-Translator: Alessandro <castellani.ale@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
 "Language: es\n"
@@ -91,7 +91,7 @@ msgstr "Si elimina esta conexión, no será capaz de recuperar los datos."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
-msgstr "Sí, eliminar"
+msgstr "Sí, eliminar!"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
@@ -99,7 +99,7 @@ msgstr "Se eliminarán todos los datos y no será capaz de recuperarlos."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
-msgstr "Sí, eliminar todo"
+msgstr "Sí, eliminar todo!"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
@@ -330,7 +330,7 @@ msgstr "Exportar como texto"
 
 #: src/Layouts/Views/Query.vala:436 src/Layouts/Views/Query.vala:482
 msgid "Unable to process Query!"
-msgstr "No se pudo procesar la consulta."
+msgstr "No se pudo procesar la consulta!"
 
 #: src/Layouts/Views/Query.vala:457
 #, c-format
@@ -438,7 +438,7 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
-msgstr "Error"
+msgstr "Error!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
