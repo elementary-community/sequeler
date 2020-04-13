@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-13 19:51+0000\n"
+"PO-Revision-Date: 2020-04-14 20:11+0000\n"
 "Last-Translator: Alessandro <castellani.ale@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
@@ -391,7 +391,7 @@ msgstr "Fallo al inicializar libssh2 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr "Fallo al abrir socket."
+msgstr "Fallo al abrir socket"
 
 #: src/Services/ConnectionManager.vala:211
 msgid "Failed to connect!"
@@ -442,7 +442,7 @@ msgstr "Error!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr "Falta el fichero de clave SSH"
+msgstr "Falta el fichero de clave SSH!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
@@ -576,7 +576,7 @@ msgstr "Probando la conexión…"
 
 #: src/Widgets/ConnectionDialog.vala:661
 msgid "Successfully Connected!"
-msgstr "Se ha conectado correctamente."
+msgstr "Se ha conectado correctamente!"
 
 #: src/Widgets/ConnectionDialog.vala:679
 msgid "Saving Connection…"
@@ -584,7 +584,7 @@ msgstr "Guardando la conexión…"
 
 #: src/Widgets/ConnectionDialog.vala:684
 msgid "Connection Saved!"
-msgstr "Conexión guardada."
+msgstr "Conexión guardada!"
 
 #: src/Widgets/ConnectionDialog.vala:692
 msgid "Connecting…"
