@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-11 12:12+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-04-25 16:11+0000\n"
+"Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
+"translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -61,9 +63,9 @@ msgid "Menu"
 msgstr ""
 
 #: src/Layouts/Main.vala:77
-#, fuzzy, c-format
+#, c-format
 msgid "Connected to %s"
-msgstr "Подключиться к "
+msgstr "Подключиться к %s"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
@@ -122,9 +124,9 @@ msgid "_Cancel"
 msgstr "_Отмена"
 
 #: src/Layouts/Library.vala:467
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to Connect to %s"
-msgstr "Не удалось подключиться к "
+msgstr "Не удалось подключиться к %s"
 
 #: src/Layouts/Library.vala:480
 msgid "Unable to Export Library "
@@ -228,9 +230,8 @@ msgid "Zoom In"
 msgstr ""
 
 #: src/Layouts/DataBaseView.vala:124
-#, fuzzy
 msgid "High Contrast"
-msgstr " Отношения"
+msgstr "Отношения"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
@@ -249,9 +250,9 @@ msgid "Create a new Query Tab"
 msgstr ""
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Запрос"
+msgstr "Запрос %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -306,9 +307,9 @@ msgid "%d of %d Pages"
 msgstr ""
 
 #: src/Layouts/Views/Content.vala:275
-#, fuzzy, c-format
+#, c-format
 msgid "%d Entries"
-msgstr " Записи"
+msgstr "%d Записи"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
@@ -340,14 +341,14 @@ msgid "Unable to process Query!"
 msgstr "Невозможно выполнить запрос!"
 
 #: src/Layouts/Views/Query.vala:457
-#, fuzzy, c-format
+#, c-format
 msgid "%d Total Results"
-msgstr " Общий результат"
+msgstr "%d Общий результат"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Запрос выполнен успешно! Строк обработано: "
+msgstr "Запрос выполнен успешно! Строк обработано: %s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
