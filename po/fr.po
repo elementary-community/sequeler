@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
 "PO-Revision-Date: 2020-04-25 16:11+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/sequeler/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -161,7 +161,6 @@ msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importer des connexions de Sequeler précédemment exportées"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
 msgstr "Sélectionner un fichier"
 
@@ -220,7 +219,7 @@ msgstr "Zoom arrière"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Zoom 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
