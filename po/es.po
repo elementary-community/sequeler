@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-30 12:44+0000\n"
+"PO-Revision-Date: 2020-05-01 13:11+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
@@ -441,15 +441,15 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
-msgstr "¡Error!"
+msgstr "Error"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr "¡Falta el fichero de clave SSH!"
+msgstr "Falta el archivo de clave SSH."
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr "¡No se encontró la llave publica SSH!"
+msgstr "Falta la clave SSH pública."
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
@@ -510,11 +510,11 @@ msgstr "Seleccione su archivo SQLite…"
 
 #: src/Widgets/ConnectionDialog.vala:261
 msgid "Connect via SSH Tunnel:"
-msgstr "Conectar vía túnel SSH:"
+msgstr "Conectar mediante túnel SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:271
 msgid "SSH Host:"
-msgstr "Host SSH:"
+msgstr "Anfitrión SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
 msgid "SSH Username:"
@@ -563,7 +563,7 @@ msgstr "Probar conexión"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr "Abriendo Túnel SSH…"
+msgstr "Abriendo túnel SSH…"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
@@ -571,7 +571,7 @@ msgstr "Probando la conexión…"
 
 #: src/Widgets/ConnectionDialog.vala:661
 msgid "Successfully Connected!"
-msgstr "Se ha conectado correctamente!"
+msgstr "Se ha conectado correctamente."
 
 #: src/Widgets/ConnectionDialog.vala:679
 msgid "Saving Connection…"
