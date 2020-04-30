@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-14 20:11+0000\n"
-"Last-Translator: Alessandro <castellani.ale@gmail.com>\n"
+"PO-Revision-Date: 2020-04-30 12:44+0000\n"
+"Last-Translator: Luis Antonio Cordova Perez <cordova0705@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.2\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -424,38 +424,39 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "¡Fallo al escuchar!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "¡Fallo al aceptar la conexión remota!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"No se pudo abrir el canal direct-tcpip! (Nota: ¡Esto puede ser un problema "
+"con el servidor! Por favor revisa los registros del servidor)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
-msgstr "Error!"
+msgstr "¡Error!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr "Falta el fichero de clave SSH!"
+msgstr "¡Falta el fichero de clave SSH!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "¡No se encontró la llave publica SSH!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
 msgstr "Conexión"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Eliminar conexión"
+msgstr "Seleccionar el color de la conexión"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -487,14 +488,12 @@ msgstr "Contraseña:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Contraseña:"
+msgstr "Mostrar contraseña"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Contraseña:"
+msgstr "Ocultar contraseña"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
@@ -510,32 +509,27 @@ msgstr "Seleccione su archivo SQLite…"
 
 #: src/Widgets/ConnectionDialog.vala:261
 msgid "Connect via SSH Tunnel:"
-msgstr ""
+msgstr "Conectar vía túnel SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Anfitrión:"
+msgstr "Host SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Nombre de usuario:"
+msgstr "Nombre de usuario SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Contraseña:"
+msgstr "Contraseña SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:301
-#, fuzzy
 msgid "SSH Port:"
-msgstr "Puerto:"
+msgstr "Puerto SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
-#, fuzzy
 msgid "Optional"
-msgstr "Opciones"
+msgstr "Opcional"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
@@ -552,7 +546,7 @@ msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:356
 msgid "SSH Tunnel"
-msgstr ""
+msgstr "Túnel SSH"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
@@ -568,7 +562,7 @@ msgstr "Probar conexión"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "Abriendo Túnel SSH…"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
