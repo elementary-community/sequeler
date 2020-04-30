@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
 "PO-Revision-Date: 2020-04-30 12:44+0000\n"
-"Last-Translator: Luis Antonio Cordova Perez <cordova0705@gmail.com>\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
 "Language: es\n"
@@ -21,19 +21,19 @@ msgstr ""
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr "Las carpetas no están soportadas"
+msgstr "No se admiten los directorios"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr "No se sabe que hacer"
+msgstr "No se sabe qué hacer"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr "Algo completamente inesperado ha pasado"
+msgstr "Se produjo una situación inesperada"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
-msgstr "Cerrar sesión"
+msgstr "Finalizar sesión"
 
 #: src/Layouts/HeaderBar.vala:56
 msgid "Light background"
@@ -91,7 +91,7 @@ msgstr "Si elimina esta conexión, no será capaz de recuperar los datos."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
-msgstr "Sí, eliminar!"
+msgstr "Sí, eliminarla"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
@@ -99,12 +99,12 @@ msgstr "Se eliminarán todos los datos y no será capaz de recuperarlos."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
-msgstr "Sí, eliminar todo!"
+msgstr "Sí, eliminarlo todo"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr "¡Se requiere un nombre de usuario para conectar!"
+msgstr "Se necesita un nombre de usuario para efectuar la conexión."
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -154,11 +154,11 @@ msgstr "Importar conexiones"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
-msgstr "Abrir conexiones de Sequeler previamente exportadas"
+msgstr "Abrir conexiones de Sequeler exportadas anteriormente"
 
 #: src/Layouts/Welcome.vala:58
 msgid "Select a file"
-msgstr "Seleccionar fichero"
+msgstr "Seleccione un archivo"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -239,7 +239,7 @@ msgstr "Cambiar estilo de texto"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr "Crear nueva pestaña de consulta"
+msgstr "Crear pestaña de consulta"
 
 #: src/Layouts/DataBaseView.vala:240
 #, c-format
@@ -330,7 +330,7 @@ msgstr "Exportar como texto"
 
 #: src/Layouts/Views/Query.vala:436 src/Layouts/Views/Query.vala:482
 msgid "Unable to process Query!"
-msgstr "No se pudo procesar la consulta!"
+msgstr "No se pudo procesar la consulta."
 
 #: src/Layouts/Views/Query.vala:457
 #, c-format
@@ -344,7 +344,7 @@ msgstr "Se ejecutó la consulta correctamente. Filas afectadas: %s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
-msgstr "¡Consulta ejecutada!"
+msgstr "Se ha ejecutado la consulta."
 
 #: src/Partials/LibraryItem.vala:107 src/Widgets/ConnectionDialog.vala:431
 msgid "Connect"
@@ -400,19 +400,19 @@ msgstr "¡Fallo al conectar!"
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr "Error iniciando sesión SSH: %d"
+msgstr "Error al iniciar la sesión SSH: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr "¡Fallo autenticado con contraseña!"
+msgstr "Falló la autenticación por contraseña."
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr "¡Fallo autenticado con clave pública!"
+msgstr "Falló la autenticación por clave pública."
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr "¡No se encontraron métodos de autenticación!"
+msgstr "No se encontró ningún método de autenticación admitido."
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
@@ -421,6 +421,7 @@ msgstr "Fallo al abrir socket de escucha"
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
 msgstr ""
+"No se pudo vincular. Puede que el puerto de su base de datos sea erróneo."
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
