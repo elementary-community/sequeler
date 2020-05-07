@@ -131,7 +131,6 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         spinner.vexpand = true;
         spinner.halign = Gtk.Align.CENTER;
         spinner.valign = Gtk.Align.CENTER;
-        spinner.start ();
 
         toolbar.attach (add_table_btn, 0, 0, 1, 1);
         toolbar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
@@ -147,15 +146,15 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         attach (revealer, 0, 1, 1, 1);
         attach (stack, 0, 2, 1, 2);
         attach (toolbar, 0, 4, 1, 1);
-
-        start_spinner ();
     }
 
     public void start_spinner () {
+        spinner.start ();
         stack.visible_child_name = "spinner";
     }
 
     public void stop_spinner () {
+        spinner.stop ();
         stack.visible_child_name = "list";
     }
 
