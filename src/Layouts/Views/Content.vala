@@ -85,7 +85,6 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
         spinner.vexpand = true;
         spinner.halign = Gtk.Align.CENTER;
         spinner.valign = Gtk.Align.CENTER;
-        spinner.start ();
 
         var welcome = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
 
@@ -107,10 +106,12 @@ public class Sequeler.Layouts.Views.Content : Gtk.Grid {
     }
 
     public void start_spinner () {
+        spinner.start ();
         stack.visible_child_name = "spinner";
     }
 
     public void stop_spinner () {
+        spinner.stop ();
         stack.visible_child_name = "list";
     }
 
