@@ -37,6 +37,12 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+        <release version="0.7.91" date="2020-05-12">
+			<description>
+				<p>Reduced CPU usage by 2%.</p>
+				<p>Update translations for Italian, Spanish, Catalan, French, Hindi, Russian, and Turkish.</p>
+			</description>
+		</release>
         <release version="0.7.9" date="2020-04-11">
 			<description>
 				<p>More fixes!</p>

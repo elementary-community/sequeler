@@ -1,6 +1,6 @@
 # project name and programming language
 project('com.github.alecaddd.sequeler', 'vala', 'c',
-    version: '0.7.9')
+    version: '0.7.91')
 
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required: true)

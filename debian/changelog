@@ -1,3 +1,10 @@
+com.github.alecaddd.sequeler (0.7.91) xenial; urgency=high
+
+  * Reduced CPU usage by 2%.
+  * Update translations for Italian, Spanish, Catalan, French, Hindi, Russian, and Turkish.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 12 May 2020 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.9) xenial; urgency=high
 
   * Fixed usage of wrong Vala method.
