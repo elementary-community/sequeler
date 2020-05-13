@@ -56,6 +56,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
     private string keyfile1;
     private string keyfile2;
     private Sequeler.Partials.LabelForm ssl_switch_label;
+    private Gtk.Grid ssl_switch_container;
     private Gtk.Switch ssl_switch;
     private Sequeler.Partials.LabelForm ssh_switch_label;
     private Gtk.Grid ssh_switch_container;
@@ -243,10 +244,12 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         ssl_switch_label = new Sequeler.Partials.LabelForm (_("Use SSL:"));
         ssl_switch = new Gtk.Switch ();
+        ssl_switch_container = new Gtk.Grid ();
+        ssl_switch_container.add (ssl_switch);
         ssl_switch.set_state (false);
 
         form_grid.attach (ssl_switch_label, 0, 7, 1, 1);
-        form_grid.attach (ssl_switch, 1, 7, 1, 1);
+        form_grid.attach (ssl_switch_container, 1, 7, 1, 1);
 
         db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
         db_file_entry = new Gtk.FileChooserButton (_("Select Your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
