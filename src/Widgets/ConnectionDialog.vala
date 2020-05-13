@@ -243,7 +243,7 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         ssl_switch_label = new Sequeler.Partials.LabelForm (_("Use SSL:"));
         ssl_switch = new Gtk.Switch ();
-        ssl_switch.set_state (true);
+        ssl_switch.set_state (false);
 
         form_grid.attach (ssl_switch_label, 0, 7, 1, 1);
         form_grid.attach (ssl_switch, 1, 7, 1, 1);

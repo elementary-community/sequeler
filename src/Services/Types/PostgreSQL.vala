@@ -26,7 +26,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     public string connection_string (Gee.HashMap<string, string> data) {
         var username = Gda.rfc1738_encode (data["username"]);
         var password = Gda.rfc1738_encode (data["password"]);
-        var use_ssl = Gda.rfc1738_encode (data["use_ssl"] ?? "true");
+        var use_ssl = Gda.rfc1738_encode (data["use_ssl"] ?? "false");
         var name = Gda.rfc1738_encode (data["name"]);
         host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
         if (data["has_ssh"] == "true") {
