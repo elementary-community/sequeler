@@ -55,6 +55,9 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
     private string keyfile1;
     private string keyfile2;
+    private Sequeler.Partials.LabelForm ssl_switch_label;
+    private Gtk.Grid ssl_switch_container;
+    private Gtk.Switch ssl_switch;
     private Sequeler.Partials.LabelForm ssh_switch_label;
     private Gtk.Grid ssh_switch_container;
     private Gtk.Switch ssh_switch;
@@ -238,6 +241,15 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
 
         form_grid.attach (db_port_label, 0, 6, 1, 1);
         form_grid.attach (db_port_entry, 1, 6, 1, 1);
+
+        ssl_switch_label = new Sequeler.Partials.LabelForm (_("Use SSL:"));
+        ssl_switch = new Gtk.Switch ();
+        ssl_switch_container = new Gtk.Grid ();
+        ssl_switch_container.add (ssl_switch);
+        ssl_switch.set_state (false);
+
+        form_grid.attach (ssl_switch_label, 0, 7, 1, 1);
+        form_grid.attach (ssl_switch_container, 1, 7, 1, 1);
 
         db_file_label = new Sequeler.Partials.LabelForm (_("File Path:"));
         db_file_entry = new Gtk.FileChooserButton (_("Select Your SQLite File\u2026"), Gtk.FileChooserAction.OPEN);
@@ -505,6 +517,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
                 ssh_identity_file_entry.set_filename (update_data["ssh_identity_file"]);
             }
         }
+
+        if (update_data["use_ssl"] != null) {
+            ssl_switch.set_state (update_data["use_ssl"] == "true");
+        }
     }
 
     private void db_type_changed () {
@@ -545,6 +561,10 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         db_port_label.no_show_all = toggle;
         db_port_entry.visible = !toggle;
         db_port_entry.no_show_all = toggle;
+        ssl_switch_label.visible = !toggle;
+        ssl_switch_label.no_show_all = toggle;
+        ssl_switch.visible = !toggle;
+        ssl_switch.no_show_all = toggle;
 
         if (toggle) ssh_switch.active = false;
 
@@ -756,6 +776,8 @@ public class Sequeler.Widgets.ConnectionDialog : Gtk.Dialog {
         packaged_data.set ("ssh_password", ssh_switch.active ? ssh_password_entry.text : "");
         packaged_data.set ("ssh_port", ssh_switch.active ? ssh_port_entry.text : "");
         packaged_data.set ("ssh_identity_file", ssh_identity_file_entry.get_filename () ?? "");
+
+        packaged_data.set ("use_ssl", ssl_switch.active.to_string ());
 
         return packaged_data;
     }

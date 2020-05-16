@@ -26,6 +26,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
     public string connection_string (Gee.HashMap<string, string> data) {
         var username = Gda.rfc1738_encode (data["username"]);
         var password = Gda.rfc1738_encode (data["password"]);
+        var use_ssl = Gda.rfc1738_encode (data["use_ssl"] ?? "false");
         var name = Gda.rfc1738_encode (data["name"]);
         if (data["has_ssh"] == "true") {
             port = "9000";
@@ -35,7 +36,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
             host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
         }
 
-        return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
+        return "MySQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port + ";USE_SSL=" + use_ssl;
     }
 
     public string show_schema () {
