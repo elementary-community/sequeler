@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-25 16:11+0000\n"
+"PO-Revision-Date: 2020-05-19 14:41+0000\n"
 "Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
 "translations/ru/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -377,9 +377,8 @@ msgid "Options"
 msgstr "Отношения"
 
 #: src/Partials/TreeBuilder.vala:131
-#, fuzzy
 msgid "Error"
-msgstr "Ошибка!"
+msgstr "Ошибка"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
@@ -405,9 +404,8 @@ msgid "Failed to open socket"
 msgstr ""
 
 #: src/Services/ConnectionManager.vala:211
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Не удалось подключиться к "
+msgstr "Не удалось подключиться!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
