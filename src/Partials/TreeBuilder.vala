@@ -67,6 +67,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
             column.clickable = true;
             column.resizable = true;
             column.expand = true;
+            column.set_data ("model_column_id", col);
 
             if (col > 0) {
                 column.sizing = Gtk.TreeViewColumnSizing.FIXED;
@@ -155,7 +156,7 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
         Gdk.Display display = Gdk.Display.get_default ();
         Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
         model.get_iter (out iter, path);
-        model.get_value (iter, column.get_sort_column_id (), out val);
+        model.get_value (iter, column.get_data ("model_column_id"), out val);
 
         Gda.DataHandler handler = Gda.DataHandler.get_default (val.type ());
         string? column_data = handler.get_str_from_value (val);
