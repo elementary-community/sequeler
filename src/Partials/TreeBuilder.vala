@@ -189,10 +189,13 @@ public class Sequeler.Partials.TreeBuilder : Gtk.TreeView {
             Gtk.TreePath path;
             Gtk.TreeViewColumn column;
             get_path_at_pos ((int) event.x, (int) event.y, out path, out column, null, null);
-            var menu = create_context_menu (event, path, column);
-            menu.popup_at_pointer (event);
 
-            return true;
+            if (path != null) {
+                var menu = create_context_menu (event, path, column);
+                menu.popup_at_pointer (event);
+
+                return true;
+            }
         }
 
         return base.button_press_event (event);

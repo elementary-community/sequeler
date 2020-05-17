@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -292,7 +292,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         int top = 0;
         int count = 0;
         while (_iter.move_next ()) {
-            var item = new Granite.Widgets.SourceList.Item (_iter.get_value_at (0).get_string ());
+            var item = new Sequeler.Partials.DataBaseTable (_iter.get_value_at (0).get_string (), source_list);
 
             // Get the table rows coutn with an extra query for SQLite
             if (window.data_manager.data["type"] == "SQLite") {
@@ -309,13 +309,13 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
             }
 
             var icon_name = count == 0 ? "table-empty" : "table";
-            item.editable = true;
             item.icon = new GLib.ThemedIcon (icon_name);
             item.edited.connect ((new_name) => {
                 if (new_name != item.name) {
                     edit_table_name.begin (item.name, new_name);
                 }
             });
+
             tables_category.add (item);
             top++;
         }
