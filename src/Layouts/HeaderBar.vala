@@ -121,7 +121,5 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logged_out = !logged_out;
         logout_button.visible = logged_out;
         logout_button.no_show_all = !logged_out;
-
-        yield;
     }
 }

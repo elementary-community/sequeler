@@ -70,15 +70,28 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
 
         schema_list_combo.margin_top = 10;
         schema_list_combo.margin_bottom = 10;
-        schema_list_combo.margin_start = 10;
 
         reset_schema_combo.begin ();
 
         var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
+        search_btn.valign = Gtk.Align.CENTER;
         search_btn.clicked.connect (toggle_search_tables);
 
-        dropdown_area.attach (schema_list_combo, 0, 0, 1, 1);
-        dropdown_area.attach (search_btn, 1, 0, 1, 1);
+        var new_db_button = new Gtk.Button.from_icon_name ("document-new", Gtk.IconSize.LARGE_TOOLBAR);
+        new_db_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Control><Shift>N"},
+            _("Create a new Database")
+        );
+        new_db_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+        new_db_button.valign = Gtk.Align.CENTER;
+        new_db_button.can_focus = false;
+        new_db_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_NEW_DB;
+
+        dropdown_area.attach (new_db_button, 0, 0, 1, 1);
+        dropdown_area.attach (schema_list_combo, 1, 0, 1, 1);
+        dropdown_area.attach (search_btn, 2, 0, 1, 1);
 
         revealer = new Gtk.Revealer ();
         revealer.hexpand = true;

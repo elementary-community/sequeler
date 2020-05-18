@@ -37,6 +37,7 @@ public class Sequeler.Services.ActionManager : Object {
     public const string ACTION_ZOOM_DEFAULT = "action_zoom_default";
     public const string ACTION_ZOOM_IN = "action_zoom_in";
     public const string ACTION_ZOOM_OUT = "action_zoom_out";
+    public const string ACTION_NEW_DB = "action_new_db";
 
     public static Gee.MultiMap<string, string> action_accelerators = new Gee.HashMultiMap<string, string> ();
 
@@ -48,7 +49,8 @@ public class Sequeler.Services.ActionManager : Object {
         { ACTION_QUIT, action_quit },
         { ACTION_ZOOM_DEFAULT, action_set_default_zoom },
         { ACTION_ZOOM_IN, action_zoom_in },
-        { ACTION_ZOOM_OUT, action_zoom_out}
+        { ACTION_ZOOM_OUT, action_zoom_out},
+        { ACTION_NEW_DB, action_new_db}
     };
 
     public ActionManager (Sequeler.Application sequeler_app, Sequeler.Window main_window) {
@@ -71,6 +73,7 @@ public class Sequeler.Services.ActionManager : Object {
         action_accelerators.set (ACTION_ZOOM_IN, "<Control>KP_Add");
         action_accelerators.set (ACTION_ZOOM_OUT, "<Control>minus");
         action_accelerators.set (ACTION_ZOOM_OUT, "<Control>KP_Subtract");
+        action_accelerators.set (ACTION_NEW_DB, "<Control><Shift>N");
     }
 
     construct {
@@ -227,5 +230,9 @@ public class Sequeler.Services.ActionManager : Object {
     // Actions functions
     private void action_set_default_zoom () {
         set_default_zoom ();
+    }
+
+    private void action_new_db () {
+        // Creat a new database.
     }
 }
