@@ -51,8 +51,7 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         tabs.append (new Sequeler.Partials.ToolBarButton ("preferences-system-windows", "Relations", _("Relations")));
         tabs.append (new Sequeler.Partials.ToolBarButton ("accessories-text-editor", "Query", _("Query")));
         tabs.set_active (0);
-        tabs.margin = 10;
-        tabs.margin_bottom = 9;
+        tabs.margin = 9;
 
         tabs.mode_changed.connect ((tab) => {
             stack.set_visible_child_name (tab.name);
@@ -157,7 +156,7 @@ public class Sequeler.Layouts.DataBaseView : Gtk.Grid {
         menu.add (menu_grid);
 
         font_style = new Gtk.MenuButton ();
-        font_style.margin_end = 10;
+        font_style.margin_end = 9;
         font_style.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
         font_style.set_image (new Gtk.Image.from_icon_name ("font-select-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
         font_style.tooltip_text = _("Change Text Style");
