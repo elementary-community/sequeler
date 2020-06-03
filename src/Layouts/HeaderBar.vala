@@ -45,13 +45,13 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
     }
 
     private void build_ui () {
-        logout_button = header_button ("application-exit");
+        logout_button = header_button ("application-logout");
         logout_button.action_name =
             Sequeler.Services.ActionManager.ACTION_PREFIX
             + Sequeler.Services.ActionManager.ACTION_LOGOUT;
         logout_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Escape"}, _("Logout"));
 
-        new_db_button = header_button ("document-new");
+        new_db_button = header_button ("office-database-new");
         new_db_button.tooltip_markup = Granite.markup_accel_tooltip (
             {"<Control><Shift>N"},
             _("Create a new database")
@@ -60,13 +60,13 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
             Sequeler.Services.ActionManager.ACTION_PREFIX
             + Sequeler.Services.ActionManager.ACTION_NEW_DB;
 
-        delete_db_button = header_button ("list-remove");
+        delete_db_button = header_button ("office-database-remove");
         delete_db_button.tooltip_markup = Granite.markup_accel_tooltip (
             {"<Control><Shift>D"},
             _("Delete database")
         );
 
-        edit_db_button = header_button ("document-properties");
+        edit_db_button = header_button ("office-database-edit");
         edit_db_button.tooltip_markup = Granite.markup_accel_tooltip (
             {"<Control><Shift>P"},
             _("Database properties")
@@ -123,6 +123,7 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         pack_start (headerbar_separator ());
         pack_start (new_db_button);
         pack_start (edit_db_button);
+        pack_start (headerbar_separator ());
         pack_start (delete_db_button);
 
         pack_end (open_menu);

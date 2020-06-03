@@ -31,6 +31,26 @@ install_data(
 		install_dir: join_paths(icons_dir , '16x16', 'status'),
 )
 
+install_data(
+		join_paths('assets', 'icons', 'actions', 'office-database-new.svg'),
+		install_dir: join_paths(icons_dir , '24x24', 'actions'),
+)
+
+install_data(
+		join_paths('assets', 'icons', 'actions', 'office-database-remove.svg'),
+		install_dir: join_paths(icons_dir , '24x24', 'actions'),
+)
+
+install_data(
+		join_paths('assets', 'icons', 'actions', 'office-database-edit.svg'),
+		install_dir: join_paths(icons_dir , '24x24', 'actions'),
+)
+
+install_data(
+		join_paths('assets', 'icons', 'actions', 'application-logout.svg'),
+		install_dir: join_paths(icons_dir , '24x24', 'actions'),
+)
+
 # Install the Desktop file
 desktop_conf = configuration_data()
 desktop_conf.set('icon', application_id)
