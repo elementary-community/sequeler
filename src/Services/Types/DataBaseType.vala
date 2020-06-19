@@ -60,4 +60,9 @@ public interface DataBaseType : Object {
         string table, string? database,
         string? sortby = null, string sort = "ASC"
     );
+
+    /*
+     * Create database
+     */
+    public abstract string create_database (string name);
 }

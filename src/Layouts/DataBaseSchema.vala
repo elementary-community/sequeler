@@ -42,6 +42,9 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     public Gtk.SearchEntry search;
     public string search_text;
 
+    private Gtk.Grid main_grid;
+    private Sequeler.Partials.DatabasePanel db_panel;
+
     enum Column {
         SCHEMAS
     }
@@ -132,10 +135,20 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         stack.add_named (scroll, "list");
         stack.add_named (spinner, "spinner");
 
-        attach (dropdown_area, 0, 0, 1, 1);
-        attach (revealer, 0, 1, 1, 1);
-        attach (stack, 0, 2, 1, 2);
-        attach (toolbar, 0, 4, 1, 1);
+        main_grid = new Gtk.Grid ();
+        main_grid.get_style_context ().add_class ("database-schema");
+        main_grid.attach (dropdown_area, 0, 0, 1, 1);
+        main_grid.attach (revealer, 0, 1, 1, 1);
+        main_grid.attach (stack, 0, 2, 1, 2);
+        main_grid.attach (toolbar, 0, 4, 1, 1);
+
+        db_panel = new Sequeler.Partials.DatabasePanel ();
+
+        var overlay = new Gtk.Overlay ();
+        overlay.add_overlay (db_panel);
+        overlay.add (main_grid);
+
+        add (overlay);
     }
 
     public void start_spinner () {
@@ -416,6 +429,16 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         window.main.database_view.content.reset.begin ();
         window.main.database_view.relations.reset.begin ();
         window.main.database_view.structure.reset.begin ();
+    }
+
+    public void show_database_panel () {
+        main_grid.get_style_context ().add_class ("fade-out");
+        db_panel.reveal_child = true;
+    }
+
+    public void hide_database_panel () {
+        main_grid.get_style_context ().remove_class ("fade-out");
+        db_panel.reveal_child = false;
     }
 
     public void add_table () {

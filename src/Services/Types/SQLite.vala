@@ -74,4 +74,8 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
     ) {
         return "PRAGMA foreign_key_list('%s')".printf (table);
     }
+
+    public string create_database (string name) {
+        return "CREATE DATABASE %s".printf (name);
+    }
 }

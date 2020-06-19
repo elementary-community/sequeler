@@ -232,7 +232,8 @@ public class Sequeler.Services.ActionManager : Object {
         set_default_zoom ();
     }
 
+    // Show the Database Panel.
     private void action_new_db () {
-        // Creat a new database.
+        window.main.database_schema.show_database_panel ();
     }
 }

@@ -30,6 +30,7 @@ executable(
     'Layouts/Views/Query.vala',
 
     'Partials/ButtonType.vala',
+    'Partials/DatabasePanel.vala',
     'Partials/DatabaseTable.vala',
     'Partials/Helpers.vala',
     'Partials/LibraryItem.vala',

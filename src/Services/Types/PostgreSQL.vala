@@ -93,4 +93,8 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
 
         return output;
     }
+
+    public string create_database (string name) {
+        return "CREATE DATABASE %s".printf (name);
+    }
 }
