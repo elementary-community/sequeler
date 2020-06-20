@@ -19,16 +19,41 @@
  * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
  */
 
- public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
-    construct {
-        transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
-        reveal_child = false;
-        valign = Gtk.Align.START;
+public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
+    private Gtk.Revealer panel_revealer;
 
-        var grid = new Gtk.Grid ();
-        grid.margin = 9;
-        grid.get_style_context ().add_class ("database-panel");
-
-        add (grid);
+    public bool reveal {
+        get {
+            return reveal_child;
+        }
+        set {
+            reveal_child = value;
+            Timeout.add (transition_duration, () => {
+                panel_revealer.reveal_child = value;
+                return false;
+            });
+        }
     }
- }
+
+    construct {
+        transition_type = Gtk.RevealerTransitionType.CROSSFADE;
+        reveal_child = false;
+
+        var base_grid = new Gtk.Grid ();
+        base_grid.get_style_context ().add_class ("database-panel-overlay");
+
+        panel_revealer = new Gtk.Revealer ();
+        panel_revealer.valign = Gtk.Align.START;
+        panel_revealer.hexpand = true;
+        panel_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
+        panel_revealer.reveal_child = false;
+
+        var panel = new Gtk.Grid ();
+        panel.margin = 9;
+        panel.get_style_context ().add_class ("database-panel");
+
+        panel_revealer.add (panel);
+        base_grid.add (panel_revealer);
+        add (base_grid);
+    }
+}

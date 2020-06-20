@@ -136,7 +136,6 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         stack.add_named (spinner, "spinner");
 
         main_grid = new Gtk.Grid ();
-        main_grid.get_style_context ().add_class ("database-schema");
         main_grid.attach (dropdown_area, 0, 0, 1, 1);
         main_grid.attach (revealer, 0, 1, 1, 1);
         main_grid.attach (stack, 0, 2, 1, 2);
@@ -432,13 +431,11 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     }
 
     public void show_database_panel () {
-        main_grid.get_style_context ().add_class ("fade-out");
-        db_panel.reveal_child = true;
+        db_panel.reveal = true;
     }
 
     public void hide_database_panel () {
-        main_grid.get_style_context ().remove_class ("fade-out");
-        db_panel.reveal_child = false;
+        db_panel.reveal = false;
     }
 
     public void add_table () {

@@ -126,13 +126,8 @@ button.notebook-temp-fix image {
     color: @selected_fg_color;
 }
 
-.database-schema {
-    transition: opacity 320ms ease;
-    opacity: 1;
-}
-
-.database-schema.fade-out {
-    opacity: 0.5;
+.database-panel-overlay {
+    background-color: alpha (#000, 0.3);
 }
 
 .database-panel {
