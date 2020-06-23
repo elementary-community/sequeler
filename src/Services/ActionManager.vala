@@ -118,6 +118,7 @@ public class Sequeler.Services.ActionManager : Object {
 
         window.main.connection_closed ();
         window.data_manager.data = null;
+        window.main.database_schema.hide_database_panel ();
     }
 
     private void action_new_window () {

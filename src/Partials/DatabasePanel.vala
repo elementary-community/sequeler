@@ -21,6 +21,7 @@
 
 public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
     private Gtk.Revealer panel_revealer;
+    private Sequeler.Partials.Entry db_entry;
 
     public bool reveal {
         get {
@@ -51,6 +52,50 @@ public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
         var panel = new Gtk.Grid ();
         panel.margin = 9;
         panel.get_style_context ().add_class ("database-panel");
+
+        // Title area.
+        var title = new Gtk.Label (_("Create a new Database"));
+        title.get_style_context ().add_class ("h4");
+        title.margin_start = title.margin_end = 3;
+        title.margin_top = 6;
+        title.ellipsize = Pango.EllipsizeMode.END;
+
+        // Body area.
+        var body = new Gtk.Grid ();
+        body.margin = 3;
+
+        db_entry = new Sequeler.Partials.Entry (_("Database name"), null);
+        db_entry.margin = 6;
+
+        body.add (db_entry);
+
+        // Action buttons area.
+        var buttons_area = new Gtk.Grid ();
+        buttons_area.hexpand = true;
+        buttons_area.get_style_context ().add_class ("database-panel-bottom");
+
+        var button_save = new Gtk.Button.with_label (_("Save"));
+        button_save.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+        button_save.margin = 9;
+
+        var button_cancel = new Gtk.Button.with_label (_("Cancel"));
+        button_cancel.clicked.connect (() => {
+            panel_revealer.reveal_child = false;
+            reveal_child = false;
+        });
+        button_cancel.margin = 9;
+
+        var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+        separator.expand = true;
+        separator.halign = Gtk.Align.CENTER;
+
+        buttons_area.attach (button_cancel, 0, 0);
+        buttons_area.attach (separator, 1, 0);
+        buttons_area.attach (button_save, 2, 0);
+
+        panel.attach (title, 0, 0);
+        panel.attach (body, 0, 1);
+        panel.attach (buttons_area, 0, 2);
 
         panel_revealer.add (panel);
         base_grid.add (panel_revealer);

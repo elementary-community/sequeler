@@ -146,6 +146,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         var overlay = new Gtk.Overlay ();
         overlay.add_overlay (db_panel);
         overlay.add (main_grid);
+        overlay.set_overlay_pass_through (db_panel, true);
 
         add (overlay);
     }
