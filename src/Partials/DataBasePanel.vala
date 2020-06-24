@@ -19,9 +19,10 @@
  * Authored by: Alessandro "Alecaddd" Castellani <castellani.ale@gmail.com>
  */
 
-public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
-    private Gtk.Revealer panel_revealer;
+public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
+    public weak Sequeler.Window window { get; construct; }
     private Sequeler.Partials.Entry db_entry;
+    private Gtk.Button button_save;
 
     public bool reveal {
         get {
@@ -29,25 +30,21 @@ public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
         }
         set {
             reveal_child = value;
-            Timeout.add (transition_duration, () => {
-                panel_revealer.reveal_child = value;
-                return false;
-            });
+            db_entry.text = "";
         }
     }
 
+    public DataBasePanel (Sequeler.Window main_window) {
+        Object (
+            window: main_window
+        );
+    }
+
     construct {
-        transition_type = Gtk.RevealerTransitionType.CROSSFADE;
+        valign = Gtk.Align.START;
+        hexpand = true;
+        transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
         reveal_child = false;
-
-        var base_grid = new Gtk.Grid ();
-        base_grid.get_style_context ().add_class ("database-panel-overlay");
-
-        panel_revealer = new Gtk.Revealer ();
-        panel_revealer.valign = Gtk.Align.START;
-        panel_revealer.hexpand = true;
-        panel_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
-        panel_revealer.reveal_child = false;
 
         var panel = new Gtk.Grid ();
         panel.margin = 9;
@@ -66,6 +63,7 @@ public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
 
         db_entry = new Sequeler.Partials.Entry (_("Database name"), null);
         db_entry.margin = 6;
+        db_entry.changed.connect (change_sensitivity);
 
         body.add (db_entry);
 
@@ -74,14 +72,17 @@ public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
         buttons_area.hexpand = true;
         buttons_area.get_style_context ().add_class ("database-panel-bottom");
 
-        var button_save = new Gtk.Button.with_label (_("Save"));
+        button_save = new Gtk.Button.with_label (_("Save"));
         button_save.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
         button_save.margin = 9;
+        button_save.sensitive = false;
+        button_save.clicked.connect (() => {
+            window.main.database_schema.create_database.begin (db_entry.text);
+        });
 
         var button_cancel = new Gtk.Button.with_label (_("Cancel"));
         button_cancel.clicked.connect (() => {
-            panel_revealer.reveal_child = false;
-            reveal_child = false;
+            window.main.database_schema.hide_database_panel ();
         });
         button_cancel.margin = 9;
 
@@ -97,8 +98,10 @@ public class Sequeler.Partials.DatabasePanel : Gtk.Revealer {
         panel.attach (body, 0, 1);
         panel.attach (buttons_area, 0, 2);
 
-        panel_revealer.add (panel);
-        base_grid.add (panel_revealer);
-        add (base_grid);
+        add (panel);
+    }
+
+    private void change_sensitivity () {
+        button_save.sensitive = db_entry.text != "";
     }
 }

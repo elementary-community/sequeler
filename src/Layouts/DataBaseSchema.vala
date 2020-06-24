@@ -43,7 +43,8 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     public string search_text;
 
     private Gtk.Grid main_grid;
-    private Sequeler.Partials.DatabasePanel db_panel;
+    private Gtk.Revealer main_revealer;
+    private Sequeler.Partials.DataBasePanel db_panel;
 
     enum Column {
         SCHEMAS
@@ -116,7 +117,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         reload_btn.halign = Gtk.Align.START;
 
         var add_table_btn = new Sequeler.Partials.HeaderBarButton ("list-add-symbolic", _("Add Table"));
-        add_table_btn.clicked.connect (add_table);
+        //  add_table_btn.clicked.connect (add_table);
         add_table_btn.sensitive = false;
 
         spinner = new Gtk.Spinner ();
@@ -141,12 +142,16 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         main_grid.attach (stack, 0, 2, 1, 2);
         main_grid.attach (toolbar, 0, 4, 1, 1);
 
-        db_panel = new Sequeler.Partials.DatabasePanel ();
+        main_revealer = new Gtk.Revealer ();
+        main_revealer.reveal_child = true;
+        main_revealer.transition_type = Gtk.RevealerTransitionType.CROSSFADE;
+        main_revealer.add (main_grid);
+
+        db_panel = new Sequeler.Partials.DataBasePanel (window);
 
         var overlay = new Gtk.Overlay ();
         overlay.add_overlay (db_panel);
-        overlay.add (main_grid);
-        overlay.set_overlay_pass_through (db_panel, true);
+        overlay.add (main_revealer);
 
         add (overlay);
     }
@@ -432,14 +437,22 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     }
 
     public void show_database_panel () {
+        main_revealer.reveal_child = false;
         db_panel.reveal = true;
     }
 
     public void hide_database_panel () {
+        main_revealer.reveal_child = true;
         db_panel.reveal = false;
     }
 
-    public void add_table () {
+    public async void create_database (string name) {
+        var query = (window.main.connection_manager.db_type as DataBaseType).create_database (name);
 
+        yield window.main.connection_manager.init_query (query);
+
+        yield reload_schema ();
+
+        hide_database_panel ();
     }
 }
