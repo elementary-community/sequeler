@@ -237,4 +237,9 @@ public class Sequeler.Services.ActionManager : Object {
     private void action_new_db () {
         window.main.database_schema.show_database_panel ();
     }
+
+    // Show the Database Panel to edit the currently selected database.
+    private void action_edit_db () {
+        window.main.database_schema.show_database_panel ();
+    }
 }
