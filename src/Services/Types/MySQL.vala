@@ -52,7 +52,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
     }
 
     public string transfer_table (string old_database, string table, string new_database) {
-        return "RENAME TABLE \"%s.%s\" TO \"%s.%s\"".printf (old_database, table, new_database, table);
+        return "RENAME TABLE %s.%s TO %s.%s".printf (old_database, table, new_database, table);
     }
 
     public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {

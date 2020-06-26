@@ -456,7 +456,11 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     public async void create_database (string name) {
         var query = (window.main.connection_manager.db_type as DataBaseType).create_database (name);
 
-        yield window.main.connection_manager.init_query (query);
+        var result = yield window.main.connection_manager.init_query (query);
+
+        if (result == null) {
+            return;
+        }
 
         yield reload_schema ();
 
@@ -470,32 +474,38 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         // We need to first create a new database with the chosen name.
         var query = (window.main.connection_manager.db_type as DataBaseType).create_database (name);
 
-        yield window.main.connection_manager.init_query (query);
+        var result = yield window.main.connection_manager.init_query (query);
 
-        yield reload_schema ();
+        if (result == null) {
+            return;
+        }
 
         // Then, we need to loop through all the tables and attach them to the new database.
         if (tables_category.n_children > 0) {
             foreach (Granite.Widgets.SourceList.Item child in tables_category.children) {
-                yield window.main.connection_manager.init_query (
+                var tb_result = yield window.main.connection_manager.init_query (
                     (window.main.connection_manager.db_type as DataBaseType).transfer_table (
                         current_db,
                         child.name,
                         name
                     )
                 );
+
+                if (tb_result == null) {
+                    return;
+                }
             }
         }
-
-        // Select the new database.
-        schema_list_combo.active_id = name;
-
-        yield reload_schema ();
 
         // Delete the old database.
         yield window.main.connection_manager.init_query (
             (window.main.connection_manager.db_type as DataBaseType).delete_database (current_db)
         );
+
+        // Update the DataManager to use the newly created database.
+        window.data_manager.data["name"] = name;
+
+        yield update_connection ();
 
         hide_database_panel ();
     }

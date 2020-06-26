@@ -88,12 +88,23 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
         button_edit.margin = 9;
         button_edit.sensitive = false;
         button_edit.clicked.connect (() => {
-            window.main.database_schema.edit_database.begin (db_entry.text);
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to edit this Database?"), _("This is a dangerous operation and it might cause data loss, a backup before proceeding is recommended."), "dialog-warning", Gtk.ButtonsType.CANCEL);
+            dialog.transient_for = window;
+
+            var suggested_button = new Gtk.Button.with_label (_("Yes, proceed!"));
+            suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+            dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+            dialog.show_all ();
+            if (dialog.run () == Gtk.ResponseType.ACCEPT) {
+                window.main.database_schema.edit_database.begin (db_entry.text);
+            }
+
+            dialog.destroy ();
         });
 
         button_stack = new Gtk.Stack ();
-        button_stack.hexpand = true;
-        button_stack.vexpand = true;
+        button_stack.expand = false;
         button_stack.add_named (button_save, "new");
         button_stack.add_named (button_edit, "edit");
 

@@ -166,11 +166,14 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
 
         logout_button.visible = logged_out;
         logout_button.no_show_all = !logged_out;
-        new_db_button.visible = logged_out;
-        new_db_button.no_show_all = !logged_out;
-        edit_db_button.visible = logged_out;
-        edit_db_button.no_show_all = !logged_out;
-        delete_db_button.visible = logged_out;
-        delete_db_button.no_show_all = !logged_out;
+
+        if (window.data_manager.data["type"] != "SQLite") {
+            new_db_button.visible = logged_out;
+            new_db_button.no_show_all = !logged_out;
+            edit_db_button.visible = logged_out;
+            edit_db_button.no_show_all = !logged_out;
+            delete_db_button.visible = logged_out;
+            delete_db_button.no_show_all = !logged_out;
+        }
     }
 }
