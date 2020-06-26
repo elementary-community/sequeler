@@ -437,6 +437,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     }
 
     public void show_database_panel () {
+        db_panel.new_database ();
         main_revealer.reveal_child = false;
         db_panel.reveal = true;
     }
@@ -444,6 +445,12 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     public void hide_database_panel () {
         main_revealer.reveal_child = true;
         db_panel.reveal = false;
+    }
+
+    public void edit_database_name () {
+        db_panel.edit_database (schemas[schema_list_combo.get_active ()]);
+        main_revealer.reveal_child = false;
+        db_panel.reveal = true;
     }
 
     public async void create_database (string name) {
@@ -454,5 +461,54 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         yield reload_schema ();
 
         hide_database_panel ();
+    }
+
+    public async void edit_database (string name) {
+        var current_db = schemas[schema_list_combo.get_active ()];
+
+        // Renaming a database is tricky as we can't simply update its name.
+        // We need to first create a new database with the chosen name.
+        var query = (window.main.connection_manager.db_type as DataBaseType).create_database (name);
+
+        yield window.main.connection_manager.init_query (query);
+
+        yield reload_schema ();
+
+        // Then, we need to loop through all the tables and attach them to the new database.
+        if (tables_category.n_children > 0) {
+            foreach (Granite.Widgets.SourceList.Item child in tables_category.children) {
+                yield window.main.connection_manager.init_query (
+                    (window.main.connection_manager.db_type as DataBaseType).transfer_table (
+                        current_db,
+                        child.name,
+                        name
+                    )
+                );
+            }
+        }
+
+        // Select the new database.
+        schema_list_combo.active_id = name;
+
+        yield reload_schema ();
+
+        // Delete the old database.
+        yield window.main.connection_manager.init_query (
+            (window.main.connection_manager.db_type as DataBaseType).delete_database (current_db)
+        );
+
+        hide_database_panel ();
+    }
+
+    public async void delete_database () {
+        yield window.main.connection_manager.init_query (
+            (window.main.connection_manager.db_type as DataBaseType).delete_database (
+                schemas[schema_list_combo.get_active ()]
+            )
+        );
+
+        yield reload_schema ();
+
+        schema_list_combo.active = 0;
     }
 }

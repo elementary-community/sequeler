@@ -43,6 +43,12 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
         return "ALTER TABLE %s RENAME TO %s".printf (old_table, new_table);
     }
 
+    public string transfer_table (string old_database, string table, string new_database) {
+        // Temporary placeholder methods. No current support for database
+        // operations in SQLite.
+        return "";
+    }
+
     public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
         return "PRAGMA table_info('%s')".printf (table);
     }
@@ -76,6 +82,14 @@ public class Sequeler.Services.Types.SQLite : Object, DataBaseType {
     }
 
     public string create_database (string name) {
-        return "CREATE DATABASE %s".printf (name);
+        // Temporary placeholder methods. No current support for database
+        // operations in SQLite.
+        return "";
+    }
+
+    public string delete_database (string name) {
+        // Temporary placeholder methods. No current support for database
+        // operations in SQLite.
+        return "";
     }
 }

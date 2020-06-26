@@ -65,12 +65,18 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
             {"<Control><Shift>D"},
             _("Delete database")
         );
+        delete_db_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_DELETE_DB;
 
         edit_db_button = header_button ("office-database-edit");
         edit_db_button.tooltip_markup = Granite.markup_accel_tooltip (
             {"<Control><Shift>P"},
             _("Database properties")
         );
+        edit_db_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_EDIT_DB;
 
         mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
         mode_switch.primary_icon_tooltip_text = _("Light background");

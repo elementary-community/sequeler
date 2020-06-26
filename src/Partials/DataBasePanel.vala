@@ -21,8 +21,12 @@
 
 public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
     public weak Sequeler.Window window { get; construct; }
+
+    private Gtk.Label title;
     private Sequeler.Partials.Entry db_entry;
+    private Gtk.Stack button_stack;
     private Gtk.Button button_save;
+    private Gtk.Button button_edit;
 
     public bool reveal {
         get {
@@ -30,7 +34,6 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
         }
         set {
             reveal_child = value;
-            db_entry.text = "";
         }
     }
 
@@ -51,7 +54,7 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
         panel.get_style_context ().add_class ("database-panel");
 
         // Title area.
-        var title = new Gtk.Label (_("Create a new Database"));
+        title = new Gtk.Label ("");
         title.get_style_context ().add_class ("h4");
         title.margin_start = title.margin_end = 3;
         title.margin_top = 6;
@@ -80,6 +83,20 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
             window.main.database_schema.create_database.begin (db_entry.text);
         });
 
+        button_edit = new Gtk.Button.with_label (_("Edit"));
+        button_edit.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+        button_edit.margin = 9;
+        button_edit.sensitive = false;
+        button_edit.clicked.connect (() => {
+            window.main.database_schema.edit_database.begin (db_entry.text);
+        });
+
+        button_stack = new Gtk.Stack ();
+        button_stack.hexpand = true;
+        button_stack.vexpand = true;
+        button_stack.add_named (button_save, "new");
+        button_stack.add_named (button_edit, "edit");
+
         var button_cancel = new Gtk.Button.with_label (_("Cancel"));
         button_cancel.clicked.connect (() => {
             window.main.database_schema.hide_database_panel ();
@@ -92,7 +109,7 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
 
         buttons_area.attach (button_cancel, 0, 0);
         buttons_area.attach (separator, 1, 0);
-        buttons_area.attach (button_save, 2, 0);
+        buttons_area.attach (button_stack, 2, 0);
 
         panel.attach (title, 0, 0);
         panel.attach (body, 0, 1);
@@ -103,5 +120,18 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
 
     private void change_sensitivity () {
         button_save.sensitive = db_entry.text != "";
+        button_edit.sensitive = db_entry.text != "";
+    }
+
+    public void new_database () {
+        title.label = _("Create a new Database");
+        db_entry.text = "";
+        button_stack.visible_child_name = "new";
+    }
+
+    public void edit_database (string name) {
+        title.label = _("Edit Database");
+        db_entry.text = name;
+        button_stack.visible_child_name = "edit";
     }
 }

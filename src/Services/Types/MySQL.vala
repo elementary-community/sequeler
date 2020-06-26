@@ -51,6 +51,10 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
         return "RENAME TABLE %s TO %s".printf (old_table, new_table);
     }
 
+    public string transfer_table (string old_database, string table, string new_database) {
+        return "RENAME TABLE \"%s.%s\" TO \"%s.%s\"".printf (old_database, table, new_database, table);
+    }
+
     public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
         var output = "SELECT COLUMN_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, COLUMN_COMMENT FROM information_schema.COLUMNS WHERE table_name = '%s' AND table_schema = DATABASE()".printf (table);
 
@@ -97,5 +101,9 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
 
     public string create_database (string name) {
         return "CREATE DATABASE %s".printf (name);
+    }
+
+    public string delete_database (string name) {
+        return "DROP DATABASE %s".printf (name);
     }
 }
