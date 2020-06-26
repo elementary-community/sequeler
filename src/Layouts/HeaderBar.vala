@@ -175,8 +175,11 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logout_button.no_show_all = !logged_out;
 
         if (
-            window.data_manager.data["type"] == "MySQL"
-            || window.data_manager.data["type"] == "MariaDB"
+            window.data_manager != null &&
+            (
+                window.data_manager.data["type"] == "MySQL"
+                || window.data_manager.data["type"] == "MariaDB"
+            )
         ) {
             new_db_button.visible = logged_out;
             new_db_button.no_show_all = !logged_out;

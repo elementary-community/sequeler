@@ -51,7 +51,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string transfer_table (string old_database, string table, string new_database) {
-        return "ALTER TABLE \"%s.%s\" RENAME TO \"%s.%s\"".printf (old_database, table, new_database, table);
+        return "";
     }
 
     public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
@@ -99,10 +99,14 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string create_database (string name) {
-        return "CREATE DATABASE %s".printf (name);
+        // Temporary placeholder methods. No current support for database
+        // operations in PostgreSQL.
+        return "";
     }
 
     public string delete_database (string name) {
-        return "DROP DATABASE %s".printf (name);
+        // Temporary placeholder methods. No current support for database
+        // operations in PostgreSQL.
+        return "";
     }
 }
