@@ -28,7 +28,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     private bool reloading { get; set; default = false;}
 
     public Gee.HashMap<int, string> schemas;
-    private ulong handler_id;
+    private ulong handler_id = 0;
 
     public Gtk.Stack stack;
     public Gtk.ScrolledWindow scroll;
@@ -41,6 +41,10 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     public Gtk.Revealer revealer;
     public Gtk.SearchEntry search;
     public string search_text;
+
+    private Gtk.Grid main_grid;
+    private Gtk.Revealer main_revealer;
+    private Sequeler.Partials.DataBasePanel db_panel;
 
     enum Column {
         SCHEMAS
@@ -62,29 +66,19 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         var cell = new Gtk.CellRendererText ();
 
         schema_list = new Gtk.ListStore (1, typeof (string));
-        schema_list.append (out iter);
-        schema_list.set (iter, Column.SCHEMAS, _("- Select Database -"));
 
         schema_list_combo = new Gtk.ComboBox.with_model (schema_list);
         schema_list_combo.hexpand = true;
         schema_list_combo.pack_start (cell, false);
         schema_list_combo.set_attributes (cell, "text", Column.SCHEMAS);
 
-        schema_list_combo.set_active (0);
-        schema_list_combo.margin_top = 10;
-        schema_list_combo.margin_bottom = 10;
-        schema_list_combo.margin_start = 10;
-        schema_list_combo.sensitive = false;
+        schema_list_combo.margin_top = schema_list_combo.margin_bottom = 9;
+        schema_list_combo.margin_start = 9;
 
-        handler_id = schema_list_combo.changed.connect (() => {
-            if (schema_list_combo.get_active () == 0) {
-                return;
-            }
-            start_spinner ();
-            init_populate_schema.begin (null);
-        });
+        reset_schema_combo.begin ();
 
         var search_btn = new Sequeler.Partials.HeaderBarButton ("system-search-symbolic", _("Search Tables"));
+        search_btn.valign = Gtk.Align.CENTER;
         search_btn.clicked.connect (toggle_search_tables);
 
         dropdown_area.attach (schema_list_combo, 0, 0, 1, 1);
@@ -97,7 +91,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         search = new Gtk.SearchEntry ();
         search.placeholder_text = _("Search Tables\u2026");
         search.hexpand = true;
-        search.margin = 10;
+        search.margin = 9;
         search.search_changed.connect (on_search_tables);
         search.key_press_event.connect (key => {
             if (key.keyval == 65307) {
@@ -123,7 +117,7 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         reload_btn.halign = Gtk.Align.START;
 
         var add_table_btn = new Sequeler.Partials.HeaderBarButton ("list-add-symbolic", _("Add Table"));
-        add_table_btn.clicked.connect (add_table);
+        //  add_table_btn.clicked.connect (add_table);
         add_table_btn.sensitive = false;
 
         spinner = new Gtk.Spinner ();
@@ -142,10 +136,24 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         stack.add_named (scroll, "list");
         stack.add_named (spinner, "spinner");
 
-        attach (dropdown_area, 0, 0, 1, 1);
-        attach (revealer, 0, 1, 1, 1);
-        attach (stack, 0, 2, 1, 2);
-        attach (toolbar, 0, 4, 1, 1);
+        main_grid = new Gtk.Grid ();
+        main_grid.attach (dropdown_area, 0, 0, 1, 1);
+        main_grid.attach (revealer, 0, 1, 1, 1);
+        main_grid.attach (stack, 0, 2, 1, 2);
+        main_grid.attach (toolbar, 0, 4, 1, 1);
+
+        main_revealer = new Gtk.Revealer ();
+        main_revealer.reveal_child = true;
+        main_revealer.transition_type = Gtk.RevealerTransitionType.CROSSFADE;
+        main_revealer.add (main_grid);
+
+        db_panel = new Sequeler.Partials.DataBasePanel (window);
+
+        var overlay = new Gtk.Overlay ();
+        overlay.add_overlay (db_panel);
+        overlay.add (main_revealer);
+
+        add (overlay);
     }
 
     public void start_spinner () {
@@ -159,7 +167,9 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
     }
 
     private async void reset_schema_combo () {
-        schema_list_combo.disconnect (handler_id);
+        if (handler_id > 0) {
+            schema_list_combo.disconnect (handler_id);
+        }
 
         schema_list.clear ();
         schema_list.append (out iter);
@@ -426,7 +436,89 @@ public class Sequeler.Layouts.DataBaseSchema : Gtk.Grid {
         window.main.database_view.structure.reset.begin ();
     }
 
-    public void add_table () {
+    public void show_database_panel () {
+        db_panel.new_database ();
+        main_revealer.reveal_child = false;
+        db_panel.reveal = true;
+    }
 
+    public void hide_database_panel () {
+        main_revealer.reveal_child = true;
+        db_panel.reveal = false;
+    }
+
+    public void edit_database_name () {
+        db_panel.edit_database (schemas[schema_list_combo.get_active ()]);
+        main_revealer.reveal_child = false;
+        db_panel.reveal = true;
+    }
+
+    public async void create_database (string name) {
+        var query = (window.main.connection_manager.db_type as DataBaseType).create_database (name);
+
+        var result = yield window.main.connection_manager.init_query (query);
+
+        if (result == null) {
+            return;
+        }
+
+        yield reload_schema ();
+
+        hide_database_panel ();
+    }
+
+    public async void edit_database (string name) {
+        var current_db = schemas[schema_list_combo.get_active ()];
+
+        // Renaming a database is tricky as we can't simply update its name.
+        // We need to first create a new database with the chosen name.
+        var query = (window.main.connection_manager.db_type as DataBaseType).create_database (name);
+
+        var result = yield window.main.connection_manager.init_query (query);
+
+        if (result == null) {
+            return;
+        }
+
+        // Then, we need to loop through all the tables and attach them to the new database.
+        if (tables_category.n_children > 0) {
+            foreach (Granite.Widgets.SourceList.Item child in tables_category.children) {
+                var tb_result = yield window.main.connection_manager.init_query (
+                    (window.main.connection_manager.db_type as DataBaseType).transfer_table (
+                        current_db,
+                        child.name,
+                        name
+                    )
+                );
+
+                if (tb_result == null) {
+                    return;
+                }
+            }
+        }
+
+        // Delete the old database.
+        yield window.main.connection_manager.init_query (
+            (window.main.connection_manager.db_type as DataBaseType).delete_database (current_db)
+        );
+
+        // Update the DataManager to use the newly created database.
+        window.data_manager.data["name"] = name;
+
+        yield update_connection ();
+
+        hide_database_panel ();
+    }
+
+    public async void delete_database () {
+        yield window.main.connection_manager.init_query (
+            (window.main.connection_manager.db_type as DataBaseType).delete_database (
+                schemas[schema_list_combo.get_active ()]
+            )
+        );
+
+        yield reload_schema ();
+
+        schema_list_combo.active = 0;
     }
 }

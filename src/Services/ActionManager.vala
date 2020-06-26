@@ -37,6 +37,9 @@ public class Sequeler.Services.ActionManager : Object {
     public const string ACTION_ZOOM_DEFAULT = "action_zoom_default";
     public const string ACTION_ZOOM_IN = "action_zoom_in";
     public const string ACTION_ZOOM_OUT = "action_zoom_out";
+    public const string ACTION_NEW_DB = "action_new_db";
+    public const string ACTION_EDIT_DB = "action_edit_db";
+    public const string ACTION_DELETE_DB = "action_delete_db";
 
     public static Gee.MultiMap<string, string> action_accelerators = new Gee.HashMultiMap<string, string> ();
 
@@ -48,7 +51,10 @@ public class Sequeler.Services.ActionManager : Object {
         { ACTION_QUIT, action_quit },
         { ACTION_ZOOM_DEFAULT, action_set_default_zoom },
         { ACTION_ZOOM_IN, action_zoom_in },
-        { ACTION_ZOOM_OUT, action_zoom_out}
+        { ACTION_ZOOM_OUT, action_zoom_out},
+        { ACTION_NEW_DB, action_new_db},
+        { ACTION_EDIT_DB, action_edit_db},
+        { ACTION_DELETE_DB, action_delete_db}
     };
 
     public ActionManager (Sequeler.Application sequeler_app, Sequeler.Window main_window) {
@@ -71,6 +77,9 @@ public class Sequeler.Services.ActionManager : Object {
         action_accelerators.set (ACTION_ZOOM_IN, "<Control>KP_Add");
         action_accelerators.set (ACTION_ZOOM_OUT, "<Control>minus");
         action_accelerators.set (ACTION_ZOOM_OUT, "<Control>KP_Subtract");
+        action_accelerators.set (ACTION_NEW_DB, "<Control><Shift>N");
+        action_accelerators.set (ACTION_EDIT_DB, "<Control><Shift>P");
+        action_accelerators.set (ACTION_DELETE_DB, "<Control><Shift>D");
     }
 
     construct {
@@ -115,6 +124,7 @@ public class Sequeler.Services.ActionManager : Object {
 
         window.main.connection_closed ();
         window.data_manager.data = null;
+        window.main.database_schema.hide_database_panel ();
     }
 
     private void action_new_window () {
@@ -227,5 +237,32 @@ public class Sequeler.Services.ActionManager : Object {
     // Actions functions
     private void action_set_default_zoom () {
         set_default_zoom ();
+    }
+
+    // Show the Database Panel.
+    private void action_new_db () {
+        window.main.database_schema.show_database_panel ();
+    }
+
+    // Show the Database Panel to edit the currently selected database.
+    private void action_edit_db () {
+        window.main.database_schema.edit_database_name ();
+    }
+
+    // Ask confirmation to the user before deleting the database.
+    private void action_delete_db () {
+        var dialog = new Granite.MessageDialog.with_image_from_icon_name (_("Are you sure you want to delete this Database?"), _("All the tables and data will be deleted and you won’t be able to recover it."), "dialog-warning", Gtk.ButtonsType.CANCEL);
+        dialog.transient_for = window;
+
+        var suggested_button = new Gtk.Button.with_label (_("Yes, Delete!"));
+        suggested_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+        dialog.add_action_widget (suggested_button, Gtk.ResponseType.ACCEPT);
+
+        dialog.show_all ();
+        if (dialog.run () == Gtk.ResponseType.ACCEPT) {
+            window.main.database_schema.delete_database.begin ();
+        }
+
+        dialog.destroy ();
     }
 }

@@ -50,6 +50,10 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         return "ALTER TABLE \"%s\" RENAME TO \"%s\"".printf (old_table, new_table);
     }
 
+    public string transfer_table (string old_database, string table, string new_database) {
+        return "";
+    }
+
     public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
         var output = "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
 
@@ -92,5 +96,17 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         }
 
         return output;
+    }
+
+    public string create_database (string name) {
+        // Temporary placeholder methods. No current support for database
+        // operations in PostgreSQL.
+        return "";
+    }
+
+    public string delete_database (string name) {
+        // Temporary placeholder methods. No current support for database
+        // operations in PostgreSQL.
+        return "";
     }
 }

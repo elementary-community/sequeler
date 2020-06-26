@@ -41,6 +41,11 @@ public interface DataBaseType : Object {
     public abstract string edit_table_name (string old_table, string new_table);
 
     /*
+     * Transfer a table from a Database to another
+     */
+    public abstract string transfer_table (string old_database, string table, string new_database);
+
+    /*
      * Show table structure
      */
     public abstract string show_table_structure (string table, string? sortby = null, string sort = "ASC");
@@ -60,4 +65,14 @@ public interface DataBaseType : Object {
         string table, string? database,
         string? sortby = null, string sort = "ASC"
     );
+
+    /*
+     * Create database
+     */
+    public abstract string create_database (string name);
+
+    /*
+     * Delete database
+     */
+    public abstract string delete_database (string name);
 }

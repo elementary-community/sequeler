@@ -23,6 +23,9 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
     public weak Sequeler.Window window { get; construct; }
 
     private Gtk.Button logout_button;
+    private Gtk.Button new_db_button;
+    private Gtk.Button delete_db_button;
+    private Gtk.Button edit_db_button;
     private Granite.ModeSwitch mode_switch;
     private Gtk.Popover menu_popover;
 
@@ -42,15 +45,45 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
     }
 
     private void build_ui () {
-        var eject_image = new Gtk.Image.from_icon_name ("media-eject-symbolic", Gtk.IconSize.BUTTON);
-        logout_button = new Gtk.Button.with_label (_("Logout"));
-        logout_button.get_style_context ().add_class ("back-button");
-        logout_button.valign = Gtk.Align.CENTER;
-        logout_button.always_show_image = true;
-        logout_button.set_image (eject_image);
-        logout_button.can_focus = false;
-        logout_button.action_name = Sequeler.Services.ActionManager.ACTION_PREFIX + Sequeler.Services.ActionManager.ACTION_LOGOUT;
+        logout_button = header_button ("application-logout");
+        logout_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_LOGOUT;
         logout_button.tooltip_markup = Granite.markup_accel_tooltip ({"<Control>Escape"}, _("Logout"));
+
+        new_db_button = header_button ("office-database-new");
+        new_db_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Control><Shift>N"},
+            _("Create a new database")
+        );
+        new_db_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_NEW_DB;
+
+        delete_db_button = header_button ("office-database-remove");
+        delete_db_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Control><Shift>D"},
+            _("Delete database")
+        );
+        delete_db_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_DELETE_DB;
+
+        edit_db_button = header_button ("office-database-edit");
+        edit_db_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Control><Shift>P"},
+            _("Database properties")
+        );
+        edit_db_button.action_name =
+            Sequeler.Services.ActionManager.ACTION_PREFIX
+            + Sequeler.Services.ActionManager.ACTION_EDIT_DB;
+
+        new_db_button.visible = false;
+        new_db_button.no_show_all = true;
+        edit_db_button.visible = false;
+        edit_db_button.no_show_all = true;
+        delete_db_button.visible = false;
+        delete_db_button.no_show_all = true;
 
         mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
         mode_switch.primary_icon_tooltip_text = _("Light background");
@@ -100,12 +133,14 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         open_menu.valign = Gtk.Align.CENTER;
 
         pack_start (logout_button);
+        pack_start (headerbar_separator ());
+        pack_start (new_db_button);
+        pack_start (edit_db_button);
+        pack_start (headerbar_separator ());
+        pack_start (delete_db_button);
+
         pack_end (open_menu);
-
-        var separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
-        separator.get_style_context ().add_class ("headerbar-separator");
-
-        pack_end (separator);
+        pack_end (headerbar_separator ());
         pack_end (mode_switch);
     }
 
@@ -117,11 +152,41 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         return button;
     }
 
+    private Gtk.Button header_button (string image) {
+        var button = new Gtk.Button.from_icon_name (image, Gtk.IconSize.LARGE_TOOLBAR);
+        button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+        button.valign = Gtk.Align.CENTER;
+        button.can_focus = false;
+
+        return button;
+    }
+
+    private Gtk.Separator headerbar_separator () {
+        var separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
+        separator.get_style_context ().add_class ("headerbar-separator");
+
+        return separator;
+    }
+
     public async void toggle_logout () {
         logged_out = !logged_out;
+
         logout_button.visible = logged_out;
         logout_button.no_show_all = !logged_out;
 
-        yield;
+        if (
+            window.data_manager != null &&
+            (
+                window.data_manager.data["type"] == "MySQL"
+                || window.data_manager.data["type"] == "MariaDB"
+            )
+        ) {
+            new_db_button.visible = logged_out;
+            new_db_button.no_show_all = !logged_out;
+            edit_db_button.visible = logged_out;
+            edit_db_button.no_show_all = !logged_out;
+            delete_db_button.visible = logged_out;
+            delete_db_button.no_show_all = !logged_out;
+        }
     }
 }
