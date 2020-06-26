@@ -78,6 +78,13 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
             Sequeler.Services.ActionManager.ACTION_PREFIX
             + Sequeler.Services.ActionManager.ACTION_EDIT_DB;
 
+        new_db_button.visible = false;
+        new_db_button.no_show_all = true;
+        edit_db_button.visible = false;
+        edit_db_button.no_show_all = true;
+        delete_db_button.visible = false;
+        delete_db_button.no_show_all = true;
+
         mode_switch = new Granite.ModeSwitch.from_icon_name ("display-brightness-symbolic", "weather-clear-night-symbolic");
         mode_switch.primary_icon_tooltip_text = _("Light background");
         mode_switch.secondary_icon_tooltip_text = _("Dark background");
@@ -167,7 +174,10 @@ public class Sequeler.Layouts.HeaderBar : Gtk.HeaderBar {
         logout_button.visible = logged_out;
         logout_button.no_show_all = !logged_out;
 
-        if (window.data_manager.data["type"] != "SQLite") {
+        if (
+            window.data_manager.data["type"] == "MySQL"
+            || window.data_manager.data["type"] == "MariaDB"
+        ) {
             new_db_button.visible = logged_out;
             new_db_button.no_show_all = !logged_out;
             edit_db_button.visible = logged_out;
