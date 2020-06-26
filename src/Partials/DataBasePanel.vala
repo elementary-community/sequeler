@@ -27,6 +27,8 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
     private Gtk.Stack button_stack;
     private Gtk.Button button_save;
     private Gtk.Button button_edit;
+    private Gtk.Button button_cancel;
+    private Gtk.Spinner spinner;
 
     public bool reveal {
         get {
@@ -34,6 +36,8 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
         }
         set {
             reveal_child = value;
+            spinner.stop ();
+            button_cancel.sensitive = true;
         }
     }
 
@@ -75,6 +79,12 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
         buttons_area.hexpand = true;
         buttons_area.get_style_context ().add_class ("database-panel-bottom");
 
+        button_cancel = new Gtk.Button.with_label (_("Cancel"));
+        button_cancel.clicked.connect (() => {
+            window.main.database_schema.hide_database_panel ();
+        });
+        button_cancel.margin = 9;
+
         button_save = new Gtk.Button.with_label (_("Save"));
         button_save.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
         button_save.margin = 9;
@@ -97,22 +107,26 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
 
             dialog.show_all ();
             if (dialog.run () == Gtk.ResponseType.ACCEPT) {
+                button_cancel.sensitive = false;
+                spinner.start ();
+                button_stack.visible_child_name = "spinner";
                 window.main.database_schema.edit_database.begin (db_entry.text);
             }
 
             dialog.destroy ();
         });
 
+        spinner = new Gtk.Spinner ();
+        spinner.hexpand = true;
+        spinner.vexpand = true;
+        spinner.halign = Gtk.Align.CENTER;
+        spinner.valign = Gtk.Align.CENTER;
+
         button_stack = new Gtk.Stack ();
         button_stack.expand = false;
         button_stack.add_named (button_save, "new");
         button_stack.add_named (button_edit, "edit");
-
-        var button_cancel = new Gtk.Button.with_label (_("Cancel"));
-        button_cancel.clicked.connect (() => {
-            window.main.database_schema.hide_database_panel ();
-        });
-        button_cancel.margin = 9;
+        button_stack.add_named (spinner, "spinner");
 
         var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
         separator.expand = true;
@@ -135,12 +149,16 @@ public class Sequeler.Partials.DataBasePanel : Gtk.Revealer {
     }
 
     public void new_database () {
+        spinner.stop ();
+        button_cancel.sensitive = true;
         title.label = _("Create a new Database");
         db_entry.text = "";
         button_stack.visible_child_name = "new";
     }
 
     public void edit_database (string name) {
+        spinner.stop ();
+        button_cancel.sensitive = true;
         title.label = _("Edit Database");
         db_entry.text = name;
         button_stack.visible_child_name = "edit";
