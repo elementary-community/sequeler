@@ -37,6 +37,24 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+        <release version="0.8.0" date="2020-06-25">
+			<description>
+				<p>New Features</p>
+                <ul>
+                    <li>Create, Edit, and Delete databases.</li>
+                    <li>New context menu to copy and edit tables.</li>
+                    <li>Support unencrypted connections.</li>
+                </ul>
+				<p>Bug Fixes</p>
+                <ul>
+                    <li>Fix copy column data.</li>
+                </ul>
+				<p>Translations</p>
+                <ul>
+                    <li>Updated translations for Ukranian, Russian, French, and German.</li>
+                </ul>
+			</description>
+		</release>
         <release version="0.7.91" date="2020-05-12">
 			<description>
 				<p>Reduced CPU usage by 2%.</p>

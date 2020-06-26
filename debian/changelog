@@ -1,3 +1,13 @@
+com.github.alecaddd.sequeler (0.8.0) xenial; urgency=medium
+
+  * Create, Edit, and Delete databases.
+  * New context menu to copy and edit tables.
+  * Support unencrypted connections.
+  * Fix copy column data.
+  * Updated translations for Ukranian, Russian, French, and German.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 25 Jun 2020 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.91) xenial; urgency=high
 
   * Reduced CPU usage by 2%.
