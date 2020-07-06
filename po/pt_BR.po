@@ -8,35 +8,36 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-11 12:12+0200\n"
-"Last-Translator: Everson Santos Araujo <everson@everson.com.br>\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-07-07 19:41+0000\n"
+"Last-Translator: Ygor Sad <ysads2010@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"sequeler/translations/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "Diretórios não são suportados"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "Não sei o que fazer"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "Algo inesperado aconteceu"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
 msgstr "Sair"
 
 #: src/Layouts/HeaderBar.vala:56
-#, fuzzy
 msgid "Light background"
-msgstr "Fundo escuro"
+msgstr "Fundo claro"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
@@ -57,7 +58,7 @@ msgstr "Sair"
 
 #: src/Layouts/HeaderBar.vala:94
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/Layouts/Main.vala:77
 #, c-format
@@ -103,7 +104,7 @@ msgstr "Sim, Apague Tudo!"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "É obrigatório um nome de usuário para conectar!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -156,9 +157,8 @@ msgid "Import Previously Exported Sequeler Connections"
 msgstr "Importar Conexões do Sequeler Exportadas Anteriormente"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
-msgstr "Selecionar Tabela"
+msgstr "Selecione um arquivo"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -211,36 +211,35 @@ msgstr "Consultar"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Diminuir zoom"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Zoom 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Aumentar Zoom"
 
 #: src/Layouts/DataBaseView.vala:124
-#, fuzzy
 msgid "High Contrast"
-msgstr " Restrições"
+msgstr "Alto Contraste"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "Claro Solarizado"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "Escuro Solarizado"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Mudar Estilo do Texto"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Criar uma nova Aba de Consultas"
 
 #: src/Layouts/DataBaseView.vala:240
 #, fuzzy, c-format
@@ -289,7 +288,7 @@ msgstr " Páginas"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Ir para página..."
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
