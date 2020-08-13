@@ -1,3 +1,67 @@
+com.github.alecaddd.sequeler (0.8.0) xenial; urgency=medium
+
+  * Create, Edit, and Delete databases.
+  * New context menu to copy and edit tables.
+  * Support unencrypted connections.
+  * Fix copy column data.
+  * Updated translations for Ukranian, Russian, French, and German.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 25 Jun 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.91) xenial; urgency=high
+
+  * Reduced CPU usage by 2%.
+  * Update translations for Italian, Spanish, Catalan, French, Hindi, Russian, and Turkish.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 12 May 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.9) xenial; urgency=high
+
+  * Fixed usage of wrong Vala method.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 12 Apr 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.8) xenial; urgency=high
+
+  * Fixed usage attempt of wrong Vala method.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 11 Apr 2020 12:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.7) xenial; urgency=high
+
+  * Fix nasty GSettings bug causing the app to crash.
+  * Implement GDA Placeholder statement.
+  * Improve Query Tab iconography.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 11 Apr 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.6) xenial; urgency=medium
+
+  * Fix ORDER BY in PostgreSQL Relationship view.
+  * Improve MySQL structure view.
+  * Drop Granite.Settings in favour of GLib.Settings.
+  * Implement Granite.Notebook on the Query tab.
+  * Show query error messages inline.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Thu, 09 Apr 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.5) xenial; urgency=medium
+
+  * You can now duplicate connections.
+  * Sorting columns now works as expected by actually running the ORDER BY query.
+  * Quickly jump to a specific result page with the handy dandy pagination popover.
+  * Show Comment Column inside table structure view.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Sat, 04 Apr 2020 11:00:00 -0700
+
+com.github.alecaddd.sequeler (0.7.4) xenial; urgency=medium
+
+  * Manually reorder saved connection.
+  * Allow selecting a custom SSH public key.
+  * Fix SSH tunnel crashes.
+
+ -- Alessandro Castellani <castellani.ale@gmail.com>  Tue, 31 Mar 2020 11:00:00 -0700
+
 com.github.alecaddd.sequeler (0.7.3) xenial; urgency=medium
 
   * Strip comments from SQL raw queries.

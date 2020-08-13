@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011-2019 Alecaddd (http://alecaddd.com)
+* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -8,7 +8,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 * General Public License for more details.
 *
 * You should have received a copy of the GNU General Public
@@ -20,258 +20,301 @@
 */
 
 public class Sequeler.Layouts.Views.Content : Gtk.Grid {
-	public weak Sequeler.Window window { get; construct; }
+    public weak Sequeler.Window window { get; construct; }
 
-	public Gtk.Stack stack;
-	private Gda.DataModel? table_content;
-	public Gtk.Grid scroll_grid;
-	public Gtk.ScrolledWindow scroll;
-	public Gtk.Label result_message;
-	private Gtk.Spinner spinner;
+    public Gtk.Stack stack;
+    private Gda.DataModel? table_content;
+    public Gtk.Grid scroll_grid;
+    public Gtk.ScrolledWindow scroll;
+    public Gtk.Label result_message;
+    private Gtk.Spinner spinner;
 
-	private Sequeler.Partials.HeaderBarButton page_prev_btn;
-	private Sequeler.Partials.HeaderBarButton page_next_btn;
-	private Gtk.Label pages_label;
-	private int tot_pages { get; set; default = 0; }
-	private int current_page { get; set; default = 1; }
-	private bool reloading { get; set; default = false; }
+    private Gtk.Button pages_button;
+    private Gtk.SpinButton pages_entry;
+    private Sequeler.Partials.HeaderBarButton page_prev_btn;
+    private Sequeler.Partials.HeaderBarButton page_next_btn;
+    private int tot_pages { get; set; default = 0; }
+    private int current_page { get; set; default = 1; }
+    private bool reloading { get; set; default = false; }
 
-	private string _table_name = "";
+    private string _table_name = "";
 
-	public string table_name {
-		get { return _table_name; }
-		set { _table_name = value; }
-	}
+    public string table_name {
+        get { return _table_name; }
+        set { _table_name = value; }
+    }
 
-	private string _database = "";
+    private string _database = "";
 
-	public string database {
-		get { return _database; }
-		set { _database = value; }
-	}
+    public string database {
+        get { return _database; }
+        set { _database = value; }
+    }
 
-	public int table_count = 0;
+    public int table_count = 0;
 
-	public Content (Sequeler.Window main_window) {
-		Object (
-			orientation: Gtk.Orientation.VERTICAL,
-			window: main_window
-		);
-	}
+    private string? sortby = null;
+    private string sort = "ASC";
 
-	construct {
-		scroll_grid = new Gtk.Grid ();
-		scroll_grid.expand = true;
+    public Content (Sequeler.Window main_window) {
+        Object (
+            orientation: Gtk.Orientation.VERTICAL,
+            window: main_window
+        );
+    }
 
-		scroll = new Gtk.ScrolledWindow (null, null);
-		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-		scroll.expand = true;
-		scroll_grid.add (scroll);
+    construct {
+        scroll_grid = new Gtk.Grid ();
+        scroll_grid.expand = true;
 
-		var info_bar = new Gtk.Grid ();
-		info_bar.get_style_context ().add_class ("library-toolbar");
-		info_bar.attach (build_pagination (), 0, 0, 1, 1);
-		info_bar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
-		info_bar.attach (build_results_msg (), 2, 0, 1, 1);
-		info_bar.attach (build_reload_btn (), 3, 0, 1, 1);
+        scroll = new Gtk.ScrolledWindow (null, null);
+        scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+        scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+        scroll.expand = true;
+        scroll_grid.add (scroll);
 
-		spinner = new Gtk.Spinner ();
-		spinner.hexpand = true;
-		spinner.vexpand = true;
-		spinner.halign = Gtk.Align.CENTER;
-		spinner.valign = Gtk.Align.CENTER;
-		spinner.start ();
+        var info_bar = new Gtk.Grid ();
+        info_bar.get_style_context ().add_class ("library-toolbar");
+        info_bar.attach (build_pagination (), 0, 0, 1, 1);
+        info_bar.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
+        info_bar.attach (build_results_msg (), 2, 0, 1, 1);
+        info_bar.attach (build_reload_btn (), 3, 0, 1, 1);
 
-		var welcome = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
+        spinner = new Gtk.Spinner ();
+        spinner.hexpand = true;
+        spinner.vexpand = true;
+        spinner.halign = Gtk.Align.CENTER;
+        spinner.valign = Gtk.Align.CENTER;
 
-		stack = new Gtk.Stack ();
-		stack.hexpand = true;
-		stack.vexpand = true;
-		stack.add_named (welcome, "welcome");
-		stack.add_named (spinner, "spinner");
-		stack.add_named (scroll_grid, "list");
+        var welcome = new Granite.Widgets.Welcome (_("Select Table"), _("Select a table from the left sidebar to activate this view."));
 
-		attach (stack, 0, 0, 1, 1);
-		attach (info_bar, 0, 1, 1, 1);
+        stack = new Gtk.Stack ();
+        stack.hexpand = true;
+        stack.vexpand = true;
+        stack.add_named (welcome, "welcome");
+        stack.add_named (spinner, "spinner");
+        stack.add_named (scroll_grid, "list");
 
-		placeholder ();
-	}
-	
-	public void placeholder () {
-		stack.visible_child_name = "welcome";
-	}
+        attach (stack, 0, 0, 1, 1);
+        attach (info_bar, 0, 1, 1, 1);
 
-	public void start_spinner () {
-		stack.visible_child_name = "spinner";
-	}
+        placeholder ();
+    }
 
-	public void stop_spinner () {
-		stack.visible_child_name = "list";
-	}
+    public void placeholder () {
+        stack.visible_child_name = "welcome";
+    }
 
-	public Gtk.Grid build_pagination () {
-		var page_grid = new Gtk.Grid ();
+    public void start_spinner () {
+        spinner.start ();
+        stack.visible_child_name = "spinner";
+    }
 
-		page_prev_btn = new Sequeler.Partials.HeaderBarButton ("go-previous-symbolic", _("Previous Page"));
-		page_prev_btn.clicked.connect (go_prev_page);
-		page_prev_btn.halign = Gtk.Align.START;
-		page_prev_btn.sensitive = false;
+    public void stop_spinner () {
+        spinner.stop ();
+        stack.visible_child_name = "list";
+    }
 
-		page_next_btn = new Sequeler.Partials.HeaderBarButton ("go-next-symbolic", _("Next Page"));
-		page_next_btn.clicked.connect (go_next_page);
-		page_next_btn.halign = Gtk.Align.END;
-		page_next_btn.sensitive = false;
+    public Gtk.Grid build_pagination () {
+        var page_grid = new Gtk.Grid ();
+        page_grid.valign = Gtk.Align.CENTER;
 
-		pages_label = new Gtk.Label (_("%d Pages").printf(tot_pages));
-		pages_label.margin = 7;
+        page_prev_btn = new Sequeler.Partials.HeaderBarButton ("go-previous-symbolic", _("Previous Page"));
+        page_prev_btn.clicked.connect (go_prev_page);
+        page_prev_btn.halign = Gtk.Align.START;
+        page_prev_btn.sensitive = false;
 
-		page_grid.attach (page_prev_btn, 0, 0, 1, 1);
-		page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
-		page_grid.attach (pages_label, 2, 0, 1, 1);
-		page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 3, 0, 1, 1);
-		page_grid.attach (page_next_btn, 4, 0, 1, 1);
+        page_next_btn = new Sequeler.Partials.HeaderBarButton ("go-next-symbolic", _("Next Page"));
+        page_next_btn.clicked.connect (go_next_page);
+        page_next_btn.halign = Gtk.Align.END;
+        page_next_btn.sensitive = false;
 
-		return page_grid;
-	}
+        pages_button = new Gtk.Button.with_label (_("%d Pages").printf (tot_pages));
+        pages_button.can_focus = false;
+        pages_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+        pages_button.set_tooltip_text (_("Jump to page…"));
 
-	private void update_pagination () {
-		if (table_count <= settings.limit_results) {
-			pages_label.set_text (_("1 Page"));
-			return;
-		}
+        pages_entry = new Gtk.SpinButton.with_range (0, 0, 1);
+        pages_entry.margin = 3;
+        pages_entry.value_changed.connect (() => {
+            if (pages_entry.get_value_as_int () > tot_pages) {
+                return;
+            }
+            current_page = pages_entry.get_value_as_int ();
+            reload_results ();
+        });
 
-		tot_pages = (int) Math.ceilf (((float) table_count) / settings.limit_results);
-		pages_label.set_text (_("%d of %d Pages").printf (current_page, tot_pages));
+        var pages_popover = new Gtk.Popover (pages_button);
+        pages_popover.add (pages_entry);
 
-		page_prev_btn.sensitive = (current_page > 1);
-		page_next_btn.sensitive = (current_page < tot_pages);
-	}
+        pages_button.clicked.connect (() => {
+            pages_popover.popup ();
+            pages_popover.show_all ();
+        });
 
-	public Gtk.Label build_results_msg () {
-		result_message = new Gtk.Label (_("No Results Available"));
-		result_message.halign = Gtk.Align.START;
-		result_message.margin = 7;
-		result_message.margin_top = 6;
-		result_message.hexpand = true;
-		result_message.wrap = true;
+        page_grid.attach (page_prev_btn, 0, 0, 1, 1);
+        page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 1);
+        page_grid.attach (pages_button, 2, 0, 1, 1);
+        page_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 3, 0, 1, 1);
+        page_grid.attach (page_next_btn, 4, 0, 1, 1);
 
-		return result_message;
-	}
+        return page_grid;
+    }
 
-	private Gtk.Button build_reload_btn () {
-		var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Results"));
-		reload_btn.clicked.connect (reload_results);
-		reload_btn.halign = Gtk.Align.END;
+    private void update_pagination () {
+        if (table_count <= settings.limit_results) {
+            pages_button.label = _("1 Page");
+            pages_entry.set_range (1, 1);
+            return;
+        }
 
-		return reload_btn;
-	}
+        tot_pages = (int) Math.ceilf (((float) table_count) / settings.limit_results);
+        pages_button.label = _("%d of %d Pages").printf (current_page, tot_pages);
 
-	public async void clear () {
-		if (scroll == null) {
-			return;
-		}
+        page_prev_btn.sensitive = (current_page > 1);
+        page_next_btn.sensitive = (current_page < tot_pages);
+        pages_entry.set_range (1, tot_pages);
+    }
 
-		scroll.destroy ();
+    public Gtk.Label build_results_msg () {
+        result_message = new Gtk.Label (_("No Results Available"));
+        result_message.halign = Gtk.Align.START;
+        result_message.margin_top = result_message.margin_bottom = 3;
+        result_message.margin_start = result_message.margin_end = 9;
+        result_message.ellipsize = Pango.EllipsizeMode.END;
+        result_message.hexpand = true;
+        result_message.wrap = true;
 
-		scroll = new Gtk.ScrolledWindow (null, null);
-		scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-		scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-		scroll.expand = true;
+        return result_message;
+    }
 
-		scroll_grid.add (scroll);
-	}
+    private Gtk.Button build_reload_btn () {
+        var reload_btn = new Sequeler.Partials.HeaderBarButton ("view-refresh-symbolic", _("Reload Results"));
+        reload_btn.clicked.connect (reload_results);
+        reload_btn.halign = Gtk.Align.END;
 
-	public async void reset () {
-		if (scroll.get_child () != null) {
-			scroll.remove (scroll.get_child ());
-		}
+        return reload_btn;
+    }
 
-		result_message.label = _("No Results Available");
-		table_name = "";
-		database = "";
-		placeholder ();
-	}
+    public async void clear () {
+        if (scroll == null) {
+            return;
+        }
 
-	public void fill (string? table, string? db_name = null, string? count = null) {
-		if (table == null) {
-			return;
-		}
+        scroll.destroy ();
 
-		if (table == _table_name && db_name == _database) {
-			return;
-		}
+        scroll = new Gtk.ScrolledWindow (null, null);
+        scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+        scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+        scroll.expand = true;
 
-		table_name = table;
-		database = db_name;
-		table_count = count != null ? int.parse (count) : 0;
+        scroll_grid.add (scroll);
+    }
 
-		tot_pages = 0;
-		current_page = 1;
+    public async void reset () {
+        if (scroll.get_child () != null) {
+            scroll.remove (scroll.get_child ());
+        }
 
-		get_content_and_fill.begin ();
-	}
+        result_message.label = _("No Results Available");
+        table_name = "";
+        database = "";
+        placeholder ();
+    }
 
-	public void reload_results () {
-		if (table_name == "") {
-			return;
-		}
+    public void fill (string? table, string? db_name = null, string? count = null) {
+        if (table == null) {
+            return;
+        }
 
-		get_content_and_fill.begin ();
-	}
+        if (table == _table_name && db_name == _database) {
+            return;
+        }
 
-	public async void get_content_and_fill () {
-		if (reloading) {
-			debug ("still loading");
-			return;
-		}
+        // Reset sorting attributes.
+        sortby = null;
+        sort = "ASC";
 
-		start_spinner ();
-		var query = (window.main.connection_manager.db_type as DataBaseType)
-					.show_table_content (table_name, table_count, current_page);
-		reloading = true;
+        table_name = table;
+        database = db_name;
+        table_count = count != null ? int.parse (count) : 0;
 
-		table_content = yield get_table_content (query);
+        tot_pages = 0;
+        current_page = 1;
 
-		if (table_content == null) {
-			return;
-		}
+        get_content_and_fill.begin ();
+    }
 
-		var result_data = new Sequeler.Partials.TreeBuilder (table_content, window, settings.limit_results, current_page);
-		result_message.label = _("%d Entries").printf (table_count);
+    public void reload_results () {
+        if (table_name == "") {
+            return;
+        }
 
-		yield clear ();
-		update_pagination ();
+        get_content_and_fill.begin ();
+    }
 
-		scroll.add (result_data);
-		scroll.show_all ();
-		reloading = false;
+    public async void get_content_and_fill () {
+        if (reloading) {
+            debug ("still loading");
+            return;
+        }
 
-		stop_spinner ();
-	}
+        start_spinner ();
+        var query = (window.main.connection_manager.db_type as DataBaseType)
+                    .show_table_content (table_name, table_count, current_page, sortby, sort);
+        reloading = true;
 
-	private async Gda.DataModel? get_table_content (string query) {
-		Gda.DataModel? result = null;
+        table_content = yield get_table_content (query);
 
-		result = yield window.main.connection_manager.init_select_query (query);
+        if (table_content == null) {
+            return;
+        }
 
-		if (result == null) {
-			reloading = false;
-			yield reset ();
-		}
+        var result_data = new Sequeler.Partials.TreeBuilder (
+            table_content, window, settings.limit_results, current_page, sortby, sort);
+        build_signals (result_data);
+        result_message.label = _("%d Entries").printf (table_count);
 
-		return result;
-	}
+        yield clear ();
+        update_pagination ();
 
-	public void go_prev_page () {
-		page_prev_btn.sensitive = false;
-		current_page--;
-		get_content_and_fill.begin ();
-	}
+        scroll.add (result_data);
+        scroll.show_all ();
+        reloading = false;
 
-	public void go_next_page () {
-		page_next_btn.sensitive = false;
-		current_page++;
-		get_content_and_fill.begin ();
-	}
+        stop_spinner ();
+    }
+
+    private async Gda.DataModel? get_table_content (string query) {
+        Gda.DataModel? result = null;
+
+        result = yield window.main.connection_manager.init_select_query (query);
+
+        if (result == null) {
+            reloading = false;
+            yield reset ();
+        }
+
+        return result;
+    }
+
+    private void build_signals (Sequeler.Partials.TreeBuilder tree) {
+        tree.sortby_column.connect ((column, direction) => {
+            sortby = column;
+            sort = direction;
+            reload_results ();
+        });
+    }
+
+    public void go_prev_page () {
+        page_prev_btn.sensitive = false;
+        current_page--;
+        get_content_and_fill.begin ();
+    }
+
+    public void go_next_page () {
+        page_next_btn.sensitive = false;
+        current_page++;
+        get_content_and_fill.begin ();
+    }
 }

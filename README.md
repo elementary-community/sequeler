@@ -1,7 +1,8 @@
 # ![Sequeler](data/assets/sequeler-logo-transparent.png)
 > Friendly SQL Client
 
-[![Build Status](https://travis-ci.org/Alecaddd/sequeler.svg?branch=master)](https://travis-ci.org/Alecaddd/sequeler)
+[![Build Status](https://github.com/Alecaddd/sequeler/workflows/CI/badge.svg)](https://github.com/Alecaddd/sequeler/action)
+[![Translation status](https://hosted.weblate.org/widgets/sequeler/-/svg-badge.svg)](https://hosted.weblate.org/engage/sequeler/?utm_source=widget)
 
 Sequeler is a native Linux SQL client built in Vala and Gtk. It allows you to connect to your local and remote databases, write SQL in a handy text editor with language recognition, and visualize SELECT results in a Gtk.Grid Widget.
 
@@ -30,7 +31,7 @@ If you like Sequeler and you want to support its development, consider donating 
 ## Install it from source
 You can install Sequeler by compiling from source, here's the list of dependencies required:
  - `gtk+-3.0>=3.22.29`
- - `granite>=0.5.1`
+ - `granite>=5.2`
  - `glib-2.0`
  - `gee-0.8`
  - `gobject-2.0`
@@ -41,23 +42,26 @@ You can install Sequeler by compiling from source, here's the list of dependenci
  - `libssh2`
  - `meson`
 
-## Building 
+## Building
 ```
 meson build --prefix=/usr
-sudo -C build ninja install
+sudo ninja -C build install
 ```
 
 ## Building development version
 The development version allows you to keep the stable version perfectly working while hacking on Sequeler.
 ```
 meson build --prefix=/usr -Dprofile=development
-sudo -C build ninja install
+sudo ninja -C build install
 ```
 
 You can run the application from terminal using
 ```
 com.github.alecaddd.sequelerDevel
 ```
+
+### Help with the translation
+[![Translation status](https://hosted.weblate.org/widgets/sequeler/-/287x66-grey.png)](https://hosted.weblate.org/engage/sequeler/?utm_source=widget)
 
 ### Contributors
 - Alberto Fanjul - [Github](https://github.com/albfan)

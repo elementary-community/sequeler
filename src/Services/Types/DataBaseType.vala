@@ -20,38 +20,59 @@
 */
 
 public interface DataBaseType : Object {
-	/*
-	 * Connect to the database
-	 */
-	public abstract string connection_string (Gee.HashMap<string, string> data);
+    /*
+     * Connect to the database
+     */
+    public abstract string connection_string (Gee.HashMap<string, string> data);
 
-	/*
-	 * Populate dropdown database selection
-	 */
-	public abstract string show_schema ();
+    /*
+     * Populate dropdown database selection
+     */
+    public abstract string show_schema ();
 
-	/*
-	 * Populate sidebar with table list
-	 */
-	public abstract string show_table_list (string name);
+    /*
+     * Populate sidebar with table list
+     */
+    public abstract string show_table_list (string name);
 
-	/*
-	 * Update table name
-	 */
-	public abstract string edit_table_name (string old_table, string new_table);
+    /*
+     * Update table name
+     */
+    public abstract string edit_table_name (string old_table, string new_table);
 
-	/*
-	 * Show table structure
-	 */
-	public abstract string show_table_structure (string table);
+    /*
+     * Transfer a table from a Database to another
+     */
+    public abstract string transfer_table (string old_database, string table, string new_database);
 
-	/*
-	 * Show table content
-	 */
-	public abstract string show_table_content (string table, int? count, int? page = null);
+    /*
+     * Show table structure
+     */
+    public abstract string show_table_structure (string table, string? sortby = null, string sort = "ASC");
 
-	/*
-	 * Show table relations
-	 */
-	public abstract string show_table_relations (string table, string? database);
+    /*
+     * Show table content
+     */
+    public abstract string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    );
+
+    /*
+     * Show table relations
+     */
+    public abstract string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    );
+
+    /*
+     * Create database
+     */
+    public abstract string create_database (string name);
+
+    /*
+     * Delete database
+     */
+    public abstract string delete_database (string name);
 }

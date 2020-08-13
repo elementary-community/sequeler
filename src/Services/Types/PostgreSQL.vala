@@ -26,6 +26,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     public string connection_string (Gee.HashMap<string, string> data) {
         var username = Gda.rfc1738_encode (data["username"]);
         var password = Gda.rfc1738_encode (data["password"]);
+        var use_ssl = Gda.rfc1738_encode (data["use_ssl"] ?? "false");
         var name = Gda.rfc1738_encode (data["name"]);
         host = data["host"] != "" ? Gda.rfc1738_encode (data["host"]) : host;
         if (data["has_ssh"] == "true") {
@@ -34,7 +35,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
             port = data["port"] != "" ? data["port"] : port;
         }
 
-        return "PostgreSQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port;
+        return "PostgreSQL://" + username + ":" + password + "@DB_NAME=" + name + ";HOST=" + host + ";PORT=" + port + ";USE_SSL=" + use_ssl;
     }
 
     public string show_schema () {
@@ -49,25 +50,63 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
         return "ALTER TABLE \"%s\" RENAME TO \"%s\"".printf (old_table, new_table);
     }
 
-    public string show_table_structure (string table) {
-        return "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
+    public string transfer_table (string old_database, string table, string new_database) {
+        return "";
     }
 
-    public string show_table_content (string table, int? count, int? page = null) {
+    public string show_table_structure (string table, string? sortby = null, string sort = "ASC") {
+        var output = "SELECT * FROM information_schema.COLUMNS WHERE table_name='%s'".printf (table);
+
+        if (sortby != null) {
+            output += " ORDER BY %s %s".printf (sortby, sort);
+        }
+
+        return output;
+    }
+
+    public string show_table_content (
+        string table, int? count = null, int? page = null,
+        string? sortby = null, string sort = "ASC"
+    ) {
         var output = "SELECT * FROM  \"%s\"".printf (table);
 
-		if (count != null && count > settings.limit_results) {
-			output += " LIMIT %i".printf (settings.limit_results);
-		}
+        if (sortby != null) {
+            output += " ORDER BY \"%s\" %s".printf (sortby, sort);
+        }
 
-		if (page != null && page > 1) {
-			output += " OFFSET %i".printf (settings.limit_results * (page - 1));
-		}
+        if (count != null && count > settings.limit_results) {
+            output += " LIMIT %i".printf (settings.limit_results);
+        }
 
-		return output;
+        if (page != null && page > 1) {
+            output += " OFFSET %i".printf (settings.limit_results * (page - 1));
+        }
+
+        return output;
     }
-    
-    public string show_table_relations (string table, string? database) {
-        return "SELECT ccu.column_name as \"COLUMN_NAME\", tc.constraint_name as \"CONSTRAINT_NAME\", kcu.column_name as \"REFERENCED_COLUMN_NAME\", tc.table_name as \"REFERENCED_TABLE\" FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_name='%s' AND ccu.table_schema = '%s'".printf (table, database);
+
+    public string show_table_relations (
+        string table, string? database,
+        string? sortby = null, string sort = "ASC"
+    ) {
+        var output = "SELECT ccu.column_name as \"COLUMN_NAME\", tc.constraint_name as \"CONSTRAINT_NAME\", kcu.column_name as \"REFERENCED_COLUMN_NAME\", tc.table_name as \"REFERENCED_TABLE\" FROM information_schema.table_constraints tc JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name WHERE constraint_type = 'FOREIGN KEY' AND ccu.table_name='%s' AND ccu.table_schema = '%s'".printf (table, database);
+
+        if (sortby != null) {
+            output += " ORDER BY \"%s\" %s".printf (sortby, sort);
+        }
+
+        return output;
+    }
+
+    public string create_database (string name) {
+        // Temporary placeholder methods. No current support for database
+        // operations in PostgreSQL.
+        return "";
+    }
+
+    public string delete_database (string name) {
+        // Temporary placeholder methods. No current support for database
+        // operations in PostgreSQL.
+        return "";
     }
 }

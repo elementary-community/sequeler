@@ -30,6 +30,8 @@ executable(
     'Layouts/Views/Query.vala',
 
     'Partials/ButtonType.vala',
+    'Partials/DataBasePanel.vala',
+    'Partials/DatabaseTable.vala',
     'Partials/Helpers.vala',
     'Partials/LibraryItem.vala',
     'Partials/TreeBuilder.vala',
@@ -47,6 +49,8 @@ executable(
     'Services/Types/SQLite.vala',
 
     'Widgets/ConnectionDialog.vala',
+    'Widgets/QueryParamsDialog.vala',
+
     asresources,
     config_header,
     dependencies: [

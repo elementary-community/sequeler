@@ -37,6 +37,104 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+        <release version="0.8.0" date="2020-06-25">
+			<description>
+				<p>New Features</p>
+                <ul>
+                    <li>Create, Edit, and Delete databases.</li>
+                    <li>New context menu to copy and edit tables.</li>
+                    <li>Support unencrypted connections.</li>
+                </ul>
+				<p>Bug Fixes</p>
+                <ul>
+                    <li>Fix copy column data.</li>
+                </ul>
+				<p>Translations</p>
+                <ul>
+                    <li>Updated translations for Ukranian, Russian, French, and German.</li>
+                </ul>
+			</description>
+		</release>
+        <release version="0.7.91" date="2020-05-12">
+			<description>
+				<p>Reduced CPU usage by 2%.</p>
+				<p>Update translations for Italian, Spanish, Catalan, French, Hindi, Russian, and Turkish.</p>
+			</description>
+		</release>
+        <release version="0.7.9" date="2020-04-11">
+			<description>
+				<p>More fixes!</p>
+                <p>0.7.8 changelog</p>
+                <ul>
+					<li>Fixed usage attempt of wrong Vala method.</li>
+				</ul>
+                <p>0.7.7 changelog</p>
+				<ul>
+					<li>Fix nasty GSettings bug causing the app to crash.</li>
+					<li>Implement GDA Placeholder statement.</li>
+					<li>Improve Query Tab iconography.</li>
+				</ul>
+                <p>0.7.6 changelog</p>
+				<ul>
+					<li>Fix ORDER BY in PostgreSQL Relationship view.</li>
+					<li>Improve MySQL structure view.</li>
+					<li>Drop Granite.Settings in favour of GLib.Settings.</li>
+					<li>Implement Granite.Notebook on the Query tab.</li>
+					<li>Show query error messages inline.</li>
+				</ul>
+			</description>
+		</release>
+		<release version="0.7.8" date="2020-04-11">
+			<description>
+				<p>More fixes!</p>
+                <ul>
+					<li>Fixed usage attempt of wrong Vala method.</li>
+				</ul>
+			</description>
+		</release>
+		<release version="0.7.7" date="2020-04-11">
+			<description>
+				<p>Because 0.7.6 never happened!</p>
+				<ul>
+					<li>Fix nasty GSettings bug causing the app to crash.</li>
+					<li>Implement GDA Placeholder statement.</li>
+					<li>Improve Query Tab iconography.</li>
+				</ul>
+			</description>
+		</release>
+		<release version="0.7.6" date="2020-04-09">
+			<description>
+				<p>Query Tab Bonanza!</p>
+				<ul>
+					<li>Fix ORDER BY in PostgreSQL Relationship view.</li>
+					<li>Improve MySQL structure view.</li>
+					<li>Drop Granite.Settings in favour of GLib.Settings.</li>
+					<li>Implement Granite.Notebook on the Query tab.</li>
+					<li>Show query error messages inline.</li>
+				</ul>
+			</description>
+		</release>
+		<release version="0.7.5" date="2020-04-04">
+			<description>
+				<p>New features and improvements</p>
+				<ul>
+					<li>You can now duplicate connections.</li>
+					<li>Sorting columns now works as expected by actually running the ORDER BY query.</li>
+					<li>Quickly jump to a specific result page with the handy dandy pagination popover.</li>
+					<li>Show Comment Column inside table structure view.</li>
+				</ul>
+			</description>
+		</release>
+		<release version="0.7.4" date="2020-03-31">
+			<description>
+				<p>The 2020 release!</p>
+				<ul>
+					<li>Manually reorder saved connection.</li>
+					<li>Allow selecting a custom SSH public key.</li>
+					<li>Fix SSH tunnel crashes.</li>
+				</ul>
+			</description>
+		</release>
 		<release version="0.7.3" date="2019-09-01">
 			<description>
 				<p>Raw Query Improvements</p>
@@ -397,6 +495,9 @@
 		<screenshot>
 			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/data/assets/screenshots/sequeler-screenshot3.png</image>
 		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/Alecaddd/sequeler/master/data/assets/screenshots/sequeler-screenshot4.png</image>
+		</screenshot>
 	</screenshots>
 	<developer_name>Alessandro Castellani</developer_name>
 	<launchable type="desktop-id">@appid@.desktop</launchable>
@@ -404,6 +505,7 @@
 	<url type="donation">https://www.paypal.me/alecaddd</url>
 	<url type="bugtracker">https://github.com/Alecaddd/sequeler/issues</url>
 	<url type="help">https://github.com/Alecaddd/sequeler/issues</url>
+	<url type="translate">https://hosted.weblate.org/projects/sequeler</url>
 	<update_contact>castellani.ale@gmail.com</update_contact>
 	<content_rating type="oars-1.1">
 		<content_attribute id="violence-cartoon">none</content_attribute>

@@ -20,37 +20,37 @@
 */
 
 public class Sequeler.Services.UpgradeManager : Object {
-	construct {
-		string version = settings.version;
+    construct {
+        string version = settings.version;
 
-		switch (version) {
-			case "":
-				upgrade_passwords_to_libsecret.begin ();
-			case Constants.VERSION:
-				debug ("Current Version");
-		}
+        switch (version) {
+            case "":
+                upgrade_passwords_to_libsecret.begin ();
+            case Constants.VERSION:
+                debug ("Current Version");
+        }
 
-		settings.version = Constants.VERSION;
-	}
+        settings.version = Constants.VERSION;
+    }
 
-	public virtual async void upgrade_passwords_to_libsecret () throws Error {
-		var current_connections = settings.saved_connections;
+    public virtual async void upgrade_passwords_to_libsecret () throws Error {
+        var current_connections = settings.saved_connections;
 
-		Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
-		existing_connections.add_all_array (current_connections);
+        Gee.List<string> existing_connections = new Gee.ArrayList<string> ();
+        existing_connections.add_all_array (current_connections);
 
-		foreach (var conn in settings.saved_connections) {
-			var check = settings.arraify_data (conn);
+        foreach (var conn in settings.saved_connections) {
+            var check = settings.arraify_data (conn);
 
-			if (check["type"] != "SQLite" && check.has_key ("password")) {
-				settings.update_password.begin (check);
-				check.unset ("password");
+            if (check["type"] != "SQLite" && check.has_key ("password")) {
+                settings.update_password.begin (check);
+                check.unset ("password");
 
-				existing_connections.remove (conn);
-				existing_connections.insert (0, settings.stringify_data (check));
-			}
-		}
+                existing_connections.remove (conn);
+                existing_connections.insert (0, settings.stringify_data (check));
+            }
+        }
 
-		settings.saved_connections = existing_connections.to_array ();
-	}
+        settings.saved_connections = existing_connections.to_array ();
+    }
 }

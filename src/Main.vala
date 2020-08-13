@@ -27,10 +27,10 @@ public const string APP_NAME = "Sequeler";
 public const string TERMINAL_NAME = "sequeler";
 
 public static int main (string[] args) {
-	Environment.set_application_name ("Sequeler");
-	Environment.set_prgname ("Sequeler");
+    Environment.set_application_name ("Sequeler");
+    Environment.set_prgname ("Sequeler");
 
-	var application = new Sequeler.Application ();
+    var application = new Sequeler.Application ();
 
-	return application.run (args);
+    return application.run (args);
 }
