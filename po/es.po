@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-05-01 13:11+0000\n"
+"PO-Revision-Date: 2020-08-14 12:32+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.2\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -223,15 +223,15 @@ msgstr "Acercar"
 
 #: src/Layouts/DataBaseView.vala:124
 msgid "High Contrast"
-msgstr "Alto contraste"
+msgstr "Contraste alto"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr "Solarized claro"
+msgstr "Solarizado claro"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr "Solarized oscuro"
+msgstr "Solarizado oscuro"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
@@ -387,7 +387,7 @@ msgstr "%s (copia)"
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr "Fallo al inicializar libssh2 (%d)"
+msgstr "No se pudo inicializar libssh2 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
@@ -395,7 +395,7 @@ msgstr "Fallo al abrir socket"
 
 #: src/Services/ConnectionManager.vala:211
 msgid "Failed to connect!"
-msgstr "¡Fallo al conectar!"
+msgstr "No se pudo establecer la conexión."
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
@@ -404,11 +404,11 @@ msgstr "Error al iniciar la sesión SSH: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr "Falló la autenticación por contraseña."
+msgstr "No se pudo autenticar por contraseña."
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr "Falló la autenticación por clave pública."
+msgstr "No se pudo autenticar por clave pública."
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
@@ -425,19 +425,19 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr "¡Fallo al escuchar!"
+msgstr "No se pudo escuchar."
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr "¡Fallo al aceptar la conexión remota!"
+msgstr "No se pudo aceptar la conexión remota."
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
-"No se pudo abrir el canal direct-tcpip! (Nota: ¡Esto puede ser un problema "
-"con el servidor! Por favor revisa los registros del servidor)"
+"No se pudo abrir el canal direct-tcpip (Nota: esto puede ser un problema con "
+"el servidor. Revise los registros del servidor.)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
@@ -534,16 +534,15 @@ msgstr "Opcional"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "Identidad SSH"
 
 #: src/Widgets/ConnectionDialog.vala:308
-#, fuzzy
 msgid "Select Your Identity File…"
-msgstr "Seleccione su archivo SQLite…"
+msgstr "Seleccione su archivo de identidad…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "Generar clave SSH"
 
 #: src/Widgets/ConnectionDialog.vala:356
 msgid "SSH Tunnel"
@@ -579,7 +578,7 @@ msgstr "Guardando la conexión…"
 
 #: src/Widgets/ConnectionDialog.vala:684
 msgid "Connection Saved!"
-msgstr "Conexión guardada!"
+msgstr "Se guardó la conexión."
 
 #: src/Widgets/ConnectionDialog.vala:692
 msgid "Connecting…"
