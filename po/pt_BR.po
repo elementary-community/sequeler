@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-07-07 19:41+0000\n"
-"Last-Translator: Ygor Sad <ysads2010@gmail.com>\n"
+"PO-Revision-Date: 2020-08-19 03:33+0000\n"
+"Last-Translator: Eduardo Addad de Oliveira <duduaddad@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "sequeler/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -242,9 +242,9 @@ msgid "Create a new Query Tab"
 msgstr "Criar uma nova Aba de Consultas"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Consultar"
+msgstr "Consultar %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -282,9 +282,9 @@ msgid "Next Page"
 msgstr "Próxima Página"
 
 #: src/Layouts/Views/Content.vala:131
-#, fuzzy, c-format
+#, c-format
 msgid "%d Pages"
-msgstr " Páginas"
+msgstr "%d  páginas"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
@@ -295,9 +295,9 @@ msgid "1 Page"
 msgstr "1 Página"
 
 #: src/Layouts/Views/Content.vala:171
-#, fuzzy, c-format
+#, c-format
 msgid "%d of %d Pages"
-msgstr " Páginas"
+msgstr "%d de %d Páginas"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
@@ -338,9 +338,9 @@ msgid "%d Total Results"
 msgstr "Total de %d Resultados"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Consulta Executada com Sucesso! Linhas Afetadas: "
+msgstr "Consulta executada com sucesso! Linhas afetadas: %s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
@@ -355,9 +355,8 @@ msgid "Edit Connection"
 msgstr "Editar Conexão"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Remover Conexão"
+msgstr "Duplicar Conexão"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
@@ -378,65 +377,66 @@ msgstr "na Coluna"
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "Copiar %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (cópia)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Falha ao iniciar libssh2 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "Falha ao abrir socket"
 
 #: src/Services/ConnectionManager.vala:211
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Não é possível conectar-se a %s"
+msgstr "Falhou ao conectar!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "Erro ao iniciar sessão SSH: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "Falha na autenticação por senha!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "Autenticação via chave pública falhou!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "Não foi encontrado nenhum método de autenticação suportado!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "Falha ao abrir o socket"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
-msgstr ""
+msgstr "Falha ao conectar. A porta do banco de dados pode estar errada!"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "Falha ao iniciar!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "Falha ao aceitar a conexão remota!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"Não foi possível abrir o canal direct-tcpip! (Note que isso pode ser um "
+"problema no servidor! Por favor, verifique os logs do servidor.)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
@@ -444,20 +444,19 @@ msgstr "Erro!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "Arquivo de chave SSH não encontrada!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "Chave pública SSH não encontrada!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
 msgstr "Conexão"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Remover Conexão"
+msgstr "Escolha a cor da conexão"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -489,14 +488,12 @@ msgstr "Senha:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Senha:"
+msgstr "Exibir senha"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Senha:"
+msgstr "Ocultar senha"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
@@ -511,52 +508,44 @@ msgid "Select Your SQLite File…"
 msgstr "Selecione seu Arquivo SQLite…"
 
 #: src/Widgets/ConnectionDialog.vala:261
-#, fuzzy
 msgid "Connect via SSH Tunnel:"
-msgstr "Conectar via Terminal"
+msgstr "Conectar via terminal SSH"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Host:"
+msgstr "Host SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Usuário:"
+msgstr "Usuário SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Senha:"
+msgstr "Senha SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:301
-#, fuzzy
 msgid "SSH Port:"
-msgstr "Porta:"
+msgstr "Porta SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
-#, fuzzy
 msgid "Optional"
-msgstr "Opções"
+msgstr "Opcional"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "Identidade SSH"
 
 #: src/Widgets/ConnectionDialog.vala:308
-#, fuzzy
 msgid "Select Your Identity File…"
-msgstr "Selecione seu Arquivo SQLite…"
+msgstr "Selecione o seu arquivo de identificação…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "Gerar chave SSH"
 
 #: src/Widgets/ConnectionDialog.vala:356
-#, fuzzy
 msgid "SSH Tunnel"
-msgstr "Conectar via Terminal"
+msgstr "Túnel SSH"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
@@ -572,7 +561,7 @@ msgstr "Testar Conexão"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "Abrindo túnel SSH"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
