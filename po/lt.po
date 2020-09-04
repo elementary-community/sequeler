@@ -8,15 +8,18 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-11 12:12+0200\n"
-"Last-Translator: Moo\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-09-05 16:36+0000\n"
+"Last-Translator: Rokas Kasnauskas <rokas.kasnauskas@gmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/sequeler/"
+"translations/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -35,9 +38,8 @@ msgid "Logout"
 msgstr "Atsijungti"
 
 #: src/Layouts/HeaderBar.vala:56
-#, fuzzy
 msgid "Light background"
-msgstr "Tamsus fonas"
+msgstr "Šviesus fonas"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
@@ -99,12 +101,12 @@ msgstr "Visi duomenys bus ištrinti ir jūs nebegalėsite jų atkurti."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
-msgstr "Taip, ištrinti visus!"
+msgstr "Taip, ištrinti viską!"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "Norint prisijungti būtina įvesti slapyvardį!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -211,20 +213,19 @@ msgstr "Užklausti"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Atitolinti"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Mastelis 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Priartinti"
 
 #: src/Layouts/DataBaseView.vala:124
-#, fuzzy
 msgid "High Contrast"
-msgstr " ribojimų"
+msgstr "Aukštas kontrastas"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
@@ -236,16 +237,16 @@ msgstr ""
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Pakeisti teksto stilių"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Sukurti naują užklausos langą"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Užklausti"
+msgstr "Užklausti %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -290,7 +291,7 @@ msgstr "%d puslapių"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Pereitį į puslapį…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
@@ -340,9 +341,9 @@ msgid "%d Total Results"
 msgstr "Iš viso %d rezultatų"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Užklausa sėkmingai įvykdyta! Paveiktos eilutės: %d"
+msgstr "Užklausa sėkmingai įvykdyta! Paveiktos eilutės: %s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
@@ -385,7 +386,7 @@ msgstr "Kopijuoti %s"
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (nukopijuoti)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
@@ -452,7 +453,6 @@ msgid "Missing SSH Key file!"
 msgstr "Trūksta SSH rakto failo!"
 
 #: src/Widgets/ConnectionDialog.vala:34
-#, fuzzy
 msgid "Missing SSH public key!"
 msgstr "Trūksta SSH rakto failo!"
 
@@ -461,9 +461,8 @@ msgid "Connection"
 msgstr "Ryšys"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Ištrinti ryšį"
+msgstr "Pasirinkitę prisijungimo spalvą"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -495,14 +494,12 @@ msgstr "Slaptažodis:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "SSH slaptažodis:"
+msgstr "Rodyti slaptažodį"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "SSH slaptažodis:"
+msgstr "Paslėpti slaptažodį"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
