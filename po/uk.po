@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-09-15 20:04+0000\n"
-"Last-Translator: Acvarium <3dvits@gmail.com>\n"
+"PO-Revision-Date: 2020-09-16 20:36+0000\n"
+"Last-Translator: ihor_ck <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/sequeler/"
 "translations/uk/>\n"
 "Language: uk\n"
@@ -306,7 +306,7 @@ msgstr "%d записи"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
-msgstr "Обмеження"
+msgstr " Обмеження"
 
 #: src/Layouts/Views/Query.vala:279
 msgid "Running Query…"
@@ -330,12 +330,12 @@ msgstr "Експортувати як текст"
 
 #: src/Layouts/Views/Query.vala:436 src/Layouts/Views/Query.vala:482
 msgid "Unable to process Query!"
-msgstr "Не вдається обробити запит!"
+msgstr "Не вдалося обробити запит!"
 
 #: src/Layouts/Views/Query.vala:457
 #, c-format
 msgid "%d Total Results"
-msgstr "%d Загальних результатів"
+msgstr "Всього %d результатів"
 
 #: src/Layouts/Views/Query.vala:492
 #, c-format
@@ -352,7 +352,7 @@ msgstr "З'єднати"
 
 #: src/Partials/LibraryItem.vala:110
 msgid "Edit Connection"
-msgstr "Редагувати з'єднання"
+msgstr "Змінити з'єднання"
 
 #: src/Partials/LibraryItem.vala:113
 msgid "Duplicate Connection"
@@ -400,19 +400,19 @@ msgstr "Не вдалось з'єднатись!"
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr "Помилка на старті SSH сесії: %d"
+msgstr "Помилка на старті SSH сеансу: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr "Аутентифікація з допомогою пароля провалилась!"
+msgstr "Не вдалася автентифікація за допомогою пароля!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr "Аутентифікація за публічним ключем не вдалась!"
+msgstr "Не вдалася автентифікація публічним ключем!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr "Не знайдено підтримуваних методів аутентифікації!"
+msgstr "Не знайдено підтримуваних методів автентифікації!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
@@ -435,7 +435,7 @@ msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
-"Не в змозі відкрити прямий tcpip канал! (Зауважте, що це може бути проблемою "
+"Не вдалося відкрити прямий tcpip канал! (Зауважте, що це може бути проблемою "
 "на сервері! Перегляньте журнали сервера.)"
 
 #: src/Services/ConnectionManager.vala:566
@@ -460,11 +460,11 @@ msgstr "Оберіть колір з'єднання"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
-msgstr "Ім'я з'єднання:"
+msgstr "Назва з'єднання:"
 
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "Connection's name"
-msgstr "Ім'я з'єднань"
+msgstr "Назви з'єднань"
 
 #: src/Widgets/ConnectionDialog.vala:172
 msgid "Database Type:"
@@ -476,7 +476,7 @@ msgstr "Хост:"
 
 #: src/Widgets/ConnectionDialog.vala:200
 msgid "Database Name:"
-msgstr "Ім'я бази даних:"
+msgstr "Назва бази даних:"
 
 #: src/Widgets/ConnectionDialog.vala:207
 msgid "Username:"
