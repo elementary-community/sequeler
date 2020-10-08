@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-04-28 21:11+0000\n"
-"Last-Translator: Recep Alaca <recepalacaa@gmail.com>\n"
+"PO-Revision-Date: 2020-10-09 19:26+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/sequeler/"
 "translations/tr/>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.2\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -25,7 +25,7 @@ msgstr "Dizinler desteklenmiyor"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "Ne yapılacağı bilinmiyor"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
@@ -36,9 +36,8 @@ msgid "Logout"
 msgstr "Çıkış"
 
 #: src/Layouts/HeaderBar.vala:56
-#, fuzzy
 msgid "Light background"
-msgstr "Koyu arka plan"
+msgstr "Açık arka plan"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
@@ -59,12 +58,12 @@ msgstr "Çık"
 
 #: src/Layouts/HeaderBar.vala:94
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 #: src/Layouts/Main.vala:77
-#, fuzzy, c-format
+#, c-format
 msgid "Connected to %s"
-msgstr "Bağlı "
+msgstr "%s ile bağlantı kuruldu"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
@@ -87,18 +86,16 @@ msgid "Are you sure you want to proceed?"
 msgstr "Devam etmek istediğinize emin misiniz?"
 
 #: src/Layouts/Library.vala:215
-#, fuzzy
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr "Bu bağlantıyı silerek, bu veriyi kurtaramayacaksınız."
+msgstr "Bu bağlantıyı silerek, bu verileri kurtaramayacaksınız."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
 msgstr "Evet, Sil!"
 
 #: src/Layouts/Library.vala:233
-#, fuzzy
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr "Tüm veri silinecek ve kurtarılamayacak."
+msgstr "Tüm veriler silinecek ve bunları kurtaramayacaksınız."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
@@ -107,11 +104,11 @@ msgstr "Evet, Hepsini Sil!"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "Bağlanmak için bir kullanıcı adı gerekli!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
-msgstr ""
+msgstr "Dosya seç"
 
 #: src/Layouts/Library.vala:407 src/Layouts/Views/Query.vala:531
 msgid "_Save"
@@ -123,36 +120,33 @@ msgid "_Cancel"
 msgstr "_İptal Et"
 
 #: src/Layouts/Library.vala:467
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to Connect to %s"
-msgstr "Bağlanılamadı "
+msgstr "%s ile Bağlantı Kurulamıyor"
 
 #: src/Layouts/Library.vala:480
 msgid "Unable to Export Library "
-msgstr "Kütüphane Dışa Aktarılamadı"
+msgstr "Kütüphane Dışa Aktarılamıyor "
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
 msgstr "Sequeler‘a Hoş Geldiniz"
 
 #: src/Layouts/Welcome.vala:29
-#, fuzzy
 msgid "Connect to Any Local or Remote Database."
-msgstr "Herhangi Bir Yerel veya Uzak Veri Tabanına Bağlan."
+msgstr "Herhangi Bir Yerel veya Uzak Veri Tabanına Bağlanın."
 
 #: src/Layouts/Welcome.vala:38
 msgid "Add a New Database"
 msgstr "Yeni Bir Veri Tabanı Ekle"
 
 #: src/Layouts/Welcome.vala:38
-#, fuzzy
 msgid "Connect to a Database and Save It in Your Library"
-msgstr "Bir Veri Tabanına Bağlan ve Kütüphanene Kaydet"
+msgstr "Bir Veri Tabanına Bağlanın ve Kütüphanenize Kaydedin"
 
 #: src/Layouts/Welcome.vala:39
-#, fuzzy
 msgid "Open a New Sequeler Window"
-msgstr "Yeni bir Sequeler Penceresi Aç"
+msgstr "Yeni Bir Sequeler Penceresi Açın"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
@@ -160,12 +154,11 @@ msgstr "Bağlantıları İçe Aktar"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
-msgstr "Önceden Dışa Aktarılmış Sequeler Bağlantılarını İçe Aktar"
+msgstr "Önceden Dışa Aktarılmış Sequeler Bağlantılarını İçe Aktarın"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
-msgstr "Tablo Seç"
+msgstr "Dosya seç"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -173,7 +166,7 @@ msgstr "_Aç"
 
 #: src/Layouts/Welcome.vala:107
 msgid "Unable to Import Library "
-msgstr "Kütüphane İçe Aktarılamadı"
+msgstr "Kütüphane İçe Aktarılamıyor "
 
 #: src/Layouts/DataBaseSchema.vala:66 src/Layouts/DataBaseSchema.vala:167
 msgid "- Select Database -"
@@ -218,41 +211,40 @@ msgstr "Sorgu"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Uzaklaştır"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Yakınlaştırmayı sıfırla"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Yakınlaştır"
 
 #: src/Layouts/DataBaseView.vala:124
-#, fuzzy
 msgid "High Contrast"
-msgstr " Kısıtlar"
+msgstr "Yüksek Karşıtlık"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "Solarized Açık"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "Solarized Koyu"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Metin Tarzını Değiştir"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Yeni bir sorgu sekmesi oluşturun"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Sorgu"
+msgstr "Sorgu %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -263,7 +255,7 @@ msgstr "Tablo Seç"
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select a table from the left sidebar to activate this view."
 msgstr ""
-"Bu görünümü etkinleştirmek için soldaki kenar çubuğundan bir tablo seç."
+"Bu görünümü etkinleştirmek için soldaki kenar çubuğundan bir tablo seçin."
 
 #: src/Layouts/Views/Structure.vala:107 src/Layouts/Views/Structure.vala:145
 #: src/Layouts/Views/Content.vala:179 src/Layouts/Views/Content.vala:218
@@ -283,34 +275,34 @@ msgstr " Alanlar"
 
 #: src/Layouts/Views/Content.vala:121
 msgid "Previous Page"
-msgstr ""
+msgstr "Önceki Sayfa"
 
 #: src/Layouts/Views/Content.vala:126
 msgid "Next Page"
-msgstr ""
+msgstr "Sonraki Sayfa"
 
 #: src/Layouts/Views/Content.vala:131
 #, c-format
 msgid "%d Pages"
-msgstr ""
+msgstr "%d Sayfa"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Sayfaya atla…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
-msgstr ""
+msgstr "1 Sayfa"
 
 #: src/Layouts/Views/Content.vala:171
 #, c-format
 msgid "%d of %d Pages"
-msgstr ""
+msgstr "Sayfa %d / %d"
 
 #: src/Layouts/Views/Content.vala:275
-#, fuzzy, c-format
+#, c-format
 msgid "%d Entries"
-msgstr " Girdiler"
+msgstr "%d Girdi"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
@@ -329,9 +321,8 @@ msgid "Export Results"
 msgstr "Sonuçları Dışa Aktar"
 
 #: src/Layouts/Views/Query.vala:369
-#, fuzzy
 msgid "Export as CSV"
-msgstr "Csv Olarak Dışa Aktar"
+msgstr "CSV Olarak Dışa Aktar"
 
 #: src/Layouts/Views/Query.vala:377
 msgid "Export as Text"
@@ -342,14 +333,14 @@ msgid "Unable to process Query!"
 msgstr "Sorgu işlenemedi!"
 
 #: src/Layouts/Views/Query.vala:457
-#, fuzzy, c-format
+#, c-format
 msgid "%d Total Results"
-msgstr " Toplam Sonuç"
+msgstr "%d Toplam Sonuç"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Sorgu Başarıyla Çalıştırıldı! Etkilenen satırlar: "
+msgstr "Sorgu Başarıyla Çalıştırıldı! Etkilenen Satırlar: %s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
@@ -364,90 +355,88 @@ msgid "Edit Connection"
 msgstr "Bağlantıyı Düzenle"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Bağlantıyı Sil"
+msgstr "Bağlantıyı Çoğalt"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
 msgstr "Bağlantıyı Sil"
 
 #: src/Partials/LibraryItem.vala:126
-#, fuzzy
 msgid "Options"
-msgstr "İlişkiler"
+msgstr "Seçenekler"
 
 #: src/Partials/TreeBuilder.vala:131
-#, fuzzy
 msgid "Error"
-msgstr "Hata!"
+msgstr "Hata"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
-msgstr ""
+msgstr "Sütun"
 
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "%s kopyala"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (kopyala)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Libssh2 başlatma başarısız oldu (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "Soket açma başarısız oldu"
 
 #: src/Services/ConnectionManager.vala:211
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Bağlanılamadı "
+msgstr "Bağlantı başarısız oldu!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "SSH oturumu başlatılırken hata oluştu: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "Parola ile kimlik doğrulama başarısız oldu!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "Ortak anahtar ile kimlik doğrulama başarısız oldu!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "Desteklenen kimlik doğrulama yöntemi bulunamadı!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "Dinleme soketi açma başarısız oldu"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
-msgstr ""
+msgstr "Bağlama başarısız oldu. Veri tabanı bağlantı noktanız yanlış olabilir!"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "Dinleme başarısız oldu!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "Uzaktan bağlantı kabul etme başarısız oldu!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"direct-tcpip kanalı açılamadı! (Bu sorunun sunucuda olabileceğini unutmayın! "
+"Lütfen sunucu günlüklerini inceleyin.)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
@@ -455,20 +444,19 @@ msgstr "Hata!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "SSH anahtar dosyası eksik!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "SSH ortak anahtarı eksik!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
 msgstr "Bağlantı"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Bağlantıyı Sil"
+msgstr "Bağlantı rengini seçin"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -500,65 +488,56 @@ msgstr "Parola:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Parola:"
+msgstr "Parolayı göster"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Parola:"
+msgstr "Parolayı gizle"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
-msgstr "Bağlantı Kapısı:"
+msgstr "Bağlantı Noktası:"
 
 #: src/Widgets/ConnectionDialog.vala:240
 msgid "File Path:"
 msgstr "Dosya Yolu:"
 
 #: src/Widgets/ConnectionDialog.vala:241
-#, fuzzy
 msgid "Select Your SQLite File…"
-msgstr "SQLite Dosyanı Seç…"
+msgstr "SQLite Dosyanızı Seçin…"
 
 #: src/Widgets/ConnectionDialog.vala:261
 msgid "Connect via SSH Tunnel:"
-msgstr ""
+msgstr "SSH Tüneli ile Bağlan:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Ana Makine:"
+msgstr "SSH Ana Makinesi:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Kullanıcı Adı:"
+msgstr "SSH Kullanıcı Adı:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Parola:"
+msgstr "SSH Parolası:"
 
 #: src/Widgets/ConnectionDialog.vala:301
-#, fuzzy
 msgid "SSH Port:"
-msgstr "Bağlantı Kapısı:"
+msgstr "SSH Bağlantı Noktası:"
 
 #: src/Widgets/ConnectionDialog.vala:302
-#, fuzzy
 msgid "Optional"
-msgstr "İlişkiler"
+msgstr "İsteğe Bağlı"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH Kimliği"
 
 #: src/Widgets/ConnectionDialog.vala:308
-#, fuzzy
 msgid "Select Your Identity File…"
-msgstr "SQLite Dosyanı Seç…"
+msgstr "Kimlik Dosyanızı Seçin…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
@@ -566,7 +545,7 @@ msgstr "SSH Anahtarı Oluştur"
 
 #: src/Widgets/ConnectionDialog.vala:356
 msgid "SSH Tunnel"
-msgstr ""
+msgstr "SSH Tüneli"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
@@ -582,7 +561,7 @@ msgstr "Bağlantıyı Sına"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "SSH Tüneli açılıyor…"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
