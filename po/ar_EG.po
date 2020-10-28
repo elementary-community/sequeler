@@ -8,134 +8,138 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-10-29 13:27+0000\n"
+"Last-Translator: Ali Galal <ali.sameh.galal@gmail.com>\n"
+"Language-Team: Arabic (Egypt) <https://hosted.weblate.org/projects/sequeler/"
+"translations/ar_EG/>\n"
 "Language: ar_EG\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "الدلائل غير مدعومة"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "لا أعرف ما يجب القيام به"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "شئ غير متوقع قد حدث"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
-msgstr ""
+msgstr "خروج"
 
 #: src/Layouts/HeaderBar.vala:56
 msgid "Light background"
-msgstr ""
+msgstr "خلفية مضيئة"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
-msgstr ""
+msgstr "خلفية داكنة"
 
 #: src/Layouts/HeaderBar.vala:68 src/Layouts/Welcome.vala:39
 msgid "New Window"
-msgstr ""
+msgstr "نافذة جديدة"
 
 #: src/Layouts/HeaderBar.vala:71 src/Widgets/ConnectionDialog.vala:130
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "New Connection"
-msgstr ""
+msgstr "اتصال جديد"
 
 #: src/Layouts/HeaderBar.vala:74
 msgid "Quit"
-msgstr ""
+msgstr "خروج"
 
 #: src/Layouts/HeaderBar.vala:94
 msgid "Menu"
-msgstr ""
+msgstr "القائمة"
 
 #: src/Layouts/Main.vala:77
 #, c-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "متصل ب %s"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
-msgstr ""
+msgstr "اتصالات محفوظة"
 
 #: src/Layouts/Library.vala:74
 msgid "Delete All"
-msgstr ""
+msgstr "مسح الكل"
 
 #: src/Layouts/Library.vala:81
 msgid "Reload Library"
-msgstr ""
+msgstr "تحديث المكتبة"
 
 #: src/Layouts/Library.vala:84
 msgid "Export Library"
-msgstr ""
+msgstr "تصدير المكتبة"
 
 #: src/Layouts/Library.vala:215 src/Layouts/Library.vala:233
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "هل انت متأكد انك تريد المتابعة؟"
 
 #: src/Layouts/Library.vala:215
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr ""
+msgstr "بحذف هذا الاتصال ، لن تتمكن من استعادة هذه البيانات."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
-msgstr ""
+msgstr "نعم ، احذف!"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr ""
+msgstr "سيتم حذف جميع البيانات ولن تتمكن من استعادتها."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
-msgstr ""
+msgstr "نعم ، احذف الكل!"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "مطلوب اسم مستخدم من أجل الاتصال!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
-msgstr ""
+msgstr "اختر ملفًا"
 
 #: src/Layouts/Library.vala:407 src/Layouts/Views/Query.vala:531
 msgid "_Save"
-msgstr ""
+msgstr "_حفظ"
 
 #: src/Layouts/Library.vala:408 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:532
 msgid "_Cancel"
-msgstr ""
+msgstr "_إلغاء"
 
 #: src/Layouts/Library.vala:467
 #, c-format
 msgid "Unable to Connect to %s"
-msgstr ""
+msgstr "غير قادر على الاتصال ب %s"
 
 #: src/Layouts/Library.vala:480
 msgid "Unable to Export Library "
-msgstr ""
+msgstr "تعذر تصدير المكتبة "
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
-msgstr ""
+msgstr "مرحبا بكم في Sequeler"
 
 #: src/Layouts/Welcome.vala:29
 msgid "Connect to Any Local or Remote Database."
-msgstr ""
+msgstr "اتصل بأي قاعدة بيانات محلية أو بعيدة."
 
 #: src/Layouts/Welcome.vala:38
 msgid "Add a New Database"
-msgstr ""
+msgstr "إضافة قاعدة بيانات جديدة"
 
 #: src/Layouts/Welcome.vala:38
 msgid "Connect to a Database and Save It in Your Library"
