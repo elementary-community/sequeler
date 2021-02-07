@@ -429,8 +429,9 @@ public class Sequeler.Layouts.Views.Query : Gtk.Grid {
         var show_pos = query.down ().index_of ("show", 0);
         var pragma_pos = query.down ().index_of ("pragma", 0);
         var explain_pos = query.down ().index_of ("explain", 0);
+        var describe_pos = query.down ().index_of ("describe", 0);
 
-        if (select_pos == 0 || show_pos == 0 || pragma_pos == 0 || explain_pos == 0) {
+        if (select_pos == 0 || show_pos == 0 || pragma_pos == 0 || explain_pos == 0 || describe_pos == 0) {
             select_statement.begin (statement, params, (obj, res) => {
                 handle_select_response (select_statement.end (res));
             });
