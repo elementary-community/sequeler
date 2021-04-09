@@ -8,219 +8,222 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-04-09 12:45+0000\n"
+"Last-Translator: Yangfl <mmyangfl@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"sequeler/translations/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.6-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "不支持目录"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "不知道做什么"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "发生了完全出乎意料的事"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
-msgstr ""
+msgstr "登出"
 
 #: src/Layouts/HeaderBar.vala:56
 msgid "Light background"
-msgstr ""
+msgstr "浅色背景"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
-msgstr ""
+msgstr "深色背景"
 
 #: src/Layouts/HeaderBar.vala:68 src/Layouts/Welcome.vala:39
 msgid "New Window"
-msgstr ""
+msgstr "新窗口"
 
 #: src/Layouts/HeaderBar.vala:71 src/Widgets/ConnectionDialog.vala:130
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "New Connection"
-msgstr ""
+msgstr "新连接"
 
 #: src/Layouts/HeaderBar.vala:74
 msgid "Quit"
-msgstr ""
+msgstr "退出"
 
 #: src/Layouts/HeaderBar.vala:94
 msgid "Menu"
-msgstr ""
+msgstr "目录"
 
 #: src/Layouts/Main.vala:77
 #, c-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "已连接至 %s"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
-msgstr ""
+msgstr "已保持连接"
 
 #: src/Layouts/Library.vala:74
 msgid "Delete All"
-msgstr ""
+msgstr "删除全部"
 
 #: src/Layouts/Library.vala:81
 msgid "Reload Library"
-msgstr ""
+msgstr "重载库"
 
 #: src/Layouts/Library.vala:84
 msgid "Export Library"
-msgstr ""
+msgstr "导出库"
 
 #: src/Layouts/Library.vala:215 src/Layouts/Library.vala:233
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "您确定要继续吗？"
 
 #: src/Layouts/Library.vala:215
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr ""
+msgstr "删除此连接后，您将无法恢复此数据。"
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
-msgstr ""
+msgstr "是，删除！"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr ""
+msgstr "所有数据将被删除，您将无法恢复。"
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
-msgstr ""
+msgstr "是，删除全部！"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "需要用户名才能连接！"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
-msgstr ""
+msgstr "选择文件"
 
 #: src/Layouts/Library.vala:407 src/Layouts/Views/Query.vala:531
 msgid "_Save"
-msgstr ""
+msgstr "保存(_S)"
 
 #: src/Layouts/Library.vala:408 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:532
 msgid "_Cancel"
-msgstr ""
+msgstr "取消(_S)"
 
 #: src/Layouts/Library.vala:467
 #, c-format
 msgid "Unable to Connect to %s"
-msgstr ""
+msgstr "无法连接到 %s"
 
 #: src/Layouts/Library.vala:480
 msgid "Unable to Export Library "
-msgstr ""
+msgstr "无法导出库 "
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
-msgstr ""
+msgstr "欢迎来到 Sequeler"
 
 #: src/Layouts/Welcome.vala:29
 msgid "Connect to Any Local or Remote Database."
-msgstr ""
+msgstr "连接到任何本地或远程数据库。"
 
 #: src/Layouts/Welcome.vala:38
 msgid "Add a New Database"
-msgstr ""
+msgstr "添加一个新的数据库"
 
 #: src/Layouts/Welcome.vala:38
 msgid "Connect to a Database and Save It in Your Library"
-msgstr ""
+msgstr "连接到数据库并将其保存在您的库中"
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a New Sequeler Window"
-msgstr ""
+msgstr "打开新的 Sequeler 窗口"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Connections"
-msgstr ""
+msgstr "导入连接"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
-msgstr ""
+msgstr "导入先前导出的 Sequeler 连接"
 
 #: src/Layouts/Welcome.vala:58
 msgid "Select a file"
-msgstr ""
+msgstr "选择文件"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
-msgstr ""
+msgstr "打开(_O)"
 
 #: src/Layouts/Welcome.vala:107
 msgid "Unable to Import Library "
-msgstr ""
+msgstr "无法导入库 "
 
 #: src/Layouts/DataBaseSchema.vala:66 src/Layouts/DataBaseSchema.vala:167
 msgid "- Select Database -"
-msgstr ""
+msgstr "- 选择数据库 -"
 
 #: src/Layouts/DataBaseSchema.vala:87
 msgid "Search Tables"
-msgstr ""
+msgstr "搜索表"
 
 #: src/Layouts/DataBaseSchema.vala:98
 msgid "Search Tables…"
-msgstr ""
+msgstr "搜索表…"
 
 #: src/Layouts/DataBaseSchema.vala:120
 msgid "Reload Tables"
-msgstr ""
+msgstr "刷新表"
 
 #: src/Layouts/DataBaseSchema.vala:125
 msgid "Add Table"
-msgstr ""
+msgstr "添加表"
 
 #: src/Layouts/DataBaseSchema.vala:289
 msgid "TABLES"
-msgstr ""
+msgstr "表"
 
 #: src/Layouts/DataBaseView.vala:49
 msgid "Structure"
-msgstr ""
+msgstr "结构"
 
 #: src/Layouts/DataBaseView.vala:50
 msgid "Content"
-msgstr ""
+msgstr "内容"
 
 #: src/Layouts/DataBaseView.vala:51
 msgid "Relations"
-msgstr ""
+msgstr "关系"
 
 #: src/Layouts/DataBaseView.vala:52 src/Layouts/DataBaseView.vala:229
 #: src/Layouts/DataBaseView.vala:253
 msgid "Query"
-msgstr ""
+msgstr "查询"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "缩小"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "原始缩放"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "放大"
 
 #: src/Layouts/DataBaseView.vala:124
 msgid "High Contrast"
-msgstr ""
+msgstr "高对比度"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
@@ -232,38 +235,38 @@ msgstr ""
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "更改文字样式"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "创建新查询选项卡"
 
 #: src/Layouts/DataBaseView.vala:240
 #, c-format
 msgid "Query %i"
-msgstr ""
+msgstr "查询 %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select Table"
-msgstr ""
+msgstr "选择表"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select a table from the left sidebar to activate this view."
-msgstr ""
+msgstr "从左边栏中选择一个表格以激活此视图。"
 
 #: src/Layouts/Views/Structure.vala:107 src/Layouts/Views/Structure.vala:145
 #: src/Layouts/Views/Content.vala:179 src/Layouts/Views/Content.vala:218
 #: src/Layouts/Views/Relations.vala:106 src/Layouts/Views/Relations.vala:144
 #: src/Layouts/Views/Query.vala:323
 msgid "No Results Available"
-msgstr ""
+msgstr "无可用结果"
 
 #: src/Layouts/Views/Structure.vala:118 src/Layouts/Views/Content.vala:191
 #: src/Layouts/Views/Relations.vala:117
 msgid "Reload Results"
-msgstr ""
+msgstr "刷新结果"
 
 #: src/Layouts/Views/Structure.vala:197
 msgid " Fields"
@@ -271,308 +274,308 @@ msgstr ""
 
 #: src/Layouts/Views/Content.vala:121
 msgid "Previous Page"
-msgstr ""
+msgstr "前一页"
 
 #: src/Layouts/Views/Content.vala:126
 msgid "Next Page"
-msgstr ""
+msgstr "后一页"
 
 #: src/Layouts/Views/Content.vala:131
 #, c-format
 msgid "%d Pages"
-msgstr ""
+msgstr "%d 页"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "跳至页…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
-msgstr ""
+msgstr "1 页"
 
 #: src/Layouts/Views/Content.vala:171
 #, c-format
 msgid "%d of %d Pages"
-msgstr ""
+msgstr "%2$d 页中的第 %1$d 页"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
 msgid "%d Entries"
-msgstr ""
+msgstr "%d 条"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
-msgstr ""
+msgstr " 约束"
 
 #: src/Layouts/Views/Query.vala:279
 msgid "Running Query…"
-msgstr ""
+msgstr "正在运行查询…"
 
 #: src/Layouts/Views/Query.vala:295 src/Layouts/Views/Query.vala:304
 msgid "Run Query"
-msgstr ""
+msgstr "运行查询"
 
 #: src/Layouts/Views/Query.vala:356
 msgid "Export Results"
-msgstr ""
+msgstr "导出结果"
 
 #: src/Layouts/Views/Query.vala:369
 msgid "Export as CSV"
-msgstr ""
+msgstr "导出为 CSV"
 
 #: src/Layouts/Views/Query.vala:377
 msgid "Export as Text"
-msgstr ""
+msgstr "导出为文本文件"
 
 #: src/Layouts/Views/Query.vala:436 src/Layouts/Views/Query.vala:482
 msgid "Unable to process Query!"
-msgstr ""
+msgstr "无法处理查询！"
 
 #: src/Layouts/Views/Query.vala:457
 #, c-format
 msgid "%d Total Results"
-msgstr ""
+msgstr "共 %d 条结果"
 
 #: src/Layouts/Views/Query.vala:492
 #, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr ""
+msgstr "成功执行查询！ 受影响的行：%s"
 
 #: src/Layouts/Views/Query.vala:495
 msgid "Query Executed!"
-msgstr ""
+msgstr "查询已执行！"
 
 #: src/Partials/LibraryItem.vala:107 src/Widgets/ConnectionDialog.vala:431
 msgid "Connect"
-msgstr ""
+msgstr "连接"
 
 #: src/Partials/LibraryItem.vala:110
 msgid "Edit Connection"
-msgstr ""
+msgstr "编辑连接"
 
 #: src/Partials/LibraryItem.vala:113
 msgid "Duplicate Connection"
-msgstr ""
+msgstr "复制连接"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
-msgstr ""
+msgstr "删除连接"
 
 #: src/Partials/LibraryItem.vala:126
 msgid "Options"
-msgstr ""
+msgstr "选项"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
-msgstr ""
+msgstr "于列"
 
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "复制 %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (复制)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Libssh2初始化失败 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "打开套接字失败"
 
 #: src/Services/ConnectionManager.vala:211
 msgid "Failed to connect!"
-msgstr ""
+msgstr "连接失败！"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "启动 SSH 会话时出错：%d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "密码认证失败！"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "公钥认证失败！"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "找不到支持的身份验证方法！"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "无法打开监听套接字"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
-msgstr ""
+msgstr "绑定失败。 数据库端口可能有误！"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "监听失败！"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "无法接受远程连接！"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
-msgstr ""
+msgstr "无法打开直接 tcpip 通道！(请注意，这可能是服务器上的问题！请查看服务器日志。)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
-msgstr ""
+msgstr "错误！"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "缺少 SSH 密钥文件！"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "缺少 SSH 公钥！"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
-msgstr ""
+msgstr "连接"
 
 #: src/Widgets/ConnectionDialog.vala:141
 msgid "Select connection color"
-msgstr ""
+msgstr "选择连接颜色"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
-msgstr ""
+msgstr "连接名："
 
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "Connection's name"
-msgstr ""
+msgstr "连接名称"
 
 #: src/Widgets/ConnectionDialog.vala:172
 msgid "Database Type:"
-msgstr ""
+msgstr "数据库类型："
 
 #: src/Widgets/ConnectionDialog.vala:194
 msgid "Host:"
-msgstr ""
+msgstr "主机："
 
 #: src/Widgets/ConnectionDialog.vala:200
 msgid "Database Name:"
-msgstr ""
+msgstr "数据库名："
 
 #: src/Widgets/ConnectionDialog.vala:207
 msgid "Username:"
-msgstr ""
+msgstr "用户名："
 
 #: src/Widgets/ConnectionDialog.vala:213
 msgid "Password:"
-msgstr ""
+msgstr "密码："
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
 msgid "Show password"
-msgstr ""
+msgstr "显示密码"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
 msgid "Hide password"
-msgstr ""
+msgstr "隐藏密码"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
-msgstr ""
+msgstr "端口："
 
 #: src/Widgets/ConnectionDialog.vala:240
 msgid "File Path:"
-msgstr ""
+msgstr "文件路径："
 
 #: src/Widgets/ConnectionDialog.vala:241
 msgid "Select Your SQLite File…"
-msgstr ""
+msgstr "选择您的 SQLite 文件…"
 
 #: src/Widgets/ConnectionDialog.vala:261
 msgid "Connect via SSH Tunnel:"
-msgstr ""
+msgstr "通过 SSH 隧道连接："
 
 #: src/Widgets/ConnectionDialog.vala:271
 msgid "SSH Host:"
-msgstr ""
+msgstr "SSH 主机："
 
 #: src/Widgets/ConnectionDialog.vala:276
 msgid "SSH Username:"
-msgstr ""
+msgstr "SSH 用户名："
 
 #: src/Widgets/ConnectionDialog.vala:281
 msgid "SSH Password:"
-msgstr ""
+msgstr "SSH 密码："
 
 #: src/Widgets/ConnectionDialog.vala:301
 msgid "SSH Port:"
-msgstr ""
+msgstr "SSH 端口："
 
 #: src/Widgets/ConnectionDialog.vala:302
 msgid "Optional"
-msgstr ""
+msgstr "可选"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH 身份"
 
 #: src/Widgets/ConnectionDialog.vala:308
 msgid "Select Your Identity File…"
-msgstr ""
+msgstr "选择您的身份验证文件…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "生成 SSH 密钥"
 
 #: src/Widgets/ConnectionDialog.vala:356
 msgid "SSH Tunnel"
-msgstr ""
+msgstr "SSH 隧道"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: src/Widgets/ConnectionDialog.vala:427
 msgid "Save Connection"
-msgstr ""
+msgstr "保存连接"
 
 #: src/Widgets/ConnectionDialog.vala:429
 msgid "Test Connection"
-msgstr ""
+msgstr "测试连接"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "正在打开 SSH 隧道…"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
-msgstr ""
+msgstr "正在测试连接…"
 
 #: src/Widgets/ConnectionDialog.vala:661
 msgid "Successfully Connected!"
-msgstr ""
+msgstr "已成功连接！"
 
 #: src/Widgets/ConnectionDialog.vala:679
 msgid "Saving Connection…"
-msgstr ""
+msgstr "正在保存连接…"
 
 #: src/Widgets/ConnectionDialog.vala:684
 msgid "Connection Saved!"
-msgstr ""
+msgstr "连接已保存！"
 
 #: src/Widgets/ConnectionDialog.vala:692
 msgid "Connecting…"
-msgstr ""
+msgstr "连接中…"
