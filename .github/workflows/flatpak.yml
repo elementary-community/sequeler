@@ -12,7 +12,9 @@ jobs:
       options: --privileged
     steps:
       - uses: actions/checkout@v2
-      - uses: bilelmoussaoui/flatpak-github-actions@v2
+      - uses: bilelmoussaoui/flatpak-github-actions@master
         with:
           bundle: "sequeler-nightly.flatpak"
           manifest-path: "build-aux/com.github.alecaddd.sequeler.json"
+          run-tests: true
+          cache-key: "flatpak-builder-${{ github.sha }}"
