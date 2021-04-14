@@ -2,7 +2,7 @@
 {
   "app-id": "com.github.alecaddd.sequeler",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "3.38",
+  "runtime-version": "40",
   "sdk": "org.gnome.Sdk",
   "base": "io.elementary.BaseApp",
   "base-version": "juno-20.08",
@@ -34,8 +34,8 @@
       },
       "sources": [{
         "type": "archive",
-        "url": "https://github.com/GNOME/libxml2/archive/v2.9.9.tar.gz",
-        "sha256": "d673f0284cec867ee00872a8152e0c3c09852f17fd9aa93f07579a37534f0bfe"
+        "url": "https://github.com/GNOME/libxml2/archive/v2.9.10.tar.gz",
+        "sha256": "3bdffb4d728e4dc135b3210bf2a2cebb76548b820a5617c68abb7b83654066dd"
       }]
     },
     {
@@ -62,7 +62,7 @@
       },
       "sources": [{
         "type": "archive",
-        "url": "https://download.gnome.org/sources/libgda/5.2/libgda-5.2.9.tar.xz",
+        "url": "hhttps://download-fallback.gnome.org/sources/libgda/5.2/libgda-5.2.9.tar.xz",
         "sha256": "59caed8ca72b1ac6437c9844f0677f8a296d52cfd1c0049116026abfb1d87d9b"
       }],
       "modules": [{
@@ -77,8 +77,8 @@
           },
           "sources": [{
             "type": "archive",
-            "url": "https://ftp.postgresql.org/pub/source/v12.0/postgresql-12.0.tar.gz",
-            "sha256": "15c7f267b476d764c79401d7f61f39c76222314951f77e6893a5854db26b6616"
+            "url": "https://ftp.postgresql.org/pub/source/v13.2/postgresql-13.2.tar.gz",
+            "sha256": "3386a40736332aceb055c7c9012ecc665188536d874d967fcc5a33e7992f8080"
           }]
         },
         {
@@ -127,7 +127,8 @@
             "-DWITHOUT_TOKUDB=1",
             "-DWITHOUT_EXAMPLE_STORAGE_ENGINE=1",
             "-DWITHOUT_FEDERATED_STORAGE_ENGINE=1",
-            "-DWITHOUT_PBXT_STORAGE_ENGINE=1"
+            "-DWITHOUT_PBXT_STORAGE_ENGINE=1",
+            "-DPLUGIN_AUTH_PAM=NO"
           ],
           "post-install": [
             "make -C libmysql install",
@@ -140,8 +141,8 @@
           ],
           "sources": [{
             "type": "archive",
-            "url": "http://ftp.hosteurope.de/mirror/archive.mariadb.org/mariadb-10.1.32/source/mariadb-10.1.32.tar.gz",
-            "sha256": "0e2aae6a6a190d07c8e36e87dd43377057fa82651ca3c583462563f3e9369096"
+            "url": "http://ftp.hosteurope.de/mirror/archive.mariadb.org/mariadb-10.1.48/source/mariadb-10.1.48.tar.gz",
+            "sha256": "069d58b1e2c06bb1e6c31249eda34138f41fb8ae3dec7ecaeba8035812c87cf9"
           }]
         },
         {
