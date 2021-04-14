@@ -1,0 +1,20 @@
+on:
+  push:
+  # branches: [master]
+  pull_request:
+name: CI
+jobs:
+  flatpak-builder:
+    name: "Flatpak Builder"
+    runs-on: ubuntu-20.04
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:elementary-juno
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bilelmoussaoui/flatpak-github-actions@master
+        with:
+          bundle: "sequeler-nightly.flatpak"
+          manifest-path: "build-aux/com.github.alecaddd.sequeler.json"
+          run-tests: true
+          cache-key: "flatpak-builder-${{ github.sha }}"
