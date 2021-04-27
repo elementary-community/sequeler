@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-04-21 09:29+0000\n"
+"PO-Revision-Date: 2021-04-28 04:32+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/sequeler/"
 "translations/id/>\n"
@@ -29,7 +29,7 @@ msgstr "Saya tidak tahu apa yang harus dilakukan"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "Sesuatu yang tak terduga terjadi"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
@@ -37,11 +37,11 @@ msgstr "Keluar"
 
 #: src/Layouts/HeaderBar.vala:56
 msgid "Light background"
-msgstr ""
+msgstr "Latar belakang terang"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
-msgstr ""
+msgstr "Latar belakang gelap"
 
 #: src/Layouts/HeaderBar.vala:68 src/Layouts/Welcome.vala:39
 msgid "New Window"
@@ -67,29 +67,27 @@ msgstr "Menghubungkan %s"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
-msgstr ""
+msgstr "KONEKSI TERSIMPAN"
 
 #: src/Layouts/Library.vala:74
 msgid "Delete All"
 msgstr "Hapus Semua"
 
 #: src/Layouts/Library.vala:81
-#, fuzzy
 msgid "Reload Library"
-msgstr "Telusuri Pustaka"
+msgstr "Muat Ulang Pustaka"
 
 #: src/Layouts/Library.vala:84
-#, fuzzy
 msgid "Export Library"
-msgstr "Telusuri Pustaka"
+msgstr "Ekspor Pustaka"
 
 #: src/Layouts/Library.vala:215 src/Layouts/Library.vala:233
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "Anda yakin ingin melanjutkan?"
 
 #: src/Layouts/Library.vala:215
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr ""
+msgstr "Dengan menghapus koneksi ini, Anda tidak dapat memulihkan data ini."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
@@ -97,21 +95,20 @@ msgstr "Ya, Hapus!"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr ""
+msgstr "Semua data akan dihapus dan anda tidak bisa memulihkannya."
 
 #: src/Layouts/Library.vala:236
-#, fuzzy
 msgid "Yes, Delete All!"
-msgstr "Hapus Semua"
+msgstr "Ya, Hapus Semua!"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "Nama pengguna diperlukan untuk terhubung!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
-msgstr ""
+msgstr "Pilih file"
 
 #: src/Layouts/Library.vala:407 src/Layouts/Views/Query.vala:531
 msgid "_Save"
@@ -123,149 +120,141 @@ msgid "_Cancel"
 msgstr "_Batal"
 
 #: src/Layouts/Library.vala:467
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to Connect to %s"
-msgstr "Hapus Koneksi"
+msgstr "Tidak dapat terhubung ke %s"
 
 #: src/Layouts/Library.vala:480
-#, fuzzy
 msgid "Unable to Export Library "
-msgstr "Tidak dapat memproses Query!"
+msgstr "Tak Bisa Mengekspor Pustaka "
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
 msgstr "Selamat datang di Sequeler"
 
 #: src/Layouts/Welcome.vala:29
-#, fuzzy
 msgid "Connect to Any Local or Remote Database."
-msgstr "Hubungkan ke Basis Data Lokal atau Jauh"
+msgstr "Hubungkan ke Basis Data Lokal atau Jauh."
 
 #: src/Layouts/Welcome.vala:38
-#, fuzzy
 msgid "Add a New Database"
 msgstr "Tambahkan Basis Data Baru"
 
 #: src/Layouts/Welcome.vala:38
-#, fuzzy
 msgid "Connect to a Database and Save It in Your Library"
-msgstr "Hubungkan ke Basis Data dan simpan di Pustaka Anda."
+msgstr "Hubungkan ke Basis Data dan simpan di Pustaka Anda"
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a New Sequeler Window"
-msgstr ""
+msgstr "Buka Jendela Sequeler Baru"
 
 #: src/Layouts/Welcome.vala:40
-#, fuzzy
 msgid "Import Connections"
-msgstr "Uji Koneksi"
+msgstr "Impor Koneksi"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
-msgstr ""
+msgstr "Impor Koneksi Sequeler yang Sebelumnya Diekspor"
 
 #: src/Layouts/Welcome.vala:58
 msgid "Select a file"
-msgstr ""
+msgstr "Pilih berkas"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
-msgstr ""
+msgstr "_Buka"
 
 #: src/Layouts/Welcome.vala:107
-#, fuzzy
 msgid "Unable to Import Library "
-msgstr "Tidak dapat memproses Query!"
+msgstr "Tak Bisa Mengimpor Pustaka "
 
 #: src/Layouts/DataBaseSchema.vala:66 src/Layouts/DataBaseSchema.vala:167
-#, fuzzy
 msgid "- Select Database -"
-msgstr "Tambahkan Basis Data Baru"
+msgstr "- Pilih Basis Data -"
 
 #: src/Layouts/DataBaseSchema.vala:87
 msgid "Search Tables"
-msgstr ""
+msgstr "Cari Table"
 
 #: src/Layouts/DataBaseSchema.vala:98
 msgid "Search Tables…"
-msgstr ""
+msgstr "Cari Table…"
 
 #: src/Layouts/DataBaseSchema.vala:120
 msgid "Reload Tables"
-msgstr ""
+msgstr "Muat ulang Table"
 
 #: src/Layouts/DataBaseSchema.vala:125
 msgid "Add Table"
-msgstr ""
+msgstr "Tambah Table"
 
 #: src/Layouts/DataBaseSchema.vala:289
 msgid "TABLES"
-msgstr ""
+msgstr "TABLE"
 
 #: src/Layouts/DataBaseView.vala:49
 msgid "Structure"
-msgstr ""
+msgstr "Struktur"
 
 #: src/Layouts/DataBaseView.vala:50
 msgid "Content"
-msgstr ""
+msgstr "Konten"
 
 #: src/Layouts/DataBaseView.vala:51
 msgid "Relations"
-msgstr ""
+msgstr "Relasi"
 
 #: src/Layouts/DataBaseView.vala:52 src/Layouts/DataBaseView.vala:229
 #: src/Layouts/DataBaseView.vala:253
-#, fuzzy
 msgid "Query"
-msgstr "Jalankan Query"
+msgstr "Kueri"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Perkecil"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Perbesar 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Perbesar"
 
 #: src/Layouts/DataBaseView.vala:124
 msgid "High Contrast"
-msgstr ""
+msgstr "Kontras Tinggi"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "Cahaya Terpolarisasi"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "Gelap Terpolarisasi"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Ubah Gaya Teks"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Buat tab Kueri baru"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Jalankan Query"
+msgstr "Kueri %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select Table"
-msgstr ""
+msgstr "Pilih Table"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select a table from the left sidebar to activate this view."
-msgstr ""
+msgstr "Pilih tabel dari sidebar kiri untuk mengaktifkan tampilan ini."
 
 #: src/Layouts/Views/Structure.vala:107 src/Layouts/Views/Structure.vala:145
 #: src/Layouts/Views/Content.vala:179 src/Layouts/Views/Content.vala:218
@@ -277,42 +266,42 @@ msgstr "Tidak Ada hasil Yang Tersedia"
 #: src/Layouts/Views/Structure.vala:118 src/Layouts/Views/Content.vala:191
 #: src/Layouts/Views/Relations.vala:117
 msgid "Reload Results"
-msgstr ""
+msgstr "Muat Ulang Hasil"
 
 #: src/Layouts/Views/Structure.vala:197
 msgid " Fields"
-msgstr ""
+msgstr " Bidang"
 
 #: src/Layouts/Views/Content.vala:121
 msgid "Previous Page"
-msgstr ""
+msgstr "Halaman Sebelumnya"
 
 #: src/Layouts/Views/Content.vala:126
 msgid "Next Page"
-msgstr ""
+msgstr "Halaman Selanjutnya"
 
 #: src/Layouts/Views/Content.vala:131
 #, c-format
 msgid "%d Pages"
-msgstr ""
+msgstr "%d Halaman"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Lompat ke halaman…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
-msgstr ""
+msgstr "1 Halaman"
 
 #: src/Layouts/Views/Content.vala:171
 #, c-format
 msgid "%d of %d Pages"
-msgstr ""
+msgstr "%d dari %d Halaman"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
 msgid "%d Entries"
-msgstr ""
+msgstr "%d Entri"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
