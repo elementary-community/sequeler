@@ -8,29 +8,29 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-05-19 14:41+0000\n"
-"Last-Translator: Acvarium <3dvits@gmail.com>\n"
+"PO-Revision-Date: 2021-05-11 04:33+0000\n"
+"Last-Translator: Axus Wizix <axus.wizix@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
 "translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr ""
+msgstr "Каталоги не поддерживаются"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr ""
+msgstr "Не знаю что делать"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr ""
+msgstr "Произошло что-то совершенно неожиданное"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
@@ -59,7 +59,7 @@ msgstr "Выход"
 
 #: src/Layouts/HeaderBar.vala:94
 msgid "Menu"
-msgstr ""
+msgstr "Меню"
 
 #: src/Layouts/Main.vala:77
 #, c-format
@@ -87,18 +87,16 @@ msgid "Are you sure you want to proceed?"
 msgstr "Вы действительно хотите сделать это?"
 
 #: src/Layouts/Library.vala:215
-#, fuzzy
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr "Подключение будет удалено безвозвратно."
+msgstr "Удалив это соединение, вы не сможете восстановить эти данные."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
 msgstr "Да, удалить!"
 
 #: src/Layouts/Library.vala:233
-#, fuzzy
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr "Все подключения будут удалены безвозвратно."
+msgstr "Все данные будут удалены, и вы не сможете их восстановить."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
@@ -107,11 +105,11 @@ msgstr "Да, удалить всё!"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "Для подключения требуется имя пользователя!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
-msgstr ""
+msgstr "Выберите файл"
 
 #: src/Layouts/Library.vala:407 src/Layouts/Views/Query.vala:531
 msgid "_Save"
@@ -163,9 +161,8 @@ msgid "Import Previously Exported Sequeler Connections"
 msgstr "Импорт ранее экспортированных Sequeler-подключений"
 
 #: src/Layouts/Welcome.vala:58
-#, fuzzy
 msgid "Select a file"
-msgstr "Выберите таблицу"
+msgstr "Выберите файл"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
@@ -218,15 +215,15 @@ msgstr "Запрос"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "Уменьшить"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Масштаб 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "Увеличить"
 
 #: src/Layouts/DataBaseView.vala:124
 msgid "High Contrast"
@@ -234,19 +231,19 @@ msgstr "Отношения"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "Светлая цветовая схема"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "Тёмная цветовая схема"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "Изменить стиль текста"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "Создать новую вкладку запросов"
 
 #: src/Layouts/DataBaseView.vala:240
 #, c-format
@@ -281,29 +278,29 @@ msgstr " Поля"
 
 #: src/Layouts/Views/Content.vala:121
 msgid "Previous Page"
-msgstr ""
+msgstr "Предыдущая страница"
 
 #: src/Layouts/Views/Content.vala:126
 msgid "Next Page"
-msgstr ""
+msgstr "Следующая страница"
 
 #: src/Layouts/Views/Content.vala:131
 #, c-format
 msgid "%d Pages"
-msgstr ""
+msgstr "%d страниц"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "Перейти к странице…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
-msgstr ""
+msgstr "1 страница"
 
 #: src/Layouts/Views/Content.vala:171
 #, c-format
 msgid "%d of %d Pages"
-msgstr ""
+msgstr "%d из %d страниц"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
@@ -327,9 +324,8 @@ msgid "Export Results"
 msgstr "Экспорт результатов"
 
 #: src/Layouts/Views/Query.vala:369
-#, fuzzy
 msgid "Export as CSV"
-msgstr "Экспортировать в Csv"
+msgstr "Экспортировать в CSV"
 
 #: src/Layouts/Views/Query.vala:377
 msgid "Export as Text"
@@ -362,18 +358,16 @@ msgid "Edit Connection"
 msgstr "Изменить"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Удалить"
+msgstr "Дублировать соединение"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
 msgstr "Удалить"
 
 #: src/Partials/LibraryItem.vala:126
-#, fuzzy
 msgid "Options"
-msgstr "Отношения"
+msgstr "Параметры"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "Error"
@@ -381,26 +375,26 @@ msgstr "Ошибка"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
-msgstr ""
+msgstr "на столбце"
 
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "Копировать %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (копия)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Инициализация Libssh2 не удалась (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "Не удалось открыть сокет"
 
 #: src/Services/ConnectionManager.vala:211
 msgid "Failed to connect!"
@@ -409,41 +403,43 @@ msgstr "Не удалось подключиться!"
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "Ошибка при запуске сеанса SSH: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "Не удалось аутентифицировать с помощью пароля!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "Аутентификация публичным ключом не удалась!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "Поддерживаемые методы аутентификации не найдены!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "Не удалось открыть прослушиваемый сокет"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
-msgstr ""
+msgstr "Не удалось соединить. Ваш порт базы данных может быть неправильным!"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "Не удалось послушать!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "Не удалось принять удаленное соединение!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"Не удалось открыть прямой канал tcpip! (Обратите внимание, что это может "
+"быть проблемой на сервере! Просмотрите журналы сервера.)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
@@ -451,20 +447,19 @@ msgstr "Ошибка!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "Отсутствует файл SSH-ключа!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "Отсутствует публичный ключ SSH!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
 msgstr "Подключение"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Удалить"
+msgstr "Выберите цвет соединения"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -496,14 +491,12 @@ msgstr "Пароль:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Пароль:"
+msgstr "Отобразить пароль:"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Пароль:"
+msgstr "Скрыть пароль:"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
@@ -514,57 +507,48 @@ msgid "File Path:"
 msgstr "Файл:"
 
 #: src/Widgets/ConnectionDialog.vala:241
-#, fuzzy
 msgid "Select Your SQLite File…"
-msgstr "Выберите SQLite-файл…"
+msgstr "Выберите свой SQLite-файл…"
 
 #: src/Widgets/ConnectionDialog.vala:261
-#, fuzzy
 msgid "Connect via SSH Tunnel:"
-msgstr "Подключиться через терминал"
+msgstr "Подключиться через SSH-туннель:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Сервер:"
+msgstr "SSH хост:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Пользователь:"
+msgstr "Имя пользователя SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Пароль:"
+msgstr "Пароль SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:301
-#, fuzzy
 msgid "SSH Port:"
-msgstr "Порт:"
+msgstr "Порт SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
-#, fuzzy
 msgid "Optional"
-msgstr "Отношения"
+msgstr "Необязательно"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "Идентификация SSH"
 
 #: src/Widgets/ConnectionDialog.vala:308
-#, fuzzy
 msgid "Select Your Identity File…"
-msgstr "Выберите SQLite-файл…"
+msgstr "Выберите свой файл идентификации…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "Создать SSH ключ"
 
 #: src/Widgets/ConnectionDialog.vala:356
-#, fuzzy
 msgid "SSH Tunnel"
-msgstr "Подключиться через терминал"
+msgstr "SSH-туннель"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
@@ -580,7 +564,7 @@ msgstr "Проверить"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "Открытие туннеля SSH…"
 
 #: src/Widgets/ConnectionDialog.vala:650
 msgid "Testing Connection…"
