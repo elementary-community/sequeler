@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-05-11 04:33+0000\n"
+"PO-Revision-Date: 2021-05-15 04:32+0000\n"
 "Last-Translator: Axus Wizix <axus.wizix@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
 "translations/ru/>\n"
@@ -68,7 +68,7 @@ msgstr "Подключиться к %s"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
-msgstr "ПОДКЛЮЧЕНИЯ"
+msgstr "Сохраненные подключения"
 
 #: src/Layouts/Library.vala:74
 msgid "Delete All"
@@ -96,7 +96,7 @@ msgstr "Да, удалить!"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr "Все данные будут удалены, и вы не сможете их восстановить."
+msgstr "Все подключения будут безвозвратно удалены."
 
 #: src/Layouts/Library.vala:236
 msgid "Yes, Delete All!"
@@ -227,7 +227,7 @@ msgstr "Увеличить"
 
 #: src/Layouts/DataBaseView.vala:124
 msgid "High Contrast"
-msgstr "Отношения"
+msgstr "Высокий контраст"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
@@ -367,7 +367,7 @@ msgstr "Удалить"
 
 #: src/Partials/LibraryItem.vala:126
 msgid "Options"
-msgstr "Параметры"
+msgstr "Настройки"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "Error"
@@ -403,15 +403,15 @@ msgstr "Не удалось подключиться!"
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr "Ошибка при запуске сеанса SSH: %d"
+msgstr "Ошибка при запуске SSH сессии: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr "Не удалось аутентифицировать с помощью пароля!"
+msgstr "Аутентификация с помощью пароля не удалась!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr "Аутентификация публичным ключом не удалась!"
+msgstr "Аутентификация с помощью публичного ключа не удалась!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
@@ -419,7 +419,7 @@ msgstr "Поддерживаемые методы аутентификации �
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr "Не удалось открыть прослушиваемый сокет"
+msgstr "Не удалось открыть прослушивание сокета"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
@@ -447,11 +447,11 @@ msgstr "Ошибка!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr "Отсутствует файл SSH-ключа!"
+msgstr "Отсутствует файл SSH ключа!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr "Отсутствует публичный ключ SSH!"
+msgstr "Отсутствует публичный SSH ключ!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
@@ -459,7 +459,7 @@ msgstr "Подключение"
 
 #: src/Widgets/ConnectionDialog.vala:141
 msgid "Select connection color"
-msgstr "Выберите цвет соединения"
+msgstr "Выбрать цвет соединения"
 
 #: src/Widgets/ConnectionDialog.vala:164
 msgid "Connection Name:"
@@ -492,11 +492,11 @@ msgstr "Пароль:"
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
 msgid "Show password"
-msgstr "Отобразить пароль:"
+msgstr "Показать пароль"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
 msgid "Hide password"
-msgstr "Скрыть пароль:"
+msgstr "Скрыть пароль"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
@@ -508,15 +508,15 @@ msgstr "Файл:"
 
 #: src/Widgets/ConnectionDialog.vala:241
 msgid "Select Your SQLite File…"
-msgstr "Выберите свой SQLite-файл…"
+msgstr "Выберите SQLite-файл…"
 
 #: src/Widgets/ConnectionDialog.vala:261
 msgid "Connect via SSH Tunnel:"
-msgstr "Подключиться через SSH-туннель:"
+msgstr "Подключиться через SSH туннель"
 
 #: src/Widgets/ConnectionDialog.vala:271
 msgid "SSH Host:"
-msgstr "SSH хост:"
+msgstr "Сервер SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
 msgid "SSH Username:"
