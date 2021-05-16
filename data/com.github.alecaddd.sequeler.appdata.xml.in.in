@@ -37,6 +37,14 @@
 		<binary>@appid@</binary>
 	</provides>
 	<releases>
+        <release version="0.8.1" date="2021-05-15">
+			<description>
+				<p>Odin release</p>
+                <ul>
+                    <li>Updated translations for Ukranian, Russian, Indonisian, Chinese, Lithuanian, Portugese, Turkish, and Arabic.</li>
+                </ul>
+			</description>
+		</release>
         <release version="0.8.0" date="2020-06-25">
 			<description>
 				<p>New Features</p>
