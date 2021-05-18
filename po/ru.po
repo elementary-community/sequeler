@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-05-17 03:32+0000\n"
+"PO-Revision-Date: 2021-05-19 04:32+0000\n"
 "Last-Translator: Axus Wizix <axus.wizix@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
 "translations/ru/>\n"
@@ -212,7 +212,6 @@ msgid "Query"
 msgstr "Запрос"
 
 #: src/Layouts/DataBaseView.vala:101
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Уменьшить масштаб"
 
@@ -221,7 +220,6 @@ msgid "Zoom 1:1"
 msgstr "Масштаб 1:1"
 
 #: src/Layouts/DataBaseView.vala:111
-#, fuzzy
 msgid "Zoom In"
 msgstr "Увеличить масштаб"
 
@@ -532,7 +530,7 @@ msgstr "Порт SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
 msgid "Optional"
-msgstr "Необязательно"
+msgstr "Не обязательно"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
