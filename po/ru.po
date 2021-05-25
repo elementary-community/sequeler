@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-05-19 04:32+0000\n"
+"PO-Revision-Date: 2021-05-26 21:33+0000\n"
 "Last-Translator: Axus Wizix <axus.wizix@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
 "translations/ru/>\n"
@@ -134,7 +134,6 @@ msgid "Welcome to Sequeler"
 msgstr "Добро пожаловать в Sequeler"
 
 #: src/Layouts/Welcome.vala:29
-#, fuzzy
 msgid "Connect to Any Local or Remote Database."
 msgstr "Подключиться к локальной или удалённой базе данных."
 
@@ -510,7 +509,7 @@ msgstr "Выберите SQLite-файл…"
 
 #: src/Widgets/ConnectionDialog.vala:261
 msgid "Connect via SSH Tunnel:"
-msgstr "Подключиться через SSH туннель"
+msgstr "Подключение через SSH туннель:"
 
 #: src/Widgets/ConnectionDialog.vala:271
 msgid "SSH Host:"
