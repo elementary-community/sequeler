@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-04-28 04:32+0000\n"
-"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"PO-Revision-Date: 2021-09-14 11:34+0000\n"
+"Last-Translator: Dicki Darmawan Saputra <dickidarmawansaputra@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/sequeler/"
 "translations/id/>\n"
 "Language: id\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -322,11 +322,11 @@ msgstr ""
 
 #: src/Layouts/Views/Query.vala:369
 msgid "Export as CSV"
-msgstr ""
+msgstr "Ekspor sebagai CSV"
 
 #: src/Layouts/Views/Query.vala:377
 msgid "Export as Text"
-msgstr ""
+msgstr "Ekspor sebagai Text"
 
 #: src/Layouts/Views/Query.vala:436 src/Layouts/Views/Query.vala:482
 msgid "Unable to process Query!"
@@ -356,9 +356,8 @@ msgid "Edit Connection"
 msgstr "Sunting Koneksi"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Hapus Koneksi"
+msgstr "Salinan Koneksi"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
@@ -366,7 +365,7 @@ msgstr "Hapus Koneksi"
 
 #: src/Partials/LibraryItem.vala:126
 msgid "Options"
-msgstr ""
+msgstr "Pilihan"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "Error"
@@ -407,7 +406,7 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "Otentikasi dengan kata sandi gagal!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
@@ -452,14 +451,12 @@ msgid "Missing SSH public key!"
 msgstr ""
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
-#, fuzzy
 msgid "Connection"
-msgstr "Koneksi Baru"
+msgstr "Koneksi"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Hapus Koneksi"
+msgstr "Pilih warna koneksi"
 
 #: src/Widgets/ConnectionDialog.vala:164
 #, fuzzy
