@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-09-14 11:34+0000\n"
-"Last-Translator: Dicki Darmawan Saputra <dickidarmawansaputra@gmail.com>\n"
+"PO-Revision-Date: 2021-10-02 15:39+0000\n"
+"Last-Translator: Dicki Darmawan Saputra <dickidarmawansaputra@student.untan."
+"ac.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/sequeler/"
 "translations/id/>\n"
 "Language: id\n"
@@ -308,9 +309,8 @@ msgid " Constraints"
 msgstr ""
 
 #: src/Layouts/Views/Query.vala:279
-#, fuzzy
 msgid "Running Query…"
-msgstr "Query sedang jalan..."
+msgstr "Menjalankan Query…"
 
 #: src/Layouts/Views/Query.vala:295 src/Layouts/Views/Query.vala:304
 msgid "Run Query"
@@ -318,7 +318,7 @@ msgstr "Jalankan Query"
 
 #: src/Layouts/Views/Query.vala:356
 msgid "Export Results"
-msgstr ""
+msgstr "Hasil di Ekspor"
 
 #: src/Layouts/Views/Query.vala:369
 msgid "Export as CSV"
@@ -369,7 +369,7 @@ msgstr "Pilihan"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "Error"
-msgstr ""
+msgstr "Terjadi kesalahan"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
@@ -378,31 +378,30 @@ msgstr ""
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "Salin %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (salin)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "Inisialisasi Libssh2 gagal (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "Gagal membuka socket"
 
 #: src/Services/ConnectionManager.vala:211
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Hapus Koneksi"
+msgstr "Gagal terhubung!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "Kesalahan saat memulai sesi SSH: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
@@ -410,7 +409,7 @@ msgstr "Otentikasi dengan kata sandi gagal!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "Otentikasi dengan public key gagal!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
@@ -430,7 +429,7 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "Gagal menerima koneksi jarak jauh!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
@@ -440,11 +439,11 @@ msgstr ""
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
-msgstr ""
+msgstr "Terjadi kesalahan!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "Berkas Kunci SSH hilang!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
@@ -459,9 +458,8 @@ msgid "Select connection color"
 msgstr "Pilih warna koneksi"
 
 #: src/Widgets/ConnectionDialog.vala:164
-#, fuzzy
 msgid "Connection Name:"
-msgstr "Nama koneksi"
+msgstr "Nama koneksi:"
 
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "Connection's name"
@@ -489,71 +487,64 @@ msgstr "Kata sandi:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Kata sandi:"
+msgstr "Tampilkan kata sandi"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Kata sandi:"
+msgstr "Sembunyikan kata sandi"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
-msgstr ""
+msgstr "Port:"
 
 #: src/Widgets/ConnectionDialog.vala:240
 msgid "File Path:"
-msgstr ""
+msgstr "Tempat Berkas:"
 
 #: src/Widgets/ConnectionDialog.vala:241
 msgid "Select Your SQLite File…"
-msgstr ""
+msgstr "Pilih File SQLite Anda…"
 
 #: src/Widgets/ConnectionDialog.vala:261
-#, fuzzy
 msgid "Connect via SSH Tunnel:"
-msgstr "Koneksi di Terminal"
+msgstr "Terhubung melalui SSH Tunnel:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Utama:"
+msgstr "Host SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Nama pengguna:"
+msgstr "Nama Pengguna SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Kata sandi:"
+msgstr "Kata Sandi SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:301
 msgid "SSH Port:"
-msgstr ""
+msgstr "Port SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
 msgid "Optional"
-msgstr ""
+msgstr "Opsional"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "Identitas SSH"
 
 #: src/Widgets/ConnectionDialog.vala:308
 msgid "Select Your Identity File…"
-msgstr ""
+msgstr "Pilih File Identitas Anda…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "Hasilkan SSH Key"
 
 #: src/Widgets/ConnectionDialog.vala:356
-#, fuzzy
 msgid "SSH Tunnel"
-msgstr "Koneksi di Terminal"
+msgstr "SSH Tunnel"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
@@ -569,28 +560,24 @@ msgstr "Uji Koneksi"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "Membuka SSH Tunnel…"
 
 #: src/Widgets/ConnectionDialog.vala:650
-#, fuzzy
 msgid "Testing Connection…"
-msgstr "Uji Koneksi"
+msgstr "Uji Koneksi…"
 
 #: src/Widgets/ConnectionDialog.vala:661
-#, fuzzy
 msgid "Successfully Connected!"
-msgstr "Query Berhasil Dijalankan!"
+msgstr "Berhasil Terhubung!"
 
 #: src/Widgets/ConnectionDialog.vala:679
-#, fuzzy
 msgid "Saving Connection…"
-msgstr "Simpan Koneksi"
+msgstr "Menyimpan Koneksi…"
 
 #: src/Widgets/ConnectionDialog.vala:684
 msgid "Connection Saved!"
 msgstr "Koneksi Tersimpan!"
 
 #: src/Widgets/ConnectionDialog.vala:692
-#, fuzzy
 msgid "Connecting…"
-msgstr "Menghubungkan"
+msgstr "Menghubungkan…"
