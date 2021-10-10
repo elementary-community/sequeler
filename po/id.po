@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2021-10-02 15:39+0000\n"
+"PO-Revision-Date: 2021-10-11 09:02+0000\n"
 "Last-Translator: Dicki Darmawan Saputra <dickidarmawansaputra@student.untan."
 "ac.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/sequeler/"
@@ -306,7 +306,7 @@ msgstr "%d Entri"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
-msgstr ""
+msgstr " Pembatas"
 
 #: src/Layouts/Views/Query.vala:279
 msgid "Running Query…"
@@ -335,17 +335,16 @@ msgstr "Tidak dapat memproses Query!"
 #: src/Layouts/Views/Query.vala:457
 #, c-format
 msgid "%d Total Results"
-msgstr ""
+msgstr "%d Hasil Total"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Query Berhasil Dijalankan!"
+msgstr "Query Berhasil Dieksekusi! Rows Affected: %s"
 
 #: src/Layouts/Views/Query.vala:495
-#, fuzzy
 msgid "Query Executed!"
-msgstr "Query Berhasil Dijalankan!"
+msgstr "Query Dieksekusi!"
 
 #: src/Partials/LibraryItem.vala:107 src/Widgets/ConnectionDialog.vala:431
 msgid "Connect"
@@ -373,7 +372,7 @@ msgstr "Terjadi kesalahan"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
-msgstr ""
+msgstr "di Kolom"
 
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
@@ -413,19 +412,19 @@ msgstr "Otentikasi dengan public key gagal!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "Tidak ditemukan metode autentikasi yang didukung!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "Gagal membuka listen socket"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
-msgstr ""
+msgstr "Gagal mengikat. Port Database Anda mungkin salah!"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "Gagal mendengarkan!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
@@ -436,6 +435,8 @@ msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"Tidak dapat membuka saluran direct-tcpip! (Perhatikan bahwa ini bisa menjadi "
+"masalah di server! Harap tinjau log server.)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
@@ -447,7 +448,7 @@ msgstr "Berkas Kunci SSH hilang!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "Kunci publik SSH tidak ada!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
 msgid "Connection"
@@ -544,7 +545,7 @@ msgstr "Hasilkan SSH Key"
 
 #: src/Widgets/ConnectionDialog.vala:356
 msgid "SSH Tunnel"
-msgstr "SSH Tunnel"
+msgstr "Tunnel SSH"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
