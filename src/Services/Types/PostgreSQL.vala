@@ -43,7 +43,7 @@ public class Sequeler.Services.Types.PostgreSQL : Object, DataBaseType {
     }
 
     public string show_table_list (string name) {
-        return "SELECT relname, reltuples FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema') AND relkind='r' ORDER BY relname DESC;";
+        return "SELECT relname, reltuples FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema') AND relkind='r' ORDER BY relname ASC;";
     }
 
     public string edit_table_name (string old_table, string new_table) {
