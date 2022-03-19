@@ -44,7 +44,7 @@ public class Sequeler.Services.Types.MySQL : Object, DataBaseType {
     }
 
     public string show_table_list (string name) {
-        return "SELECT table_name, table_rows FROM information_schema.TABLES WHERE TABLE_SCHEMA = '%s'".printf (name);
+        return "SELECT table_name, table_rows FROM information_schema.TABLES WHERE TABLE_SCHEMA = '%s' ORDER BY table_name ASC".printf (name);
     }
 
     public string edit_table_name (string old_table, string new_table) {
