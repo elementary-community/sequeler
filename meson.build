@@ -1,6 +1,9 @@
 # project name and programming language
-project('com.github.alecaddd.sequeler', 'vala', 'c',
-    version: '0.8.2')
+project(
+    'com.github.alecaddd.sequeler',
+    'vala', 'c',
+    version: '0.9.0'
+)
 
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required: true)
@@ -11,13 +14,6 @@ add_project_arguments(
     ['--vapidir', join_paths(meson.current_source_dir(), 'vapi')],
     language: 'vala'
 )
-
-if get_option('profile') == 'development'
-	application_id = '@0@Devel'.format(meson.project_name())
-	vala_args += ['-D', 'IS_DEVEL']
-else
-	application_id = meson.project_name()
-endif
 
 linux_dep = meson.get_compiler('vala').find_library('linux')
 
