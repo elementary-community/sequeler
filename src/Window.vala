@@ -28,16 +28,15 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
 
     // public Gtk.AccelGroup accel_group { get; construct; }
 
-    // public Window (Sequeler.Application sequeler_app) {
-    //     Object (
-    //         application: sequeler_app,
-    //         app: sequeler_app,
-    //         icon_name: Constants.PROJECT_NAME
-    //     );
-    // }
+    public Window (Sequeler.Application app) {
+        Object (
+            application: app,
+            icon_name: Constants.PROJECT_NAME
+        );
+    }
 
     construct {
-        title = "Sequeler";
+        title = "Sequeler"; // Non translatable.
         default_height = 500;
         default_width = 800;
 
@@ -76,17 +75,26 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         sidebar.add_css_class (Granite.STYLE_CLASS_DEFAULT_DECORATION);
         sidebar.append (start_window_controls);
 
-        var main_view = new Gtk.Grid ();
-        main_view.add_css_class (Granite.STYLE_CLASS_VIEW);
-        main_view.attach (end_window_controls, 0, 0);
+        var sidebar_handle = new Gtk.WindowHandle () {
+            child = sidebar
+        };
+
+        var main = new Gtk.Grid ();
+        main.add_css_class (Granite.STYLE_CLASS_VIEW);
+        main.attach (end_window_controls, 0, 0);
+
+        var main_handle = new Gtk.WindowHandle () {
+            child = main
+        };
 
         var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL) {
             position = 250,
-            start_child = sidebar,
-            end_child = main_view,
-            resize_end_child = false,
+            start_child = sidebar_handle,
+            end_child = main_handle,
+            resize_end_child = true,
             shrink_end_child = false,
-            shrink_start_child = false
+            shrink_start_child = false,
+            resize_start_child = false
         };
 
         child = paned;

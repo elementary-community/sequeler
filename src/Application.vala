@@ -51,7 +51,7 @@ public class Sequeler.Application : Gtk.Application {
     }
 
     protected override void activate () {
-        var main_window = new Sequeler.Window ();
+        var main_window = new Sequeler.Window (this);
 
         add_window (main_window);
 
