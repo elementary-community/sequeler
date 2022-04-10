@@ -51,11 +51,7 @@ public class Sequeler.Application : Gtk.Application {
     }
 
     protected override void activate () {
-        var main_window = new Gtk.ApplicationWindow (this) {
-            default_height = 300,
-            default_width = 300,
-            title = "Hello World"
-        };
+        var main_window = new Sequeler.Window ();
 
         add_window (main_window);
 
@@ -72,7 +68,7 @@ public class Sequeler.Application : Gtk.Application {
             );
         });
 
-         active_window.present_with_time (Gdk.CURRENT_TIME);
+        active_window.present_with_time (Gdk.CURRENT_TIME);
     }
 
     public static int main (string[] args) {

@@ -12,9 +12,8 @@ config_header = configure_file(
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     meson.project_name(),
-    #'Main.vala',
     'Application.vala',
-    #'Window.vala',
+    'Window.vala',
 
     #'Layouts/HeaderBar.vala',
     #'Layouts/Main.vala',
