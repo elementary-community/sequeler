@@ -20,7 +20,6 @@
 */
 
 // namespace Sequeler {
-//     public Sequeler.Services.Settings settings;
 //     public Sequeler.Services.PasswordManager password_mngr;
 //     public Sequeler.Services.UpgradeManager upgrade_mngr;
 //     public Secret.Schema schema;
@@ -28,6 +27,7 @@
 
 public class Sequeler.Application : Gtk.Application {
     // public GLib.List <Sequeler.Window> windows;
+    // private Settings settings;
 
     public Application () {
         Object (

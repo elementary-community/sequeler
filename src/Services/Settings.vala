@@ -20,22 +20,6 @@
 */
 
 public class Sequeler.Services.Settings : GLib.Settings {
-        public int pos_x {
-        get { return get_int ("pos-x"); }
-        set { set_int ("pos-x", value); }
-    }
-    public int pos_y {
-        get { return get_int ("pos-y"); }
-        set { set_int ("pos-y", value); }
-    }
-    public int window_width {
-        get { return get_int ("window-width"); }
-        set { set_int ("window-width", value); }
-    }
-    public int window_height {
-        get { return get_int ("window-height"); }
-        set { set_int ("window-height", value); }
-    }
     public int sidebar_width {
         get { return get_int ("sidebar-width"); }
         set { set_int ("sidebar-width", value); }

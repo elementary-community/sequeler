@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2017-2020 Alecaddd (https://alecaddd.com)
+* Copyright (c) 2022 Alecaddd (https://alecaddd.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -20,6 +20,8 @@
 */
 
 public class Sequeler.Window : Gtk.ApplicationWindow {
+    private Settings settings;
+    private Gtk.Paned paned;
     // public Sequeler.Layouts.Main main;
     // public Sequeler.Layouts.HeaderBar headerbar;
     // public Sequeler.Services.ActionManager action_manager;
@@ -36,6 +38,8 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     }
 
     construct {
+        settings = new Settings (Constants.PROJECT_NAME);
+
         title = "Sequeler"; // Non translatable.
         default_height = 500;
         default_width = 800;
@@ -60,35 +64,43 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         };
 
         var end_window_controls = new Gtk.WindowControls (Gtk.PackType.END) {
-            hexpand = true,
-            halign = Gtk.Align.END
+            hexpand = true
         };
         end_window_controls.add_css_class ("titlebar");
         end_window_controls.add_css_class (Granite.STYLE_CLASS_FLAT);
         end_window_controls.add_css_class (Granite.STYLE_CLASS_DEFAULT_DECORATION);
 
-        var sidebar = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0) {
+        var sidebar_header = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0) {
             valign = Gtk.Align.START
         };
-        sidebar.add_css_class ("titlebar");
-        sidebar.add_css_class (Granite.STYLE_CLASS_FLAT);
-        sidebar.add_css_class (Granite.STYLE_CLASS_DEFAULT_DECORATION);
-        sidebar.append (start_window_controls);
+        sidebar_header.add_css_class ("titlebar");
+        sidebar_header.add_css_class (Granite.STYLE_CLASS_FLAT);
+        sidebar_header.add_css_class (Granite.STYLE_CLASS_DEFAULT_DECORATION);
+        sidebar_header.append (start_window_controls);
+
+        var sidebar = new Gtk.Grid ();
+        sidebar.add_css_class (Granite.STYLE_CLASS_VIEW);
+        sidebar.attach (sidebar_header, 0, 0);
 
         var sidebar_handle = new Gtk.WindowHandle () {
             child = sidebar
         };
 
+        var main_header = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0) {
+            valign = Gtk.Align.START,
+            halign = Gtk.Align.END
+        };
+        main_header.append (end_window_controls);
+
         var main = new Gtk.Grid ();
-        main.add_css_class (Granite.STYLE_CLASS_VIEW);
-        main.attach (end_window_controls, 0, 0);
+        main.attach (main_header, 0, 0);
 
         var main_handle = new Gtk.WindowHandle () {
             child = main
         };
 
-        var paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL) {
-            position = 250,
+        paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL) {
+            position = settings.get_int ("sidebar-width"),
             start_child = sidebar_handle,
             end_child = main_handle,
             resize_end_child = true,
@@ -96,8 +108,9 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
             shrink_start_child = false,
             resize_start_child = false
         };
-
         child = paned;
+
+        close_request.connect (on_before_close);
 
         // accel_group = new Gtk.AccelGroup ();
         // add_accel_group (accel_group);
@@ -108,16 +121,11 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
         // data_manager = new Sequeler.Services.DataManager ();
 
         // build_ui ();
-
-        // move (settings.pos_x, settings.pos_y);
-        // resize (settings.window_width, settings.window_height);
-
-        // show_app ();
     }
 
-    public Sequeler.Window get_instance () {
-        return this;
-    }
+    // public Sequeler.Window get_instance () {
+    //     return this;
+    // }
 
     // private void build_ui () {
     //     Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = settings.dark_theme;
@@ -137,33 +145,18 @@ public class Sequeler.Window : Gtk.ApplicationWindow {
     //     add (main);
     // }
 
-    // public bool before_destroy () {
-    //     update_status ();
-    //     app.get_active_window ().destroy ();
-    //     return true;
-    // }
+    public bool on_before_close () {
+        update_status ();
+        // app.get_active_window ().destroy ();
+        return false;
+    }
 
-    // private void update_status () {
-    //     int width, height, x, y;
-
-    //     get_size (out width, out height);
-    //     get_position (out x, out y);
-
-    //     settings.pos_x = x;
-    //     settings.pos_y = y;
-    //     settings.window_width = width;
-    //     settings.window_height = height;
-    //     settings.sidebar_width = main.get_position ();
-    //     if (main.database_view.query.n_tabs > 0) {
-    //         settings.query_area =
-    //             (main.database_view.query.current.page as Layouts.Views.Query)
-    //             .panels.get_position ();
-    //     }
-    // }
-
-    // public void show_app () {
-    //     show_all ();
-    //     show ();
-    //     present ();
-    // }
+    private void update_status () {
+        settings.set_int ("sidebar-width", paned.get_position ());
+        // if (main.database_view.query.n_tabs > 0) {
+        //     settings.query_area =
+        //         (main.database_view.query.current.page as Layouts.Views.Query)
+        //         .panels.get_position ();
+        // }
+    }
 }

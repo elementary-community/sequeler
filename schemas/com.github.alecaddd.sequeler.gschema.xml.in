@@ -1,29 +1,5 @@
 <schemalist>
 	<schema id="@appid@" path="@schema-path@" gettext-domain="sequeler">
-		<key name="pos-x" type="i">
-			<default>360</default>
-			<summary>The saved horizontal position of the window.</summary>
-			<description>The saved horizontal position of the window.</description>
-		</key>
-
-		<key name="pos-y" type="i">
-			<default>360</default>
-			<summary>The vertical position width of the window.</summary>
-			<description>The saved vertical position of the window.</description>
-		</key>
-
-		<key name="window-width" type="i">
-			<default>900</default>
-			<summary>The saved width of the window.</summary>
-			<description>The saved width of the window. Must be greater than 750, or it will not take effect.</description>
-		</key>
-
-		<key name="window-height" type="i">
-			<default>600</default>
-			<summary>The saved height of the window.</summary>
-			<description>The saved height of the window. Must be greater than 500, or it will not take effect.</description>
-		</key>
-
 		<key name="sidebar-width" type="i">
 			<default>260</default>
 			<summary>The saved width of the sidebar pane.</summary>
