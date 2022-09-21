@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-08-19 03:33+0000\n"
-"Last-Translator: Eduardo Addad de Oliveira <duduaddad@gmail.com>\n"
+"PO-Revision-Date: 2022-09-22 13:24+0000\n"
+"Last-Translator: Marco Andrei Kichalowsky <mandrei@arsnova.digital>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "sequeler/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -29,7 +29,7 @@ msgstr "Não sei o que fazer"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr "Algo inesperado aconteceu"
+msgstr "Algo completamente inesperado ocorreu"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
@@ -104,7 +104,7 @@ msgstr "Sim, Apague Tudo!"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr "É obrigatório um nome de usuário para conectar!"
+msgstr "Um nome de usuário é necessário para conectar!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -244,7 +244,7 @@ msgstr "Criar uma nova Aba de Consultas"
 #: src/Layouts/DataBaseView.vala:240
 #, c-format
 msgid "Query %i"
-msgstr "Consultar %i"
+msgstr "Consulta %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
@@ -284,11 +284,11 @@ msgstr "Próxima Página"
 #: src/Layouts/Views/Content.vala:131
 #, c-format
 msgid "%d Pages"
-msgstr "%d  páginas"
+msgstr "%d Páginas"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr "Ir para página..."
+msgstr "Ir para página…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
@@ -395,7 +395,7 @@ msgstr "Falha ao abrir socket"
 
 #: src/Services/ConnectionManager.vala:211
 msgid "Failed to connect!"
-msgstr "Falhou ao conectar!"
+msgstr "Falha ao conectar!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
@@ -513,7 +513,7 @@ msgstr "Conectar via terminal SSH"
 
 #: src/Widgets/ConnectionDialog.vala:271
 msgid "SSH Host:"
-msgstr "Host SSH:"
+msgstr "Servidor SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
 msgid "SSH Username:"
