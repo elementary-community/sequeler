@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2022-09-28 07:24+0000\n"
+"PO-Revision-Date: 2022-09-29 08:23+0000\n"
 "Last-Translator: lenemter <lenemter@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/sequeler/"
 "translations/ru/>\n"
@@ -228,11 +228,11 @@ msgstr "Высокий контраст"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr "Светлая цветовая схема"
+msgstr "Solarized светлая"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr "Тёмная цветовая схема"
+msgstr "Solarized тёмная"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
@@ -428,7 +428,7 @@ msgstr "Не удалось послушать!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr "Не удалось принять удаленное соединение!"
+msgstr "Не удалось принять удалённое соединение!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
