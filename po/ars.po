@@ -1,610 +1,585 @@
-# Ganda translations for com.github.alecaddd.sequeler package.
-# Copyright (C) 2020 THE com.github.alecaddd.sequeler'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.alecaddd.sequeler package.
-# Laurence Bahiirwa <laurence@mediauganda.com>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2023-05-13 20:50+0000\n"
-"Last-Translator: Clizco <gonzalezad06@gmail.com>\n"
-"Language-Team: Luganda <https://hosted.weblate.org/projects/sequeler/"
-"translations/lg/>\n"
-"Language: lg\n"
+"PO-Revision-Date: 2021-11-08 01:50+0000\n"
+"Last-Translator: Abdulrahman ☕️ <saanina@gmail.com>\n"
+"Language-Team: Arabic (Najdi) <https://hosted.weblate.org/projects/sequeler/"
+"translations/ars/>\n"
+"Language: ars\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"Plural-Forms: nplurals=6; plural=(n == 0) ? 0 : ((n == 1) ? 1 : ((n == 2) ? "
+"2 : ((n % 100 >= 3 && n % 100 <= 10) ? 3 : ((n % 100 >= 11 && n % 100 <= 99) "
+"? 4 : 5))));\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
-msgstr "Dayirekita teziwagirwa"
+msgstr "المجلدات غير مدعومة"
 
 #: src/Application.vala:68
 msgid "Don't know what to do"
-msgstr "tebamanyi kya kukola"
+msgstr "ما أدري وش أسوي"
 
 #: src/Application.vala:80
 msgid "Something completely unexpected happened"
-msgstr "Waliwo ekintu kye yali tasuubira ddala ekyaliwo"
+msgstr "صار شيء غير متوقع أبداً"
 
 #: src/Layouts/HeaderBar.vala:46 src/Layouts/HeaderBar.vala:53
 msgid "Logout"
-msgstr "Fuluma"
+msgstr "خروج"
 
 #: src/Layouts/HeaderBar.vala:56
 msgid "Light background"
-msgstr "Ennyuma enjeru"
+msgstr "خلفية فاتحة"
 
 #: src/Layouts/HeaderBar.vala:57
 msgid "Dark background"
-msgstr "omuddugavu mugongo"
+msgstr "خلفية غامقة"
 
 #: src/Layouts/HeaderBar.vala:68 src/Layouts/Welcome.vala:39
 msgid "New Window"
-msgstr "Eddirisa Eppya"
+msgstr "نافذة جديدة"
 
 #: src/Layouts/HeaderBar.vala:71 src/Widgets/ConnectionDialog.vala:130
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "New Connection"
-msgstr "Enkolagana empya"
+msgstr "اتصال جديد"
 
 #: src/Layouts/HeaderBar.vala:74
 msgid "Quit"
-msgstr "Okuwanika"
+msgstr "إنهاء"
 
 #: src/Layouts/HeaderBar.vala:94
 msgid "Menu"
-msgstr "menu"
+msgstr "القائمة"
 
 #: src/Layouts/Main.vala:77
 #, c-format
 msgid "Connected to %s"
-msgstr "Eyungiddwa ku %s"
+msgstr "متصل %s"
 
 #: src/Layouts/Library.vala:65
 msgid "SAVED CONNECTIONS"
-msgstr ""
+msgstr "اتصالات مخزنة"
 
 #: src/Layouts/Library.vala:74
 msgid "Delete All"
-msgstr "Byonna bigyemu"
+msgstr "حذف الكل"
 
 #: src/Layouts/Library.vala:81
-#, fuzzy
 msgid "Reload Library"
-msgstr "Nonya mu terekero lyo"
+msgstr "اعادة تحميل المكتبة"
 
 #: src/Layouts/Library.vala:84
-#, fuzzy
 msgid "Export Library"
-msgstr "Nonya mu terekero lyo"
+msgstr "تصدير المكتبة"
 
 #: src/Layouts/Library.vala:215 src/Layouts/Library.vala:233
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "متأكد أنك ودك تكمل؟"
 
 #: src/Layouts/Library.vala:215
 msgid "By deleting this connection you won’t be able to recover this data."
-msgstr ""
+msgstr "ترا لما تحذف هالاتصال ماراح تقدر ترجع بياناته."
 
 #: src/Layouts/Library.vala:218
 msgid "Yes, Delete!"
-msgstr ""
+msgstr "ايه، احذف!"
 
 #: src/Layouts/Library.vala:233
 msgid "All the data will be deleted and you won’t be able to recover it."
-msgstr ""
+msgstr "كل البيانات راح تنحذف وماراح تقدر ترجعها."
 
 #: src/Layouts/Library.vala:236
-#, fuzzy
 msgid "Yes, Delete All!"
-msgstr "Byonna bigyemu"
+msgstr "ايه، احذف كل شي!"
 
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr ""
+msgstr "اسم المستخدم مطلوب عشان تقدر تتصل!"
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
-msgstr ""
+msgstr "اختر ملف"
 
 #: src/Layouts/Library.vala:407 src/Layouts/Views/Query.vala:531
 msgid "_Save"
-msgstr ""
+msgstr "_حفظ"
 
 #: src/Layouts/Library.vala:408 src/Layouts/Welcome.vala:62
 #: src/Layouts/Views/Query.vala:532
 msgid "_Cancel"
-msgstr "_sazamu"
+msgstr "_الغاء"
 
 #: src/Layouts/Library.vala:467
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to Connect to %s"
-msgstr "Gyamu Enkolagana"
+msgstr "موب قادر يتصل ب %s"
 
 #: src/Layouts/Library.vala:480
-#, fuzzy
 msgid "Unable to Export Library "
-msgstr "Okunyerezebwa tekusobolwa!"
+msgstr "موب قادر يصدر المكنبة "
 
 #: src/Layouts/Welcome.vala:28
 msgid "Welcome to Sequeler"
-msgstr "Tukwaniriza ku Sequeler"
+msgstr "حياك بتطبيق Sequeler"
 
 #: src/Layouts/Welcome.vala:29
-#, fuzzy
 msgid "Connect to Any Local or Remote Database."
-msgstr "Kola enkolagana ne Databesi ku sava yonna"
+msgstr "اتصل بأي قاعدة محلية أو خارجية."
 
 #: src/Layouts/Welcome.vala:38
-#, fuzzy
 msgid "Add a New Database"
-msgstr "Kola Datanesi empya"
+msgstr "سوي قاعدة جديدة"
 
 #: src/Layouts/Welcome.vala:38
-#, fuzzy
 msgid "Connect to a Database and Save It in Your Library"
-msgstr "Wegatte ku Database ogiterekke mu terekero lyo."
+msgstr "اتصل بقاعدة وخزنها بمكتبتك"
 
 #: src/Layouts/Welcome.vala:39
 msgid "Open a New Sequeler Window"
-msgstr ""
+msgstr "افتح نافذة Sequeler جديدة"
 
 #: src/Layouts/Welcome.vala:40
-#, fuzzy
 msgid "Import Connections"
-msgstr "Gezesa Enkolagana"
+msgstr "استورد اتصالات"
 
 #: src/Layouts/Welcome.vala:40
 msgid "Import Previously Exported Sequeler Connections"
-msgstr ""
+msgstr "استورد اتصالات قد صدرتها قبل"
 
 #: src/Layouts/Welcome.vala:58
 msgid "Select a file"
-msgstr ""
+msgstr "حدد ملف"
 
 #: src/Layouts/Welcome.vala:61
 msgid "_Open"
-msgstr ""
+msgstr "_افتح"
 
 #: src/Layouts/Welcome.vala:107
-#, fuzzy
 msgid "Unable to Import Library "
-msgstr "Okunyerezebwa tekusobolwa!"
+msgstr "موب قادر يستورد مكتبة "
 
 #: src/Layouts/DataBaseSchema.vala:66 src/Layouts/DataBaseSchema.vala:167
-#, fuzzy
 msgid "- Select Database -"
-msgstr "Kola Datanesi empya"
+msgstr "- حدد قاعدة -"
 
 #: src/Layouts/DataBaseSchema.vala:87
 msgid "Search Tables"
-msgstr ""
+msgstr "ابحث بالجداول"
 
 #: src/Layouts/DataBaseSchema.vala:98
 msgid "Search Tables…"
-msgstr ""
+msgstr "ابحث بالجداول…"
 
 #: src/Layouts/DataBaseSchema.vala:120
 msgid "Reload Tables"
-msgstr ""
+msgstr "اعادة تحميل الجداول"
 
 #: src/Layouts/DataBaseSchema.vala:125
 msgid "Add Table"
-msgstr ""
+msgstr "اضف جدول"
 
 #: src/Layouts/DataBaseSchema.vala:289
 msgid "TABLES"
-msgstr ""
+msgstr "جداول"
 
 #: src/Layouts/DataBaseView.vala:49
 msgid "Structure"
-msgstr ""
+msgstr "البنية"
 
 #: src/Layouts/DataBaseView.vala:50
 msgid "Content"
-msgstr ""
+msgstr "المحتوى"
 
 #: src/Layouts/DataBaseView.vala:51
 msgid "Relations"
-msgstr ""
+msgstr "العلاقات"
 
 #: src/Layouts/DataBaseView.vala:52 src/Layouts/DataBaseView.vala:229
 #: src/Layouts/DataBaseView.vala:253
-#, fuzzy
 msgid "Query"
-msgstr "Buza Databesi"
+msgstr "الاستعلام"
 
 #: src/Layouts/DataBaseView.vala:101
 msgid "Zoom Out"
-msgstr ""
+msgstr "سوي تصغير"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "خلي العرض طبيعي"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
-msgstr ""
+msgstr "سوي تكبير"
 
 #: src/Layouts/DataBaseView.vala:124
 msgid "High Contrast"
-msgstr ""
+msgstr "سطوع عالي"
 
 #: src/Layouts/DataBaseView.vala:132
 msgid "Solarized Light"
-msgstr ""
+msgstr "شمسي فاتح"
 
 #: src/Layouts/DataBaseView.vala:140
 msgid "Solarized Dark"
-msgstr ""
+msgstr "شمسي غامق"
 
 #: src/Layouts/DataBaseView.vala:163
 msgid "Change Text Style"
-msgstr ""
+msgstr "غير شكل الكتابة"
 
 #: src/Layouts/DataBaseView.vala:222
 msgid "Create a new Query Tab"
-msgstr ""
+msgstr "سوي مبوبة استعلام جديدة"
 
 #: src/Layouts/DataBaseView.vala:240
-#, fuzzy, c-format
+#, c-format
 msgid "Query %i"
-msgstr "Buza Databesi"
+msgstr "استعلام %i"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select Table"
-msgstr ""
+msgstr "حدد جدول"
 
 #: src/Layouts/Views/Structure.vala:79 src/Layouts/Views/Content.vala:90
 #: src/Layouts/Views/Relations.vala:78
 msgid "Select a table from the left sidebar to activate this view."
-msgstr ""
+msgstr "جدد جدول من الجنب اليسار عشان تفعل العرض هذا."
 
 #: src/Layouts/Views/Structure.vala:107 src/Layouts/Views/Structure.vala:145
 #: src/Layouts/Views/Content.vala:179 src/Layouts/Views/Content.vala:218
 #: src/Layouts/Views/Relations.vala:106 src/Layouts/Views/Relations.vala:144
 #: src/Layouts/Views/Query.vala:323
 msgid "No Results Available"
-msgstr "Teri bivuddeyo"
+msgstr "مافي أي نتايج متوفرة"
 
 #: src/Layouts/Views/Structure.vala:118 src/Layouts/Views/Content.vala:191
 #: src/Layouts/Views/Relations.vala:117
 msgid "Reload Results"
-msgstr ""
+msgstr "اعادة تحميل النتايج"
 
 #: src/Layouts/Views/Structure.vala:197
 msgid " Fields"
-msgstr ""
+msgstr " حقول"
 
 #: src/Layouts/Views/Content.vala:121
 msgid "Previous Page"
-msgstr ""
+msgstr "الصفحة اللي قبل"
 
 #: src/Layouts/Views/Content.vala:126
 msgid "Next Page"
-msgstr ""
+msgstr "الصفحة اللي بعده"
 
 #: src/Layouts/Views/Content.vala:131
 #, c-format
 msgid "%d Pages"
-msgstr ""
+msgstr "%d صفحات"
 
 #: src/Layouts/Views/Content.vala:134
 msgid "Jump to page…"
-msgstr ""
+msgstr "انقز لصفحة…"
 
 #: src/Layouts/Views/Content.vala:165
 msgid "1 Page"
-msgstr ""
+msgstr "صفحة وحدة"
 
 #: src/Layouts/Views/Content.vala:171
 #, c-format
 msgid "%d of %d Pages"
-msgstr ""
+msgstr "%d من اصل %d صفحات"
 
 #: src/Layouts/Views/Content.vala:275
 #, c-format
 msgid "%d Entries"
-msgstr ""
+msgstr "%d ادخالات"
 
 #: src/Layouts/Views/Relations.vala:197
 msgid " Constraints"
-msgstr ""
+msgstr " قيود"
 
 #: src/Layouts/Views/Query.vala:279
-#, fuzzy
 msgid "Running Query…"
-msgstr "Databesi erikebelwa..."
+msgstr "استعلام جالس يشتغل…"
 
 #: src/Layouts/Views/Query.vala:295 src/Layouts/Views/Query.vala:304
 msgid "Run Query"
-msgstr "Buza Databesi"
+msgstr "شغل استعلام"
 
 #: src/Layouts/Views/Query.vala:356
 msgid "Export Results"
-msgstr ""
+msgstr "صدر النتايج"
 
 #: src/Layouts/Views/Query.vala:369
 msgid "Export as CSV"
-msgstr ""
+msgstr "صدر بصيغة CSV"
 
 #: src/Layouts/Views/Query.vala:377
 msgid "Export as Text"
-msgstr ""
+msgstr "صدر بصيغة نصية"
 
 #: src/Layouts/Views/Query.vala:436 src/Layouts/Views/Query.vala:482
 msgid "Unable to process Query!"
-msgstr "Okunyerezebwa tekusobolwa!"
+msgstr "موب قادر يشغل الاستعلام!"
 
 #: src/Layouts/Views/Query.vala:457
 #, c-format
 msgid "%d Total Results"
-msgstr ""
+msgstr "%d اجمالي النتايج"
 
 #: src/Layouts/Views/Query.vala:492
-#, fuzzy, c-format
+#, c-format
 msgid "Query Successfully Executed! Rows Affected: %s"
-msgstr "Okunyerezebwa kukoze bulungi!"
+msgstr "الاستعلام تنفذ بشكل ممتاز! الصفوف اللي تأثرت: %s"
 
 #: src/Layouts/Views/Query.vala:495
-#, fuzzy
 msgid "Query Executed!"
-msgstr "Okunyerezebwa kukoze bulungi!"
+msgstr "الاستعلام تنفذ!"
 
 #: src/Partials/LibraryItem.vala:107 src/Widgets/ConnectionDialog.vala:431
 msgid "Connect"
-msgstr "Gatta Enkolagana"
+msgstr "اتصل"
 
 #: src/Partials/LibraryItem.vala:110
 msgid "Edit Connection"
-msgstr "Terezza Enkolagana"
+msgstr "عدل اتصال"
 
 #: src/Partials/LibraryItem.vala:113
-#, fuzzy
 msgid "Duplicate Connection"
-msgstr "Gyamu Enkolagana"
+msgstr "سوي اتصال مكرر من هذا"
 
 #: src/Partials/LibraryItem.vala:116
 msgid "Delete Connection"
-msgstr "Gyamu Enkolagana"
+msgstr "احذف الاتصال"
 
 #: src/Partials/LibraryItem.vala:126
 msgid "Options"
-msgstr ""
+msgstr "خيارات"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "Error"
-msgstr ""
+msgstr "خطأ"
 
 #: src/Partials/TreeBuilder.vala:131
 msgid "on Column"
-msgstr ""
+msgstr "على العمود"
 
 #: src/Partials/TreeBuilder.vala:172
 #, c-format
 msgid "Copy %s"
-msgstr ""
+msgstr "انسخ %s"
 
 #: src/Services/Settings.vala:106
 #, c-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (نسخة)"
 
 #: src/Services/ConnectionManager.vala:193
 #, c-format
 msgid "Libssh2 initialization failed (%d)"
-msgstr ""
+msgstr "فشل تشغيل Libssh2 (%d)"
 
 #: src/Services/ConnectionManager.vala:202
 msgid "Failed to open socket"
-msgstr ""
+msgstr "منفذ السوكيت فشل فتحه"
 
 #: src/Services/ConnectionManager.vala:211
-#, fuzzy
 msgid "Failed to connect!"
-msgstr "Gyamu Enkolagana"
+msgstr "فشل الاتصال!"
 
 #: src/Services/ConnectionManager.vala:223
 #, c-format
 msgid "Error when starting up SSH session: %d"
-msgstr ""
+msgstr "لما نحاول نبدأ جلسة SSH يطلع خطأ: %d"
 
 #: src/Services/ConnectionManager.vala:242
 msgid "Authentication by password failed!"
-msgstr ""
+msgstr "عملية التحقق عن طريقة كلمة المرور فشلت!"
 
 #: src/Services/ConnectionManager.vala:252
 msgid "Authentication by public key failed!"
-msgstr ""
+msgstr "عملية التحقق عن طريق الببلك كي فشلت!"
 
 #: src/Services/ConnectionManager.vala:259
 msgid "No supported authentication methods found!"
-msgstr ""
+msgstr "مالقينا طرق تحقق مدعومة!"
 
 #: src/Services/ConnectionManager.vala:266
 msgid "Failed to open listen socket"
-msgstr ""
+msgstr "فتح منفذ سوكيت للاستماع (listen socket ) فشلت"
 
 #: src/Services/ConnectionManager.vala:281
 msgid "Failed to bind. Your Database Port may be wrong!"
-msgstr ""
+msgstr "الارتباط فشل! يمكن المنفذ حق القاعدة غلط!"
 
 #: src/Services/ConnectionManager.vala:287
 msgid "Failed to listen!"
-msgstr ""
+msgstr "فشل بالاستماع!"
 
 #: src/Services/ConnectionManager.vala:314
 msgid "Failed to accept remote connection!"
-msgstr ""
+msgstr "الموافقة على اتصال خارجي فشلت!"
 
 #: src/Services/ConnectionManager.vala:323
 msgid ""
 "Could not open the direct-tcpip channel! (Note that this can be a problem at "
 "the server! Please review the server logs.)"
 msgstr ""
+"ماقدرنا نفتح قناة direct-tcpip! (ترا يمكن هذي مشكلة بالخادم نفسه! راجع لوقات "
+"السيرفر وشوف)"
 
 #: src/Services/ConnectionManager.vala:566
 msgid "Error!"
-msgstr ""
+msgstr "خطأ!"
 
 #: src/Widgets/ConnectionDialog.vala:33
 msgid "Missing SSH Key file!"
-msgstr ""
+msgstr "مالقينا ملف SSH Key!"
 
 #: src/Widgets/ConnectionDialog.vala:34
 msgid "Missing SSH public key!"
-msgstr ""
+msgstr "مالقينا SSH public key!"
 
 #: src/Widgets/ConnectionDialog.vala:89 src/Widgets/ConnectionDialog.vala:355
-#, fuzzy
 msgid "Connection"
-msgstr "Enkolagana empya"
+msgstr "اتصال"
 
 #: src/Widgets/ConnectionDialog.vala:141
-#, fuzzy
 msgid "Select connection color"
-msgstr "Gyamu Enkolagana"
+msgstr "حدد لون للاتصال"
 
 #: src/Widgets/ConnectionDialog.vala:164
-#, fuzzy
 msgid "Connection Name:"
-msgstr "Erinnya ly'enkolagana"
+msgstr "اسم الاتصال:"
 
 #: src/Widgets/ConnectionDialog.vala:165
 msgid "Connection's name"
-msgstr "Erinnya ly'enkolagana"
+msgstr "اسم الاتصال"
 
 #: src/Widgets/ConnectionDialog.vala:172
 msgid "Database Type:"
-msgstr "Ekika ky'enkolagana:"
+msgstr "نوع القاعدة:"
 
 #: src/Widgets/ConnectionDialog.vala:194
 msgid "Host:"
-msgstr "Erinnya lya Sava:"
+msgstr "المستضيف:"
 
 #: src/Widgets/ConnectionDialog.vala:200
 msgid "Database Name:"
-msgstr "Erinnya lya Databesi:"
+msgstr "اسم القاعدة:"
 
 #: src/Widgets/ConnectionDialog.vala:207
 msgid "Username:"
-msgstr "Erinnya lya agyikozesa:"
+msgstr "اسم المستخدم:"
 
 #: src/Widgets/ConnectionDialog.vala:213
 msgid "Password:"
-msgstr "Ekyama:"
+msgstr "كلمة المرور:"
 
 #: src/Widgets/ConnectionDialog.vala:217 src/Widgets/ConnectionDialog.vala:227
 #: src/Widgets/ConnectionDialog.vala:285 src/Widgets/ConnectionDialog.vala:295
-#, fuzzy
 msgid "Show password"
-msgstr "Ekyama:"
+msgstr "اعرض كلمة المرور"
 
 #: src/Widgets/ConnectionDialog.vala:224 src/Widgets/ConnectionDialog.vala:292
-#, fuzzy
 msgid "Hide password"
-msgstr "Ekyama:"
+msgstr "خبي كلمة المرور"
 
 #: src/Widgets/ConnectionDialog.vala:234
 msgid "Port:"
-msgstr ""
+msgstr "المنفذ:"
 
 #: src/Widgets/ConnectionDialog.vala:240
 msgid "File Path:"
-msgstr ""
+msgstr "مسار الملف:"
 
 #: src/Widgets/ConnectionDialog.vala:241
 msgid "Select Your SQLite File…"
-msgstr ""
+msgstr "حدد الملف حق قاعدة SQLite…"
 
 #: src/Widgets/ConnectionDialog.vala:261
-#, fuzzy
 msgid "Connect via SSH Tunnel:"
-msgstr "Enkolagana mu termino"
+msgstr "اتصال عن طريق SSH Tunnel:"
 
 #: src/Widgets/ConnectionDialog.vala:271
-#, fuzzy
 msgid "SSH Host:"
-msgstr "Erinnya lya Sava:"
+msgstr "مستضيف SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:276
-#, fuzzy
 msgid "SSH Username:"
-msgstr "Erinnya lya agyikozesa:"
+msgstr "اسم مستخدم SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:281
-#, fuzzy
 msgid "SSH Password:"
-msgstr "Ekyama:"
+msgstr "كلمة مرور SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:301
 msgid "SSH Port:"
-msgstr ""
+msgstr "منفذ SSH:"
 
 #: src/Widgets/ConnectionDialog.vala:302
 msgid "Optional"
-msgstr ""
+msgstr "اختياري"
 
 #: src/Widgets/ConnectionDialog.vala:306
 msgid "SSH Identity"
-msgstr ""
+msgstr "هوية SSH (Identity)"
 
 #: src/Widgets/ConnectionDialog.vala:308
 msgid "Select Your Identity File…"
-msgstr ""
+msgstr "حدد ملف الهوية (Identity)…"
 
 #: src/Widgets/ConnectionDialog.vala:324
 msgid "Generate SSH Key"
-msgstr ""
+msgstr "سوي مفتاح SSH"
 
 #: src/Widgets/ConnectionDialog.vala:356
-#, fuzzy
 msgid "SSH Tunnel"
-msgstr "Enkolagana mu termino"
+msgstr "قناة SSH (Tunnel)"
 
 #: src/Widgets/ConnectionDialog.vala:426
 msgid "Close"
-msgstr "Galawo"
+msgstr "اغلاق"
 
 #: src/Widgets/ConnectionDialog.vala:427
 msgid "Save Connection"
-msgstr "Tereka Enkolagana"
+msgstr "خزن الاتصال"
 
 #: src/Widgets/ConnectionDialog.vala:429
 msgid "Test Connection"
-msgstr "Gezesa Enkolagana"
+msgstr "جرب الاتصال"
 
 #: src/Widgets/ConnectionDialog.vala:620
 msgid "Opening SSH Tunnel…"
-msgstr ""
+msgstr "جالس يفتح قناة SSH (Tunnel)…"
 
 #: src/Widgets/ConnectionDialog.vala:650
-#, fuzzy
 msgid "Testing Connection…"
-msgstr "Gezesa Enkolagana"
+msgstr "جالس يجرب الاتصال…"
 
 #: src/Widgets/ConnectionDialog.vala:661
-#, fuzzy
 msgid "Successfully Connected!"
-msgstr "Okunyerezebwa kukoze bulungi!"
+msgstr "اتصل بشكل مضبوط!"
 
 #: src/Widgets/ConnectionDialog.vala:679
-#, fuzzy
 msgid "Saving Connection…"
-msgstr "Tereka Enkolagana"
+msgstr "جالس يخزن الاتصال…"
 
 #: src/Widgets/ConnectionDialog.vala:684
 msgid "Connection Saved!"
-msgstr "Enkolagana eterekeddwa!"
+msgstr "الاتصال تخزن!"
 
 #: src/Widgets/ConnectionDialog.vala:692
-#, fuzzy
 msgid "Connecting…"
-msgstr "Gatta Enkolagana"
+msgstr "جالس يتصل…"

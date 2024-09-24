@@ -19,7 +19,9 @@ namespace Gda {
 	[Compact]
 	public class Binary {
 		public long binary_length;
-		public uint8 data;
+
+		[CCode (array_length = false)]
+		public unowned uint8[] data;
 		public static void* copy (void* boxed);
 		public static void free (owned void* boxed);
 		public string to_string (uint maxlen);
@@ -1091,8 +1093,7 @@ namespace Gda {
 		public void unset_io_channel ();
 	}
 	[CCode (cheader_filename = "libgda/libgda.h", copy_function = "g_boxed_copy", free_function = "g_boxed_free", type_id = "gda_time_get_type ()")]
-	[Compact]
-	public class Time {
+	public struct Time {
 		public ulong fraction;
 		public ushort hour;
 		public ushort minute;
@@ -1104,8 +1105,7 @@ namespace Gda {
 		public bool valid ();
 	}
 	[CCode (cheader_filename = "libgda/libgda.h", copy_function = "g_boxed_copy", free_function = "g_boxed_free", type_id = "gda_timestamp_get_type ()")]
-	[Compact]
-	public class Timestamp {
+	public struct Timestamp {
 		public ushort day;
 		public ulong fraction;
 		public ushort hour;
@@ -2200,4 +2200,69 @@ namespace Gda {
 	public static int value_differ (GLib.Value value1, GLib.Value value2);
 	[CCode (cheader_filename = "libgda/libgda.h")]
 	public static string value_stringify (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_copy (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_free (owned GLib.Value? value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static bool value_is_null (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static bool value_is_number (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_new_binary (owned uint8[] val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_new_blob (owned uint8[] val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_new_blob_from_file (string filename);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static unowned Gda.Binary value_get_binary (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static unowned Gda.Blob value_get_blob (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_take_binary (GLib.Value value, owned Gda.Binary binary);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_take_blob (GLib.Value value, owned Gda.Blob blob);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_binary (GLib.Value value, Gda.Binary binary);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_blob (GLib.Value value, Gda.Blob blob);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static bool value_set_from_string (GLib.Value value, string as_string, GLib.Type type);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	[Version (since = "4.2.9")]
+	public static GLib.Value? value_new_default (string? default_val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_new_from_string (string as_string, GLib.Type type);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_new_from_xml ([CCode (type = "const xmlNodePtr")] Xml.Node node);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static string value_to_xml (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static GLib.Value? value_new_null ();	
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_null (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_geometric_point (GLib.Value value, Gda.GeometricPoint val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static unowned Gda.GeometricPoint value_get_geometric_point (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_time (GLib.Value value, Gda.Time val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static unowned Gda.Time value_get_time (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_timestamp  (GLib.Value value, Gda.Timestamp val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static unowned Gda.Timestamp value_get_timestamp (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static unowned Gda.Numeric value_get_numeric (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_numeric (GLib.Value value, Gda.Numeric val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static short value_get_short (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_short (GLib.Value value, short val);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static ushort value_get_ushort (GLib.Value value);
+	[CCode (cheader_filename = "libgda/libgda.h")]
+	public static void value_set_ushort (GLib.Value value, ushort val);
 }

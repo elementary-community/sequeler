@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.alecaddd.sequeler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-11 12:37+0200\n"
-"PO-Revision-Date: 2020-08-14 12:32+0000\n"
+"PO-Revision-Date: 2022-04-10 23:12+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/sequeler/"
 "translations/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: src/Application.vala:62
 msgid "Directories are not supported"
@@ -104,7 +104,7 @@ msgstr "Sí, eliminarlo todo"
 #: src/Layouts/Library.vala:330 src/Widgets/ConnectionDialog.vala:575
 #: src/Widgets/ConnectionDialog.vala:596
 msgid "A username is required in order to connect!"
-msgstr "Se necesita un nombre de usuario para efectuar la conexión."
+msgstr "Se necesita un nombre de usuario para establecer la conexión."
 
 #: src/Layouts/Library.vala:404 src/Layouts/Views/Query.vala:528
 msgid "Pick a file"
@@ -215,7 +215,7 @@ msgstr "Alejar"
 
 #: src/Layouts/DataBaseView.vala:107
 msgid "Zoom 1:1"
-msgstr "Ajustar 1:1"
+msgstr "Escala 1∶1"
 
 #: src/Layouts/DataBaseView.vala:111
 msgid "Zoom In"
