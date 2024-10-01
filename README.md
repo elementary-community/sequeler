@@ -31,7 +31,7 @@ If you like Sequeler and you want to support its development, consider donating 
 ## Install it from source
 You can install Sequeler by compiling from source, here's the list of dependencies required:
  - `gtk+-3.0>=3.22.29`
- - `granite>=5.2`
+ - `granite>=5.3`
  - `glib-2.0`
  - `gee-0.8`
  - `gobject-2.0`

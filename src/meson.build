@@ -55,7 +55,7 @@ executable(
     config_header,
     dependencies: [
         dependency('gtk+-3.0'),
-        dependency('granite', version: '>= 0.5.1'),
+        dependency('granite', version: '>= 5.3.0'),
         dependency('glib-2.0'),
         dependency('gee-0.8'),
         dependency('gobject-2.0'),
